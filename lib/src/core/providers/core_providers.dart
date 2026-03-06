@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/auth/data/auth_api.dart';
@@ -12,9 +13,10 @@ import '../network/api_client.dart';
 import '../network/dio_client.dart';
 import '../storage/local_storage.dart';
 
-/// Logging enabled when the app is compiled with
-/// `--dart-define=ENABLE_LOGGING=true`.
-const _loggingEnabled = bool.fromEnvironment('ENABLE_LOGGING');
+/// Logging enabled in debug builds OR when compiled with
+/// `--dart-define=ENABLE_LOGGING=true` (for profile/release diagnostics).
+final _loggingEnabled =
+    kDebugMode || const bool.fromEnvironment('ENABLE_LOGGING');
 
 final dioClientProvider = Provider<DioClient>((ref) {
   return DioClient(

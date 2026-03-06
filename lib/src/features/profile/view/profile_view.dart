@@ -136,6 +136,33 @@ class ProfileScreen extends ConsumerWidget {
                           ref.read(themeModeProvider.notifier).toggle(),
                     ),
                   ),
+                  if (isWorker) ...[
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: Icon(
+                        (auth.isOnDuty ?? false)
+                            ? Icons.work_rounded
+                            : Icons.work_off_outlined,
+                        color: (auth.isOnDuty ?? false)
+                            ? AppPalette.success
+                            : null,
+                      ),
+                      title: const Text('Available for Work'),
+                      subtitle: Text(
+                        (auth.isOnDuty ?? false)
+                            ? 'You are visible to clients'
+                            : 'You are currently off duty',
+                      ),
+                      trailing: Switch.adaptive(
+                        value: auth.isOnDuty ?? false,
+                        onChanged: auth.isLoading
+                            ? null
+                            : (_) => ref
+                                  .read(authControllerProvider.notifier)
+                                  .toggleDutyStatus(),
+                      ),
+                    ),
+                  ],
                   const Divider(height: 1),
                   if (isWorker && auth.userId != null)
                     ListTile(
@@ -352,20 +379,18 @@ class _UploadableAvatar extends ConsumerWidget {
           onTap: isUploading
               ? null
               : () => ref
-                  .read(imageUploadControllerProvider.notifier)
-                  .pickAndUpload(),
+                    .read(imageUploadControllerProvider.notifier)
+                    .pickAndUpload(),
           child: CircleAvatar(
             radius: 48,
             backgroundColor: AppPalette.primary.withValues(alpha: 0.1),
             backgroundImage:
-                auth.profileImageUrl != null &&
-                    auth.profileImageUrl!.isNotEmpty
+                auth.profileImageUrl != null && auth.profileImageUrl!.isNotEmpty
                 ? NetworkImage(auth.profileImageUrl!)
                 : null,
             child: isUploading
                 ? const CircularProgressIndicator(strokeWidth: 2.6)
-                : auth.profileImageUrl == null ||
-                    auth.profileImageUrl!.isEmpty
+                : auth.profileImageUrl == null || auth.profileImageUrl!.isEmpty
                 ? Text(
                     (auth.name ?? 'U')[0].toUpperCase(),
                     style: const TextStyle(
@@ -387,7 +412,11 @@ class _UploadableAvatar extends ConsumerWidget {
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white, width: 2),
             ),
-            child: const Icon(Icons.camera_alt_rounded, size: 13, color: Colors.white),
+            child: const Icon(
+              Icons.camera_alt_rounded,
+              size: 13,
+              color: Colors.white,
+            ),
           ),
         ),
       ],

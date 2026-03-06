@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../auth/data/auth_api.dart';
 import '../../auth/view_model/auth_view_model.dart';
 import '../../../core/config/app_environment.dart';
+import '../../../core/logging/app_logger.dart';
 
 // ── Places autocomplete suggestion ────────────────────────────────────────────
 
@@ -45,6 +47,8 @@ class LocationPickerScreen extends ConsumerStatefulWidget {
 
 class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
     with SingleTickerProviderStateMixin {
+  static final _log = AppLogger.tag('LocationPicker');
+
   // tabs
   late final TabController _tabController;
 
@@ -59,7 +63,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
 
   // places search
   final TextEditingController _searchController = TextEditingController();
-  final Dio _dio = Dio();
+  late final Dio _dio;
   List<_PlaceSuggestion> _suggestions = const [];
   bool _isSearching = false;
   bool _showSuggestions = false;
@@ -92,10 +96,88 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    // Set up the Dio instance used for Google APIs with full logging.
+    _dio = Dio();
+    if (kDebugMode) {
+      _dio.interceptors.add(
+        LogInterceptor(
+          requestBody: false,
+          responseBody: true,
+          requestHeader: false,
+          logPrint: (obj) => _log.t(obj.toString()),
+        ),
+      );
+    }
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          // Mask the API key in the log (show only last 6 chars).
+          final key = options.queryParameters['key'] as String? ?? '';
+          final masked = key.length > 6
+              ? '${'*' * (key.length - 6)}${key.substring(key.length - 6)}'
+              : '***';
+          _log.d(
+            '→ Google API  ${options.method} ${options.path}  '
+            'key: $masked  '
+            'params: ${Map.from(options.queryParameters)..remove('key')}',
+          );
+          handler.next(options);
+        },
+        onResponse: (response, handler) {
+          final status = (response.data as Map?)?['status'] as String? ?? '?';
+          _log.d(
+            '← Google API  ${response.statusCode}  '
+            '${response.requestOptions.path}  '
+            'status: $status',
+          );
+          if (status != 'OK' && status != 'ZERO_RESULTS') {
+            _log.w(
+              'Google API returned non-OK status: "$status".  '
+              'Common causes: API key restriction, billing disabled, '
+              'quota exceeded, or API not enabled in Cloud Console.  '
+              'Full response: ${response.data}',
+            );
+          }
+          handler.next(response);
+        },
+        onError: (DioException err, ErrorInterceptorHandler handler) {
+          _log.e(
+            'Google API network error  '
+            '${err.requestOptions.path}  '
+            'type: ${err.type.name}  '
+            'status: ${err.response?.statusCode}',
+            error: err,
+            stackTrace: err.stackTrace,
+          );
+          handler.next(err);
+        },
+      ),
+    );
+
+    // Validate API key presence once on screen open.
+    final apiKey = AppEnvironment.googleMapsApiKey.trim();
+    if (apiKey.isEmpty) {
+      _log.e(
+        'GOOGLE_MAPS_API_KEY is empty!  '
+        'Places search and reverse geocoding will fail.  '
+        'Check your .env file.',
+      );
+    } else {
+      _log.i(
+        'LocationPickerScreen opened.  '
+        'API key present (${apiKey.length} chars).',
+      );
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final addr = ref.read(authControllerProvider).currentAddressFull;
       if (addr?.latitude != null && addr?.longitude != null) {
-        setState(() => _centre = LatLng(addr!.latitude!, addr.longitude!));
+        _log.d(
+          'Restoring saved address centre: '
+          '(${addr!.latitude}, ${addr.longitude})',
+        );
+        setState(() => _centre = LatLng(addr.latitude!, addr.longitude!));
       }
     });
   }
@@ -118,41 +200,55 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
   void _onCameraMove(CameraPosition pos) => _centre = pos.target;
 
   void _toggleMapType() => setState(() {
-        _mapType =
-            _mapType == MapType.normal ? MapType.satellite : MapType.normal;
-      });
+    _mapType = _mapType == MapType.normal ? MapType.satellite : MapType.normal;
+  });
 
   // ── current location ──────────────────────────────────────────────────────
   Future<void> _goToCurrentLocation() async {
+    _log.d('Requesting current location...');
     setState(() => _isGettingLocation = true);
     try {
       var permission = await Geolocator.checkPermission();
+      _log.d('Location permission: ${permission.name}');
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
+        _log.d('After request, permission: ${permission.name}');
       }
       if (permission == LocationPermission.deniedForever) {
+        _log.w('Location permission permanently denied');
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text(
-                'Location permanently denied. Enable it in Settings.'),
-          ));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Location permanently denied. Enable it in Settings.',
+              ),
+            ),
+          );
         }
         return;
       }
       final pos = await Geolocator.getCurrentPosition(
-        locationSettings:
-            const LocationSettings(accuracy: LocationAccuracy.high),
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        ),
+      );
+      _log.i(
+        'GPS position: (${pos.latitude}, ${pos.longitude})  '
+        'accuracy: ${pos.accuracy.toStringAsFixed(1)}m',
       );
       final target = LatLng(pos.latitude, pos.longitude);
       _centre = target;
       await _mapController?.animateCamera(
         CameraUpdate.newCameraPosition(
-            CameraPosition(target: target, zoom: 16)),
+          CameraPosition(target: target, zoom: 16),
+        ),
       );
-    } catch (e) {
+    } catch (e, st) {
+      _log.e('Failed to get current location', error: e, stackTrace: st);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Could not get location: $e')));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Could not get location: $e')));
       }
     } finally {
       if (mounted) setState(() => _isGettingLocation = false);
@@ -161,8 +257,9 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
 
   // ── reverse geocoding ─────────────────────────────────────────────────────
   Future<_GeoResult> _reverseGeocode(LatLng point) async {
+    _log.d('Reverse geocoding (${point.latitude}, ${point.longitude})');
     try {
-      final key = AppEnvironment.googleMapsApiKey;
+      final key = AppEnvironment.googleMapsApiKey.trim();
       final res = await _dio.get<Map<String, dynamic>>(
         'https://maps.googleapis.com/maps/api/geocode/json',
         queryParameters: {
@@ -171,10 +268,20 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
         },
       );
       final data = res.data;
-      if (data == null || data['status'] != 'OK') return const _GeoResult();
+      if (data == null || data['status'] != 'OK') {
+        _log.w(
+          'Reverse geocode returned status: ${data?['status']}.  '
+          'error_message: ${data?['error_message']}.  '
+          'Point: (${point.latitude}, ${point.longitude})',
+        );
+        return const _GeoResult();
+      }
 
       final results = data['results'] as List;
-      if (results.isEmpty) return const _GeoResult();
+      if (results.isEmpty) {
+        _log.w('Reverse geocode: OK status but empty results list');
+        return const _GeoResult();
+      }
 
       final first = results.first as Map<String, dynamic>;
       final formatted = first['formatted_address'] as String?;
@@ -198,6 +305,10 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
         }
       }
 
+      _log.i(
+        'Reverse geocode OK → "$formatted"  '
+        'area: $area  city: $city  postal: $postalCode  country: $country',
+      );
       return _GeoResult(
         fullAddress: formatted,
         area: area,
@@ -205,7 +316,8 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
         postalCode: postalCode,
         country: country,
       );
-    } catch (_) {
+    } catch (e, st) {
+      _log.e('Reverse geocode exception', error: e, stackTrace: st);
       return const _GeoResult();
     }
   }
@@ -261,9 +373,10 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
       });
       return;
     }
+    _log.d('Places autocomplete query: "$input"');
     setState(() => _isSearching = true);
     try {
-      final key = AppEnvironment.googleMapsApiKey;
+      final key = AppEnvironment.googleMapsApiKey.trim();
       final response = await _dio.get<Map<String, dynamic>>(
         'https://maps.googleapis.com/maps/api/place/autocomplete/json',
         queryParameters: <String, String>{
@@ -275,22 +388,37 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
       final data = response.data;
       if (data != null && data['status'] == 'OK') {
         final predictions = data['predictions'] as List<dynamic>;
+        _log.d('Autocomplete: ${predictions.length} predictions');
         setState(() {
           _suggestions = predictions
-              .map((p) => _PlaceSuggestion(
-                    description: p['description'] as String,
-                    placeId: p['place_id'] as String,
-                  ))
+              .map(
+                (p) => _PlaceSuggestion(
+                  description: p['description'] as String,
+                  placeId: p['place_id'] as String,
+                ),
+              )
               .toList();
           _showSuggestions = _suggestions.isNotEmpty;
         });
       } else {
+        _log.w(
+          'Autocomplete non-OK status: ${data?['status']}.  '
+          'error_message: ${data?['error_message']}.  '
+          'If status is REQUEST_DENIED check: API key is correct, '
+          'Places API is enabled in Google Cloud Console, '
+          'billing account is active.',
+        );
         setState(() {
           _suggestions = const [];
           _showSuggestions = false;
         });
       }
-    } catch (_) {
+    } catch (e, st) {
+      _log.e(
+        'Places autocomplete exception for query "$input"',
+        error: e,
+        stackTrace: st,
+      );
       setState(() {
         _suggestions = const [];
         _showSuggestions = false;
@@ -301,6 +429,10 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
   }
 
   Future<void> _selectPlace(_PlaceSuggestion suggestion) async {
+    _log.d(
+      'Place selected: "${suggestion.description}"  '
+      'placeId: ${suggestion.placeId}',
+    );
     setState(() {
       _showSuggestions = false;
       _suggestions = const [];
@@ -308,7 +440,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
     _searchController.text = suggestion.description;
     FocusScope.of(context).unfocus();
     try {
-      final key = AppEnvironment.googleMapsApiKey;
+      final key = AppEnvironment.googleMapsApiKey.trim();
       final response = await _dio.get<Map<String, dynamic>>(
         'https://maps.googleapis.com/maps/api/place/details/json',
         queryParameters: <String, String>{
@@ -325,13 +457,26 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
           (loc['lat'] as num).toDouble(),
           (loc['lng'] as num).toDouble(),
         );
+        _log.i('Place details OK → (${target.latitude}, ${target.longitude})');
         _centre = target;
         await _mapController?.animateCamera(
           CameraUpdate.newCameraPosition(
-              CameraPosition(target: target, zoom: 15)),
+            CameraPosition(target: target, zoom: 15),
+          ),
+        );
+      } else {
+        _log.w(
+          'Place details non-OK status: ${data?['status']}.  '
+          'error_message: ${data?['error_message']}',
         );
       }
-    } catch (_) {}
+    } catch (e, st) {
+      _log.e(
+        'Place details exception  placeId: ${suggestion.placeId}',
+        error: e,
+        stackTrace: st,
+      );
+    }
   }
 
   // ── build ─────────────────────────────────────────────────────────────────
@@ -342,8 +487,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
 
     final allAddresses = <AddressInfo>[
       if (auth.currentAddressFull != null) auth.currentAddressFull!,
-      ...auth.savedAddresses
-          .where((a) => a.id != auth.currentAddressFull?.id),
+      ...auth.savedAddresses.where((a) => a.id != auth.currentAddressFull?.id),
     ];
 
     return Scaffold(
@@ -373,8 +517,9 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
   }
 
   Widget _buildMapTab(bool isDark) {
-    final mapStyle =
-        isDark && _mapType == MapType.normal ? _darkMapStyle : null;
+    final mapStyle = isDark && _mapType == MapType.normal
+        ? _darkMapStyle
+        : null;
 
     return Stack(
       children: [
@@ -429,29 +574,30 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
                             child: SizedBox(
                               width: 18,
                               height: 18,
-                              child: CircularProgressIndicator(
-                                  strokeWidth: 2),
+                              child: CircularProgressIndicator(strokeWidth: 2),
                             ),
                           )
                         : _searchController.text.isNotEmpty
-                            ? IconButton(
-                                icon: const Icon(Icons.clear_rounded),
-                                onPressed: () {
-                                  _searchController.clear();
-                                  setState(() {
-                                    _suggestions = const [];
-                                    _showSuggestions = false;
-                                  });
-                                },
-                              )
-                            : null,
+                        ? IconButton(
+                            icon: const Icon(Icons.clear_rounded),
+                            onPressed: () {
+                              _searchController.clear();
+                              setState(() {
+                                _suggestions = const [];
+                                _showSuggestions = false;
+                              });
+                            },
+                          )
+                        : null,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
                     contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 14),
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
                   ),
                 ),
               ),
@@ -459,11 +605,13 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
                 Material(
                   elevation: 6,
                   borderRadius: const BorderRadius.vertical(
-                      bottom: Radius.circular(14)),
+                    bottom: Radius.circular(14),
+                  ),
                   shadowColor: Colors.black38,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(14)),
+                      bottom: Radius.circular(14),
+                    ),
                     child: ListView.separated(
                       shrinkWrap: true,
                       padding: EdgeInsets.zero,
@@ -475,8 +623,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
                         final s = _suggestions[i];
                         return ListTile(
                           dense: true,
-                          leading:
-                              const Icon(Icons.place_outlined, size: 20),
+                          leading: const Icon(Icons.place_outlined, size: 20),
                           title: Text(
                             s.description,
                             maxLines: 2,
@@ -522,8 +669,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
                 backgroundColor: Theme.of(context).colorScheme.surface,
                 foregroundColor: Theme.of(context).colorScheme.primary,
                 elevation: 4,
-                onPressed:
-                    _isGettingLocation ? null : _goToCurrentLocation,
+                onPressed: _isGettingLocation ? null : _goToCurrentLocation,
                 child: _isGettingLocation
                     ? SizedBox(
                         width: 18,
@@ -549,7 +695,8 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
             icon: const Icon(Icons.check_circle_outline_rounded),
             label: const Text('Confirm Location'),
             style: FilledButton.styleFrom(
-                minimumSize: const Size.fromHeight(52)),
+              minimumSize: const Size.fromHeight(52),
+            ),
           ),
         ),
       ],
@@ -566,10 +713,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
 /// preventing the use-after-dispose crash that occurs when controllers are
 /// created in a method and disposed before the sheet animation finishes.
 class _AddressConfirmSheet extends StatefulWidget {
-  const _AddressConfirmSheet({
-    required this.geo,
-    required this.centre,
-  });
+  const _AddressConfirmSheet({required this.geo, required this.centre});
 
   final _GeoResult geo;
   final LatLng centre;
@@ -634,10 +778,9 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
 
               Text(
                 'Confirm Address Details',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w700),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 4),
               Text(
@@ -651,9 +794,7 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .surfaceContainerHighest
+                    color: Theme.of(context).colorScheme.surfaceContainerHighest
                         .withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -751,8 +892,7 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
                               ? null
                               : _cityCtrl.text.trim(),
                           postalCode: _postalCtrl.text.trim(),
-                          country:
-                              _countryCtrl.text.trim().toUpperCase(),
+                          country: _countryCtrl.text.trim().toUpperCase(),
                           latitude: widget.centre.latitude,
                           longitude: widget.centre.longitude,
                         ),
@@ -791,12 +931,16 @@ class _SavedAddressesTab extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.location_off_outlined,
-                  size: 56,
-                  color: Theme.of(context).colorScheme.outline),
+              Icon(
+                Icons.location_off_outlined,
+                size: 56,
+                color: Theme.of(context).colorScheme.outline,
+              ),
               const SizedBox(height: 16),
-              Text('No saved addresses yet',
-                  style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                'No saved addresses yet',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               const SizedBox(height: 8),
               Text(
                 'Switch to the Pin on Map tab to pick any location.',
@@ -815,15 +959,13 @@ class _SavedAddressesTab extends StatelessWidget {
       separatorBuilder: (_, __) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
         final addr = addresses[index];
-        final isCurrent =
-            addr.id != null && addr.id == currentAddressId;
+        final isCurrent = addr.id != null && addr.id == currentAddressId;
 
         return Card(
           child: ListTile(
             leading: Icon(
               isCurrent ? Icons.home_rounded : Icons.location_on_outlined,
-              color:
-                  isCurrent ? Theme.of(context).colorScheme.primary : null,
+              color: isCurrent ? Theme.of(context).colorScheme.primary : null,
             ),
             title: Text(
               // Prefer fullAddress as the primary title — it's the richest text
@@ -843,8 +985,7 @@ class _SavedAddressesTab extends StatelessWidget {
                     label: const Text('Current'),
                     visualDensity: VisualDensity.compact,
                     padding: EdgeInsets.zero,
-                    labelPadding:
-                        const EdgeInsets.symmetric(horizontal: 6),
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 6),
                   )
                 : const Icon(Icons.chevron_right_rounded),
             onTap: () => onSelect(addr),

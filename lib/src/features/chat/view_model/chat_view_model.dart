@@ -26,10 +26,7 @@ class ConversationsController extends AsyncNotifier<List<Conversation>> {
     }
 
     final chatApi = ref.read(chatApiProvider);
-    final rawList = await chatApi.getConversations(
-      token: auth.token!,
-      userId: auth.userId!,
-    );
+    final rawList = await chatApi.getConversations(token: auth.token!);
 
     final conversations = rawList.map(Conversation.fromMap).toList();
     conversations.sort((a, b) {
@@ -119,7 +116,6 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
       final rawList = await chatApi.getMessages(
         token: auth.token!,
         conversationId: arg,
-        userId: auth.userId!,
         page: 0,
         size: 100,
       );
@@ -138,11 +134,7 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
       );
 
       // Mark as read
-      await chatApi.markAsRead(
-        token: auth.token!,
-        conversationId: arg,
-        userId: auth.userId!,
-      );
+      await chatApi.markAsRead(token: auth.token!, conversationId: arg);
     } catch (error) {
       state = state.copyWith(isLoading: false, errorMessage: error.toString());
     }
@@ -159,7 +151,6 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
         final rawList = await chatApi.getMessages(
           token: auth.token!,
           conversationId: arg,
-          userId: auth.userId!,
           page: 0,
           size: 100,
         );
@@ -173,11 +164,7 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
 
         state = state.copyWith(messages: messages, clearError: true);
 
-        await chatApi.markAsRead(
-          token: auth.token!,
-          conversationId: arg,
-          userId: auth.userId!,
-        );
+        await chatApi.markAsRead(token: auth.token!, conversationId: arg);
       } catch (error) {
         AppLogger.error('Chat poll failed', error: error);
       }
@@ -201,7 +188,6 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
       final rawMsg = await chatApi.sendMessage(
         token: auth.token!,
         jobId: jobId,
-        senderId: auth.userId!,
         recipientId: recipientId,
         content: content.trim(),
       );

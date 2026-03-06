@@ -10,14 +10,12 @@ class ChatApi {
   Future<Map<String, dynamic>> sendMessage({
     required String token,
     required int jobId,
-    required int senderId,
     required int recipientId,
     required String content,
   }) async {
     final response = await _client.postAny(
       '/api/v1/chat/jobs/$jobId/messages',
       bearerToken: token,
-      query: <String, dynamic>{'senderId': senderId},
       body: <String, dynamic>{'recipientId': recipientId, 'content': content},
     );
 
@@ -28,14 +26,13 @@ class ChatApi {
   Future<List<Map<String, dynamic>>> getMessages({
     required String token,
     required int conversationId,
-    required int userId,
     int page = 0,
     int size = 50,
   }) async {
     final response = await _client.getAny(
       '/api/v1/chat/conversations/$conversationId/messages',
       bearerToken: token,
-      query: <String, dynamic>{'userId': userId, 'page': page, 'size': size},
+      query: <String, dynamic>{'page': page, 'size': size},
     );
 
     return _readListPayload(response);
@@ -44,12 +41,10 @@ class ChatApi {
   /// List all conversations for a user
   Future<List<Map<String, dynamic>>> getConversations({
     required String token,
-    required int userId,
   }) async {
     final response = await _client.getAny(
       '/api/v1/chat/conversations',
       bearerToken: token,
-      query: <String, dynamic>{'userId': userId},
     );
 
     return _readListPayload(response);
@@ -59,12 +54,10 @@ class ChatApi {
   Future<void> markAsRead({
     required String token,
     required int conversationId,
-    required int userId,
   }) async {
     await _client.postAny(
       '/api/v1/chat/conversations/$conversationId/read',
       bearerToken: token,
-      query: <String, dynamic>{'userId': userId},
     );
   }
 

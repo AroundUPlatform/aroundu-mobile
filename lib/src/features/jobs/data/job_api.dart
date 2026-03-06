@@ -84,6 +84,22 @@ class JobApi {
     return _readPageContent(response);
   }
 
+  Future<List<Map<String, dynamic>>> fetchWorkerMyJobs({
+    required String token,
+    required int workerId,
+    List<String>? statuses,
+  }) async {
+    final response = await _client.getJson(
+      '/api/v1/jobs/worker/$workerId/my-jobs',
+      bearerToken: token,
+      query: <String, dynamic>{
+        if (statuses != null && statuses.isNotEmpty) 'statuses': statuses,
+      },
+    );
+
+    return _readDataList(response);
+  }
+
   Future<Map<String, dynamic>> fetchJobForClient({
     required String token,
     required int clientId,
@@ -336,6 +352,20 @@ class JobApi {
   }
 
   // ──────────────────────── Job Codes ────────────────────────
+  Future<Map<String, dynamic>> fetchJobCodes({
+    required String token,
+    required int jobId,
+    required int clientId,
+  }) async {
+    final response = await _client.getAny(
+      '/api/v1/jobs/$jobId/codes',
+      bearerToken: token,
+      query: <String, dynamic>{'clientId': clientId},
+    );
+
+    return _readMapPayload(response);
+  }
+
   Future<Map<String, dynamic>> generateJobCodes({
     required String token,
     required int jobId,
@@ -369,13 +399,13 @@ class JobApi {
   Future<Map<String, dynamic>> verifyReleaseCode({
     required String token,
     required int jobId,
-    required int clientId,
+    required int workerId,
     required String code,
   }) async {
     final response = await _client.postAny(
       '/api/v1/jobs/$jobId/codes/release',
       bearerToken: token,
-      query: <String, dynamic>{'clientId': clientId},
+      query: <String, dynamic>{'workerId': workerId},
       body: <String, dynamic>{'code': code},
     );
 

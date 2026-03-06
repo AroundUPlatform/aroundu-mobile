@@ -3,6 +3,7 @@ class ChatMessage {
     required this.id,
     required this.conversationId,
     required this.senderId,
+    required this.senderRole,
     required this.content,
     required this.isRead,
     this.createdAt,
@@ -11,6 +12,7 @@ class ChatMessage {
   final int id;
   final int conversationId;
   final int senderId;
+  final String senderRole; // "WORKER" or "CLIENT"
   final String content;
   final bool isRead;
   final DateTime? createdAt;
@@ -20,6 +22,7 @@ class ChatMessage {
       id: _asInt(map['id']),
       conversationId: _asInt(map['conversationId']),
       senderId: _asInt(map['senderId']),
+      senderRole: map['senderRole']?.toString() ?? 'UNKNOWN',
       content: map['content']?.toString() ?? '',
       isRead: _asBool(map['isRead']),
       createdAt: _asDateTime(map['createdAt']),

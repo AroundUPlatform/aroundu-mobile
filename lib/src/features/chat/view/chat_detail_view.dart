@@ -100,7 +100,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
               widget.jobTitle,
               style: TextStyle(
                 fontSize: 12,
-                color: AppPalette.textSecondary,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -134,9 +134,10 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                           Icon(
                             Icons.chat_bubble_outline_rounded,
                             size: 48,
-                            color: AppPalette.textSecondary.withValues(
-                              alpha: 0.4,
-                            ),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant
+                                .withValues(alpha: 0.4),
                           ),
                           const SizedBox(height: 12),
                           Text(
@@ -156,7 +157,9 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                     itemCount: chatState.messages.length,
                     itemBuilder: (context, index) {
                       final msg = chatState.messages[index];
-                      final isMe = msg.senderId == currentUserId;
+                      // Map Flutter role to backend senderRole (provider → CLIENT, worker → WORKER)
+                      final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
+                      final isMe = msg.senderId == currentUserId && msg.senderRole == myRole;
                       final showDate =
                           index == 0 ||
                           _differentDay(
@@ -215,14 +218,16 @@ class _DateSeparator extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           decoration: BoxDecoration(
-            color: AppPalette.border.withValues(alpha: 0.3),
+            color: Theme.of(
+              context,
+            ).colorScheme.outlineVariant.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
             label,
             style: const TextStyle(
               fontSize: 12,
-              color: AppPalette.textSecondary,
+              // Inherits onSurfaceVariant from the theme for dark-mode safety
             ),
           ),
         ),
@@ -250,7 +255,9 @@ class _MessageBubble extends StatelessWidget {
         ),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
-          color: isMe ? AppPalette.primary : AppPalette.surface,
+          color: isMe
+              ? AppPalette.primary
+              : Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
             topRight: const Radius.circular(16),
@@ -273,7 +280,9 @@ class _MessageBubble extends StatelessWidget {
             Text(
               message.content,
               style: TextStyle(
-                color: isMe ? Colors.white : AppPalette.textPrimary,
+                color: isMe
+                    ? Colors.white
+                    : Theme.of(context).colorScheme.onSurface,
                 fontSize: 14,
               ),
             ),
@@ -289,7 +298,7 @@ class _MessageBubble extends StatelessWidget {
                     fontSize: 11,
                     color: isMe
                         ? Colors.white.withValues(alpha: 0.7)
-                        : AppPalette.textSecondary,
+                        : Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 if (isMe) ...[
@@ -300,7 +309,7 @@ class _MessageBubble extends StatelessWidget {
                         : Icons.done_rounded,
                     size: 14,
                     color: message.isRead
-                        ? Colors.white
+                        ? Colors.lightBlue.shade300
                         : Colors.white.withValues(alpha: 0.6),
                   ),
                 ],
@@ -338,7 +347,11 @@ class _ChatInput extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         border: Border(
-          top: BorderSide(color: AppPalette.border.withValues(alpha: 0.5)),
+          top: BorderSide(
+            color: Theme.of(
+              context,
+            ).colorScheme.outlineVariant.withValues(alpha: 0.5),
+          ),
         ),
       ),
       child: Row(
@@ -357,7 +370,9 @@ class _ChatInput extends StatelessWidget {
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
-                fillColor: AppPalette.surface,
+                fillColor: Theme.of(
+                  context,
+                ).colorScheme.surfaceContainerHighest,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 10,

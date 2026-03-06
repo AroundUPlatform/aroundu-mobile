@@ -26,11 +26,8 @@ class NewJobInput {
   final String category;
   final double budget;
   final List<String> skillNames;
-  /// Backend JobUrgency enum: NORMAL | MEDIUM | URGENT | SUPER_URGENT
   final String jobUrgency;
-  /// Backend PaymentMode enum: OFFLINE | ESCROW
   final String paymentMode;
-  /// When non-null, overrides the profile's currentAddressId as jobLocationId.
   final int? overrideLocationId;
 }
 
@@ -52,12 +49,17 @@ class PlaceBidInput {
 
 abstract class JobRepository {
   Future<List<JobItem>> fetchProviderJobs();
+  Future<List<JobItem>> fetchProviderFilteredJobs(List<String>? statuses);
   Future<List<JobItem>> fetchProviderPastJobs();
   Future<List<JobItem>> fetchWorkerFeed();
+  Future<List<JobItem>> fetchWorkerMyJobs(List<String>? statuses);
   Future<void> createJob(NewJobInput input);
 
   Future<JobItem> fetchJobForCurrentRole(int jobId);
-  Future<JobItem> updateJobStatus({required int jobId, required String newStatus});
+  Future<JobItem> updateJobStatus({
+    required int jobId,
+    required String newStatus,
+  });
   Future<void> deleteJob(int jobId);
 
   Future<List<BidItem>> fetchBids(int jobId);
@@ -66,7 +68,12 @@ abstract class JobRepository {
   Future<BidItem> handshakeBid({required int bidId, required bool accepted});
 
   Future<JobCodeInfo> generateCodes(int jobId);
-  Future<JobCodeInfo> verifyStartCode({required int jobId, required String code});
+  Future<JobCodeInfo> regenerateCodes(int jobId);
+  Future<JobCodeInfo> fetchCodes(int jobId);
+  Future<JobCodeInfo> verifyStartCode({
+    required int jobId,
+    required String code,
+  });
   Future<JobCodeInfo> verifyReleaseCode({
     required int jobId,
     required String code,
@@ -106,6 +113,26 @@ class ApiJobRepository implements JobRepository {
       sortDirection: 'DESC',
     );
 
+    return jobs.map(_mapSummaryToJobItem).toList();
+  }
+
+  @override
+  Future<List<JobItem>> fetchProviderFilteredJobs(List<String>? statuses) async {
+    if (!_authState.isAuthenticated || _authState.userId == null) {
+      return const <JobItem>[];
+    }
+    if (_authState.role != UserRole.provider) {
+      return const <JobItem>[];
+    }
+    final jobs = await _jobApi.fetchClientJobs(
+      token: _authState.token!,
+      clientId: _authState.userId!,
+      page: 0,
+      size: 50,
+      sortBy: 'createdAt',
+      sortDirection: 'DESC',
+      statuses: statuses,
+    );
     return jobs.map(_mapSummaryToJobItem).toList();
   }
 
@@ -152,10 +179,29 @@ class ApiJobRepository implements JobRepository {
   }
 
   @override
+  Future<List<JobItem>> fetchWorkerMyJobs(List<String>? statuses) async {
+    if (!_authState.isAuthenticated || _authState.userId == null) {
+      return const <JobItem>[];
+    }
+
+    if (_authState.role != UserRole.worker) {
+      return const <JobItem>[];
+    }
+
+    final jobs = await _jobApi.fetchWorkerMyJobs(
+      token: _authState.token!,
+      workerId: _authState.userId!,
+      statuses: statuses,
+    );
+
+    return jobs.map(_mapSummaryToJobItem).toList();
+  }
+
+  @override
   Future<void> createJob(NewJobInput input) async {
     _requireAuthenticatedRole(UserRole.provider);
 
-    final locationId = _authState.currentAddressId;
+    final locationId = input.overrideLocationId ?? _authState.currentAddressId;
     if (locationId == null) {
       throw const ApiException(
         'Provider profile location is missing. Please update profile.',
@@ -165,12 +211,12 @@ class ApiJobRepository implements JobRepository {
     await _jobApi.createJob(
       token: _authState.token!,
       clientId: _authState.userId!,
-      jobLocationId: input.overrideLocationId ?? locationId,
+      jobLocationId: locationId,
       title: input.title.trim(),
       description: input.description.trim(),
       currency: _authState.currency,
       amount: input.budget,
-      skillNames: input.skillNames.isNotEmpty ? input.skillNames : const <String>[],
+      skillNames: input.skillNames,
       skillIds: input.skillNames.isEmpty
           ? _skillIdsForCategory(input.category)
           : const <int>[],
@@ -237,7 +283,10 @@ class ApiJobRepository implements JobRepository {
   Future<List<BidItem>> fetchBids(int jobId) async {
     _requireAuthenticated();
 
-    final bids = await _jobApi.listBidsForJob(token: _authState.token!, jobId: jobId);
+    final bids = await _jobApi.listBidsForJob(
+      token: _authState.token!,
+      jobId: jobId,
+    );
     return bids.map(BidItem.fromMap).toList();
   }
 
@@ -302,6 +351,32 @@ class ApiJobRepository implements JobRepository {
   }
 
   @override
+  Future<JobCodeInfo> regenerateCodes(int jobId) async {
+    _requireAuthenticatedRole(UserRole.provider);
+
+    final info = await _jobApi.regenerateJobCodes(
+      token: _authState.token!,
+      jobId: jobId,
+      clientId: _authState.userId!,
+    );
+
+    return JobCodeInfo.fromMap(info);
+  }
+
+  @override
+  Future<JobCodeInfo> fetchCodes(int jobId) async {
+    _requireAuthenticatedRole(UserRole.provider);
+
+    final info = await _jobApi.fetchJobCodes(
+      token: _authState.token!,
+      jobId: jobId,
+      clientId: _authState.userId!,
+    );
+
+    return JobCodeInfo.fromMap(info);
+  }
+
+  @override
   Future<JobCodeInfo> verifyStartCode({
     required int jobId,
     required String code,
@@ -323,12 +398,12 @@ class ApiJobRepository implements JobRepository {
     required int jobId,
     required String code,
   }) async {
-    _requireAuthenticatedRole(UserRole.provider);
+    _requireAuthenticatedRole(UserRole.worker);
 
     final info = await _jobApi.verifyReleaseCode(
       token: _authState.token!,
       jobId: jobId,
-      clientId: _authState.userId!,
+      workerId: _authState.userId!,
       code: code,
     );
 
@@ -408,7 +483,9 @@ class ApiJobRepository implements JobRepository {
     final location =
         locationMap['fullAddress']?.toString() ??
         [locationMap['area'], locationMap['city']]
-            .where((value) => value != null && value.toString().trim().isNotEmpty)
+            .where(
+              (value) => value != null && value.toString().trim().isNotEmpty,
+            )
             .map((value) => value.toString())
             .join(', ')
             .trim();
@@ -611,6 +688,88 @@ final workerFeedControllerProvider =
     AsyncNotifierProvider<WorkerFeedController, List<JobItem>>(
       WorkerFeedController.new,
     );
+
+/// Filter options for the worker home screen chip bar.
+enum WorkerJobFilter {
+  nearby,
+  all,
+  bidPlaced,
+  accepted,
+  inProgress,
+  completed,
+  cancelled,
+  expired,
+}
+
+/// Maps a [WorkerJobFilter] to the backend status codes to send.
+/// Returns null for [WorkerJobFilter.nearby] (handled by the feed endpoint)
+/// and for [WorkerJobFilter.all] (no filter = all jobs).
+List<String>? workerJobFilterStatuses(WorkerJobFilter filter) {
+  switch (filter) {
+    case WorkerJobFilter.nearby:
+    case WorkerJobFilter.all:
+      return null;
+    case WorkerJobFilter.bidPlaced:
+      return const <String>['OPEN_FOR_BIDS', 'BID_SELECTED_AWAITING_HANDSHAKE'];
+    case WorkerJobFilter.accepted:
+      return const <String>['READY_TO_START'];
+    case WorkerJobFilter.inProgress:
+      // COMPLETED_PENDING_PAYMENT is legacy; new jobs go straight to COMPLETED.
+      return const <String>['IN_PROGRESS'];
+    case WorkerJobFilter.completed:
+      return const <String>['COMPLETED', 'COMPLETED_PENDING_PAYMENT', 'PAYMENT_RELEASED'];
+    case WorkerJobFilter.cancelled:
+      return const <String>['CANCELLED'];
+    case WorkerJobFilter.expired:
+      return const <String>['JOB_CLOSED_DUE_TO_EXPIRATION'];
+  }
+}
+
+/// Filter options for the provider (client) home screen chip bar.
+enum ProviderJobFilter {
+  all,
+  open,
+  active,
+  inProgress,
+  completed,
+  cancelled,
+  expired,
+}
+
+/// Maps a [ProviderJobFilter] to the backend status codes to send.
+/// Returns null for [ProviderJobFilter.all] (no filter applied).
+List<String>? providerJobFilterStatuses(ProviderJobFilter filter) {
+  switch (filter) {
+    case ProviderJobFilter.all:
+      return null;
+    case ProviderJobFilter.open:
+      return const <String>['CREATED', 'OPEN_FOR_BIDS'];
+    case ProviderJobFilter.active:
+      return const <String>['BID_SELECTED_AWAITING_HANDSHAKE', 'READY_TO_START'];
+    case ProviderJobFilter.inProgress:
+      return const <String>['IN_PROGRESS', 'COMPLETED_PENDING_PAYMENT'];
+    case ProviderJobFilter.completed:
+      return const <String>['COMPLETED', 'PAYMENT_RELEASED'];
+    case ProviderJobFilter.cancelled:
+      return const <String>['CANCELLED'];
+    case ProviderJobFilter.expired:
+      return const <String>['JOB_CLOSED_DUE_TO_EXPIRATION'];
+  }
+}
+
+final providerFilteredJobsProvider =
+    FutureProvider.family<List<JobItem>, ProviderJobFilter>((ref, filter) {
+      return ref
+          .read(jobRepositoryProvider)
+          .fetchProviderFilteredJobs(providerJobFilterStatuses(filter));
+    });
+
+final workerMyJobsProvider =
+    FutureProvider.family<List<JobItem>, WorkerJobFilter>((ref, filter) {
+      return ref
+          .read(jobRepositoryProvider)
+          .fetchWorkerMyJobs(workerJobFilterStatuses(filter));
+    });
 
 class CreateJobController extends AsyncNotifier<void> {
   @override

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_theme.dart';
-
 /// Displays a compact account label/value row inside account cards.
 class AccountDetailRow extends StatelessWidget {
   const AccountDetailRow({super.key, required this.label, required this.value});
@@ -55,9 +53,9 @@ class MetaPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppPalette.background,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: AppPalette.border),
+        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
       ),
       child: Text(label, style: Theme.of(context).textTheme.bodyMedium),
     );

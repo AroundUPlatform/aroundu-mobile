@@ -23,7 +23,7 @@ import 'widgets/job_card.dart';
 import 'widgets/job_shared_widgets.dart';
 import 'widgets/skill_suggest_field.dart';
 
-class ProviderShellScreen extends ConsumerWidget {
+class ProviderShellScreen extends ConsumerStatefulWidget {
   const ProviderShellScreen({super.key});
 
   static const List<String> _titles = [
@@ -34,11 +34,24 @@ class ProviderShellScreen extends ConsumerWidget {
   ];
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProviderShellScreen> createState() =>
+      _ProviderShellScreenState();
+}
+
+class _ProviderShellScreenState extends ConsumerState<ProviderShellScreen> {
+  @override
+  Widget build(BuildContext context) {
     final tabIndex = ref.watch(providerTabIndexProvider);
 
+    // Auto-refresh the jobs list whenever the user switches back to the tasks tab.
+    ref.listen<int>(providerTabIndexProvider, (previous, next) {
+      if (next == 0 && (previous ?? -1) != 0) {
+        ref.invalidate(providerJobsControllerProvider);
+      }
+    });
+
     return Scaffold(
-      appBar: AppBar(title: Text(_titles[tabIndex])),
+      appBar: AppBar(title: Text(ProviderShellScreen._titles[tabIndex])),
       body: IndexedStack(
         index: tabIndex,
         children: const [
@@ -80,11 +93,98 @@ class ProviderShellScreen extends ConsumerWidget {
   }
 }
 
-class _ProviderJobsTab extends ConsumerWidget {
+class _ProviderJobsTab extends ConsumerStatefulWidget {
   const _ProviderJobsTab();
 
-  Future<void> _refresh(WidgetRef ref) {
-    return ref.read(providerJobsControllerProvider.notifier).refresh();
+  @override
+  ConsumerState<_ProviderJobsTab> createState() => _ProviderJobsTabState();
+}
+
+class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
+    with WidgetsBindingObserver {
+  ProviderJobFilter _activeFilter = ProviderJobFilter.all;
+
+  static const List<({ProviderJobFilter filter, String label, IconData icon})>
+  _chips = [
+    (
+      filter: ProviderJobFilter.all,
+      label: 'All',
+      icon: Icons.work_outline_rounded,
+    ),
+    (
+      filter: ProviderJobFilter.open,
+      label: 'Open',
+      icon: Icons.public_rounded,
+    ),
+    (
+      filter: ProviderJobFilter.active,
+      label: 'Active',
+      icon: Icons.handshake_outlined,
+    ),
+    (
+      filter: ProviderJobFilter.inProgress,
+      label: 'In Progress',
+      icon: Icons.construction_rounded,
+    ),
+    (
+      filter: ProviderJobFilter.completed,
+      label: 'Completed',
+      icon: Icons.check_circle_outline_rounded,
+    ),
+    (
+      filter: ProviderJobFilter.cancelled,
+      label: 'Cancelled',
+      icon: Icons.cancel_outlined,
+    ),
+    (
+      filter: ProviderJobFilter.expired,
+      label: 'Expired',
+      icon: Icons.timer_off_outlined,
+    ),
+  ];
+
+  static const Map<ProviderJobFilter, String> _emptyMessages = {
+    ProviderJobFilter.all: 'No tasks posted yet',
+    ProviderJobFilter.open: 'No open tasks',
+    ProviderJobFilter.active: 'No active tasks',
+    ProviderJobFilter.inProgress: 'No tasks in progress',
+    ProviderJobFilter.completed: 'No completed tasks',
+    ProviderJobFilter.cancelled: 'No cancelled tasks',
+    ProviderJobFilter.expired: 'No expired tasks',
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _invalidateAll();
+    }
+  }
+
+  void _invalidateAll() {
+    ref.invalidate(providerJobsControllerProvider);
+    for (final f in ProviderJobFilter.values) {
+      ref.invalidate(providerFilteredJobsProvider(f));
+    }
+  }
+
+  Future<void> _refresh() {
+    if (_activeFilter == ProviderJobFilter.all) {
+      return ref.read(providerJobsControllerProvider.notifier).refresh();
+    }
+    ref.invalidate(providerFilteredJobsProvider(_activeFilter));
+    return Future.value();
   }
 
   Future<void> _openWorkflowSheet(BuildContext context, JobItem job) async {
@@ -106,97 +206,136 @@ class _ProviderJobsTab extends ConsumerWidget {
         },
       ),
     );
+    _invalidateAll();
   }
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final jobsAsync = ref.watch(providerJobsControllerProvider);
-
-    return RefreshIndicator(
-      onRefresh: () => _refresh(ref),
-      child: jobsAsync.when(
-        loading: () => const CenteredListBody(
-          child: CircularProgressIndicator(strokeWidth: 2.6),
-        ),
-        error: (error, _) => CenteredListBody(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Unable to load jobs',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '$error',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 12),
-              OutlinedButton.icon(
-                onPressed: () => _refresh(ref),
-                icon: const Icon(Icons.refresh_rounded),
-                label: const Text('Retry'),
-              ),
-            ],
-          ),
-        ),
-        data: (jobs) {
-          if (jobs.isEmpty) {
-            return CenteredListBody(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset(
-                    'assets/images/ProviderEmptyScreen.png',
-                    height: 160,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'No jobs posted yet',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'Create your first job from the Post Job tab.',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              ),
-            );
-          }
-
-          return ListView.separated(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(16),
-            itemCount: jobs.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
-            itemBuilder: (context, index) {
-              final job = jobs[index];
-
-              return TweenAnimationBuilder<double>(
-                duration: Duration(milliseconds: 220 + (index * 40)),
-                curve: Curves.easeOutCubic,
-                tween: Tween<double>(begin: 0, end: 1),
-                builder: (context, value, child) {
-                  return Opacity(
-                    opacity: value,
-                    child: Transform.translate(
-                      offset: Offset(0, 12 * (1 - value)),
-                      child: child,
-                    ),
-                  );
-                },
-                child: JobCard(
-                  job: job,
-                  onTap: () => _openWorkflowSheet(context, job),
-                ),
-              );
+  Widget _buildChipBar() {
+    return SizedBox(
+      height: 44,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: _chips.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (context, index) {
+          final chip = _chips[index];
+          final selected = _activeFilter == chip.filter;
+          return FilterChip(
+            selected: selected,
+            avatar: Icon(chip.icon, size: 16),
+            label: Text(chip.label),
+            onSelected: (_) {
+              if (_activeFilter != chip.filter) {
+                setState(() => _activeFilter = chip.filter);
+              }
             },
+            showCheckmark: false,
           );
         },
       ),
+    );
+  }
+
+  Widget _buildJobList(BuildContext context, List<JobItem> jobs) {
+    if (jobs.isEmpty) {
+      final message = _emptyMessages[_activeFilter] ?? 'No tasks found';
+      return CenteredListBody(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/images/ProviderEmptyScreen.png',
+              height: 160,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 10),
+            Text(message, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 6),
+            Text(
+              'Pull down to refresh.',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ],
+        ),
+      );
+    }
+
+    return ListView.separated(
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+      itemCount: jobs.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        final job = jobs[index];
+        return TweenAnimationBuilder<double>(
+          duration: Duration(milliseconds: 220 + (index * 40)),
+          curve: Curves.easeOutCubic,
+          tween: Tween<double>(begin: 0, end: 1),
+          builder: (context, value, child) {
+            return Opacity(
+              opacity: value,
+              child: Transform.translate(
+                offset: Offset(0, 12 * (1 - value)),
+                child: child,
+              ),
+            );
+          },
+          child: JobCard(
+            job: job,
+            onTap: () => _openWorkflowSheet(context, job),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AsyncValue<List<JobItem>> jobsAsync =
+        _activeFilter == ProviderJobFilter.all
+        ? ref.watch(providerJobsControllerProvider)
+        : ref.watch(providerFilteredJobsProvider(_activeFilter));
+
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        _buildChipBar(),
+        const SizedBox(height: 4),
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: _refresh,
+            child: jobsAsync.when(
+              loading: () => const CenteredListBody(
+                child: CircularProgressIndicator(strokeWidth: 2.6),
+              ),
+              error: (error, _) => CenteredListBody(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Unable to load tasks',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '$error',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 12),
+                    OutlinedButton.icon(
+                      onPressed: _refresh,
+                      icon: const Icon(Icons.refresh_rounded),
+                      label: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              ),
+              data: (jobs) => _buildJobList(context, jobs),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -274,8 +413,9 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
     final form = _formKey.currentState;
     if (form == null || !form.validate()) return;
 
-    final selectedSkillNames =
-        ref.read(skillSuggestControllerProvider.notifier).selectedNames;
+    final selectedSkillNames = ref
+        .read(skillSuggestControllerProvider.notifier)
+        .selectedNames;
     if (selectedSkillNames.isEmpty) {
       AppNotifier.showWarning(
         context,
@@ -291,8 +431,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
     }
 
     final auth = ref.read(authControllerProvider);
-    final locationId =
-        _selectedAddress?.id ?? auth.currentAddressId;
+    final locationId = _selectedAddress?.id ?? auth.currentAddressId;
     if (locationId == null) {
       AppNotifier.showWarning(
         context,
@@ -537,9 +676,9 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                                 ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .outlineVariant,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.outlineVariant,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -547,9 +686,9 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                                   children: [
                                     Icon(
                                       Icons.location_on_rounded,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
                                     ),
                                     const SizedBox(width: 10),
                                     Expanded(
@@ -561,7 +700,8 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                                                 Text(
                                                   // Full address is the rich primary label
                                                   displayAddress.fullAddress ??
-                                                      displayAddress.displayName,
+                                                      displayAddress
+                                                          .displayName,
                                                   maxLines: 2,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -574,15 +714,17 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                                                       ),
                                                 ),
                                                 // Short area/city as subtitle when different
-                                                if (displayAddress.displayName !=
-                                                    (displayAddress.fullAddress ??
+                                                if (displayAddress
+                                                        .displayName !=
+                                                    (displayAddress
+                                                            .fullAddress ??
                                                         displayAddress
                                                             .displayName))
                                                   Text(
                                                     displayAddress.displayName,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
+                                                    style: Theme.of(
+                                                      context,
+                                                    ).textTheme.bodySmall,
                                                     maxLines: 1,
                                                     overflow:
                                                         TextOverflow.ellipsis,
@@ -595,15 +737,13 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                                                   .textTheme
                                                   .bodyMedium
                                                   ?.copyWith(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .outline,
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).colorScheme.outline,
                                                   ),
                                             ),
                                     ),
-                                    const Icon(
-                                      Icons.chevron_right_rounded,
-                                    ),
+                                    const Icon(Icons.chevron_right_rounded),
                                   ],
                                 ),
                               ),
@@ -697,8 +837,6 @@ class _ProviderJobWorkflowSheetState
   bool _working = false;
   String? _error;
 
-  final TextEditingController _releaseCodeController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -707,7 +845,6 @@ class _ProviderJobWorkflowSheetState
 
   @override
   void dispose() {
-    _releaseCodeController.dispose();
     super.dispose();
   }
 
@@ -722,6 +859,21 @@ class _ProviderJobWorkflowSheetState
       final detail = await repo.fetchJobForCurrentRole(widget.jobId);
       final bids = await repo.fetchBids(widget.jobId);
 
+      // Auto-load codes for statuses where codes exist and the client needs
+      // to see them (start code while READY_TO_START, release code while
+      // IN_PROGRESS or COMPLETED_PENDING_PAYMENT).
+      JobCodeInfo? codes;
+      final statusUpper = detail.statusCode.toUpperCase();
+      if (statusUpper == 'READY_TO_START' ||
+          statusUpper == 'IN_PROGRESS' ||
+          statusUpper == 'COMPLETED_PENDING_PAYMENT') {
+        try {
+          codes = await repo.fetchCodes(widget.jobId);
+        } catch (_) {
+          // Not yet generated or fetch failed — silently ignore
+        }
+      }
+
       if (!mounted) {
         return;
       }
@@ -729,6 +881,7 @@ class _ProviderJobWorkflowSheetState
       setState(() {
         _job = detail;
         _bids = bids;
+        _codeInfo = codes ?? _codeInfo;
         _loading = false;
       });
     } catch (error) {
@@ -781,6 +934,9 @@ class _ProviderJobWorkflowSheetState
   Future<void> _acceptBid(BidItem bid) {
     return _runAction(() async {
       await ref.read(jobRepositoryProvider).acceptBid(bid.id);
+      // Refresh the top-level jobs list so the updated status is reflected
+      // immediately when the sheet is dismissed.
+      ref.invalidate(providerJobsControllerProvider);
     }, successMessage: 'Offer accepted');
   }
 
@@ -791,6 +947,15 @@ class _ProviderJobWorkflowSheetState
           .generateCodes(widget.jobId);
       _codeInfo = result;
     }, successMessage: 'Task codes generated');
+  }
+
+  Future<void> _regenerateCodes() {
+    return _runAction(() async {
+      final result = await ref
+          .read(jobRepositoryProvider)
+          .regenerateCodes(widget.jobId);
+      _codeInfo = result;
+    }, successMessage: 'New release code generated');
   }
 
   Future<void> _lockEscrow() {
@@ -804,23 +969,6 @@ class _ProviderJobWorkflowSheetState
           .read(jobRepositoryProvider)
           .lockEscrow(jobId: widget.jobId, amount: job.budget);
     }, successMessage: 'Payment safely reserved');
-  }
-
-  Future<void> _verifyReleaseAndPay() {
-    final code = _releaseCodeController.text.trim();
-    if (code.isEmpty) {
-      AppNotifier.showWarning(context, 'Enter release code first');
-      return Future<void>.value();
-    }
-
-    return _runAction(() async {
-      _codeInfo = await ref
-          .read(jobRepositoryProvider)
-          .verifyReleaseCode(jobId: widget.jobId, code: code);
-      _paymentInfo = await ref
-          .read(jobRepositoryProvider)
-          .releaseEscrow(jobId: widget.jobId, releaseCode: code);
-    }, successMessage: 'Release verified — payment released');
   }
 
   Future<void> _cancelJob() {
@@ -1089,20 +1237,56 @@ class _ProviderJobWorkflowSheetState
               ],
               if (canRelease) ...[
                 const SizedBox(height: 12),
-                TextField(
-                  controller: _releaseCodeController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Release code',
-                    prefixIcon: Icon(Icons.key_rounded),
+                // Show the release code prominently so the client can share
+                // it verbally with the worker to confirm task completion.
+                if (_codeInfo?.releaseCode != null) ...[
+                  Card(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: ListTile(
+                      leading: const Icon(Icons.lock_open_rounded),
+                      title: const Text('Release Code'),
+                      subtitle: Text(
+                        _codeInfo!.releaseCode!,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 4,
+                          fontSize: 22,
+                        ),
+                      ),
+                      trailing: IconButton(
+                        tooltip: 'Copy release code',
+                        onPressed: () {
+                          Clipboard.setData(
+                            ClipboardData(text: _codeInfo!.releaseCode!),
+                          );
+                          AppNotifier.showInfo(context, 'Release code copied');
+                        },
+                        icon: const Icon(Icons.copy_rounded),
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                FilledButton.icon(
-                  onPressed: _working ? null : _verifyReleaseAndPay,
-                  icon: const Icon(Icons.verified_rounded),
-                  label: const Text('Verify & Release Payment'),
-                ),
+                  const SizedBox(height: 6),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Text(
+                      'Share this code verbally with the worker once you are satisfied with the work. They will enter it on their screen to confirm completion and release payment.',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  OutlinedButton.icon(
+                    onPressed: _working ? null : _regenerateCodes,
+                    icon: const Icon(Icons.refresh_rounded),
+                    label: const Text('Regenerate Code'),
+                  ),
+                ],
+                if (_codeInfo?.releaseCode == null) ...[
+                  OutlinedButton.icon(
+                    onPressed: _working ? null : _regenerateCodes,
+                    icon: const Icon(Icons.refresh_rounded),
+                    label: const Text('Generate Release Code'),
+                  ),
+                ],
               ],
               if (canCancel) ...[
                 const SizedBox(height: 12),

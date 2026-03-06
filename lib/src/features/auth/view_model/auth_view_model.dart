@@ -284,7 +284,9 @@ class AuthController extends Notifier<AuthState> {
       } else if (input.role == UserRole.worker) {
         await authApi.registerWorker(request);
       } else {
-        throw const ApiException('Admin signup is not supported in mobile flow');
+        throw const ApiException(
+          'Admin signup is not supported in mobile flow',
+        );
       }
 
       state = AuthState(
@@ -402,7 +404,8 @@ class AuthController extends Notifier<AuthState> {
         phoneNumber: updated.phoneNumber ?? state.phoneNumber,
         profileImageUrl: updated.profileImageUrl ?? state.profileImageUrl,
         currentAddressId: updated.currentAddressId ?? state.currentAddressId,
-        currentAddressFull: updated.currentAddressFull ?? state.currentAddressFull,
+        currentAddressFull:
+            updated.currentAddressFull ?? state.currentAddressFull,
         savedAddresses: updated.savedAddresses.isNotEmpty
             ? updated.savedAddresses
             : state.savedAddresses,
@@ -431,6 +434,38 @@ class AuthController extends Notifier<AuthState> {
     }
   }
 
+  /// Optimistically toggles the worker's on-duty status and persists it via
+  /// the dedicated `/worker/me/duty-status` endpoint.  Reverts the local
+  /// state if the API call fails.
+  Future<bool> toggleDutyStatus() async {
+    if (!state.isAuthenticated ||
+        state.token == null ||
+        state.role != UserRole.worker) {
+      return false;
+    }
+
+    final newStatus = !(state.isOnDuty ?? false);
+    state = state.copyWith(isOnDuty: newStatus);
+
+    try {
+      final authApi = ref.read(authApiProvider);
+      await authApi.updateWorkerDutyStatus(
+        token: state.token!,
+        isOnDuty: newStatus,
+      );
+      await _persistSession(state);
+      return true;
+    } catch (error, stackTrace) {
+      AppLogger.error(
+        'Duty status toggle failed',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      state = state.copyWith(isOnDuty: !newStatus);
+      return false;
+    }
+  }
+
   Future<bool> deleteAccount() async {
     if (!state.isAuthenticated ||
         state.token == null ||
@@ -451,9 +486,15 @@ class AuthController extends Notifier<AuthState> {
     try {
       final authApi = ref.read(authApiProvider);
       if (state.role == UserRole.provider) {
-        await authApi.deleteClient(token: state.token!, clientId: state.userId!);
+        await authApi.deleteClient(
+          token: state.token!,
+          clientId: state.userId!,
+        );
       } else {
-        await authApi.deleteWorker(token: state.token!, workerId: state.userId!);
+        await authApi.deleteWorker(
+          token: state.token!,
+          workerId: state.userId!,
+        );
       }
 
       await logout();

@@ -47,6 +47,11 @@ class FakeJobRepository implements JobRepository {
   }
 
   @override
+  Future<List<JobItem>> fetchProviderFilteredJobs(List<String>? statuses) async {
+    return providerJobs;
+  }
+
+  @override
   Future<List<JobItem>> fetchProviderPastJobs() async {
     return const <JobItem>[];
   }
@@ -72,7 +77,15 @@ class FakeJobRepository implements JobRepository {
   }
 
   @override
-  Future<BidItem> handshakeBid({required int bidId, required bool accepted}) async {
+  Future<JobCodeInfo> regenerateCodes(int jobId) async {
+    return JobCodeInfo(id: 1, jobId: jobId, status: 'RELEASE_PENDING');
+  }
+
+  @override
+  Future<BidItem> handshakeBid({
+    required int bidId,
+    required bool accepted,
+  }) async {
     return BidItem(
       id: bidId,
       jobId: 1,
@@ -83,7 +96,10 @@ class FakeJobRepository implements JobRepository {
   }
 
   @override
-  Future<PaymentInfo> lockEscrow({required int jobId, required double amount}) async {
+  Future<PaymentInfo> lockEscrow({
+    required int jobId,
+    required double amount,
+  }) async {
     return PaymentInfo(
       id: 1,
       jobId: jobId,
@@ -123,7 +139,10 @@ class FakeJobRepository implements JobRepository {
   }
 
   @override
-  Future<JobItem> updateJobStatus({required int jobId, required String newStatus}) async {
+  Future<JobItem> updateJobStatus({
+    required int jobId,
+    required String newStatus,
+  }) async {
     return _job('$jobId');
   }
 

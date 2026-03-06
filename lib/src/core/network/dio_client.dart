@@ -1,6 +1,6 @@
-import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../config/app_environment.dart';
 import '../logging/app_logger.dart';
@@ -12,9 +12,15 @@ import 'api_exception.dart';
 /// this class.  Do NOT call Dio directly from ViewModels or feature files.
 class DioClient {
   DioClient({String? baseUrl, bool enableLogging = false}) {
+    final resolvedBase = baseUrl ?? AppEnvironment.apiBaseUrl;
+    _log.i(
+      'DioClient initialised → baseUrl: $resolvedBase  '
+      'logging: $enableLogging  debug: $kDebugMode',
+    );
+
     _dio = Dio(
       BaseOptions(
-        baseUrl: baseUrl ?? AppEnvironment.apiBaseUrl,
+        baseUrl: resolvedBase,
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 30),
         contentType: 'application/json; charset=utf-8',
@@ -27,20 +33,46 @@ class DioClient {
         LogInterceptor(
           requestBody: true,
           responseBody: true,
-          requestHeader: false,
-          logPrint: (obj) => AppLogger.debug(obj.toString()),
+          requestHeader: true,
+          responseHeader: false,
+          logPrint: (obj) => _log.t(obj.toString()),
         ),
       );
     }
 
     _dio.interceptors.add(
       InterceptorsWrapper(
+        onRequest: (options, handler) {
+          _log.d(
+            '→ ${options.method} ${options.baseUrl}${options.path}'
+            '${options.queryParameters.isNotEmpty ? "  query: ${options.queryParameters}" : ""}',
+          );
+          handler.next(options);
+        },
+        onResponse: (response, handler) {
+          _log.d(
+            '← ${response.statusCode} '
+            '${response.requestOptions.method} '
+            '${response.requestOptions.path}',
+          );
+          handler.next(response);
+        },
         onError: (DioException err, ErrorInterceptorHandler handler) {
+          _log.e(
+            '✗ ${err.requestOptions.method} ${err.requestOptions.path}  '
+            'type: ${err.type.name}  '
+            'status: ${err.response?.statusCode}  '
+            'message: ${err.message}',
+            error: err,
+            stackTrace: err.stackTrace,
+          );
           handler.next(err);
         },
       ),
     );
   }
+
+  static final _log = AppLogger.tag('Network');
 
   late final Dio _dio;
 
@@ -234,7 +266,11 @@ class DioClient {
       );
       throw ApiException.fromDioException(err);
     } catch (err, stackTrace) {
-      AppLogger.error('Unexpected network error', error: err, stackTrace: stackTrace);
+      AppLogger.error(
+        'Unexpected network error',
+        error: err,
+        stackTrace: stackTrace,
+      );
       throw ApiException('Network request failed', details: err.toString());
     }
   }

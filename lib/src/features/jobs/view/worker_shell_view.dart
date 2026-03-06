@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../auth/view_model/auth_view_model.dart';
 import '../../chat/view/conversations_view.dart';
 import '../../profile/view/profile_view.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/app_notification.dart';
 import '../../../core/widgets/primary_button.dart';
 import '../model/job_item.dart';
@@ -16,7 +17,7 @@ import 'widgets/job_card.dart';
 import 'widgets/job_shared_widgets.dart';
 import 'widgets/skill_suggest_field.dart';
 
-class WorkerShellScreen extends ConsumerWidget {
+class WorkerShellScreen extends ConsumerStatefulWidget {
   const WorkerShellScreen({super.key});
 
   static const List<String> _titles = [
@@ -27,11 +28,49 @@ class WorkerShellScreen extends ConsumerWidget {
   ];
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<WorkerShellScreen> createState() => _WorkerShellScreenState();
+}
+
+class _WorkerShellScreenState extends ConsumerState<WorkerShellScreen>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      final tabIndex = ref.read(workerTabIndexProvider);
+      if (tabIndex == 0) {
+        ref.invalidate(workerFeedControllerProvider);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final tabIndex = ref.watch(workerTabIndexProvider);
 
+    // Auto-refresh the feed whenever the user switches back to the home tab.
+    ref.listen<int>(workerTabIndexProvider, (previous, next) {
+      if (next == 0 && (previous ?? -1) != 0) {
+        ref.invalidate(workerFeedControllerProvider);
+      }
+    });
+
     return Scaffold(
-      appBar: AppBar(title: Text(_titles[tabIndex])),
+      appBar: AppBar(
+        title: Text(WorkerShellScreen._titles[tabIndex]),
+        actions: const [_WorkerDutyToggle()],
+      ),
       body: IndexedStack(
         index: tabIndex,
         children: const [
@@ -73,14 +112,124 @@ class WorkerShellScreen extends ConsumerWidget {
   }
 }
 
-class _WorkerFeedTab extends ConsumerWidget {
+/// Compact on-duty toggle shown in the Worker app bar on every tab.
+class _WorkerDutyToggle extends ConsumerWidget {
+  const _WorkerDutyToggle();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.watch(authControllerProvider);
+    final isOnDuty = auth.isOnDuty ?? false;
+
+    return Padding(
+      padding: const EdgeInsets.only(right: 4),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.circle,
+            size: 8,
+            color: isOnDuty ? AppPalette.success : AppPalette.textSecondary,
+          ),
+          const SizedBox(width: 2),
+          Switch.adaptive(
+            value: isOnDuty,
+            onChanged: auth.isLoading
+                ? null
+                : (_) => ref
+                      .read(authControllerProvider.notifier)
+                      .toggleDutyStatus(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _WorkerFeedTab extends ConsumerStatefulWidget {
   const _WorkerFeedTab();
 
-  Future<void> _refresh(WidgetRef ref) {
-    return ref.read(workerFeedControllerProvider.notifier).refresh();
+  @override
+  ConsumerState<_WorkerFeedTab> createState() => _WorkerFeedTabState();
+}
+
+class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
+  WorkerJobFilter _activeFilter = WorkerJobFilter.nearby;
+
+  static const List<({WorkerJobFilter filter, String label, IconData icon})>
+  _chips = [
+    (
+      filter: WorkerJobFilter.nearby,
+      label: 'Nearby',
+      icon: Icons.location_on_outlined,
+    ),
+    (
+      filter: WorkerJobFilter.all,
+      label: 'All Mine',
+      icon: Icons.work_outline_rounded,
+    ),
+    (
+      filter: WorkerJobFilter.bidPlaced,
+      label: 'Bid Placed',
+      icon: Icons.gavel_rounded,
+    ),
+    (
+      filter: WorkerJobFilter.accepted,
+      label: 'Accepted',
+      icon: Icons.handshake_outlined,
+    ),
+    (
+      filter: WorkerJobFilter.inProgress,
+      label: 'In Progress',
+      icon: Icons.construction_rounded,
+    ),
+    (
+      filter: WorkerJobFilter.completed,
+      label: 'Completed',
+      icon: Icons.check_circle_outline_rounded,
+    ),
+    (
+      filter: WorkerJobFilter.cancelled,
+      label: 'Cancelled',
+      icon: Icons.cancel_outlined,
+    ),
+    (
+      filter: WorkerJobFilter.expired,
+      label: 'Expired',
+      icon: Icons.timer_off_outlined,
+    ),
+  ];
+
+  static const Map<WorkerJobFilter, String> _emptyMessages = {
+    WorkerJobFilter.nearby: 'No nearby jobs right now',
+    WorkerJobFilter.all: 'No jobs yet — place a bid to get started!',
+    WorkerJobFilter.bidPlaced: 'No pending bids',
+    WorkerJobFilter.accepted: 'No accepted jobs',
+    WorkerJobFilter.inProgress: 'No jobs in progress',
+    WorkerJobFilter.completed: 'No completed jobs yet',
+    WorkerJobFilter.cancelled: 'No cancelled jobs',
+    WorkerJobFilter.expired: 'No expired jobs',
+  };
+
+  Future<void> _refresh() async {
+    if (_activeFilter == WorkerJobFilter.nearby) {
+      return ref.read(workerFeedControllerProvider.notifier).refresh();
+    }
+    ref.invalidate(workerMyJobsProvider(_activeFilter));
   }
 
-  Future<void> _openWorkflowSheet(BuildContext context, JobItem job) async {
+  /// After a workflow action (bid, handshake, start code) refresh ALL cached
+  /// job filters so every chip shows up-to-date data on next visit.
+  void _invalidateAllFilters() {
+    ref.invalidate(workerFeedControllerProvider);
+    for (final filter in WorkerJobFilter.values) {
+      if (filter != WorkerJobFilter.nearby) {
+        ref.invalidate(workerMyJobsProvider(filter));
+      }
+    }
+  }
+
+  Future<void> _openWorkflowSheet(JobItem job) async {
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -99,97 +248,138 @@ class _WorkerFeedTab extends ConsumerWidget {
         },
       ),
     );
+    // Invalidate all filter caches so any status change is visible everywhere.
+    _invalidateAllFilters();
   }
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final feedAsync = ref.watch(workerFeedControllerProvider);
-
-    return RefreshIndicator(
-      onRefresh: () => _refresh(ref),
-      child: feedAsync.when(
-        loading: () => const CenteredListBody(
-          child: CircularProgressIndicator(strokeWidth: 2.6),
-        ),
-        error: (error, _) => CenteredListBody(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Unable to load worker feed',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '$error',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 12),
-              OutlinedButton.icon(
-                onPressed: () => _refresh(ref),
-                icon: const Icon(Icons.refresh_rounded),
-                label: const Text('Retry'),
-              ),
-            ],
-          ),
-        ),
-        data: (jobs) {
-          if (jobs.isEmpty) {
-            return CenteredListBody(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset(
-                    'assets/images/ComingSoon.png',
-                    height: 150,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'No nearby jobs right now',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'Pull down to refresh and check again.',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              ),
-            );
-          }
-
-          return ListView.separated(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.all(16),
-            itemCount: jobs.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
-            itemBuilder: (context, index) {
-              final job = jobs[index];
-              return TweenAnimationBuilder<double>(
-                duration: Duration(milliseconds: 200 + (index * 35)),
-                curve: Curves.easeOutCubic,
-                tween: Tween<double>(begin: 0, end: 1),
-                builder: (context, value, child) {
-                  return Opacity(
-                    opacity: value,
-                    child: Transform.translate(
-                      offset: Offset(0, 12 * (1 - value)),
-                      child: child,
-                    ),
-                  );
-                },
-                child: JobCard(
-                  job: job,
-                  showDistance: true,
-                  onTap: () => _openWorkflowSheet(context, job),
-                ),
-              );
+  Widget _buildChipBar() {
+    return SizedBox(
+      height: 44,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: _chips.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (context, index) {
+          final chip = _chips[index];
+          final selected = _activeFilter == chip.filter;
+          return FilterChip(
+            selected: selected,
+            avatar: Icon(chip.icon, size: 16),
+            label: Text(chip.label),
+            onSelected: (_) {
+              if (_activeFilter != chip.filter) {
+                setState(() => _activeFilter = chip.filter);
+              }
             },
+            showCheckmark: false,
           );
         },
       ),
+    );
+  }
+
+  Widget _buildJobList(List<JobItem> jobs) {
+    if (jobs.isEmpty) {
+      final message = _emptyMessages[_activeFilter] ?? 'No jobs found';
+      return CenteredListBody(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/images/ComingSoon.png',
+              height: 150,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 10),
+            Text(message, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 6),
+            Text(
+              'Pull down to refresh and check again.',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ],
+        ),
+      );
+    }
+
+    return ListView.separated(
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+      itemCount: jobs.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        final job = jobs[index];
+        return TweenAnimationBuilder<double>(
+          duration: Duration(milliseconds: 200 + (index * 35)),
+          curve: Curves.easeOutCubic,
+          tween: Tween<double>(begin: 0, end: 1),
+          builder: (context, value, child) {
+            return Opacity(
+              opacity: value,
+              child: Transform.translate(
+                offset: Offset(0, 12 * (1 - value)),
+                child: child,
+              ),
+            );
+          },
+          child: JobCard(
+            job: job,
+            showDistance: _activeFilter == WorkerJobFilter.nearby,
+            onTap: () => _openWorkflowSheet(job),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AsyncValue<List<JobItem>> jobsAsync =
+        _activeFilter == WorkerJobFilter.nearby
+        ? ref.watch(workerFeedControllerProvider)
+        : ref.watch(workerMyJobsProvider(_activeFilter));
+
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        _buildChipBar(),
+        const SizedBox(height: 4),
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: _refresh,
+            child: jobsAsync.when(
+              loading: () => const CenteredListBody(
+                child: CircularProgressIndicator(strokeWidth: 2.6),
+              ),
+              error: (error, _) => CenteredListBody(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Unable to load jobs',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '$error',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 12),
+                    OutlinedButton.icon(
+                      onPressed: _refresh,
+                      icon: const Icon(Icons.refresh_rounded),
+                      label: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              ),
+              data: _buildJobList,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -300,6 +490,7 @@ class _WorkerJobWorkflowSheetState
   final TextEditingController _partnerFeeController = TextEditingController();
   final TextEditingController _notesController = TextEditingController();
   final TextEditingController _startCodeController = TextEditingController();
+  final TextEditingController _releaseCodeController = TextEditingController();
 
   @override
   void initState() {
@@ -314,6 +505,7 @@ class _WorkerJobWorkflowSheetState
     _partnerFeeController.dispose();
     _notesController.dispose();
     _startCodeController.dispose();
+    _releaseCodeController.dispose();
     super.dispose();
   }
 
@@ -426,6 +618,23 @@ class _WorkerJobWorkflowSheetState
           .read(jobRepositoryProvider)
           .verifyStartCode(jobId: widget.jobId, code: code);
     }, successMessage: 'Start code verified. Task is now in progress.');
+  }
+
+  Future<void> _verifyReleaseCode() {
+    final code = _releaseCodeController.text.trim();
+    if (code.isEmpty) {
+      AppNotifier.showWarning(
+        context,
+        'Enter the release code from the client',
+      );
+      return Future<void>.value();
+    }
+
+    return _runAction(() async {
+      await ref
+          .read(jobRepositoryProvider)
+          .verifyReleaseCode(jobId: widget.jobId, code: code);
+    }, successMessage: 'Work confirmed — payment released!');
   }
 
   BidItem? _myBid(AuthState authState) {
@@ -655,14 +864,49 @@ class _WorkerJobWorkflowSheetState
           ),
         ],
         if (statusCode == 'IN_PROGRESS') ...[
+          const SizedBox(height: 12),
           Card(
+            color: Theme.of(context).colorScheme.tertiaryContainer,
             child: Padding(
               padding: const EdgeInsets.all(14),
-              child: Text(
-                'Work is in progress. Wait for the client to verify and release payment.',
-                style: Theme.of(context).textTheme.bodyMedium,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.construction_rounded, size: 18),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Work In Progress',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Complete the task, then ask the client for the 6-digit release code. '
+                    'Enter it below to confirm completion and receive payment.',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
               ),
             ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _releaseCodeController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: 'Release code',
+              prefixIcon: Icon(Icons.key_rounded),
+              helperText: 'Enter the 6-digit code provided by the client',
+            ),
+          ),
+          const SizedBox(height: 10),
+          FilledButton.icon(
+            onPressed: _working ? null : _verifyReleaseCode,
+            icon: const Icon(Icons.verified_rounded),
+            label: const Text('Confirm Work Done'),
           ),
         ],
       ],

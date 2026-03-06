@@ -71,6 +71,8 @@ ThemeData _buildTheme({required Brightness brightness}) {
       filled: true,
       fillColor: surface,
       contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      hintStyle: TextStyle(color: textSecondary),
+      labelStyle: TextStyle(color: textSecondary),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: BorderSide(color: border),

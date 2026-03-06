@@ -38,11 +38,13 @@ class AddressInfo {
     String? countryOverride,
   }) {
     return <String, dynamic>{
-      'postalCode': postalCodeOverride ?? (postalCode.isNotEmpty ? postalCode : '000000'),
+      'postalCode':
+          postalCodeOverride ?? (postalCode.isNotEmpty ? postalCode : '000000'),
       'country': countryOverride ?? (country.isNotEmpty ? country : 'IN'),
       if (city != null && city!.isNotEmpty) 'city': city,
       if (area != null && area!.isNotEmpty) 'area': area,
-      if (fullAddress != null && fullAddress!.isNotEmpty) 'fullAddress': fullAddress,
+      if (fullAddress != null && fullAddress!.isNotEmpty)
+        'fullAddress': fullAddress,
       if (latitude != null) 'latitude': latitude,
       if (longitude != null) 'longitude': longitude,
     };
@@ -402,6 +404,19 @@ class AuthApi {
     return _mapProfile(_readDataMap(response));
   }
 
+  /// Lightweight endpoint that only updates the worker's on-duty flag.
+  Future<UserProfileData> updateWorkerDutyStatus({
+    required String token,
+    required bool isOnDuty,
+  }) async {
+    final response = await _client.patchJson(
+      '/api/v1/worker/me/duty-status',
+      bearerToken: token,
+      body: <String, dynamic>{'isOnDuty': isOnDuty},
+    );
+    return _mapProfile(_readDataMap(response));
+  }
+
   Future<void> deleteClient({
     required String token,
     required int clientId,
@@ -424,9 +439,7 @@ class AuthApi {
     final response = await _client.patchJson(
       '/api/v1/client/update/$clientId',
       bearerToken: token,
-      body: <String, dynamic>{
-        'currentAddress': address.toPayload(),
-      },
+      body: <String, dynamic>{'currentAddress': address.toPayload()},
     );
     final profile = _mapProfile(_readDataMap(response));
     return profile.currentAddressFull ?? address;
