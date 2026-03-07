@@ -86,8 +86,19 @@ class GroupedConversationsController
   @override
   Future<List<JobConversationsGroup>> build() {
     ref.onDispose(() => _pollTimer?.cancel());
+    _ensureWebSocketConnected();
     _startPolling();
     return _fetch();
+  }
+
+  void _ensureWebSocketConnected() {
+    final auth = ref.read(authControllerProvider);
+    if (auth.isAuthenticated && auth.token != null) {
+      final ws = ref.read(chatWebSocketServiceProvider);
+      if (!ws.isConnected) {
+        ws.connect(auth.token!);
+      }
+    }
   }
 
   Future<List<JobConversationsGroup>> _fetch() async {

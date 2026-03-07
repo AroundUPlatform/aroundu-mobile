@@ -71,6 +71,7 @@ class Conversation {
     this.unreadCount = 0,
     this.lastMessageContent,
     this.lastMessageSenderId,
+    this.lastMessageSenderRole,
     this.archived = false,
     this.archivedAt,
     this.lastMessageAt,
@@ -88,6 +89,7 @@ class Conversation {
   final int unreadCount;
   final String? lastMessageContent;
   final int? lastMessageSenderId;
+  final String? lastMessageSenderRole;
   final bool archived;
   final DateTime? archivedAt;
   final DateTime? lastMessageAt;
@@ -123,6 +125,7 @@ class Conversation {
       lastMessageSenderId: map['lastMessageSenderId'] != null
           ? _asInt(map['lastMessageSenderId'])
           : null,
+      lastMessageSenderRole: map['lastMessageSenderRole']?.toString(),
       archived: _asBool(map['archived']),
       archivedAt: _asDateTime(map['archivedAt']),
       lastMessageAt: _asDateTime(map['lastMessageAt']),

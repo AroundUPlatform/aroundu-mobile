@@ -60,6 +60,8 @@ ThemeData _buildTheme({required Brightness brightness}) {
       ),
       bodyLarge: textTheme.bodyLarge?.copyWith(color: textPrimary),
       bodyMedium: textTheme.bodyMedium?.copyWith(color: textSecondary),
+      labelLarge: textTheme.labelLarge?.copyWith(color: textPrimary),
+      labelMedium: textTheme.labelMedium?.copyWith(color: textSecondary),
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,

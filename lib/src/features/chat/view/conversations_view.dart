@@ -243,6 +243,15 @@ class ConversationTile extends ConsumerWidget {
 
   final Conversation conversation;
 
+  String _lastMessagePreview(Conversation conv, AuthState auth) {
+    if (conv.lastMessageContent == null) return 'Re: ${conv.jobTitle}';
+    final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
+    final isMine = conv.lastMessageSenderRole == myRole;
+    return isMine
+        ? 'You: ${conv.lastMessageContent}'
+        : conv.lastMessageContent!;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(authControllerProvider);
@@ -318,7 +327,7 @@ class ConversationTile extends ConsumerWidget {
         children: [
           Expanded(
             child: Text(
-              conversation.lastMessageContent ?? 'Re: ${conversation.jobTitle}',
+              _lastMessagePreview(conversation, auth),
               style: TextStyle(
                 fontSize: 13,
                 color: AppPalette.textSecondary,
