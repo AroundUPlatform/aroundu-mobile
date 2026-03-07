@@ -1081,32 +1081,10 @@ class _ProviderJobWorkflowSheetState
     }
 
     // No conversation yet — show compose dialog so the client sends first.
-    final textController = TextEditingController();
     final firstMessage = await showDialog<String>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Message Worker'),
-        content: TextField(
-          controller: textController,
-          autofocus: true,
-          maxLines: 3,
-          decoration: const InputDecoration(
-            hintText: 'Type your first message…',
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, textController.text.trim()),
-            child: const Text('Send'),
-          ),
-        ],
-      ),
+      builder: (_) => const _MessageWorkerDialog(),
     );
-    textController.dispose();
 
     if (firstMessage == null || firstMessage.isEmpty || !mounted) return;
 
@@ -1779,6 +1757,51 @@ class _CodeCard extends StatelessWidget {
           ],
         ],
       ),
+    );
+  }
+}
+
+/// Dialog that collects the first message when no conversation exists yet.
+/// Owns its [TextEditingController] so the controller is always disposed via
+/// the widget lifecycle — avoiding the "used after disposed" crash that occurs
+/// when the controller is disposed manually and Flutter's route-exit animation
+/// triggers a final rebuild of the dialog builder closure.
+class _MessageWorkerDialog extends StatefulWidget {
+  const _MessageWorkerDialog();
+
+  @override
+  State<_MessageWorkerDialog> createState() => _MessageWorkerDialogState();
+}
+
+class _MessageWorkerDialogState extends State<_MessageWorkerDialog> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Message Worker'),
+      content: TextField(
+        controller: _controller,
+        autofocus: true,
+        maxLines: 3,
+        decoration: const InputDecoration(hintText: 'Type your first message…'),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(context, _controller.text.trim()),
+          child: const Text('Send'),
+        ),
+      ],
     );
   }
 }
