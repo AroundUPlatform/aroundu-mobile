@@ -182,20 +182,38 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
   void _subscribeToWebSocket() {
     final auth = ref.read(authControllerProvider);
     final currentUserId = auth.userId ?? 0;
+    final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
     final ws = ref.read(chatWebSocketServiceProvider);
 
     ws.subscribeToConversation(
       arg,
       onMessage: (payload) {
         final msg = ChatMessage.fromMap(payload);
-        final existingIndex = state.messages.indexWhere((m) => m.id == msg.id);
-        if (existingIndex >= 0) return; // duplicate
+
+        // If the server echoed back one of our optimistic messages (temp id < 0),
+        // replace the placeholder in-place instead of appending a duplicate.
+        final optimisticIdx = state.messages.indexWhere(
+          (m) =>
+              m.id < 0 &&
+              m.senderRole == msg.senderRole &&
+              m.content == msg.content,
+        );
+
+        List<ChatMessage> updatedMessages;
+        if (optimisticIdx >= 0) {
+          updatedMessages = List<ChatMessage>.from(state.messages);
+          updatedMessages[optimisticIdx] = msg;
+        } else {
+          if (state.messages.any((m) => m.id == msg.id)) return; // exact dup
+          updatedMessages = [...state.messages, msg];
+        }
+
         state = state.copyWith(
-          messages: [...state.messages, msg],
+          messages: updatedMessages,
           isOtherTyping: false,
         );
-        // Auto-mark as delivered if the message is from other user
-        if (msg.senderId != currentUserId) {
+        // Auto-mark as delivered for messages from the other participant
+        if (msg.senderRole != myRole) {
           ws.sendDelivered(conversationId: arg);
         }
         // Refresh conversation list
@@ -267,6 +285,9 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
       // Also notify via WebSocket
       final ws = ref.read(chatWebSocketServiceProvider);
       ws.sendRead(conversationId: arg);
+      // Immediately refresh conversation list so the unread badge clears
+      ref.invalidate(conversationsControllerProvider);
+      ref.invalidate(groupedConversationsControllerProvider);
     } catch (error) {
       state = state.copyWith(isLoading: false, errorMessage: error.toString());
     }
@@ -294,13 +315,29 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
 
       final ws = ref.read(chatWebSocketServiceProvider);
       if (ws.isConnected) {
-        // Send via WebSocket for real-time delivery
+        // Optimistically add the message so the sender sees it immediately
+        // without waiting for the server WS broadcast.
+        final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
+        final optimisticMsg = ChatMessage(
+          id: -(DateTime.now().millisecondsSinceEpoch),
+          conversationId: arg,
+          senderId: auth.userId!,
+          senderRole: myRole,
+          content: content.trim(),
+          status: MessageStatus.sent,
+          createdAt: DateTime.now(),
+        );
+        state = state.copyWith(
+          messages: [...state.messages, optimisticMsg],
+          isSending: false,
+        );
         ws.sendMessage(
           jobId: jobId,
           recipientId: recipientId,
           content: content.trim(),
         );
-        state = state.copyWith(isSending: false);
+        ref.invalidate(conversationsControllerProvider);
+        ref.invalidate(groupedConversationsControllerProvider);
         return true;
       }
 

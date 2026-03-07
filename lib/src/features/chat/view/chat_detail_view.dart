@@ -105,7 +105,6 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
       chatMessagesControllerProvider(widget.conversationId),
     );
     final auth = ref.watch(authControllerProvider);
-    final currentUserId = auth.userId ?? 0;
 
     // Auto-scroll when new messages arrive
     ref.listen(chatMessagesControllerProvider(widget.conversationId), (
@@ -198,9 +197,10 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                       final myRole = auth.role == UserRole.worker
                           ? 'WORKER'
                           : 'CLIENT';
-                      final isMe =
-                          msg.senderId == currentUserId &&
-                          msg.senderRole == myRole;
+                      // In a 2-person job chat the role uniquely identifies
+                      // the sender — more robust than comparing IDs which can
+                      // collide in dev (both accounts share ID = 1).
+                      final isMe = msg.senderRole == myRole;
                       final showDate =
                           index == 0 ||
                           _differentDay(
