@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/network/exchange_rate_service.dart';
 import '../../../core/widgets/app_notification.dart';
 import '../../../core/widgets/primary_button.dart';
 import '../../auth/view_model/auth_view_model.dart';
@@ -115,6 +116,49 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               controller: _imageUrlController,
               decoration: const InputDecoration(labelText: 'Profile Image URL'),
               keyboardType: TextInputType.url,
+            ),
+            const SizedBox(height: 16),
+            // ── Currency picker (all users) ──────────────────────────
+            DropdownButtonFormField<String>(
+              initialValue: editState.currency,
+              decoration: const InputDecoration(
+                labelText: 'Currency',
+                prefixIcon: Icon(Icons.currency_exchange_outlined),
+              ),
+              items: kCurrencySymbols.keys.map((code) {
+                return DropdownMenuItem(
+                  value: code,
+                  child: Text('$code  ${kCurrencySymbols[code]}'),
+                );
+              }).toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  ref
+                      .read(editProfileControllerProvider.notifier)
+                      .updateCurrency(value);
+                }
+              },
+            ),
+            const SizedBox(height: 16),
+            // ── Country picker (all users) ────────────────────────────
+            DropdownButtonFormField<String>(
+              initialValue: kCountryToCurrency.containsKey(editState.country)
+                  ? editState.country
+                  : 'IN',
+              decoration: const InputDecoration(
+                labelText: 'Country',
+                prefixIcon: Icon(Icons.flag_outlined),
+              ),
+              items: kCountryToCurrency.keys.map((code) {
+                return DropdownMenuItem(value: code, child: Text(code));
+              }).toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  ref
+                      .read(editProfileControllerProvider.notifier)
+                      .updateCountry(value);
+                }
+              },
             ),
             if (isWorker) ...[
               const SizedBox(height: 16),

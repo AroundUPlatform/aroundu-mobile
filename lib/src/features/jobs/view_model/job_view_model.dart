@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../data/job_api.dart';
 import '../model/job_item.dart';
@@ -51,7 +52,11 @@ abstract class JobRepository {
   Future<List<JobItem>> fetchProviderJobs();
   Future<List<JobItem>> fetchProviderFilteredJobs(List<String>? statuses);
   Future<List<JobItem>> fetchProviderPastJobs();
-  Future<List<JobItem>> fetchWorkerFeed();
+  Future<List<JobItem>> fetchWorkerFeed({
+    double? radiusKm,
+    double? latitude,
+    double? longitude,
+  });
   Future<List<JobItem>> fetchWorkerMyJobs(List<String>? statuses);
   Future<void> createJob(NewJobInput input);
 
@@ -117,7 +122,9 @@ class ApiJobRepository implements JobRepository {
   }
 
   @override
-  Future<List<JobItem>> fetchProviderFilteredJobs(List<String>? statuses) async {
+  Future<List<JobItem>> fetchProviderFilteredJobs(
+    List<String>? statuses,
+  ) async {
     if (!_authState.isAuthenticated || _authState.userId == null) {
       return const <JobItem>[];
     }
@@ -157,7 +164,11 @@ class ApiJobRepository implements JobRepository {
   }
 
   @override
-  Future<List<JobItem>> fetchWorkerFeed() async {
+  Future<List<JobItem>> fetchWorkerFeed({
+    double? radiusKm,
+    double? latitude,
+    double? longitude,
+  }) async {
     if (!_authState.isAuthenticated || _authState.userId == null) {
       return const <JobItem>[];
     }
@@ -173,6 +184,9 @@ class ApiJobRepository implements JobRepository {
       page: 0,
       size: 30,
       sortByDistance: true,
+      radiusKm: radiusKm,
+      latitude: latitude,
+      longitude: longitude,
     );
 
     return jobs.map(_mapSummaryToJobItem).toList();
@@ -450,6 +464,7 @@ class ApiJobRepository implements JobRepository {
 
     final price = _asMap(raw['price']);
     final amount = _toDouble(price['amount']) ?? 0;
+    final currencyCode = price['currency']?.toString() ?? 'INR';
     final statusText = raw['jobStatus']?.toString() ?? '';
 
     return JobItem(
@@ -461,6 +476,7 @@ class ApiJobRepository implements JobRepository {
       category: _mapUrgencyToCategory(raw['jobUrgency']?.toString()),
       location: 'Location available on job detail',
       budget: amount,
+      currencyCode: currencyCode,
       createdAt: createdAt,
       dueDate: createdAt.add(const Duration(days: 2)),
       status: _mapStatus(statusText),
@@ -478,6 +494,7 @@ class ApiJobRepository implements JobRepository {
 
     final price = _asMap(raw['price']);
     final amount = _toDouble(price['amount']) ?? 0;
+    final currencyCode = price['currency']?.toString() ?? 'INR';
 
     final locationMap = _asMap(raw['jobLocation']);
     final location =
@@ -516,6 +533,7 @@ class ApiJobRepository implements JobRepository {
       category: _mapUrgencyToCategory(raw['jobUrgency']?.toString()),
       location: location.isEmpty ? 'Location unavailable' : location,
       budget: amount,
+      currencyCode: currencyCode,
       createdAt: createdAt,
       dueDate: updatedAt.add(const Duration(days: 2)),
       status: _mapStatus(statusText),
@@ -670,17 +688,40 @@ final providerPastJobsControllerProvider =
       ProviderPastJobsController.new,
     );
 
+/// Distance filter for worker feed (in km). Defaults to 10 km.
+final workerFeedRadiusProvider = StateProvider<int>((ref) => 10);
+
 class WorkerFeedController extends AsyncNotifier<List<JobItem>> {
   @override
   Future<List<JobItem>> build() {
-    return ref.read(jobRepositoryProvider).fetchWorkerFeed();
+    final radiusKm = ref.watch(workerFeedRadiusProvider).toDouble();
+    return _fetchFeed(radiusKm);
   }
 
   Future<void> refresh() async {
+    final radiusKm = ref.read(workerFeedRadiusProvider).toDouble();
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(
-      () => ref.read(jobRepositoryProvider).fetchWorkerFeed(),
-    );
+    state = await AsyncValue.guard(() => _fetchFeed(radiusKm));
+  }
+
+  Future<List<JobItem>> _fetchFeed(double radiusKm) async {
+    double? lat;
+    double? lon;
+    try {
+      final pos = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.medium,
+          timeLimit: Duration(seconds: 5),
+        ),
+      );
+      lat = pos.latitude;
+      lon = pos.longitude;
+    } catch (_) {
+      // Fall back to stored address on the server side
+    }
+    return ref
+        .read(jobRepositoryProvider)
+        .fetchWorkerFeed(radiusKm: radiusKm, latitude: lat, longitude: lon);
   }
 }
 
@@ -717,7 +758,11 @@ List<String>? workerJobFilterStatuses(WorkerJobFilter filter) {
       // COMPLETED_PENDING_PAYMENT is legacy; new jobs go straight to COMPLETED.
       return const <String>['IN_PROGRESS'];
     case WorkerJobFilter.completed:
-      return const <String>['COMPLETED', 'COMPLETED_PENDING_PAYMENT', 'PAYMENT_RELEASED'];
+      return const <String>[
+        'COMPLETED',
+        'COMPLETED_PENDING_PAYMENT',
+        'PAYMENT_RELEASED',
+      ];
     case WorkerJobFilter.cancelled:
       return const <String>['CANCELLED'];
     case WorkerJobFilter.expired:
@@ -745,7 +790,10 @@ List<String>? providerJobFilterStatuses(ProviderJobFilter filter) {
     case ProviderJobFilter.open:
       return const <String>['CREATED', 'OPEN_FOR_BIDS'];
     case ProviderJobFilter.active:
-      return const <String>['BID_SELECTED_AWAITING_HANDSHAKE', 'READY_TO_START'];
+      return const <String>[
+        'BID_SELECTED_AWAITING_HANDSHAKE',
+        'READY_TO_START',
+      ];
     case ProviderJobFilter.inProgress:
       return const <String>['IN_PROGRESS', 'COMPLETED_PENDING_PAYMENT'];
     case ProviderJobFilter.completed:

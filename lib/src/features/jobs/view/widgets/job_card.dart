@@ -1,27 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/network/exchange_rate_service.dart';
 import '../../model/job_item.dart';
 
-class JobCard extends StatelessWidget {
+class JobCard extends ConsumerStatefulWidget {
   const JobCard({
     super.key,
     required this.job,
     this.showDistance = false,
     this.onTap,
+
+    /// When set, a live conversion to this currency code is shown below the
+    /// original price, e.g. "₹83,000" if job is in USD and worker uses INR.
+    this.viewerCurrencyCode,
   });
 
   final JobItem job;
   final bool showDistance;
   final VoidCallback? onTap;
+  final String? viewerCurrencyCode;
+
+  @override
+  ConsumerState<JobCard> createState() => _JobCardState();
+}
+
+class _JobCardState extends ConsumerState<JobCard> {
+  double? _convertedAmount;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadConversion();
+  }
+
+  Future<void> _loadConversion() async {
+    final viewer = widget.viewerCurrencyCode?.toUpperCase();
+    final jobCurrency = widget.job.currencyCode.toUpperCase();
+    if (viewer == null || viewer == jobCurrency) return;
+
+    final rate = await ref
+        .read(exchangeRateServiceProvider)
+        .getRate(jobCurrency, viewer);
+    if (rate != null && mounted) {
+      setState(() {
+        _convertedAmount = widget.job.budget * rate;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final job = widget.job;
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final due = DateFormat('dd MMM').format(job.dueDate);
-    final budget = NumberFormat('#,##0', 'en_IN').format(job.budget);
+    final budget = NumberFormat('#,##0.##').format(job.budget);
+    final jobSymbol = currencySymbol(job.currencyCode);
     final isEscrow = job.paymentMode?.toUpperCase() == 'ESCROW';
+
+    // Dual-currency display
+    final viewer = widget.viewerCurrencyCode?.toUpperCase();
+    final jobCurrency = job.currencyCode.toUpperCase();
+    final showConversion =
+        viewer != null && viewer != jobCurrency && _convertedAmount != null;
+    final convertedText = showConversion
+        ? '(${currencySymbol(viewer)}${NumberFormat('#,##0.##').format(_convertedAmount!)})'
+        : null;
 
     final card = Container(
       decoration: BoxDecoration(
@@ -44,8 +90,9 @@ class JobCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
               color: job.status.color.withValues(alpha: 0.08),
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(16)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
             ),
             child: Row(
               children: [
@@ -99,7 +146,7 @@ class JobCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (showDistance && job.distanceKm != null) ...[
+                    if (widget.showDistance && job.distanceKm != null) ...[
                       const SizedBox(width: 6),
                       _InlineTag(
                         icon: Icons.near_me_outlined,
@@ -133,21 +180,33 @@ class JobCard extends StatelessWidget {
                 // ── Footer: budget · category · due ────────────────
                 Row(
                   children: [
-                    // Budget
-                    Icon(
-                      isEscrow
-                          ? Icons.lock_outline_rounded
-                          : Icons.currency_rupee_rounded,
-                      size: 15,
-                      color: colors.primary,
-                    ),
-                    const SizedBox(width: 3),
-                    Text(
-                      '₹$budget',
-                      style: theme.textTheme.labelLarge?.copyWith(
+                    // Budget (currency symbol from job data, no icon duplication)
+                    if (isEscrow)
+                      Icon(
+                        Icons.lock_outline_rounded,
+                        size: 15,
                         color: colors.primary,
-                        fontWeight: FontWeight.w700,
                       ),
+                    if (isEscrow) const SizedBox(width: 3),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '$jobSymbol$budget',
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            color: colors.primary,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        if (convertedText != null)
+                          Text(
+                            convertedText,
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: colors.onSurfaceVariant,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                      ],
                     ),
                     if (isEscrow) ...[
                       const SizedBox(width: 4),
@@ -208,14 +267,14 @@ class JobCard extends StatelessWidget {
       ),
     );
 
-    if (onTap == null) return card;
+    if (widget.onTap == null) return card;
 
     return Material(
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: onTap,
+        onTap: widget.onTap,
         child: card,
       ),
     );
@@ -235,9 +294,7 @@ class _StatusPill extends StatelessWidget {
       decoration: BoxDecoration(
         color: status.color.withValues(alpha: 0.14),
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(
-          color: status.color.withValues(alpha: 0.3),
-        ),
+        border: Border.all(color: status.color.withValues(alpha: 0.3)),
       ),
       child: Text(
         status.label,
@@ -298,9 +355,7 @@ class _SkillChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.secondaryContainer.withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(
-          color: colors.outline.withValues(alpha: 0.25),
-        ),
+        border: Border.all(color: colors.outline.withValues(alpha: 0.25)),
       ),
       child: Text(
         label,

@@ -111,11 +111,7 @@ class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
       label: 'All',
       icon: Icons.work_outline_rounded,
     ),
-    (
-      filter: ProviderJobFilter.open,
-      label: 'Open',
-      icon: Icons.public_rounded,
-    ),
+    (filter: ProviderJobFilter.open, label: 'Open', icon: Icons.public_rounded),
     (
       filter: ProviderJobFilter.active,
       label: 'Active',
@@ -1066,238 +1062,400 @@ class _ProviderJobWorkflowSheetState
     final canGenerateCodes =
         statusCode == 'BID_SELECTED_AWAITING_HANDSHAKE' ||
         statusCode == 'READY_TO_START';
-    final canCancel = statusCode != 'COMPLETED' && statusCode != 'CANCELLED';
+    // Cancellation only valid for early-stage statuses (backend enforces this too)
+    const _cancelableStatuses = {
+      'OPEN_FOR_BIDS',
+      'CREATED',
+      'BID_SELECTED_AWAITING_HANDSHAKE',
+      'READY_TO_START',
+      'IN_PROGRESS',
+    };
+    final canCancel = _cancelableStatuses.contains(statusCode);
+    // Deleting active/payment-locked jobs causes 500 on the server
+    const _unsafeDeletionStatuses = {
+      'IN_PROGRESS',
+      'READY_TO_START',
+      'BID_SELECTED_AWAITING_HANDSHAKE',
+      'COMPLETED_PENDING_PAYMENT',
+    };
+    final canDelete = !_unsafeDeletionStatuses.contains(statusCode);
     final canRelease = statusCode == 'IN_PROGRESS';
     final escrowMode = (job.paymentMode ?? '').toUpperCase() == 'ESCROW';
     final canLockEscrow = statusCode == 'READY_TO_START' && escrowMode;
+    final isReviewable =
+        statusCode == 'COMPLETED' || statusCode == 'PAYMENT_RELEASED';
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
 
     return ListView(
       controller: widget.scrollController,
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
       children: [
-        Text(job.title, style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 8),
-        Text(job.description, style: Theme.of(context).textTheme.bodyLarge),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
+        // ── Header: title + status badge ──────────────────────────
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MetaPill(label: 'ID: ${job.id}'),
-            MetaPill(label: 'Status: ${job.status.label}'),
-            MetaPill(label: 'Budget: ${job.budget.toStringAsFixed(0)}'),
-            MetaPill(label: 'Location: ${job.location}'),
-            if (job.requiredSkillNames.isNotEmpty)
-              MetaPill(label: 'Skills: ${job.requiredSkillNames.join(', ')}'),
+            Expanded(
+              child: Text(
+                job.title,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: job.status.color.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(99),
+                border: Border.all(
+                  color: job.status.color.withValues(alpha: 0.4),
+                ),
+              ),
+              child: Text(
+                job.status.label,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: job.status.color,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
           ],
         ),
+        const SizedBox(height: 8),
+        Text(
+          job.description,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: colors.onSurfaceVariant,
+            height: 1.5,
+          ),
+        ),
+        const SizedBox(height: 14),
+
+        // ── Details card ──────────────────────────────────────────
+        Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: BorderSide(color: colors.outlineVariant),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            child: Column(
+              children: [
+                _DetailRow(
+                  icon: escrowMode
+                      ? Icons.lock_outline_rounded
+                      : Icons.currency_rupee_rounded,
+                  label: 'Budget',
+                  value:
+                      '₹${job.budget.toStringAsFixed(0)}${escrowMode ? ' (Escrow)' : ' (Cash)'}',
+                  iconColor: colors.primary,
+                ),
+                const Divider(height: 16),
+                _DetailRow(
+                  icon: Icons.location_on_outlined,
+                  label: 'Location',
+                  value: job.location,
+                ),
+                if (job.requiredSkillNames.isNotEmpty) ...[
+                  const Divider(height: 16),
+                  _DetailRow(
+                    icon: Icons.handyman_outlined,
+                    label: 'Skills',
+                    value: job.requiredSkillNames.join(', '),
+                  ),
+                ],
+                const Divider(height: 16),
+                _DetailRow(
+                  icon: Icons.tag_rounded,
+                  label: 'Job ID',
+                  value: job.id,
+                  valueStyle: theme.textTheme.bodyMedium?.copyWith(
+                    fontFamily: 'monospace',
+                    color: colors.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         const SizedBox(height: 16),
+
+        // ── Offers section ────────────────────────────────────────
         Row(
           children: [
-            const Icon(Icons.price_check_rounded, size: 18),
+            const Icon(Icons.gavel_rounded, size: 18),
             const SizedBox(width: 6),
-            Text('Offers', style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              'Offers',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(width: 6),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+              decoration: BoxDecoration(
+                color: colors.primaryContainer,
+                borderRadius: BorderRadius.circular(99),
+              ),
+              child: Text(
+                '${_bids.length}',
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: colors.onPrimaryContainer,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 8),
         if (_bids.isEmpty)
           Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+              side: BorderSide(color: colors.outlineVariant),
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Text(
-                'No offers received yet.',
-                style: Theme.of(context).textTheme.bodyMedium,
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Icon(Icons.inbox_outlined, color: colors.onSurfaceVariant),
+                  const SizedBox(width: 10),
+                  Text(
+                    'No offers received yet.',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: colors.onSurfaceVariant,
+                    ),
+                  ),
+                ],
               ),
             ),
           )
         else
           ..._bids.map((bid) {
-            final status = bid.status.toUpperCase();
+            final bStatus = bid.status.toUpperCase();
             final canAcceptBid =
-                statusCode == 'OPEN_FOR_BIDS' && status == 'PENDING';
+                statusCode == 'OPEN_FOR_BIDS' && bStatus == 'PENDING';
+            final isSelected = bStatus == 'SELECTED';
 
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Worker #${bid.workerId}',
-                            style: Theme.of(context).textTheme.titleMedium,
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  side: BorderSide(
+                    color: isSelected
+                        ? AppPalette.success.withValues(alpha: 0.5)
+                        : colors.outlineVariant,
+                    width: isSelected ? 1.5 : 1,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 18,
+                            backgroundColor: isSelected
+                                ? AppPalette.success.withValues(alpha: 0.15)
+                                : colors.surfaceContainerHighest,
+                            child: Icon(
+                              Icons.person_outline_rounded,
+                              size: 20,
+                              color: isSelected
+                                  ? AppPalette.success
+                                  : colors.onSurfaceVariant,
+                            ),
                           ),
-                        ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Worker #${bid.workerId}',
+                                  style: theme.textTheme.titleSmall?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  bStatus == 'SELECTED'
+                                      ? 'Offer Accepted'
+                                      : bStatus == 'REJECTED'
+                                      ? 'Offer Rejected'
+                                      : 'Offer Pending',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: isSelected
+                                        ? AppPalette.success
+                                        : bStatus == 'REJECTED'
+                                        ? AppPalette.danger
+                                        : colors.onSurfaceVariant,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                '₹${bid.bidAmount.toStringAsFixed(0)}',
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  color: colors.primary,
+                                ),
+                              ),
+                              if (bid.partnerFee != null && bid.partnerFee! > 0)
+                                Text(
+                                  '+₹${bid.partnerFee!.toStringAsFixed(0)} partner',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: colors.onSurfaceVariant,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      if (bid.notes != null &&
+                          bid.notes!.trim().isNotEmpty) ...[
+                        const SizedBox(height: 10),
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
-                          ),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: status == 'SELECTED'
-                                ? AppPalette.success.withValues(alpha: 0.14)
-                                : AppPalette.background,
-                            borderRadius: BorderRadius.circular(99),
+                            color: colors.surfaceContainerLowest,
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            status,
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            bid.notes!,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: colors.onSurfaceVariant,
+                              height: 1.4,
+                            ),
                           ),
                         ),
                       ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Offer: ${bid.bidAmount.toStringAsFixed(0)}',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    if (bid.notes != null && bid.notes!.trim().isNotEmpty) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        bid.notes!,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                    if (canAcceptBid) ...[
-                      const SizedBox(height: 10),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: FilledButton.icon(
-                          onPressed: _working ? null : () => _acceptBid(bid),
-                          icon: const Icon(Icons.check_circle_outline_rounded),
-                          label: const Text('Accept Offer'),
+                      if (canAcceptBid) ...[
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          width: double.infinity,
+                          child: FilledButton.icon(
+                            onPressed: _working ? null : () => _acceptBid(bid),
+                            icon: const Icon(
+                              Icons.check_circle_outline_rounded,
+                            ),
+                            label: const Text('Accept this Offer'),
+                          ),
                         ),
-                      ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
             );
           }),
-        const SizedBox(height: 14),
-        if (_working) const LinearProgressIndicator(minHeight: 2.4),
+
+        // ── Progress indicator ────────────────────────────────────
+        if (_working) ...[
+          const SizedBox(height: 6),
+          const LinearProgressIndicator(minHeight: 2.4),
+          const SizedBox(height: 6),
+        ] else
+          const SizedBox(height: 6),
+
+        // ── Context-sensitive actions ─────────────────────────────
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 220),
           child: Column(
             key: ValueKey<String>(statusCode),
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (canGenerateCodes) ...[
-                const SizedBox(height: 12),
-                PrimaryButton(
-                  label: 'Generate Start Code',
+              // Generate / show start code
+              if (canGenerateCodes && _codeInfo?.startCode == null) ...[
+                FilledButton.icon(
                   onPressed: _working ? null : _generateCodes,
+                  icon: const Icon(Icons.key_rounded),
+                  label: const Text('Generate Start Code'),
                 ),
+                const SizedBox(height: 10),
               ],
               if (_codeInfo?.startCode != null) ...[
-                const SizedBox(height: 10),
-                Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.password_rounded),
-                    title: const Text('Start Code'),
-                    subtitle: Text(
-                      _codeInfo!.startCode!,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 2,
-                        fontSize: 18,
-                      ),
-                    ),
-                    trailing: IconButton(
-                      onPressed: () {
-                        Clipboard.setData(
-                          ClipboardData(text: _codeInfo!.startCode!),
-                        );
-                        AppNotifier.showInfo(context, 'Start code copied');
-                      },
-                      icon: const Icon(Icons.copy_rounded),
-                    ),
-                  ),
+                _CodeCard(
+                  title: 'Start Code',
+                  icon: Icons.lock_open_rounded,
+                  code: _codeInfo!.startCode!,
+                  onCopy: () {
+                    Clipboard.setData(
+                      ClipboardData(text: _codeInfo!.startCode!),
+                    );
+                    AppNotifier.showInfo(context, 'Start code copied');
+                  },
                 ),
-              ],
-              if (canLockEscrow) ...[
                 const SizedBox(height: 10),
+              ],
+
+              // Escrow lock
+              if (canLockEscrow) ...[
                 FilledButton.icon(
                   onPressed: _working ? null : _lockEscrow,
                   icon: const Icon(Icons.lock_rounded),
                   label: Text(
-                    'Reserve Payment (${job.budget.toStringAsFixed(0)})',
+                    'Reserve ₹${job.budget.toStringAsFixed(0)} in Escrow',
                   ),
                 ),
+                const SizedBox(height: 10),
               ],
               if (_paymentInfo != null) ...[
-                const SizedBox(height: 8),
                 PaymentStatusBanner(
                   status: _paymentInfo!.status,
                   amount: job.budget,
                   currency: 'INR',
                 ),
+                const SizedBox(height: 10),
               ],
+
+              // Release code section
               if (canRelease) ...[
-                const SizedBox(height: 12),
-                // Show the release code prominently so the client can share
-                // it verbally with the worker to confirm task completion.
                 if (_codeInfo?.releaseCode != null) ...[
-                  Card(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    child: ListTile(
-                      leading: const Icon(Icons.lock_open_rounded),
-                      title: const Text('Release Code'),
-                      subtitle: Text(
-                        _codeInfo!.releaseCode!,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 4,
-                          fontSize: 22,
-                        ),
-                      ),
-                      trailing: IconButton(
-                        tooltip: 'Copy release code',
-                        onPressed: () {
-                          Clipboard.setData(
-                            ClipboardData(text: _codeInfo!.releaseCode!),
-                          );
-                          AppNotifier.showInfo(context, 'Release code copied');
-                        },
-                        icon: const Icon(Icons.copy_rounded),
-                      ),
-                    ),
+                  _CodeCard(
+                    title: 'Release Code',
+                    icon: Icons.verified_outlined,
+                    code: _codeInfo!.releaseCode!,
+                    onCopy: () {
+                      Clipboard.setData(
+                        ClipboardData(text: _codeInfo!.releaseCode!),
+                      );
+                      AppNotifier.showInfo(context, 'Release code copied');
+                    },
+                    subtitle:
+                        'Share this verbally with the worker. They enter it to confirm task completion.',
                   ),
-                  const SizedBox(height: 6),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Text(
-                      'Share this code verbally with the worker once you are satisfied with the work. They will enter it on their screen to confirm completion and release payment.',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   OutlinedButton.icon(
                     onPressed: _working ? null : _regenerateCodes,
                     icon: const Icon(Icons.refresh_rounded),
                     label: const Text('Regenerate Code'),
                   ),
-                ],
-                if (_codeInfo?.releaseCode == null) ...[
+                ] else
                   OutlinedButton.icon(
                     onPressed: _working ? null : _regenerateCodes,
-                    icon: const Icon(Icons.refresh_rounded),
+                    icon: const Icon(Icons.lock_open_rounded),
                     label: const Text('Generate Release Code'),
                   ),
-                ],
+                const SizedBox(height: 10),
               ],
-              if (canCancel) ...[
-                const SizedBox(height: 12),
-                OutlinedButton.icon(
-                  onPressed: _working ? null : _cancelJob,
-                  icon: const Icon(Icons.cancel_outlined),
-                  label: const Text('Cancel Task'),
-                ),
-              ],
-              if (statusCode == 'COMPLETED') ...[
-                const SizedBox(height: 12),
+
+              // Review
+              if (isReviewable) ...[
                 FilledButton.icon(
                   onPressed: () {
                     Navigator.push(
@@ -1320,21 +1478,167 @@ class _ProviderJobWorkflowSheetState
                   icon: const Icon(Icons.rate_review_outlined),
                   label: const Text('Leave a Review'),
                 ),
+                const SizedBox(height: 10),
               ],
-              const SizedBox(height: 12),
-              OutlinedButton.icon(
-                onPressed: _working ? null : _deleteJob,
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppPalette.danger,
-                  side: const BorderSide(color: AppPalette.danger),
+
+              // Danger zone: cancel + delete
+              const SizedBox(height: 4),
+              const Divider(),
+              const SizedBox(height: 8),
+              if (canCancel)
+                OutlinedButton.icon(
+                  onPressed: _working ? null : _cancelJob,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppPalette.warning,
+                    side: BorderSide(
+                      color: AppPalette.warning.withValues(alpha: 0.6),
+                    ),
+                  ),
+                  icon: const Icon(Icons.cancel_outlined),
+                  label: const Text('Cancel Task'),
                 ),
-                icon: const Icon(Icons.delete_outline_rounded),
-                label: const Text('Delete Task'),
-              ),
+              if (canCancel) const SizedBox(height: 8),
+              if (canDelete)
+                OutlinedButton.icon(
+                  onPressed: _working ? null : _deleteJob,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppPalette.danger,
+                    side: BorderSide(
+                      color: AppPalette.danger.withValues(alpha: 0.6),
+                    ),
+                  ),
+                  icon: const Icon(Icons.delete_outline_rounded),
+                  label: const Text('Delete Task'),
+                ),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+/// A single icon + label + value row used in detail cards.
+class _DetailRow extends StatelessWidget {
+  const _DetailRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    this.iconColor,
+    this.valueStyle,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color? iconColor;
+  final TextStyle? valueStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 18, color: iconColor ?? colors.onSurfaceVariant),
+        const SizedBox(width: 10),
+        SizedBox(
+          width: 72,
+          child: Text(
+            label,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colors.onSurfaceVariant,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style:
+                valueStyle ??
+                theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Prominent display card for start/release codes.
+class _CodeCard extends StatelessWidget {
+  const _CodeCard({
+    required this.title,
+    required this.icon,
+    required this.code,
+    required this.onCopy,
+    this.subtitle,
+  });
+
+  final String title;
+  final IconData icon;
+  final String code;
+  final VoidCallback onCopy;
+  final String? subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: colors.primaryContainer.withValues(alpha: 0.4),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: colors.primary.withValues(alpha: 0.25)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 18, color: colors.primary),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: colors.primary,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.copy_rounded, size: 20),
+                tooltip: 'Copy',
+                color: colors.primary,
+                onPressed: onCopy,
+                visualDensity: VisualDensity.compact,
+                padding: EdgeInsets.zero,
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            code,
+            style: theme.textTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.w800,
+              letterSpacing: 6,
+              color: colors.onSurface,
+            ),
+          ),
+          if (subtitle != null) ...[
+            const SizedBox(height: 6),
+            Text(
+              subtitle!,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: colors.onSurfaceVariant,
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 }

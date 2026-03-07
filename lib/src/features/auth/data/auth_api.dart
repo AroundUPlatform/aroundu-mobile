@@ -12,6 +12,9 @@ class AddressInfo {
     this.country = 'IN',
     this.latitude,
     this.longitude,
+    this.addressLabel,
+    this.contactName,
+    this.contactPhone,
   });
 
   final int? id;
@@ -23,11 +26,21 @@ class AddressInfo {
   final double? latitude;
   final double? longitude;
 
+  /// Short label: "Home", "Work", "Other", etc.
+  final String? addressLabel;
+
+  /// Recipient / contact name at this address.
+  final String? contactName;
+
+  /// Recipient phone number at this address.
+  final String? contactPhone;
+
   String get displayName {
+    final seen = <String>{};
     final parts = <String>[
       if (area != null && area!.isNotEmpty) area!,
       if (city != null && city!.isNotEmpty) city!,
-    ];
+    ].where((s) => seen.add(s.toLowerCase())).toList();
     return parts.isNotEmpty
         ? parts.join(', ')
         : fullAddress ?? 'Unknown location';
@@ -47,6 +60,12 @@ class AddressInfo {
         'fullAddress': fullAddress,
       if (latitude != null) 'latitude': latitude,
       if (longitude != null) 'longitude': longitude,
+      if (addressLabel != null && addressLabel!.isNotEmpty)
+        'addressLabel': addressLabel,
+      if (contactName != null && contactName!.isNotEmpty)
+        'contactName': contactName,
+      if (contactPhone != null && contactPhone!.isNotEmpty)
+        'contactPhone': contactPhone,
     };
   }
 }
@@ -76,6 +95,7 @@ class UserProfileData {
     this.savedAddresses = const <AddressInfo>[],
     this.skillIds = const <int>[],
     this.currency = 'INR',
+    this.country = 'IN',
     this.profileImageUrl,
     this.experienceYears,
     this.certifications,
@@ -92,6 +112,7 @@ class UserProfileData {
   final List<AddressInfo> savedAddresses;
   final List<int> skillIds;
   final String currency;
+  final String country;
   final String? profileImageUrl;
   final int? experienceYears;
   final String? certifications;
@@ -108,6 +129,7 @@ class UserProfileData {
     List<AddressInfo>? savedAddresses,
     List<int>? skillIds,
     String? currency,
+    String? country,
     String? profileImageUrl,
     int? experienceYears,
     String? certifications,
@@ -124,6 +146,7 @@ class UserProfileData {
       savedAddresses: savedAddresses ?? this.savedAddresses,
       skillIds: skillIds ?? this.skillIds,
       currency: currency ?? this.currency,
+      country: country ?? this.country,
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
       experienceYears: experienceYears ?? this.experienceYears,
       certifications: certifications ?? this.certifications,
@@ -144,6 +167,7 @@ class UserProfileUpdateInput {
     this.isOnDuty,
     this.payoutAccount,
     this.currency,
+    this.country,
   });
 
   final String? name;
@@ -155,6 +179,7 @@ class UserProfileUpdateInput {
   final bool? isOnDuty;
   final String? payoutAccount;
   final String? currency;
+  final String? country;
 
   Map<String, dynamic> toClientPayload() {
     return <String, dynamic>{
@@ -164,6 +189,10 @@ class UserProfileUpdateInput {
         'phoneNumber': phoneNumber!.trim(),
       if (profileImageUrl != null && profileImageUrl!.trim().isNotEmpty)
         'profileImageUrl': profileImageUrl!.trim(),
+      if (currency != null && currency!.trim().isNotEmpty)
+        'currency': currency!.trim().toUpperCase(),
+      if (country != null && country!.trim().isNotEmpty)
+        'country': country!.trim().toUpperCase(),
     };
   }
 
@@ -182,6 +211,8 @@ class UserProfileUpdateInput {
         'payoutAccount': payoutAccount!.trim(),
       if (currency != null && currency!.trim().isNotEmpty)
         'currency': currency!.trim().toUpperCase(),
+      if (country != null && country!.trim().isNotEmpty)
+        'country': country!.trim().toUpperCase(),
     };
   }
 }
@@ -445,6 +476,35 @@ class AuthApi {
     return profile.currentAddressFull ?? address;
   }
 
+  /// Adds [address] as a saved address on the client profile.
+  /// Returns the full updated profile.
+  Future<UserProfileData> addSavedAddress({
+    required String token,
+    required int clientId,
+    required AddressInfo address,
+  }) async {
+    final response = await _client.postJson(
+      '/api/v1/client/$clientId/addresses',
+      bearerToken: token,
+      body: address.toPayload(),
+    );
+    return _mapProfile(_readDataMap(response));
+  }
+
+  /// Removes a saved address from the client profile.
+  /// Returns the full updated profile.
+  Future<UserProfileData> deleteSavedAddress({
+    required String token,
+    required int clientId,
+    required int addressId,
+  }) async {
+    final response = await _client.deleteJson(
+      '/api/v1/client/$clientId/addresses/$addressId',
+      bearerToken: token,
+    );
+    return _mapProfile(_readDataMap(response));
+  }
+
   Future<void> deleteWorker({
     required String token,
     required int workerId,
@@ -536,6 +596,7 @@ class AuthApi {
       savedAddresses: savedAddresses,
       skillIds: skillIds,
       currency: data['currency']?.toString() ?? 'INR',
+      country: data['country']?.toString() ?? 'IN',
       profileImageUrl: data['profileImageUrl']?.toString(),
       experienceYears: _asInt(data['experienceYears']),
       certifications: data['certifications']?.toString(),
@@ -554,6 +615,9 @@ class AuthApi {
       country: raw['country']?.toString() ?? 'IN',
       latitude: _asDouble(raw['latitude']),
       longitude: _asDouble(raw['longitude']),
+      addressLabel: raw['addressLabel']?.toString(),
+      contactName: raw['contactName']?.toString(),
+      contactPhone: raw['contactPhone']?.toString(),
     );
   }
 

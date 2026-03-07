@@ -2,7 +2,7 @@ name: aroundu
 description: "AroundU Mobile Application"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -43,7 +43,11 @@ dependencies:
   google_maps_flutter: ^2.5.0
   flutter_dotenv: ^5.2.1
   geolocator: ^13.0.0
+  geocoding: ^3.0.0
+  flutter_contacts: ^1.1.0
   logger: ^2.4.0
+  stomp_dart_client: ^2.0.0
+  web_socket_channel: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -61,7 +65,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -10,6 +10,7 @@ import '../../features/profile/data/user_profile_api.dart';
 import '../../features/review/data/review_api.dart';
 import '../config/app_environment.dart';
 import '../network/api_client.dart';
+import '../network/chat_websocket_service.dart';
 import '../network/dio_client.dart';
 import '../storage/local_storage.dart';
 
@@ -59,4 +60,8 @@ final adminApiProvider = Provider<AdminApi>((ref) {
 
 final localStorageProvider = Provider<LocalStorage>((ref) {
   return const LocalStorage();
+});
+
+final chatWebSocketServiceProvider = Provider<ChatWebSocketService>((ref) {
+  return ChatWebSocketService();
 });

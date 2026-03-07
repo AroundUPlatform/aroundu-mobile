@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/auth_api.dart';
@@ -58,6 +60,7 @@ class AuthState {
     this.savedAddresses = const <AddressInfo>[],
     this.skillIds = const <int>[],
     this.currency = 'INR',
+    this.country = 'IN',
     this.experienceYears,
     this.certifications,
     this.isOnDuty,
@@ -79,6 +82,7 @@ class AuthState {
   final List<AddressInfo> savedAddresses;
   final List<int> skillIds;
   final String currency;
+  final String country;
   final int? experienceYears;
   final String? certifications;
   final bool? isOnDuty;
@@ -104,6 +108,7 @@ class AuthState {
     List<AddressInfo>? savedAddresses,
     List<int>? skillIds,
     String? currency,
+    String? country,
     int? experienceYears,
     String? certifications,
     bool? isOnDuty,
@@ -130,6 +135,7 @@ class AuthState {
       savedAddresses: savedAddresses ?? this.savedAddresses,
       skillIds: skillIds ?? this.skillIds,
       currency: currency ?? this.currency,
+      country: country ?? this.country,
       experienceYears: experienceYears ?? this.experienceYears,
       certifications: certifications ?? this.certifications,
       isOnDuty: isOnDuty ?? this.isOnDuty,
@@ -178,11 +184,16 @@ class AuthController extends Notifier<AuthState> {
         currentAddressId: _asInt(persisted['currentAddressId']),
         skillIds: skillIds,
         currency: persisted['currency']?.toString() ?? 'INR',
+        country: persisted['country']?.toString() ?? 'IN',
         experienceYears: _asInt(persisted['experienceYears']),
         certifications: persisted['certifications']?.toString(),
         isOnDuty: _asBool(persisted['isOnDuty']),
         payoutAccount: persisted['payoutAccount']?.toString(),
       );
+
+      // Fetch the full profile (addresses, skills, etc.) from the server
+      // so that savedAddresses / currentAddressFull are available immediately.
+      unawaited(refreshProfile());
     } catch (error, stackTrace) {
       AppLogger.error(
         'Failed restoring persisted auth session',
@@ -231,6 +242,7 @@ class AuthController extends Notifier<AuthState> {
         savedAddresses: profile?.savedAddresses ?? const <AddressInfo>[],
         skillIds: profile?.skillIds ?? const <int>[],
         currency: profile?.currency ?? 'INR',
+        country: profile?.country ?? 'IN',
         experienceYears: profile?.experienceYears,
         certifications: profile?.certifications,
         isOnDuty: profile?.isOnDuty,
@@ -297,6 +309,7 @@ class AuthController extends Notifier<AuthState> {
         name: input.name.trim(),
         phoneNumber: input.phoneNumber.trim(),
         currency: input.currency.trim().toUpperCase(),
+        country: input.country.trim().toUpperCase(),
         skillIds: input.skillIds,
       );
       return true;
@@ -343,6 +356,7 @@ class AuthController extends Notifier<AuthState> {
         savedAddresses: profile.savedAddresses,
         skillIds: profile.skillIds,
         currency: profile.currency,
+        country: profile.country,
         experienceYears: profile.experienceYears,
         certifications: profile.certifications,
         isOnDuty: profile.isOnDuty,
@@ -411,6 +425,7 @@ class AuthController extends Notifier<AuthState> {
             : state.savedAddresses,
         skillIds: updated.skillIds.isEmpty ? state.skillIds : updated.skillIds,
         currency: updated.currency,
+        country: updated.country,
         experienceYears: updated.experienceYears ?? state.experienceYears,
         certifications: updated.certifications ?? state.certifications,
         isOnDuty: updated.isOnDuty ?? state.isOnDuty,
@@ -462,6 +477,88 @@ class AuthController extends Notifier<AuthState> {
         stackTrace: stackTrace,
       );
       state = state.copyWith(isOnDuty: !newStatus);
+      return false;
+    }
+  }
+
+  /// Adds a saved address to the client profile and refreshes state.
+  Future<AddressInfo?> addSavedAddress(AddressInfo address) async {
+    if (!state.isAuthenticated ||
+        state.token == null ||
+        state.userId == null ||
+        state.role != UserRole.provider) {
+      return null;
+    }
+
+    try {
+      final authApi = ref.read(authApiProvider);
+      final profile = await authApi.addSavedAddress(
+        token: state.token!,
+        clientId: state.userId!,
+        address: address,
+      );
+
+      final nextState = state.copyWith(
+        savedAddresses: profile.savedAddresses,
+        currentAddressId: profile.currentAddressId,
+        currentAddressFull: profile.currentAddressFull,
+      );
+      state = nextState;
+      await _persistSession(nextState);
+
+      // Find the newly saved record by lat/lon to get the DB-assigned id.
+      if (address.latitude != null && address.longitude != null) {
+        const epsilon = 0.0001; // ~11 m tolerance
+        try {
+          return profile.savedAddresses.firstWhere(
+            (a) =>
+                a.latitude != null &&
+                a.longitude != null &&
+                (a.latitude! - address.latitude!).abs() < epsilon &&
+                (a.longitude! - address.longitude!).abs() < epsilon,
+          );
+        } catch (_) {
+          // firstWhere throws StateError when no element found
+        }
+      }
+      return address;
+    } catch (error, stackTrace) {
+      AppLogger.error(
+        'Add saved address failed',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      return null;
+    }
+  }
+
+  /// Deletes a saved address from the client profile and refreshes state.
+  Future<bool> deleteSavedAddress(int addressId) async {
+    if (!state.isAuthenticated ||
+        state.token == null ||
+        state.userId == null ||
+        state.role != UserRole.provider) {
+      return false;
+    }
+
+    try {
+      final authApi = ref.read(authApiProvider);
+      final profile = await authApi.deleteSavedAddress(
+        token: state.token!,
+        clientId: state.userId!,
+        addressId: addressId,
+      );
+
+      final nextState = state.copyWith(savedAddresses: profile.savedAddresses);
+      state = nextState;
+      await _persistSession(nextState);
+      return true;
+    } catch (error, stackTrace) {
+      AppLogger.error(
+        'Delete saved address failed',
+        error: error,
+        stackTrace: stackTrace,
+      );
       return false;
     }
   }
@@ -570,6 +667,7 @@ class AuthController extends Notifier<AuthState> {
       'currentAddressId': authState.currentAddressId,
       'skillIds': authState.skillIds,
       'currency': authState.currency,
+      'country': authState.country,
       'experienceYears': authState.experienceYears,
       'certifications': authState.certifications,
       'isOnDuty': authState.isOnDuty,

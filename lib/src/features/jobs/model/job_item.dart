@@ -56,7 +56,8 @@ extension JobStatusView on JobStatus {
   }
 
   /// Whether the job is in an active (non-terminal) state.
-  bool get isActive => this != JobStatus.completed && this != JobStatus.cancelled;
+  bool get isActive =>
+      this != JobStatus.completed && this != JobStatus.cancelled;
 
   /// Whether the user can leave a review on this job.
   bool get isReviewEligible =>
@@ -72,6 +73,7 @@ class JobItem {
     required this.category,
     required this.location,
     required this.budget,
+    this.currencyCode = 'INR',
     required this.createdAt,
     required this.dueDate,
     required this.status,
@@ -88,6 +90,7 @@ class JobItem {
   final String category;
   final String location;
   final double budget;
+  final String currencyCode;
   final DateTime createdAt;
   final DateTime dueDate;
   final JobStatus status;
@@ -104,6 +107,7 @@ class JobItem {
     String? category,
     String? location,
     double? budget,
+    String? currencyCode,
     DateTime? createdAt,
     DateTime? dueDate,
     JobStatus? status,
@@ -120,6 +124,7 @@ class JobItem {
       category: category ?? this.category,
       location: location ?? this.location,
       budget: budget ?? this.budget,
+      currencyCode: currencyCode ?? this.currencyCode,
       createdAt: createdAt ?? this.createdAt,
       dueDate: dueDate ?? this.dueDate,
       status: status ?? this.status,

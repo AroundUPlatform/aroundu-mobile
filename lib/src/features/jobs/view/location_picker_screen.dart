@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geocoding/geocoding.dart' as geo;
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -54,7 +56,10 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
 
   // map
   GoogleMapController? _mapController;
-  LatLng _centre = const LatLng(28.6139, 77.2090);
+  LatLng _centre = const LatLng(
+    20.5937,
+    78.9629,
+  ); // Geographic center of India — overridden immediately by GPS or saved address
   bool _mapReady = false;
   MapType _mapType = MapType.normal;
 
@@ -178,6 +183,9 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
           '(${addr!.latitude}, ${addr.longitude})',
         );
         setState(() => _centre = LatLng(addr.latitude!, addr.longitude!));
+      } else {
+        // No saved address — automatically move to the device's GPS position.
+        _goToCurrentLocation();
       }
     });
   }
@@ -256,65 +264,61 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
   }
 
   // ── reverse geocoding ─────────────────────────────────────────────────────
+  /// Uses the device's native geocoder (via the `geocoding` package) —
+  /// no API key or billing required.
   Future<_GeoResult> _reverseGeocode(LatLng point) async {
     _log.d('Reverse geocoding (${point.latitude}, ${point.longitude})');
     try {
-      final key = AppEnvironment.googleMapsApiKey.trim();
-      final res = await _dio.get<Map<String, dynamic>>(
-        'https://maps.googleapis.com/maps/api/geocode/json',
-        queryParameters: {
-          'latlng': '${point.latitude},${point.longitude}',
-          'key': key,
-        },
+      final placemarks = await geo.placemarkFromCoordinates(
+        point.latitude,
+        point.longitude,
       );
-      final data = res.data;
-      if (data == null || data['status'] != 'OK') {
-        _log.w(
-          'Reverse geocode returned status: ${data?['status']}.  '
-          'error_message: ${data?['error_message']}.  '
-          'Point: (${point.latitude}, ${point.longitude})',
-        );
+
+      if (placemarks.isEmpty) {
+        _log.w('Reverse geocode: no placemarks returned');
         return const _GeoResult();
       }
 
-      final results = data['results'] as List;
-      if (results.isEmpty) {
-        _log.w('Reverse geocode: OK status but empty results list');
-        return const _GeoResult();
-      }
-
-      final first = results.first as Map<String, dynamic>;
-      final formatted = first['formatted_address'] as String?;
-      final components = first['address_components'] as List;
-
-      String? area, city, postalCode, country;
-      for (final c in components) {
-        final types = List<String>.from(c['types'] as List);
-        final longName = c['long_name'] as String;
-        final shortName = c['short_name'] as String;
-        if (types.contains('sublocality_level_1') ||
-            types.contains('sublocality') ||
-            types.contains('neighborhood')) {
-          area ??= longName;
-        } else if (types.contains('locality')) {
-          city ??= longName;
-        } else if (types.contains('postal_code')) {
-          postalCode ??= longName;
-        } else if (types.contains('country')) {
-          country ??= shortName; // e.g. "IN"
-        }
-      }
-
+      final p = placemarks.first;
       _log.i(
-        'Reverse geocode OK → "$formatted"  '
-        'area: $area  city: $city  postal: $postalCode  country: $country',
+        'Reverse geocode OK → '
+        'subLocality: ${p.subLocality}  '
+        'locality: ${p.locality}  '
+        'postalCode: ${p.postalCode}  '
+        'isoCountryCode: ${p.isoCountryCode}',
       );
+
+      // Build a human-readable full address from non-empty parts.
+      final addressParts = <String>[
+        if (p.name != null &&
+            p.name!.isNotEmpty &&
+            p.name != p.subLocality &&
+            p.name != p.locality)
+          p.name!,
+        if (p.subLocality != null && p.subLocality!.isNotEmpty) p.subLocality!,
+        if (p.locality != null && p.locality!.isNotEmpty) p.locality!,
+        if (p.postalCode != null && p.postalCode!.isNotEmpty) p.postalCode!,
+        if (p.country != null && p.country!.isNotEmpty) p.country!,
+      ];
+      final fullAddress = addressParts.isNotEmpty
+          ? addressParts.join(', ')
+          : null;
+
+      final area = (p.subLocality?.isNotEmpty == true)
+          ? p.subLocality
+          : (p.thoroughfare?.isNotEmpty == true ? p.thoroughfare : null);
+      final city = (p.locality?.isNotEmpty == true)
+          ? p.locality
+          : (p.subAdministrativeArea?.isNotEmpty == true
+                ? p.subAdministrativeArea
+                : null);
+
       return _GeoResult(
-        fullAddress: formatted,
+        fullAddress: fullAddress,
         area: area,
         city: city,
-        postalCode: postalCode,
-        country: country,
+        postalCode: p.postalCode,
+        country: p.isoCountryCode,
       );
     } catch (e, st) {
       _log.e('Reverse geocode exception', error: e, stackTrace: st);
@@ -322,8 +326,25 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
     }
   }
 
-  // ── address confirmation bottom sheet ─────────────────────────────────────
-  Future<AddressInfo?> _showAddressSheet(_GeoResult geo) async {
+  // ── confirm pinned location ───────────────────────────────────────────────
+  Future<void> _confirmPinnedLocation() async {
+    // 1. Reverse-geocode the current pin position
+    final geoResult = await _reverseGeocode(_centre);
+
+    // If search bar has text, prefer it as fullAddress
+    final finalGeo = _searchController.text.isNotEmpty
+        ? _GeoResult(
+            fullAddress: _searchController.text,
+            area: geoResult.area,
+            city: geoResult.city,
+            postalCode: geoResult.postalCode,
+            country: geoResult.country,
+          )
+        : geoResult;
+
+    // 2. Show save-address sheet — returns AddressInfo with DB id (if saved)
+    //    or without id (if user chose "Use Without Saving").
+    if (!mounted) return;
     final result = await showModalBottomSheet<AddressInfo>(
       context: context,
       isScrollControlled: true,
@@ -331,34 +352,12 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (ctx) => _AddressConfirmSheet(geo: geo, centre: _centre),
+      builder: (ctx) => _SaveAddressSheet(geo: finalGeo, centre: _centre),
     );
-    return result;
-  }
-
-  // ── confirm pinned location ───────────────────────────────────────────────
-  Future<void> _confirmPinnedLocation() async {
-    // 1. Reverse-geocode the current pin position
-    final geo = await _reverseGeocode(_centre);
-
-    // If search bar has text, prefer it as fullAddress
-    final finalGeo = _searchController.text.isNotEmpty
-        ? _GeoResult(
-            fullAddress: _searchController.text,
-            area: geo.area,
-            city: geo.city,
-            postalCode: geo.postalCode,
-            country: geo.country,
-          )
-        : geo;
-
-    // 2. Show address confirmation sheet
-    if (!mounted) return;
-    final confirmed = await _showAddressSheet(finalGeo);
-    if (confirmed == null || !mounted) return;
+    if (result == null || !mounted) return;
 
     // 3. Return the completed AddressInfo to the caller
-    Navigator.of(context).pop(confirmed);
+    Navigator.of(context).pop(result);
   }
 
   void _selectSavedAddress(AddressInfo address) =>
@@ -485,11 +484,6 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
     final auth = ref.watch(authControllerProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final allAddresses = <AddressInfo>[
-      if (auth.currentAddressFull != null) auth.currentAddressFull!,
-      ...auth.savedAddresses.where((a) => a.id != auth.currentAddressFull?.id),
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Choose Location'),
@@ -506,9 +500,8 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
         physics: const NeverScrollableScrollPhysics(),
         children: [
           _SavedAddressesTab(
-            addresses: allAddresses,
+            savedAddresses: auth.savedAddresses,
             onSelect: _selectSavedAddress,
-            currentAddressId: auth.currentAddressId,
           ),
           _buildMapTab(isDark),
         ],
@@ -704,34 +697,45 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
   }
 }
 
-// ── Saved Addresses Tab ───────────────────────────────────────────────────────
+// ── Save Address Sheet ────────────────────────────────────────────────────────
 
-// ── Address Confirm Sheet ─────────────────────────────────────────────────────
-
-/// A self-contained StatefulWidget for the address confirmation bottom sheet.
-/// Managing controllers here ties their lifecycle to this widget's State,
-/// preventing the use-after-dispose crash that occurs when controllers are
-/// created in a method and disposed before the sheet animation finishes.
-class _AddressConfirmSheet extends StatefulWidget {
-  const _AddressConfirmSheet({required this.geo, required this.centre});
+/// Bottom sheet shown after the user pins a location on the map.
+/// Lets them choose a label (Home / Work / Other), fill in recipient
+/// name & phone (with optional contact picker), and then either
+/// "Save & Use" (persists to backend, returns AddressInfo with DB id) or
+/// "Use Without Saving" (returns AddressInfo with no id).
+class _SaveAddressSheet extends ConsumerStatefulWidget {
+  const _SaveAddressSheet({required this.geo, required this.centre});
 
   final _GeoResult geo;
   final LatLng centre;
 
   @override
-  State<_AddressConfirmSheet> createState() => _AddressConfirmSheetState();
+  ConsumerState<_SaveAddressSheet> createState() => _SaveAddressSheetState();
 }
 
-class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
+/// Label options shown as selectable chips at the top of the save sheet.
+enum _AddressLabel { home, work, other }
+
+class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
+  late final TextEditingController _nameCtrl;
+  late final TextEditingController _phoneCtrl;
   late final TextEditingController _areaCtrl;
   late final TextEditingController _cityCtrl;
   late final TextEditingController _postalCtrl;
   late final TextEditingController _countryCtrl;
   final _formKey = GlobalKey<FormState>();
 
+  _AddressLabel _label = _AddressLabel.home;
+  bool _isSaving = false;
+  bool _isPickingContact = false;
+
   @override
   void initState() {
     super.initState();
+    final auth = ref.read(authControllerProvider);
+    _nameCtrl = TextEditingController(text: auth.name ?? '');
+    _phoneCtrl = TextEditingController(text: auth.phoneNumber ?? '');
     _areaCtrl = TextEditingController(text: widget.geo.area ?? '');
     _cityCtrl = TextEditingController(text: widget.geo.city ?? '');
     _postalCtrl = TextEditingController(text: widget.geo.postalCode ?? '');
@@ -740,6 +744,8 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
 
   @override
   void dispose() {
+    _nameCtrl.dispose();
+    _phoneCtrl.dispose();
     _areaCtrl.dispose();
     _cityCtrl.dispose();
     _postalCtrl.dispose();
@@ -747,8 +753,115 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
     super.dispose();
   }
 
+  String get _labelString => switch (_label) {
+    _AddressLabel.home => 'Home',
+    _AddressLabel.work => 'Work',
+    _AddressLabel.other => 'Other',
+  };
+
+  AddressInfo _buildAddressInfo() => AddressInfo(
+    fullAddress: widget.geo.fullAddress,
+    area: _areaCtrl.text.trim().isEmpty ? null : _areaCtrl.text.trim(),
+    city: _cityCtrl.text.trim().isEmpty ? null : _cityCtrl.text.trim(),
+    postalCode: _postalCtrl.text.trim(),
+    country: _countryCtrl.text.trim().toUpperCase(),
+    latitude: widget.centre.latitude,
+    longitude: widget.centre.longitude,
+    addressLabel: _labelString,
+    contactName: _nameCtrl.text.trim().isEmpty ? null : _nameCtrl.text.trim(),
+    contactPhone: _phoneCtrl.text.trim().isEmpty
+        ? null
+        : _phoneCtrl.text.trim(),
+  );
+
+  Future<void> _pickContact() async {
+    setState(() => _isPickingContact = true);
+    try {
+      // Step 1: Open system contact picker — no runtime permission required.
+      final contact = await FlutterContacts.openExternalPick();
+      if (contact == null || !mounted) return;
+
+      // Pre-fill the display name right away from the basic contact data.
+      _nameCtrl.text = contact.displayName;
+
+      // Step 2: Request permission to read the full contact details
+      // (phone numbers etc.) which requires the READ_CONTACTS permission.
+      final granted = await FlutterContacts.requestPermission(readonly: true);
+      if (!mounted) return;
+
+      if (granted) {
+        final full = await FlutterContacts.getContact(
+          contact.id,
+          withProperties: true,
+        );
+        if (full != null && mounted) {
+          _nameCtrl.text = full.displayName;
+          if (full.phones.isNotEmpty) {
+            _phoneCtrl.text = full.phones.first.number;
+          }
+        }
+      } else {
+        // Permission denied — name is already pre-filled; let the user
+        // type their phone number manually and offer a path to Settings.
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text(
+                'Contacts access denied — name was copied. Please enter the phone number manually.',
+              ),
+              action: SnackBarAction(
+                label: 'Open Settings',
+                onPressed: () async {
+                  // flutter_contacts doesn't expose openAppSettings, so we
+                  // rely on the user going to Settings manually on iOS or
+                  // opening system settings on Android.
+                  // Using FlutterContacts.requestPermission again triggers
+                  // the OS "go to settings" prompt on repeated denials.
+                  await FlutterContacts.requestPermission(readonly: true);
+                },
+              ),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Could not open contacts: $e')));
+      }
+    } finally {
+      if (mounted) setState(() => _isPickingContact = false);
+    }
+  }
+
+  Future<void> _saveAndUse() async {
+    if (!_formKey.currentState!.validate()) return;
+    setState(() => _isSaving = true);
+    try {
+      final address = _buildAddressInfo();
+      final saved = await ref
+          .read(authControllerProvider.notifier)
+          .addSavedAddress(address);
+      if (mounted) {
+        // saved has DB id if successful, else fall back to local address
+        Navigator.of(context).pop(saved ?? address);
+      }
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
+  }
+
+  void _useWithoutSaving() {
+    if (!_formKey.currentState!.validate()) return;
+    Navigator.of(context).pop(_buildAddressInfo());
+  }
+
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
+
     return Padding(
       padding: EdgeInsets.only(
         left: 20,
@@ -770,22 +883,20 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
                   height: 4,
                   margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.outlineVariant,
+                    color: cs.outlineVariant,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
               ),
 
               Text(
-                'Confirm Address Details',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                'Save Address',
+                style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 4),
               Text(
-                'Pre-filled from the map — edit anything that looks off.',
-                style: Theme.of(context).textTheme.bodySmall,
+                'Add a label and recipient details for this location.',
+                style: tt.bodySmall,
               ),
               const SizedBox(height: 16),
 
@@ -794,8 +905,7 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest
-                        .withValues(alpha: 0.5),
+                    color: cs.surfaceContainerHighest.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -803,13 +913,13 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
                       Icon(
                         Icons.location_on_rounded,
                         size: 18,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: cs.primary,
                       ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           widget.geo.fullAddress!,
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: tt.bodySmall,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -817,8 +927,78 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 16),
               ],
+
+              // Label chips: Home / Work / Other
+              Text('Label', style: tt.labelMedium),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: _AddressLabel.values.map((l) {
+                  final selected = _label == l;
+                  final (icon, text) = switch (l) {
+                    _AddressLabel.home => (Icons.home_rounded, 'Home'),
+                    _AddressLabel.work => (Icons.work_outline_rounded, 'Work'),
+                    _AddressLabel.other => (Icons.place_outlined, 'Other'),
+                  };
+                  return ChoiceChip(
+                    avatar: Icon(icon, size: 16),
+                    label: Text(text),
+                    selected: selected,
+                    onSelected: (_) => setState(() => _label = l),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 16),
+
+              // Recipient name
+              TextFormField(
+                controller: _nameCtrl,
+                textInputAction: TextInputAction.next,
+                textCapitalization: TextCapitalization.words,
+                decoration: const InputDecoration(
+                  labelText: 'Recipient Name',
+                  hintText: 'e.g. Rahul Sharma',
+                  prefixIcon: Icon(Icons.person_outline_rounded),
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              // Recipient phone + contacts picker
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _phoneCtrl,
+                      keyboardType: TextInputType.phone,
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                        labelText: 'Recipient Phone',
+                        hintText: 'e.g. 9876543210',
+                        prefixIcon: Icon(Icons.phone_outlined),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: IconButton.outlined(
+                      tooltip: 'Pick from contacts',
+                      icon: _isPickingContact
+                          ? const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Icon(Icons.contacts_outlined),
+                      onPressed: _isPickingContact ? null : _pickContact,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
 
               // Area / Neighbourhood
               TextFormField(
@@ -826,7 +1006,7 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
                   labelText: 'Area / Neighbourhood',
-                  hintText: 'e.g. Connaught Place',
+                  hintText: 'e.g. Koramangala',
                   prefixIcon: Icon(Icons.place_outlined),
                 ),
               ),
@@ -838,7 +1018,7 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
                   labelText: 'City',
-                  hintText: 'e.g. New Delhi',
+                  hintText: 'e.g. Bengaluru',
                   prefixIcon: Icon(Icons.location_city_outlined),
                 ),
               ),
@@ -851,7 +1031,7 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
                   labelText: 'Postal Code *',
-                  hintText: 'e.g. 110001',
+                  hintText: 'e.g. 560034',
                   prefixIcon: Icon(Icons.markunread_mailbox_outlined),
                 ),
                 validator: (v) =>
@@ -859,7 +1039,7 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
               ),
               const SizedBox(height: 12),
 
-              // Country — REQUIRED (ISO 2-letter)
+              // Country code
               TextFormField(
                 controller: _countryCtrl,
                 textInputAction: TextInputAction.done,
@@ -873,33 +1053,35 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
                 validator: (v) =>
                     (v == null || v.trim().isEmpty) ? 'Required' : null,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  icon: const Icon(Icons.check_rounded),
-                  label: const Text('Use This Location'),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Navigator.of(context).pop(
-                        AddressInfo(
-                          fullAddress: widget.geo.fullAddress,
-                          area: _areaCtrl.text.trim().isEmpty
-                              ? null
-                              : _areaCtrl.text.trim(),
-                          city: _cityCtrl.text.trim().isEmpty
-                              ? null
-                              : _cityCtrl.text.trim(),
-                          postalCode: _postalCtrl.text.trim(),
-                          country: _countryCtrl.text.trim().toUpperCase(),
-                          latitude: widget.centre.latitude,
-                          longitude: widget.centre.longitude,
-                        ),
-                      );
-                    }
-                  },
-                ),
+              // Action buttons
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: _isSaving ? null : _useWithoutSaving,
+                      child: const Text('Use Without Saving'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FilledButton.icon(
+                      icon: _isSaving
+                          ? const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Icon(Icons.save_outlined),
+                      label: const Text('Save & Use'),
+                      onPressed: _isSaving ? null : _saveAndUse,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -911,31 +1093,116 @@ class _AddressConfirmSheetState extends State<_AddressConfirmSheet> {
 
 // ── Saved Addresses Tab ───────────────────────────────────────────────────────
 
-class _SavedAddressesTab extends StatelessWidget {
+/// Live-GPS tile at the top + saved DB addresses below.
+/// Converted to a [ConsumerStatefulWidget] so it can fetch the device
+/// GPS position independently without blocking the whole screen.
+class _SavedAddressesTab extends ConsumerStatefulWidget {
   const _SavedAddressesTab({
-    required this.addresses,
+    required this.savedAddresses,
     required this.onSelect,
-    this.currentAddressId,
   });
 
-  final List<AddressInfo> addresses;
+  final List<AddressInfo> savedAddresses;
   final void Function(AddressInfo) onSelect;
-  final int? currentAddressId;
+
+  @override
+  ConsumerState<_SavedAddressesTab> createState() => _SavedAddressesTabState();
+}
+
+class _SavedAddressesTabState extends ConsumerState<_SavedAddressesTab> {
+  Position? _livePos;
+  String? _liveDisplayText;
+  bool _fetchingGps = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchGps();
+  }
+
+  Future<void> _fetchGps() async {
+    try {
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+      if (permission == LocationPermission.deniedForever) {
+        if (mounted) setState(() => _fetchingGps = false);
+        return;
+      }
+
+      // Fast: try last known first
+      final last = await Geolocator.getLastKnownPosition();
+      if (last != null && mounted) {
+        setState(() {
+          _livePos = last;
+          _fetchingGps = false;
+        });
+        _reverseGeocode(last);
+      }
+
+      // Accurate: update in background
+      final current = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        ),
+      );
+      if (mounted) {
+        setState(() {
+          _livePos = current;
+          _fetchingGps = false;
+        });
+        _reverseGeocode(current);
+      }
+    } catch (_) {
+      if (mounted) setState(() => _fetchingGps = false);
+    }
+  }
+
+  Future<void> _reverseGeocode(Position pos) async {
+    try {
+      final marks = await geo.placemarkFromCoordinates(
+        pos.latitude,
+        pos.longitude,
+      );
+      if (marks.isEmpty || !mounted) return;
+      final p = marks.first;
+      final parts = <String>[
+        if (p.subLocality != null && p.subLocality!.isNotEmpty) p.subLocality!,
+        if (p.locality != null && p.locality!.isNotEmpty) p.locality!,
+      ];
+      if (parts.isNotEmpty && mounted) {
+        setState(() => _liveDisplayText = parts.join(', '));
+      }
+    } catch (_) {}
+  }
+
+  void _selectGps() {
+    if (_livePos == null) return;
+    widget.onSelect(
+      AddressInfo(
+        latitude: _livePos!.latitude,
+        longitude: _livePos!.longitude,
+        fullAddress: _liveDisplayText,
+        area: _liveDisplayText?.split(', ').firstOrNull,
+        city: _liveDisplayText?.split(', ').lastOrNull,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (addresses.isEmpty) {
+    final cs = Theme.of(context).colorScheme;
+    final addresses = widget.savedAddresses;
+
+    if (!_fetchingGps && _livePos == null && addresses.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.location_off_outlined,
-                size: 56,
-                color: Theme.of(context).colorScheme.outline,
-              ),
+              Icon(Icons.location_off_outlined, size: 56, color: cs.outline),
               const SizedBox(height: 16),
               Text(
                 'No saved addresses yet',
@@ -955,43 +1222,121 @@ class _SavedAddressesTab extends StatelessWidget {
 
     return ListView.separated(
       padding: const EdgeInsets.all(16),
-      itemCount: addresses.length,
+      itemCount: 1 + addresses.length, // GPS tile + saved addresses
       separatorBuilder: (_, __) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
-        final addr = addresses[index];
-        final isCurrent = addr.id != null && addr.id == currentAddressId;
+        // ── GPS tile (always first) ───────────────────────────────────────
+        if (index == 0) {
+          return Card(
+            color: cs.primaryContainer.withValues(alpha: 0.35),
+            child: ListTile(
+              leading: Icon(Icons.my_location_rounded, color: cs.primary),
+              title: const Text('Use My Current Location'),
+              subtitle: _fetchingGps
+                  ? const Text('Detecting location…')
+                  : Text(
+                      _liveDisplayText ?? 'GPS location ready',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+              trailing: _fetchingGps
+                  ? SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: cs.primary,
+                      ),
+                    )
+                  : Icon(Icons.chevron_right_rounded, color: cs.primary),
+              onTap: (_fetchingGps || _livePos == null) ? null : _selectGps,
+            ),
+          );
+        }
+
+        // ── Saved address tiles ───────────────────────────────────────────
+        final addr = addresses[index - 1];
 
         return Card(
           child: ListTile(
             leading: Icon(
-              isCurrent ? Icons.home_rounded : Icons.location_on_outlined,
-              color: isCurrent ? Theme.of(context).colorScheme.primary : null,
+              _iconForLabel(addr.addressLabel),
+              color: cs.secondary,
             ),
             title: Text(
-              // Prefer fullAddress as the primary title — it's the richest text
-              addr.fullAddress ?? addr.displayName,
-              maxLines: 2,
+              addr.addressLabel != null
+                  ? '${addr.addressLabel!} — ${addr.displayName}'
+                  : addr.displayName,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            subtitle: addr.displayName != (addr.fullAddress ?? addr.displayName)
+            subtitle: addr.fullAddress != null
                 ? Text(
-                    addr.displayName,
+                    addr.fullAddress!,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   )
                 : null,
-            trailing: isCurrent
-                ? Chip(
-                    label: const Text('Current'),
-                    visualDensity: VisualDensity.compact,
-                    padding: EdgeInsets.zero,
-                    labelPadding: const EdgeInsets.symmetric(horizontal: 6),
-                  )
-                : const Icon(Icons.chevron_right_rounded),
-            onTap: () => onSelect(addr),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (addr.id != null)
+                  IconButton(
+                    icon: const Icon(Icons.delete_outline_rounded, size: 20),
+                    tooltip: 'Delete address',
+                    onPressed: () async {
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: const Text('Delete Address'),
+                          content: Text(
+                            'Remove "${addr.addressLabel ?? addr.displayName}" from saved addresses?',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(ctx).pop(false),
+                              child: const Text('Cancel'),
+                            ),
+                            FilledButton(
+                              onPressed: () => Navigator.of(ctx).pop(true),
+                              child: const Text('Delete'),
+                            ),
+                          ],
+                        ),
+                      );
+                      if (confirmed == true && addr.id != null) {
+                        final ok = await ref
+                            .read(authControllerProvider.notifier)
+                            .deleteSavedAddress(addr.id!);
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                ok
+                                    ? 'Address removed'
+                                    : 'Failed to remove address',
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                  ),
+                const Icon(Icons.chevron_right_rounded),
+              ],
+            ),
+            onTap: () => widget.onSelect(addr),
           ),
         );
       },
     );
   }
+}
+
+IconData _iconForLabel(String? label) {
+  return switch (label?.toLowerCase()) {
+    'home' => Icons.home_rounded,
+    'work' => Icons.work_outline_rounded,
+    _ => Icons.location_on_outlined,
+  };
 }

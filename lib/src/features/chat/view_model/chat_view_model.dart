@@ -15,8 +15,19 @@ class ConversationsController extends AsyncNotifier<List<Conversation>> {
   @override
   Future<List<Conversation>> build() {
     ref.onDispose(() => _pollTimer?.cancel());
+    _ensureWebSocketConnected();
     _startPolling();
     return _fetch();
+  }
+
+  void _ensureWebSocketConnected() {
+    final auth = ref.read(authControllerProvider);
+    if (auth.isAuthenticated && auth.token != null) {
+      final ws = ref.read(chatWebSocketServiceProvider);
+      if (!ws.isConnected) {
+        ws.connect(auth.token!);
+      }
+    }
   }
 
   Future<List<Conversation>> _fetch() async {
@@ -40,7 +51,8 @@ class ConversationsController extends AsyncNotifier<List<Conversation>> {
 
   void _startPolling() {
     _pollTimer?.cancel();
-    _pollTimer = Timer.periodic(const Duration(seconds: 15), (_) async {
+    // Fallback polling at 30s for resilience; WebSocket handles real-time
+    _pollTimer = Timer.periodic(const Duration(seconds: 30), (_) async {
       try {
         final result = await _fetch();
         state = AsyncValue.data(result);
@@ -65,6 +77,58 @@ final conversationsControllerProvider =
       ConversationsController.new,
     );
 
+// ─────────────────── Grouped Conversations (Client View) ───────────────────
+
+class GroupedConversationsController
+    extends AsyncNotifier<List<JobConversationsGroup>> {
+  Timer? _pollTimer;
+
+  @override
+  Future<List<JobConversationsGroup>> build() {
+    ref.onDispose(() => _pollTimer?.cancel());
+    _startPolling();
+    return _fetch();
+  }
+
+  Future<List<JobConversationsGroup>> _fetch() async {
+    final auth = ref.read(authControllerProvider);
+    if (!auth.isAuthenticated || auth.userId == null) {
+      return const <JobConversationsGroup>[];
+    }
+
+    final chatApi = ref.read(chatApiProvider);
+    final rawList = await chatApi.getConversationsGrouped(token: auth.token!);
+    return rawList.map(JobConversationsGroup.fromMap).toList();
+  }
+
+  void _startPolling() {
+    _pollTimer?.cancel();
+    _pollTimer = Timer.periodic(const Duration(seconds: 30), (_) async {
+      try {
+        final result = await _fetch();
+        state = AsyncValue.data(result);
+      } catch (error, stackTrace) {
+        AppLogger.error(
+          'Grouped conversation poll failed',
+          error: error,
+          stackTrace: stackTrace,
+        );
+      }
+    });
+  }
+
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(_fetch);
+  }
+}
+
+final groupedConversationsControllerProvider =
+    AsyncNotifierProvider<
+      GroupedConversationsController,
+      List<JobConversationsGroup>
+    >(GroupedConversationsController.new);
+
 // ─────────────────── Chat Messages ───────────────────
 
 class ChatMessagesState {
@@ -72,18 +136,21 @@ class ChatMessagesState {
     this.messages = const <ChatMessage>[],
     this.isLoading = false,
     this.isSending = false,
+    this.isOtherTyping = false,
     this.errorMessage,
   });
 
   final List<ChatMessage> messages;
   final bool isLoading;
   final bool isSending;
+  final bool isOtherTyping;
   final String? errorMessage;
 
   ChatMessagesState copyWith({
     List<ChatMessage>? messages,
     bool? isLoading,
     bool? isSending,
+    bool? isOtherTyping,
     String? errorMessage,
     bool clearError = false,
   }) {
@@ -91,20 +158,82 @@ class ChatMessagesState {
       messages: messages ?? this.messages,
       isLoading: isLoading ?? this.isLoading,
       isSending: isSending ?? this.isSending,
+      isOtherTyping: isOtherTyping ?? this.isOtherTyping,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
     );
   }
 }
 
 class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
-  Timer? _pollTimer;
+  Timer? _typingResetTimer;
 
   @override
   ChatMessagesState build(int conversationId) {
-    ref.onDispose(() => _pollTimer?.cancel());
+    ref.onDispose(() {
+      _typingResetTimer?.cancel();
+      final ws = ref.read(chatWebSocketServiceProvider);
+      ws.unsubscribeFromConversation(conversationId);
+    });
     _loadMessages();
-    _startPolling();
+    _subscribeToWebSocket();
     return const ChatMessagesState(isLoading: true);
+  }
+
+  void _subscribeToWebSocket() {
+    final auth = ref.read(authControllerProvider);
+    final currentUserId = auth.userId ?? 0;
+    final ws = ref.read(chatWebSocketServiceProvider);
+
+    ws.subscribeToConversation(
+      arg,
+      onMessage: (payload) {
+        final msg = ChatMessage.fromMap(payload);
+        final existingIndex = state.messages.indexWhere((m) => m.id == msg.id);
+        if (existingIndex >= 0) return; // duplicate
+        state = state.copyWith(
+          messages: [...state.messages, msg],
+          isOtherTyping: false,
+        );
+        // Auto-mark as delivered if the message is from other user
+        if (msg.senderId != currentUserId) {
+          ws.sendDelivered(conversationId: arg);
+        }
+        // Refresh conversation list
+        ref.invalidate(conversationsControllerProvider);
+        ref.invalidate(groupedConversationsControllerProvider);
+      },
+      onStatus: (payload) {
+        final msgId = payload['messageId'] as int?;
+        final statusStr = payload['status']?.toString().toUpperCase();
+        if (msgId == null || statusStr == null) return;
+        final newStatus = statusStr == 'READ'
+            ? MessageStatus.read
+            : statusStr == 'DELIVERED'
+            ? MessageStatus.delivered
+            : MessageStatus.sent;
+
+        final updatedMessages = state.messages.map((m) {
+          if (m.id == msgId) return m.copyWith(status: newStatus);
+          return m;
+        }).toList();
+        state = state.copyWith(messages: updatedMessages);
+      },
+      onTyping: (payload) {
+        final typingUserId = payload['userId'];
+        final isTyping = payload['typing'] == true;
+        if (typingUserId == currentUserId) return;
+
+        state = state.copyWith(isOtherTyping: isTyping);
+
+        // Auto-reset typing indicator after 4 seconds
+        _typingResetTimer?.cancel();
+        if (isTyping) {
+          _typingResetTimer = Timer(const Duration(seconds: 4), () {
+            state = state.copyWith(isOtherTyping: false);
+          });
+        }
+      },
+    );
   }
 
   Future<void> _loadMessages() async {
@@ -133,42 +262,20 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
         clearError: true,
       );
 
-      // Mark as read
+      // Mark as read via REST for reliability
       await chatApi.markAsRead(token: auth.token!, conversationId: arg);
+      // Also notify via WebSocket
+      final ws = ref.read(chatWebSocketServiceProvider);
+      ws.sendRead(conversationId: arg);
     } catch (error) {
       state = state.copyWith(isLoading: false, errorMessage: error.toString());
     }
   }
 
-  void _startPolling() {
-    _pollTimer?.cancel();
-    _pollTimer = Timer.periodic(const Duration(seconds: 5), (_) async {
-      try {
-        final auth = ref.read(authControllerProvider);
-        if (!auth.isAuthenticated || auth.userId == null) return;
-
-        final chatApi = ref.read(chatApiProvider);
-        final rawList = await chatApi.getMessages(
-          token: auth.token!,
-          conversationId: arg,
-          page: 0,
-          size: 100,
-        );
-
-        final messages = rawList.map(ChatMessage.fromMap).toList();
-        messages.sort((a, b) {
-          final aTime = a.createdAt ?? DateTime(2000);
-          final bTime = b.createdAt ?? DateTime(2000);
-          return aTime.compareTo(bTime);
-        });
-
-        state = state.copyWith(messages: messages, clearError: true);
-
-        await chatApi.markAsRead(token: auth.token!, conversationId: arg);
-      } catch (error) {
-        AppLogger.error('Chat poll failed', error: error);
-      }
-    });
+  /// Send a typing indicator via WebSocket.
+  void sendTyping({required bool typing}) {
+    final ws = ref.read(chatWebSocketServiceProvider);
+    ws.sendTypingEvent(conversationId: arg, typing: typing);
   }
 
   Future<bool> sendMessage({
@@ -184,6 +291,19 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
       final auth = ref.read(authControllerProvider);
       if (!auth.isAuthenticated || auth.userId == null) return false;
 
+      final ws = ref.read(chatWebSocketServiceProvider);
+      if (ws.isConnected) {
+        // Send via WebSocket for real-time delivery
+        ws.sendMessage(
+          jobId: jobId,
+          recipientId: recipientId,
+          content: content.trim(),
+        );
+        state = state.copyWith(isSending: false);
+        return true;
+      }
+
+      // Fallback to REST if WebSocket is disconnected
       final chatApi = ref.read(chatApiProvider);
       final rawMsg = await chatApi.sendMessage(
         token: auth.token!,
@@ -197,6 +317,7 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
 
       state = state.copyWith(messages: updatedMessages, isSending: false);
       ref.invalidate(conversationsControllerProvider);
+      ref.invalidate(groupedConversationsControllerProvider);
       return true;
     } catch (error) {
       state = state.copyWith(isSending: false, errorMessage: error.toString());

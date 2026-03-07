@@ -6,7 +6,6 @@ import '../../chat/view/conversations_view.dart';
 import '../../profile/view/profile_view.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/app_notification.dart';
-import '../../../core/widgets/primary_button.dart';
 import '../model/job_item.dart';
 import '../model/job_workflow_models.dart';
 import '../view_model/job_view_model.dart';
@@ -286,12 +285,16 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              'assets/images/ComingSoon.png',
-              height: 150,
-              fit: BoxFit.contain,
+            Icon(
+              _activeFilter == WorkerJobFilter.nearby
+                  ? Icons.search_off_rounded
+                  : Icons.work_off_outlined,
+              size: 64,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurfaceVariant.withValues(alpha: 0.45),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 14),
             Text(message, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 6),
             Text(
@@ -326,6 +329,7 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
           child: JobCard(
             job: job,
             showDistance: _activeFilter == WorkerJobFilter.nearby,
+            viewerCurrencyCode: ref.read(authControllerProvider).currency,
             onTap: () => _openWorkflowSheet(job),
           ),
         );
@@ -333,10 +337,91 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
     );
   }
 
+  Widget _buildDistanceSlider() {
+    final radius = ref.watch(workerFeedRadiusProvider);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          const Icon(Icons.social_distance_rounded, size: 18),
+          const SizedBox(width: 4),
+          Text('$radius km', style: Theme.of(context).textTheme.labelLarge),
+          Expanded(
+            child: Slider(
+              value: radius.toDouble(),
+              min: 2,
+              max: 30,
+              divisions: 28,
+              label: '$radius km',
+              onChanged: (v) {
+                ref.read(workerFeedRadiusProvider.notifier).state = v.round();
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOfflinePlaceholder() {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+    return CenteredListBody(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: colors.surfaceContainerHighest,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.wifi_off_rounded,
+              size: 40,
+              color: colors.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 18),
+          Text(
+            'You\'re Offline',
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Toggle the switch in the top bar to go online and discover nearby jobs.',
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: colors.onSurfaceVariant,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<List<JobItem>> jobsAsync =
-        _activeFilter == WorkerJobFilter.nearby
+    final auth = ref.watch(authControllerProvider);
+    final isOnDuty = auth.isOnDuty ?? false;
+    final showNearby = _activeFilter == WorkerJobFilter.nearby;
+
+    // When offline and on the Nearby tab, skip the API call entirely
+    if (showNearby && !isOnDuty) {
+      return Column(
+        children: [
+          const SizedBox(height: 10),
+          _buildChipBar(),
+          _buildDistanceSlider(),
+          const SizedBox(height: 4),
+          Expanded(child: _buildOfflinePlaceholder()),
+        ],
+      );
+    }
+
+    final AsyncValue<List<JobItem>> jobsAsync = showNearby
         ? ref.watch(workerFeedControllerProvider)
         : ref.watch(workerMyJobsProvider(_activeFilter));
 
@@ -344,6 +429,7 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
       children: [
         const SizedBox(height: 10),
         _buildChipBar(),
+        if (showNearby) _buildDistanceSlider(),
         const SizedBox(height: 4),
         Expanded(
           child: RefreshIndicator(
@@ -695,69 +781,234 @@ class _WorkerJobWorkflowSheetState
         myBid.status.toUpperCase() == 'SELECTED' &&
         statusCode == 'BID_SELECTED_AWAITING_HANDSHAKE';
     final canVerifyStart = statusCode == 'READY_TO_START';
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+    final escrowMode = (job.paymentMode ?? '').toUpperCase() == 'ESCROW';
 
     return ListView(
       controller: widget.scrollController,
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
       children: [
-        Text(job.title, style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 8),
-        Text(job.description, style: Theme.of(context).textTheme.bodyLarge),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
+        // ── Header: title + status ────────────────────────────────
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MetaPill(label: 'Status: ${job.status.label}'),
-            MetaPill(label: 'Budget: ${job.budget.toStringAsFixed(0)}'),
-            MetaPill(label: 'Location: ${job.location}'),
-            if (job.distanceKm != null)
-              MetaPill(
-                label: 'Distance: ${job.distanceKm!.toStringAsFixed(1)} km',
+            Expanded(
+              child: Text(
+                job.title,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
+            ),
+            const SizedBox(width: 10),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: job.status.color.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(99),
+                border: Border.all(
+                  color: job.status.color.withValues(alpha: 0.4),
+                ),
+              ),
+              child: Text(
+                job.status.label,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: job.status.color,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
           ],
         ),
+        const SizedBox(height: 8),
+        Text(
+          job.description,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: colors.onSurfaceVariant,
+            height: 1.5,
+          ),
+        ),
         const SizedBox(height: 14),
-        if (_working) const LinearProgressIndicator(minHeight: 2.4),
+
+        // ── Details card ──────────────────────────────────────────
+        Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: BorderSide(color: colors.outlineVariant),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            child: Column(
+              children: [
+                _WorkerDetailRow(
+                  icon: escrowMode
+                      ? Icons.lock_outline_rounded
+                      : Icons.currency_rupee_rounded,
+                  label: 'Budget',
+                  value:
+                      '₹${job.budget.toStringAsFixed(0)}${escrowMode ? ' (Escrow)' : ' (Cash)'}',
+                  iconColor: colors.primary,
+                ),
+                const Divider(height: 16),
+                _WorkerDetailRow(
+                  icon: Icons.location_on_outlined,
+                  label: 'Location',
+                  value: job.location,
+                ),
+                if (job.distanceKm != null) ...[
+                  const Divider(height: 16),
+                  _WorkerDetailRow(
+                    icon: Icons.near_me_outlined,
+                    label: 'Distance',
+                    value: '${job.distanceKm!.toStringAsFixed(1)} km away',
+                  ),
+                ],
+                if (job.requiredSkillNames.isNotEmpty) ...[
+                  const Divider(height: 16),
+                  _WorkerDetailRow(
+                    icon: Icons.handyman_outlined,
+                    label: 'Skills',
+                    value: job.requiredSkillNames.join(', '),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 14),
+
+        // ── Progress indicator ────────────────────────────────────
+        if (_working) ...[
+          const LinearProgressIndicator(minHeight: 2.4),
+          const SizedBox(height: 10),
+        ],
+
+        // ── My existing bid ───────────────────────────────────────
         if (myBid != null) ...[
           Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+              side: BorderSide(
+                color: myBid.status.toUpperCase() == 'SELECTED'
+                    ? AppPalette.success.withValues(alpha: 0.5)
+                    : colors.outlineVariant,
+                width: myBid.status.toUpperCase() == 'SELECTED' ? 1.5 : 1,
+              ),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(14),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Your Offer',
-                    style: Theme.of(context).textTheme.titleMedium,
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.gavel_rounded,
+                        size: 18,
+                        color: myBid.status.toUpperCase() == 'SELECTED'
+                            ? AppPalette.success
+                            : colors.onSurfaceVariant,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Your Offer',
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const Spacer(),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 9,
+                          vertical: 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: myBid.status.toUpperCase() == 'SELECTED'
+                              ? AppPalette.success.withValues(alpha: 0.12)
+                              : myBid.status.toUpperCase() == 'REJECTED'
+                              ? AppPalette.danger.withValues(alpha: 0.1)
+                              : colors.surfaceContainerHighest,
+                          borderRadius: BorderRadius.circular(99),
+                        ),
+                        child: Text(
+                          myBid.status.toUpperCase() == 'SELECTED'
+                              ? 'Selected'
+                              : myBid.status.toUpperCase() == 'REJECTED'
+                              ? 'Rejected'
+                              : 'Pending',
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: myBid.status.toUpperCase() == 'SELECTED'
+                                ? AppPalette.success
+                                : myBid.status.toUpperCase() == 'REJECTED'
+                                ? AppPalette.danger
+                                : colors.onSurfaceVariant,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Amount: ${myBid.bidAmount.toStringAsFixed(0)}',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Status: ${myBid.status}',
-                    style: Theme.of(context).textTheme.bodyMedium,
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text(
+                        '₹${myBid.bidAmount.toStringAsFixed(0)}',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          color: colors.primary,
+                        ),
+                      ),
+                      if (myBid.partnerFee != null && myBid.partnerFee! > 0)
+                        Text(
+                          ' + ₹${myBid.partnerFee!.toStringAsFixed(0)} partner fee',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: colors.onSurfaceVariant,
+                          ),
+                        ),
+                    ],
                   ),
                   if (myBid.notes != null &&
                       myBid.notes!.trim().isNotEmpty) ...[
-                    const SizedBox(height: 6),
-                    Text(
-                      myBid.notes!,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: colors.surfaceContainerLowest,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        myBid.notes!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colors.onSurfaceVariant,
+                        ),
+                      ),
                     ),
                   ],
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
         ],
+
+        // ── Place new bid ─────────────────────────────────────────
         if (canPlaceBid) ...[
-          Text('Place Offer', style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
+          Text(
+            'Place Your Offer',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 10),
           Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+              side: BorderSide(color: colors.outlineVariant),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(14),
               child: Column(
@@ -768,27 +1019,8 @@ class _WorkerJobWorkflowSheetState
                       decimal: true,
                     ),
                     decoration: const InputDecoration(
-                      labelText: 'Offer amount',
+                      labelText: 'Your offer amount',
                       prefixIcon: Icon(Icons.currency_rupee_rounded),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _partnerNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Partner name (optional)',
-                      prefixIcon: Icon(Icons.group_outlined),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _partnerFeeController,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    decoration: const InputDecoration(
-                      labelText: 'Partner fee (optional)',
-                      prefixIcon: Icon(Icons.paid_outlined),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -796,27 +1028,106 @@ class _WorkerJobWorkflowSheetState
                     controller: _notesController,
                     maxLines: 3,
                     decoration: const InputDecoration(
-                      labelText: 'Notes (optional)',
+                      labelText: 'Message to client (optional)',
                       alignLabelWithHint: true,
                       prefixIcon: Icon(Icons.notes_rounded),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  // Partner fields in an expansion section
+                  ExpansionTile(
+                    tilePadding: EdgeInsets.zero,
+                    title: Text(
+                      'Add a partner (optional)',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colors.onSurfaceVariant,
+                      ),
+                    ),
+                    leading: Icon(
+                      Icons.group_outlined,
+                      color: colors.onSurfaceVariant,
+                    ),
+                    shape: const Border(),
+                    children: [
+                      TextField(
+                        controller: _partnerNameController,
+                        decoration: const InputDecoration(
+                          labelText: 'Partner name',
+                          prefixIcon: Icon(Icons.person_outline_rounded),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      TextField(
+                        controller: _partnerFeeController,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        decoration: const InputDecoration(
+                          labelText: 'Partner fee',
+                          prefixIcon: Icon(Icons.paid_outlined),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                    ],
+                  ),
                   const SizedBox(height: 12),
-                  PrimaryButton(
-                    label: 'Submit Offer',
-                    onPressed: _working ? null : _placeBid,
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: _working ? null : _placeBid,
+                      icon: const Icon(Icons.gavel_rounded),
+                      label: const Text('Submit Offer'),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
+          const SizedBox(height: 12),
         ],
+
+        // ── Handshake response ────────────────────────────────────
         if (canHandshake) ...[
-          Text(
-            'Client selected your offer',
-            style: Theme.of(context).textTheme.titleMedium,
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: AppPalette.success.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: AppPalette.success.withValues(alpha: 0.3),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.handshake_outlined,
+                      color: AppPalette.success,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Client Selected Your Offer!',
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppPalette.success,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Accept to confirm this job, or decline if you\'re no longer available.',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: colors.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           Row(
             children: [
               Expanded(
@@ -825,7 +1136,7 @@ class _WorkerJobWorkflowSheetState
                       ? null
                       : () => _respondHandshake(true, myBid.id),
                   icon: const Icon(Icons.check_rounded),
-                  label: const Text('Accept'),
+                  label: const Text('Accept Job'),
                 ),
               ),
               const SizedBox(width: 10),
@@ -834,81 +1145,175 @@ class _WorkerJobWorkflowSheetState
                   onPressed: _working
                       ? null
                       : () => _respondHandshake(false, myBid.id),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppPalette.danger,
+                    side: BorderSide(
+                      color: AppPalette.danger.withValues(alpha: 0.5),
+                    ),
+                  ),
                   icon: const Icon(Icons.close_rounded),
                   label: const Text('Decline'),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
         ],
+
+        // ── Start code verification ───────────────────────────────
         if (canVerifyStart) ...[
           Text(
-            'Verify Start Code',
-            style: Theme.of(context).textTheme.titleMedium,
+            'Ready to Begin?',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
+          Text(
+            'Ask the client for the start code and enter it below to officially begin work.',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colors.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 10),
           TextField(
             controller: _startCodeController,
             keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.titleLarge?.copyWith(
+              letterSpacing: 6,
+              fontWeight: FontWeight.w700,
+            ),
             decoration: const InputDecoration(
-              labelText: 'Start code',
+              labelText: 'Start Code',
               prefixIcon: Icon(Icons.key_rounded),
             ),
           ),
           const SizedBox(height: 10),
-          FilledButton.icon(
-            onPressed: _working ? null : _verifyStartCode,
-            icon: const Icon(Icons.verified_rounded),
-            label: const Text('Verify & Start Work'),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              onPressed: _working ? null : _verifyStartCode,
+              icon: const Icon(Icons.play_circle_outline_rounded),
+              label: const Text('Verify & Start Work'),
+            ),
           ),
-        ],
-        if (statusCode == 'IN_PROGRESS') ...[
           const SizedBox(height: 12),
-          Card(
-            color: Theme.of(context).colorScheme.tertiaryContainer,
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+        ],
+
+        // ── In-progress: release code ─────────────────────────────
+        if (statusCode == 'IN_PROGRESS') ...[
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: AppPalette.warning.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: AppPalette.warning.withValues(alpha: 0.3),
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.construction_rounded,
+                  color: AppPalette.warning,
+                  size: 22,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.construction_rounded, size: 18),
-                      const SizedBox(width: 8),
                       Text(
                         'Work In Progress',
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: AppPalette.warning,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Once done, ask the client for the 6-digit release code.',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colors.onSurfaceVariant,
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Complete the task, then ask the client for the 6-digit release code. '
-                    'Enter it below to confirm completion and receive payment.',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 12),
           TextField(
             controller: _releaseCodeController,
             keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.titleLarge?.copyWith(
+              letterSpacing: 6,
+              fontWeight: FontWeight.w700,
+            ),
             decoration: const InputDecoration(
-              labelText: 'Release code',
-              prefixIcon: Icon(Icons.key_rounded),
-              helperText: 'Enter the 6-digit code provided by the client',
+              labelText: 'Release Code',
+              prefixIcon: Icon(Icons.verified_outlined),
+              helperText: 'Enter the 6-digit code from the client',
             ),
           ),
           const SizedBox(height: 10),
-          FilledButton.icon(
-            onPressed: _working ? null : _verifyReleaseCode,
-            icon: const Icon(Icons.verified_rounded),
-            label: const Text('Confirm Work Done'),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              onPressed: _working ? null : _verifyReleaseCode,
+              icon: const Icon(Icons.check_circle_outline_rounded),
+              label: const Text('Confirm Work Completed'),
+            ),
           ),
         ],
+      ],
+    );
+  }
+}
+
+/// A single icon + label + value row used inside details cards.
+class _WorkerDetailRow extends StatelessWidget {
+  const _WorkerDetailRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    this.iconColor,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color? iconColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 18, color: iconColor ?? colors.onSurfaceVariant),
+        const SizedBox(width: 10),
+        SizedBox(
+          width: 72,
+          child: Text(
+            label,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: colors.onSurfaceVariant,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
       ],
     );
   }

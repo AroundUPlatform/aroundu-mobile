@@ -47,7 +47,9 @@ class FakeJobRepository implements JobRepository {
   }
 
   @override
-  Future<List<JobItem>> fetchProviderFilteredJobs(List<String>? statuses) async {
+  Future<List<JobItem>> fetchProviderFilteredJobs(
+    List<String>? statuses,
+  ) async {
     return providerJobs;
   }
 

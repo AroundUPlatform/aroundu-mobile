@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../../app.dart';
 import '../view_model/auth_ui_view_model.dart';
 import '../view_model/auth_view_model.dart';
+import '../../../core/network/exchange_rate_service.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/app_notification.dart';
 import '../../../core/widgets/primary_button.dart';
@@ -25,6 +29,59 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _postalCodeController = TextEditingController();
   final _areaController = TextEditingController();
   final _fullAddressController = TextEditingController();
+
+  double? _latitude;
+  double? _longitude;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCurrentLocation();
+    _autoDetectLocale();
+  }
+
+  void _autoDetectLocale() {
+    try {
+      final locale = Platform.localeName; // e.g. "en_IN" or "en_US"
+      final parts = locale.split('_');
+      final countryCode = parts.length > 1 ? parts.last.toUpperCase() : 'IN';
+      final currency = defaultCurrencyForCountry(countryCode);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        final notifier = ref.read(registerFormUiProvider.notifier);
+        notifier.setCountry(countryCode);
+        notifier.setCurrency(currency);
+      });
+    } catch (_) {
+      // Locale detection failed — keep defaults.
+    }
+  }
+
+  Future<void> _fetchCurrentLocation() async {
+    try {
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+      if (permission == LocationPermission.deniedForever ||
+          permission == LocationPermission.denied) {
+        return;
+      }
+      final pos = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        ),
+      );
+      if (mounted) {
+        setState(() {
+          _latitude = pos.latitude;
+          _longitude = pos.longitude;
+        });
+      }
+    } catch (_) {
+      // Location unavailable — coordinates will be omitted from registration.
+    }
+  }
 
   @override
   void dispose() {
@@ -116,8 +173,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       city: city,
       area: area,
       fullAddress: fullAddress,
-      latitude: 28.6139,
-      longitude: 77.2090,
+      latitude: _latitude ?? 0.0,
+      longitude: _longitude ?? 0.0,
       currency: registerUi.selectedCurrency,
       skillIds: registerUi.selectedRole == UserRole.worker
           ? const <int>[1]

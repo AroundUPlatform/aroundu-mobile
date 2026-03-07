@@ -63,6 +63,7 @@ class EditProfileState {
     this.certifications = '',
     this.payoutAccount = '',
     this.currency = 'INR',
+    this.country = 'IN',
     this.isOnDuty = true,
     this.isSubmitting = false,
     this.errorMessage,
@@ -77,6 +78,7 @@ class EditProfileState {
   final String certifications;
   final String payoutAccount;
   final String currency;
+  final String country;
   final bool isOnDuty;
   final bool isSubmitting;
   final String? errorMessage;
@@ -91,6 +93,7 @@ class EditProfileState {
     String? certifications,
     String? payoutAccount,
     String? currency,
+    String? country,
     bool? isOnDuty,
     bool? isSubmitting,
     String? errorMessage,
@@ -106,6 +109,7 @@ class EditProfileState {
       certifications: certifications ?? this.certifications,
       payoutAccount: payoutAccount ?? this.payoutAccount,
       currency: currency ?? this.currency,
+      country: country ?? this.country,
       isOnDuty: isOnDuty ?? this.isOnDuty,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
@@ -127,6 +131,7 @@ class EditProfileController extends Notifier<EditProfileState> {
       certifications: auth.certifications ?? '',
       payoutAccount: auth.payoutAccount ?? '',
       currency: auth.currency,
+      country: auth.country,
       isOnDuty: auth.isOnDuty ?? true,
       isInitialized: true,
     );
@@ -146,6 +151,10 @@ class EditProfileController extends Notifier<EditProfileState> {
       state = state.copyWith(certifications: value, clearError: true);
   void updatePayoutAccount(String value) =>
       state = state.copyWith(payoutAccount: value, clearError: true);
+  void updateCurrency(String value) =>
+      state = state.copyWith(currency: value, clearError: true);
+  void updateCountry(String value) =>
+      state = state.copyWith(country: value, clearError: true);
   void toggleOnDuty() =>
       state = state.copyWith(isOnDuty: !state.isOnDuty, clearError: true);
 
@@ -174,6 +183,7 @@ class EditProfileController extends Notifier<EditProfileState> {
             : state.payoutAccount.trim(),
         isOnDuty: state.isOnDuty,
         currency: state.currency,
+        country: state.country,
       );
 
       final success = await ref

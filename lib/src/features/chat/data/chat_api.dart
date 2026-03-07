@@ -51,14 +51,41 @@ class ChatApi {
   }
 
   /// Mark all messages in a conversation as read
-  Future<void> markAsRead({
+  Future<List<int>> markAsRead({
     required String token,
     required int conversationId,
   }) async {
-    await _client.postAny(
+    final response = await _client.postAny(
       '/api/v1/chat/conversations/$conversationId/read',
       bearerToken: token,
     );
+
+    return _readIntListPayload(response);
+  }
+
+  /// Mark all messages in a conversation as delivered
+  Future<List<int>> markAsDelivered({
+    required String token,
+    required int conversationId,
+  }) async {
+    final response = await _client.postAny(
+      '/api/v1/chat/conversations/$conversationId/delivered',
+      bearerToken: token,
+    );
+
+    return _readIntListPayload(response);
+  }
+
+  /// Get conversations grouped by job (for client/provider view)
+  Future<List<Map<String, dynamic>>> getConversationsGrouped({
+    required String token,
+  }) async {
+    final response = await _client.getAny(
+      '/api/v1/chat/conversations/grouped',
+      bearerToken: token,
+    );
+
+    return _readListPayload(response);
   }
 
   Map<String, dynamic> _readMapPayload(Object? payload) {
@@ -100,5 +127,23 @@ class ChatApi {
     }
 
     throw const ApiException('Malformed response payload');
+  }
+
+  List<int> _readIntListPayload(Object? payload) {
+    if (payload is List) {
+      return payload.whereType<num>().map((n) => n.toInt()).toList();
+    }
+
+    if (payload is Map<String, dynamic> && payload.containsKey('success')) {
+      if (payload['success'] == true) {
+        final data = payload['data'];
+        if (data is List) {
+          return data.whereType<num>().map((n) => n.toInt()).toList();
+        }
+      }
+      throw ApiException(payload['message']?.toString() ?? 'Request failed');
+    }
+
+    return const <int>[];
   }
 }

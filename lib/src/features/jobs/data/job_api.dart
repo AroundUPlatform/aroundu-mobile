@@ -66,6 +66,8 @@ class JobApi {
     String sortDirection = 'DESC',
     double? radiusKm,
     bool sortByDistance = true,
+    double? latitude,
+    double? longitude,
   }) async {
     final response = await _client.getJson(
       '/api/v1/jobs/worker/$workerId/feed',
@@ -78,6 +80,8 @@ class JobApi {
         if (skillIds.isNotEmpty) 'skillIds': skillIds,
         if (radiusKm != null) 'radiusKm': radiusKm,
         if (sortByDistance) 'sortByDistance': true,
+        if (latitude != null) 'latitude': latitude,
+        if (longitude != null) 'longitude': longitude,
       },
     );
 

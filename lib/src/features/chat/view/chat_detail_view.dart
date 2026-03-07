@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -33,13 +35,33 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
   final _focusNode = FocusNode();
+  Timer? _typingDebounce;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_onTextChanged);
+  }
 
   @override
   void dispose() {
+    _typingDebounce?.cancel();
+    _controller.removeListener(_onTextChanged);
     _controller.dispose();
     _scrollController.dispose();
     _focusNode.dispose();
     super.dispose();
+  }
+
+  void _onTextChanged() {
+    final notifier = ref.read(
+      chatMessagesControllerProvider(widget.conversationId).notifier,
+    );
+    notifier.sendTyping(typing: true);
+    _typingDebounce?.cancel();
+    _typingDebounce = Timer(const Duration(seconds: 2), () {
+      notifier.sendTyping(typing: false);
+    });
   }
 
   void _scrollToBottom() {
@@ -59,6 +81,11 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
     if (text.isEmpty) return;
 
     _controller.clear();
+    // Stop typing indicator immediately
+    ref
+        .read(chatMessagesControllerProvider(widget.conversationId).notifier)
+        .sendTyping(typing: false);
+
     final success = await ref
         .read(chatMessagesControllerProvider(widget.conversationId).notifier)
         .sendMessage(
@@ -96,14 +123,25 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(widget.otherUserName, style: const TextStyle(fontSize: 16)),
-            Text(
-              widget.jobTitle,
-              style: TextStyle(
-                fontSize: 12,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                fontWeight: FontWeight.normal,
+            if (chatState.isOtherTyping)
+              const Text(
+                'typing...',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppPalette.success,
+                  fontWeight: FontWeight.w500,
+                  fontStyle: FontStyle.italic,
+                ),
+              )
+            else
+              Text(
+                widget.jobTitle,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
-            ),
           ],
         ),
       ),
@@ -157,9 +195,12 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                     itemCount: chatState.messages.length,
                     itemBuilder: (context, index) {
                       final msg = chatState.messages[index];
-                      // Map Flutter role to backend senderRole (provider → CLIENT, worker → WORKER)
-                      final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
-                      final isMe = msg.senderId == currentUserId && msg.senderRole == myRole;
+                      final myRole = auth.role == UserRole.worker
+                          ? 'WORKER'
+                          : 'CLIENT';
+                      final isMe =
+                          msg.senderId == currentUserId &&
+                          msg.senderRole == myRole;
                       final showDate =
                           index == 0 ||
                           _differentDay(
@@ -303,15 +344,7 @@ class _MessageBubble extends StatelessWidget {
                 ),
                 if (isMe) ...[
                   const SizedBox(width: 4),
-                  Icon(
-                    message.isRead
-                        ? Icons.done_all_rounded
-                        : Icons.done_rounded,
-                    size: 14,
-                    color: message.isRead
-                        ? Colors.lightBlue.shade300
-                        : Colors.white.withValues(alpha: 0.6),
-                  ),
+                  _StatusIcon(status: message.status),
                 ],
               ],
             ),
@@ -319,6 +352,35 @@ class _MessageBubble extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _StatusIcon extends StatelessWidget {
+  const _StatusIcon({required this.status});
+  final MessageStatus status;
+
+  @override
+  Widget build(BuildContext context) {
+    switch (status) {
+      case MessageStatus.read:
+        return Icon(
+          Icons.done_all_rounded,
+          size: 14,
+          color: Colors.lightBlue.shade300,
+        );
+      case MessageStatus.delivered:
+        return Icon(
+          Icons.done_all_rounded,
+          size: 14,
+          color: Colors.white.withValues(alpha: 0.6),
+        );
+      case MessageStatus.sent:
+        return Icon(
+          Icons.done_rounded,
+          size: 14,
+          color: Colors.white.withValues(alpha: 0.6),
+        );
+    }
   }
 }
 
