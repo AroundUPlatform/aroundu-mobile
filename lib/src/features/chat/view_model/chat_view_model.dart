@@ -208,10 +208,7 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
           updatedMessages = [...state.messages, msg];
         }
 
-        state = state.copyWith(
-          messages: updatedMessages,
-          isOtherTyping: false,
-        );
+        state = state.copyWith(messages: updatedMessages, isOtherTyping: false);
         // Auto-mark as delivered for messages from the other participant
         if (msg.senderRole != myRole) {
           ws.sendDelivered(conversationId: arg);
