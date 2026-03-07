@@ -210,14 +210,14 @@ class _JobGroupTile extends StatelessWidget {
           final auth = ProviderScope.containerOf(
             context,
           ).read(authControllerProvider);
-          final currentUserId = auth.userId ?? 0;
+          final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => ChatDetailScreen(
                 conversationId: conv.id,
                 jobId: conv.jobId,
-                otherUserId: conv.otherParticipantId(currentUserId),
-                otherUserName: conv.otherParticipantName(currentUserId),
+                otherUserId: conv.otherParticipantId(myRole),
+                otherUserName: conv.otherParticipantName(myRole),
                 jobTitle: conv.jobTitle,
               ),
             ),
@@ -255,8 +255,8 @@ class ConversationTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(authControllerProvider);
-    final currentUserId = auth.userId ?? 0;
-    final otherName = conversation.otherParticipantName(currentUserId);
+    final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
+    final otherName = conversation.otherParticipantName(myRole);
     final hasUnread = conversation.unreadCount > 0;
 
     final timeText = conversation.lastMessageAt != null
@@ -346,7 +346,7 @@ class ConversationTile extends ConsumerWidget {
             builder: (_) => ChatDetailScreen(
               conversationId: conversation.id,
               jobId: conversation.jobId,
-              otherUserId: conversation.otherParticipantId(currentUserId),
+              otherUserId: conversation.otherParticipantId(myRole),
               otherUserName: otherName,
               jobTitle: conversation.jobTitle,
             ),

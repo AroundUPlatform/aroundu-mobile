@@ -95,16 +95,19 @@ class Conversation {
   final DateTime? lastMessageAt;
   final DateTime? createdAt;
 
-  /// Get the display name for the other participant
-  String otherParticipantName(int currentUserId) {
-    if (currentUserId == participantOneId) {
-      return participantTwoName ?? 'User';
+  /// Get the display name for the other participant.
+  /// Uses role instead of userId because Client and Worker tables have
+  /// independent auto-increment IDs that can collide (both userId=1).
+  /// participantOne is always CLIENT, participantTwo is always WORKER.
+  String otherParticipantName(String currentRole) {
+    if (currentRole == 'CLIENT') {
+      return participantTwoName ?? 'User'; // show worker name
     }
-    return participantOneName ?? 'User';
+    return participantOneName ?? 'User'; // show client name
   }
 
-  int otherParticipantId(int currentUserId) {
-    if (currentUserId == participantOneId) {
+  int otherParticipantId(String currentRole) {
+    if (currentRole == 'CLIENT') {
       return participantTwoId;
     }
     return participantOneId;

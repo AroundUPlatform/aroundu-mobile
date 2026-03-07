@@ -206,8 +206,8 @@ void main() {
         'participantTwoName': 'Bob',
       });
 
-      expect(conv.otherParticipantId(10), 20);
-      expect(conv.otherParticipantId(20), 10);
+      expect(conv.otherParticipantId('CLIENT'), 20);
+      expect(conv.otherParticipantId('WORKER'), 10);
     });
 
     test('otherParticipantName returns correct name', () {
@@ -220,8 +220,8 @@ void main() {
         'participantTwoName': 'Bob',
       });
 
-      expect(conv.otherParticipantName(10), 'Bob');
-      expect(conv.otherParticipantName(20), 'Alice');
+      expect(conv.otherParticipantName('CLIENT'), 'Bob');
+      expect(conv.otherParticipantName('WORKER'), 'Alice');
     });
 
     test('archived field defaults to false', () {

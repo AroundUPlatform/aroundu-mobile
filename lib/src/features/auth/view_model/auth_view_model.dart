@@ -623,6 +623,8 @@ class AuthController extends Notifier<AuthState> {
   }
 
   Future<void> logout() async {
+    // Disconnect WebSocket so next login uses a fresh connection
+    ref.read(chatWebSocketServiceProvider).disconnect();
     await ref.read(localStorageProvider).clearAuthSession();
     state = const AuthState(isHydrating: false);
   }

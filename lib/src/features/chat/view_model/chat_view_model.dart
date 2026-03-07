@@ -24,9 +24,9 @@ class ConversationsController extends AsyncNotifier<List<Conversation>> {
     final auth = ref.read(authControllerProvider);
     if (auth.isAuthenticated && auth.token != null) {
       final ws = ref.read(chatWebSocketServiceProvider);
-      if (!ws.isConnected) {
-        ws.connect(auth.token!);
-      }
+      // Always call connect() — it no-ops if same token & already connected,
+      // but reconnects when the token changed (e.g. account switch).
+      ws.connect(auth.token!);
     }
   }
 
@@ -95,9 +95,9 @@ class GroupedConversationsController
     final auth = ref.read(authControllerProvider);
     if (auth.isAuthenticated && auth.token != null) {
       final ws = ref.read(chatWebSocketServiceProvider);
-      if (!ws.isConnected) {
-        ws.connect(auth.token!);
-      }
+      // Always call connect() — it no-ops if same token & already connected,
+      // but reconnects when the token changed (e.g. account switch).
+      ws.connect(auth.token!);
     }
   }
 
