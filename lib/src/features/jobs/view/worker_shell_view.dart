@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -47,9 +49,13 @@ class _WorkerShellScreenState extends ConsumerState<WorkerShellScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      final tabIndex = ref.read(workerTabIndexProvider);
-      if (tabIndex == 0) {
-        ref.invalidate(workerFeedControllerProvider);
+      // Invalidate the nearby feed AND all "My Jobs" filter caches so status
+      // changes made on other devices are visible after the app comes back.
+      ref.invalidate(workerFeedControllerProvider);
+      for (final filter in WorkerJobFilter.values) {
+        if (filter != WorkerJobFilter.nearby) {
+          ref.invalidate(workerMyJobsProvider(filter));
+        }
       }
     }
   }
@@ -62,6 +68,11 @@ class _WorkerShellScreenState extends ConsumerState<WorkerShellScreen>
     ref.listen<int>(workerTabIndexProvider, (previous, next) {
       if (next == 0 && (previous ?? -1) != 0) {
         ref.invalidate(workerFeedControllerProvider);
+        for (final filter in WorkerJobFilter.values) {
+          if (filter != WorkerJobFilter.nearby) {
+            ref.invalidate(workerMyJobsProvider(filter));
+          }
+        }
       }
     });
 
@@ -154,6 +165,30 @@ class _WorkerFeedTab extends ConsumerStatefulWidget {
 
 class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
   WorkerJobFilter _activeFilter = WorkerJobFilter.nearby;
+  Timer? _refreshTimer;
+
+  /// Local mirror of the radius used purely for real-time slider label
+  /// feedback.  The actual provider (and therefore the API call) is only
+  /// updated once the user lifts their finger — acting as a debounce.
+  late int _displayRadius;
+
+  @override
+  void initState() {
+    super.initState();
+    _displayRadius = ref.read(workerFeedRadiusProvider);
+    // Poll every 30 s so status changes made by the client on another device
+    // are reflected without manual pull-to-refresh.
+    _refreshTimer = Timer.periodic(
+      const Duration(seconds: 30),
+      (_) => _invalidateAllFilters(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _refreshTimer?.cancel();
+    super.dispose();
+  }
 
   static const List<({WorkerJobFilter filter, String label, IconData icon})>
   _chips = [
@@ -338,22 +373,27 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
   }
 
   Widget _buildDistanceSlider() {
-    final radius = ref.watch(workerFeedRadiusProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
           const Icon(Icons.social_distance_rounded, size: 18),
           const SizedBox(width: 4),
-          Text('$radius km', style: Theme.of(context).textTheme.labelLarge),
+          Text(
+            '$_displayRadius km',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
           Expanded(
             child: Slider(
-              value: radius.toDouble(),
+              value: _displayRadius.toDouble(),
               min: 2,
               max: 30,
               divisions: 28,
-              label: '$radius km',
-              onChanged: (v) {
+              label: '$_displayRadius km',
+              // Update label in real time without triggering the API.
+              onChanged: (v) => setState(() => _displayRadius = v.round()),
+              // Commit to the provider (and thus the API) only on finger lift.
+              onChangeEnd: (v) {
                 ref.read(workerFeedRadiusProvider.notifier).state = v.round();
               },
             ),

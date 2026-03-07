@@ -39,39 +39,36 @@ class _WorkerConversationsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final conversationsAsync = ref.watch(conversationsControllerProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Messages')),
-      body: conversationsAsync.when(
-        loading: () => const LoadingState(message: 'Loading conversations...'),
-        error: (error, _) => ErrorState(
-          message: error.toString(),
-          onRetry: () =>
-              ref.read(conversationsControllerProvider.notifier).refresh(),
-        ),
-        data: (conversations) {
-          if (conversations.isEmpty) {
-            return const EmptyState(
-              icon: Icons.chat_bubble_outline_rounded,
-              title: 'No messages yet',
-              subtitle:
-                  'Your conversations will appear here when you start chatting about a task.',
-            );
-          }
-
-          return RefreshIndicator(
-            onRefresh: () =>
-                ref.read(conversationsControllerProvider.notifier).refresh(),
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: conversations.length,
-              separatorBuilder: (_, __) => const Divider(height: 1, indent: 72),
-              itemBuilder: (context, index) {
-                return ConversationTile(conversation: conversations[index]);
-              },
-            ),
-          );
-        },
+    return conversationsAsync.when(
+      loading: () => const LoadingState(message: 'Loading conversations...'),
+      error: (error, _) => ErrorState(
+        message: error.toString(),
+        onRetry: () =>
+            ref.read(conversationsControllerProvider.notifier).refresh(),
       ),
+      data: (conversations) {
+        if (conversations.isEmpty) {
+          return const EmptyState(
+            icon: Icons.chat_bubble_outline_rounded,
+            title: 'No messages yet',
+            subtitle:
+                'Your conversations will appear here when you start chatting about a task.',
+          );
+        }
+
+        return RefreshIndicator(
+          onRefresh: () =>
+              ref.read(conversationsControllerProvider.notifier).refresh(),
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            itemCount: conversations.length,
+            separatorBuilder: (_, __) => const Divider(height: 1, indent: 72),
+            itemBuilder: (context, index) {
+              return ConversationTile(conversation: conversations[index]);
+            },
+          ),
+        );
+      },
     );
   }
 }
@@ -85,41 +82,37 @@ class _ClientGroupedConversationsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final groupedAsync = ref.watch(groupedConversationsControllerProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Messages')),
-      body: groupedAsync.when(
-        loading: () => const LoadingState(message: 'Loading conversations...'),
-        error: (error, _) => ErrorState(
-          message: error.toString(),
-          onRetry: () => ref
+    return groupedAsync.when(
+      loading: () => const LoadingState(message: 'Loading conversations...'),
+      error: (error, _) => ErrorState(
+        message: error.toString(),
+        onRetry: () =>
+            ref.read(groupedConversationsControllerProvider.notifier).refresh(),
+      ),
+      data: (groups) {
+        if (groups.isEmpty) {
+          return const EmptyState(
+            icon: Icons.chat_bubble_outline_rounded,
+            title: 'No messages yet',
+            subtitle:
+                'Your conversations will appear here when you start chatting about a task.',
+          );
+        }
+
+        return RefreshIndicator(
+          onRefresh: () => ref
               .read(groupedConversationsControllerProvider.notifier)
               .refresh(),
-        ),
-        data: (groups) {
-          if (groups.isEmpty) {
-            return const EmptyState(
-              icon: Icons.chat_bubble_outline_rounded,
-              title: 'No messages yet',
-              subtitle:
-                  'Your conversations will appear here when you start chatting about a task.',
-            );
-          }
-
-          return RefreshIndicator(
-            onRefresh: () => ref
-                .read(groupedConversationsControllerProvider.notifier)
-                .refresh(),
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: groups.length,
-              separatorBuilder: (_, __) => const Divider(height: 1, indent: 16),
-              itemBuilder: (context, index) {
-                return _JobGroupTile(group: groups[index]);
-              },
-            ),
-          );
-        },
-      ),
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            itemCount: groups.length,
+            separatorBuilder: (_, __) => const Divider(height: 1, indent: 16),
+            itemBuilder: (context, index) {
+              return _JobGroupTile(group: groups[index]);
+            },
+          ),
+        );
+      },
     );
   }
 }

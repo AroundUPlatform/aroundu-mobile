@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/data/auth_api.dart';
 import '../../auth/view_model/auth_view_model.dart';
+import '../../chat/model/chat_models.dart';
+import '../../chat/view/chat_detail_view.dart';
 import '../../chat/view/conversations_view.dart';
+import '../../chat/view_model/chat_view_model.dart';
 import '../../profile/view/profile_view.dart';
 import '../../review/view/leave_review_view.dart';
 import '../../../core/network/api_exception.dart';
@@ -47,6 +52,9 @@ class _ProviderShellScreenState extends ConsumerState<ProviderShellScreen> {
     ref.listen<int>(providerTabIndexProvider, (previous, next) {
       if (next == 0 && (previous ?? -1) != 0) {
         ref.invalidate(providerJobsControllerProvider);
+        for (final f in ProviderJobFilter.values) {
+          ref.invalidate(providerFilteredJobsProvider(f));
+        }
       }
     });
 
@@ -103,6 +111,7 @@ class _ProviderJobsTab extends ConsumerStatefulWidget {
 class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
     with WidgetsBindingObserver {
   ProviderJobFilter _activeFilter = ProviderJobFilter.all;
+  Timer? _refreshTimer;
 
   static const List<({ProviderJobFilter filter, String label, IconData icon})>
   _chips = [
@@ -153,10 +162,17 @@ class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    // Poll every 30 s while the tab is alive so status changes made by the
+    // worker on another device are reflected without manual pull-to-refresh.
+    _refreshTimer = Timer.periodic(
+      const Duration(seconds: 30),
+      (_) => _invalidateAll(),
+    );
   }
 
   @override
   void dispose() {
+    _refreshTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -1024,6 +1040,117 @@ class _ProviderJobWorkflowSheetState
     Navigator.pop(context, true);
   }
 
+  /// Opens the chat with the selected worker. If a conversation for this
+  /// job already exists it is opened directly; otherwise a small compose
+  /// dialog lets the client send the first message, which creates the
+  /// conversation on the backend.
+  Future<void> _openChat(BidItem bid) async {
+    // Check whether a conversation already exists for this job + worker.
+    final groups =
+        ref.read(groupedConversationsControllerProvider).valueOrNull ?? [];
+
+    Conversation? existing;
+    for (final group in groups) {
+      if (group.jobId != widget.jobId) continue;
+      for (final conv in group.conversations) {
+        if (conv.participantOneId == bid.workerId ||
+            conv.participantTwoId == bid.workerId) {
+          existing = conv;
+          break;
+        }
+      }
+      if (existing != null) break;
+    }
+
+    if (!mounted) return;
+
+    if (existing != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (_) => ChatDetailScreen(
+            conversationId: existing!.id,
+            jobId: existing.jobId,
+            otherUserId: bid.workerId,
+            otherUserName: 'Worker #${bid.workerId}',
+            jobTitle: _job!.title,
+          ),
+        ),
+      );
+      return;
+    }
+
+    // No conversation yet — show compose dialog so the client sends first.
+    final textController = TextEditingController();
+    final firstMessage = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Message Worker'),
+        content: TextField(
+          controller: textController,
+          autofocus: true,
+          maxLines: 3,
+          decoration: const InputDecoration(
+            hintText: 'Type your first message…',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, textController.text.trim()),
+            child: const Text('Send'),
+          ),
+        ],
+      ),
+    );
+    textController.dispose();
+
+    if (firstMessage == null || firstMessage.isEmpty || !mounted) return;
+
+    setState(() => _working = true);
+    try {
+      final auth = ref.read(authControllerProvider);
+      final chatApi = ref.read(chatApiProvider);
+      final rawMsg = await chatApi.sendMessage(
+        token: auth.token!,
+        jobId: widget.jobId,
+        recipientId: bid.workerId,
+        content: firstMessage,
+      );
+
+      // The backend response includes the created message with conversationId.
+      final conversationId = rawMsg['conversationId'] is num
+          ? (rawMsg['conversationId'] as num).toInt()
+          : int.tryParse(rawMsg['conversationId']?.toString() ?? '') ?? 0;
+
+      ref.invalidate(groupedConversationsControllerProvider);
+      ref.invalidate(conversationsControllerProvider);
+
+      if (!mounted) return;
+
+      Navigator.push(
+        context,
+        MaterialPageRoute<void>(
+          builder: (_) => ChatDetailScreen(
+            conversationId: conversationId,
+            jobId: widget.jobId,
+            otherUserId: bid.workerId,
+            otherUserName: 'Worker #${bid.workerId}',
+            jobTitle: _job!.title,
+          ),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      AppNotifier.showError(context, 'Failed to send message: $e');
+    } finally {
+      if (mounted) setState(() => _working = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_loading) {
@@ -1063,22 +1190,22 @@ class _ProviderJobWorkflowSheetState
         statusCode == 'BID_SELECTED_AWAITING_HANDSHAKE' ||
         statusCode == 'READY_TO_START';
     // Cancellation only valid for early-stage statuses (backend enforces this too)
-    const _cancelableStatuses = {
+    const cancelableStatuses = {
       'OPEN_FOR_BIDS',
       'CREATED',
       'BID_SELECTED_AWAITING_HANDSHAKE',
       'READY_TO_START',
       'IN_PROGRESS',
     };
-    final canCancel = _cancelableStatuses.contains(statusCode);
+    final canCancel = cancelableStatuses.contains(statusCode);
     // Deleting active/payment-locked jobs causes 500 on the server
-    const _unsafeDeletionStatuses = {
+    const unsafeDeletionStatuses = {
       'IN_PROGRESS',
       'READY_TO_START',
       'BID_SELECTED_AWAITING_HANDSHAKE',
       'COMPLETED_PENDING_PAYMENT',
     };
-    final canDelete = !_unsafeDeletionStatuses.contains(statusCode);
+    final canDelete = !unsafeDeletionStatuses.contains(statusCode);
     final canRelease = statusCode == 'IN_PROGRESS';
     final escrowMode = (job.paymentMode ?? '').toUpperCase() == 'ESCROW';
     final canLockEscrow = statusCode == 'READY_TO_START' && escrowMode;
@@ -1354,6 +1481,19 @@ class _ProviderJobWorkflowSheetState
                               Icons.check_circle_outline_rounded,
                             ),
                             label: const Text('Accept this Offer'),
+                          ),
+                        ),
+                      ],
+                      // Message button — only for the selected worker so the
+                      // client always initiates the conversation first.
+                      if (isSelected) ...[
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            onPressed: _working ? null : () => _openChat(bid),
+                            icon: const Icon(Icons.chat_bubble_outline_rounded),
+                            label: const Text('Message Worker'),
                           ),
                         ),
                       ],

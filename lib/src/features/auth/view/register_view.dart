@@ -327,25 +327,20 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           children: [
                             Expanded(
                               child: DropdownButtonFormField<String>(
+                                isExpanded: true,
                                 initialValue: registerUi.selectedCountry,
                                 decoration: const InputDecoration(
                                   labelText: 'Country',
                                   prefixIcon: Icon(Icons.flag_outlined),
                                 ),
-                                items: const [
-                                  DropdownMenuItem(
-                                    value: 'IN',
-                                    child: Text('IN'),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'US',
-                                    child: Text('US'),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'GB',
-                                    child: Text('GB'),
-                                  ),
-                                ],
+                                items: kCountryToCurrency.keys
+                                    .map(
+                                      (code) => DropdownMenuItem(
+                                        value: code,
+                                        child: Text(code),
+                                      ),
+                                    )
+                                    .toList(),
                                 onChanged: authState.isLoading
                                     ? null
                                     : (value) {
@@ -363,6 +358,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             const SizedBox(width: 10),
                             Expanded(
                               child: DropdownButtonFormField<String>(
+                                isExpanded: true,
                                 initialValue: registerUi.selectedCurrency,
                                 decoration: const InputDecoration(
                                   labelText: 'Currency',
@@ -370,20 +366,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                     Icons.currency_exchange_outlined,
                                   ),
                                 ),
-                                items: const [
-                                  DropdownMenuItem(
-                                    value: 'INR',
-                                    child: Text('INR'),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'USD',
-                                    child: Text('USD'),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'EUR',
-                                    child: Text('EUR'),
-                                  ),
-                                ],
+                                items: kCurrencySymbols.entries
+                                    .map(
+                                      (e) => DropdownMenuItem(
+                                        value: e.key,
+                                        child: Text(
+                                          '${e.key}  ${e.value}',
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
                                 onChanged: authState.isLoading
                                     ? null
                                     : (value) {

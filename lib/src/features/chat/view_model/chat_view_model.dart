@@ -275,6 +275,7 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
   /// Send a typing indicator via WebSocket.
   void sendTyping({required bool typing}) {
     final ws = ref.read(chatWebSocketServiceProvider);
+    if (!ws.isConnected) return;
     ws.sendTypingEvent(conversationId: arg, typing: typing);
   }
 

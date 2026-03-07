@@ -111,6 +111,7 @@ class ChatWebSocketService {
 
   /// Send a typing indicator.
   void sendTypingEvent({required int conversationId, required bool typing}) {
+    if (!_connected) return;
     _client?.send(
       destination: '/app/chat.typing/$conversationId',
       body: jsonEncode({'typing': typing}),
@@ -119,11 +120,13 @@ class ChatWebSocketService {
 
   /// Notify the server that messages in a conversation have been delivered.
   void sendDelivered({required int conversationId}) {
+    if (!_connected) return;
     _client?.send(destination: '/app/chat.delivered/$conversationId', body: '');
   }
 
   /// Notify the server that messages in a conversation have been read.
   void sendRead({required int conversationId}) {
+    if (!_connected) return;
     _client?.send(destination: '/app/chat.read/$conversationId', body: '');
   }
 
