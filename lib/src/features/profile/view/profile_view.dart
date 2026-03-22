@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_theme.dart';
-import '../../../core/view_model/theme_view_model.dart';
 import '../../../core/widgets/app_notification.dart';
 import '../../../core/widgets/rating_stars.dart';
 import '../../auth/view_model/auth_view_model.dart';
@@ -128,13 +127,27 @@ class ProfileScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   ListTile(
-                    leading: const Icon(Icons.dark_mode_outlined),
-                    title: const Text('Dark Mode'),
-                    trailing: Switch(
-                      value: ref.watch(themeModeProvider) == ThemeMode.dark,
-                      onChanged: (_) =>
-                          ref.read(themeModeProvider.notifier).toggle(),
-                    ),
+                    leading: const Icon(Icons.palette_outlined),
+                    title: const Text('Theme & Colors'),
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppRoutes.themePicker),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const Icon(Icons.language_outlined),
+                    title: const Text('Language'),
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppRoutes.languagePicker),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const Icon(Icons.auto_awesome_outlined),
+                    title: const Text('AI Model'),
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppRoutes.aiSetup),
                   ),
                   if (isWorker) ...[
                     const Divider(height: 1),

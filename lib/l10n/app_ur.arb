@@ -1,0 +1,22 @@
+{
+  "@@locale": "ur",
+  "appName": "AroundU",
+  "loginTitle": "لاگ ان",
+  "registerTitle": "اکاؤنٹ بنائیں",
+  "getStarted": "شروع کریں",
+  "homeTab": "ہوم",
+  "jobsTab": "نوکریاں",
+  "chatTab": "چیٹ",
+  "profileTab": "پروفائل",
+  "conversations": "پیغامات",
+  "typeMessage": "پیغام ٹائپ کریں...",
+  "newMessages": "نئے پیغامات",
+  "settings": "ترتیبات",
+  "language": "زبان",
+  "loading": "لوڈ ہو رہا ہے...",
+  "error": "کچھ غلط ہو گیا",
+  "cancel": "منسوخ",
+  "save": "محفوظ کریں",
+  "search": "تلاش",
+  "logout": "لاگ آؤٹ"
+}

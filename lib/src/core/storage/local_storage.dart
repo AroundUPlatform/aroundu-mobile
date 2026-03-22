@@ -142,4 +142,18 @@ class LocalStorage {
     }
     await prefs.setString(_themeModeKey, themeModeName);
   }
+
+  // ── Generic string read / write ──────────────────────────────────────────
+
+  Future<String?> readString(String key) async {
+    final prefs = await _prefs();
+    if (prefs == null) return null;
+    return prefs.getString(key);
+  }
+
+  Future<void> saveString(String key, String value) async {
+    final prefs = await _prefs();
+    if (prefs == null) return;
+    await prefs.setString(key, value);
+  }
 }

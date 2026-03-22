@@ -1,0 +1,22 @@
+{
+  "@@locale": "ar",
+  "appName": "AroundU",
+  "loginTitle": "تسجيل الدخول",
+  "registerTitle": "إنشاء حساب",
+  "getStarted": "ابدأ",
+  "homeTab": "الرئيسية",
+  "jobsTab": "الوظائف",
+  "chatTab": "الدردشة",
+  "profileTab": "الملف الشخصي",
+  "conversations": "الرسائل",
+  "typeMessage": "اكتب رسالة...",
+  "newMessages": "رسائل جديدة",
+  "settings": "الإعدادات",
+  "language": "اللغة",
+  "loading": "جار التحميل...",
+  "error": "حدث خطأ ما",
+  "cancel": "إلغاء",
+  "save": "حفظ",
+  "search": "بحث",
+  "logout": "تسجيل الخروج"
+}

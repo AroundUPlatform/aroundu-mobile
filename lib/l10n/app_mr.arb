@@ -1,0 +1,22 @@
+{
+  "@@locale": "mr",
+  "appName": "AroundU",
+  "loginTitle": "लॉग इन",
+  "registerTitle": "खाते तयार करा",
+  "getStarted": "सुरू करा",
+  "homeTab": "मुख्यपृष्ठ",
+  "jobsTab": "कामे",
+  "chatTab": "चॅट",
+  "profileTab": "प्रोफाइल",
+  "conversations": "संदेश",
+  "typeMessage": "संदेश टाइप करा...",
+  "newMessages": "नवीन संदेश",
+  "settings": "सेटिंग्ज",
+  "language": "भाषा",
+  "loading": "लोड होत आहे...",
+  "error": "काहीतरी चूक झाली",
+  "cancel": "रद्द करा",
+  "save": "जतन करा",
+  "search": "शोधा",
+  "logout": "लॉग आउट"
+}

@@ -1,0 +1,22 @@
+{
+  "@@locale": "nl",
+  "appName": "AroundU",
+  "loginTitle": "Inloggen",
+  "registerTitle": "Account aanmaken",
+  "getStarted": "Aan de slag",
+  "homeTab": "Home",
+  "jobsTab": "Klussen",
+  "chatTab": "Chat",
+  "profileTab": "Profiel",
+  "conversations": "Berichten",
+  "typeMessage": "Typ een bericht...",
+  "newMessages": "Nieuwe Berichten",
+  "settings": "Instellingen",
+  "language": "Taal",
+  "loading": "Laden...",
+  "error": "Er ging iets mis",
+  "cancel": "Annuleren",
+  "save": "Opslaan",
+  "search": "Zoeken",
+  "logout": "Uitloggen"
+}

@@ -1,0 +1,22 @@
+{
+  "@@locale": "pt",
+  "appName": "AroundU",
+  "loginTitle": "Entrar",
+  "registerTitle": "Criar Conta",
+  "getStarted": "Começar",
+  "homeTab": "Início",
+  "jobsTab": "Trabalhos",
+  "chatTab": "Chat",
+  "profileTab": "Perfil",
+  "conversations": "Mensagens",
+  "typeMessage": "Digite uma mensagem...",
+  "newMessages": "Novas Mensagens",
+  "settings": "Configurações",
+  "language": "Idioma",
+  "loading": "Carregando...",
+  "error": "Algo deu errado",
+  "cancel": "Cancelar",
+  "save": "Salvar",
+  "search": "Pesquisar",
+  "logout": "Sair"
+}

@@ -1,0 +1,22 @@
+{
+  "@@locale": "pa",
+  "appName": "AroundU",
+  "loginTitle": "ਲੌਗ ਇਨ",
+  "registerTitle": "ਖਾਤਾ ਬਣਾਓ",
+  "getStarted": "ਸ਼ੁਰੂ ਕਰੋ",
+  "homeTab": "ਹੋਮ",
+  "jobsTab": "ਨੌਕਰੀਆਂ",
+  "chatTab": "ਚੈਟ",
+  "profileTab": "ਪ੍ਰੋਫਾਈਲ",
+  "conversations": "ਸੁਨੇਹੇ",
+  "typeMessage": "ਸੁਨੇਹਾ ਟਾਈਪ ਕਰੋ...",
+  "newMessages": "ਨਵੇਂ ਸੁਨੇਹੇ",
+  "settings": "ਸੈਟਿੰਗਾਂ",
+  "language": "ਭਾਸ਼ਾ",
+  "loading": "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+  "error": "ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ",
+  "cancel": "ਰੱਦ ਕਰੋ",
+  "save": "ਸੇਵ ਕਰੋ",
+  "search": "ਖੋਜੋ",
+  "logout": "ਲੌਗ ਆਊਟ"
+}

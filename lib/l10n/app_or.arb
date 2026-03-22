@@ -1,0 +1,19 @@
+{
+  "@@locale": "or",
+  "appName": "AroundU",
+  "loginTitle": "ଲଗ ଇନ",
+  "getStarted": "ଆରମ୍ଭ କରନ୍ତୁ",
+  "homeTab": "ହୋମ",
+  "jobsTab": "ଚାକିରି",
+  "chatTab": "ଚାଟ",
+  "profileTab": "ପ୍ରୋଫାଇଲ",
+  "conversations": "ବାର୍ତ୍ତା",
+  "settings": "ସେଟିଂସ",
+  "language": "ଭାଷା",
+  "loading": "ଲୋଡ ହେଉଛି...",
+  "error": "କିଛି ଭୁଲ ହୋଇଯାଇଛି",
+  "cancel": "ବାତିଲ",
+  "save": "ସେଭ",
+  "search": "ଖୋଜ",
+  "logout": "ଲଗ ଆଉଟ"
+}

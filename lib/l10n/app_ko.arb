@@ -1,0 +1,22 @@
+{
+  "@@locale": "ko",
+  "appName": "AroundU",
+  "loginTitle": "로그인",
+  "registerTitle": "계정 만들기",
+  "getStarted": "시작하기",
+  "homeTab": "홈",
+  "jobsTab": "일자리",
+  "chatTab": "채팅",
+  "profileTab": "프로필",
+  "conversations": "메시지",
+  "typeMessage": "메시지 입력...",
+  "newMessages": "새 메시지",
+  "settings": "설정",
+  "language": "언어",
+  "loading": "로딩 중...",
+  "error": "문제가 발생했습니다",
+  "cancel": "취소",
+  "save": "저장",
+  "search": "검색",
+  "logout": "로그아웃"
+}

@@ -36,6 +36,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   final _scrollController = ScrollController();
   final _focusNode = FocusNode();
   Timer? _typingDebounce;
+  bool _hasScrolledToUnread = false;
 
   @override
   void initState() {
@@ -73,6 +74,18 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
           curve: Curves.easeOut,
         );
       }
+    });
+  }
+
+  /// Scrolls to a specific item index (0-based). Used to jump to the
+  /// first unread message on initial load.
+  void _scrollToIndex(int index, int totalItems) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_scrollController.hasClients) return;
+      // Estimate: each message bubble ~72px; overshoot slightly.
+      final estimated = index * 72.0;
+      final maxScroll = _scrollController.position.maxScrollExtent;
+      _scrollController.jumpTo(estimated.clamp(0.0, maxScroll));
     });
   }
 
@@ -115,6 +128,27 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
         _scrollToBottom();
       }
     });
+
+    // Calculate first unread index for the divider
+    final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
+    int? firstUnreadIndex;
+    for (int i = 0; i < chatState.messages.length; i++) {
+      final msg = chatState.messages[i];
+      if (msg.senderRole != myRole && !msg.isRead) {
+        firstUnreadIndex = i;
+        break;
+      }
+    }
+
+    // On first data load: scroll to first unread, or bottom if all read.
+    if (!_hasScrolledToUnread && chatState.messages.isNotEmpty) {
+      _hasScrolledToUnread = true;
+      if (firstUnreadIndex != null) {
+        _scrollToIndex(firstUnreadIndex, chatState.messages.length);
+      } else {
+        _scrollToBottom();
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -194,12 +228,6 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                     itemCount: chatState.messages.length,
                     itemBuilder: (context, index) {
                       final msg = chatState.messages[index];
-                      final myRole = auth.role == UserRole.worker
-                          ? 'WORKER'
-                          : 'CLIENT';
-                      // In a 2-person job chat the role uniquely identifies
-                      // the sender — more robust than comparing IDs which can
-                      // collide in dev (both accounts share ID = 1).
                       final isMe = msg.senderRole == myRole;
                       final showDate =
                           index == 0 ||
@@ -207,11 +235,13 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                             chatState.messages[index - 1].createdAt,
                             msg.createdAt,
                           );
+                      final showUnreadDivider = index == firstUnreadIndex;
 
                       return Column(
                         children: [
                           if (showDate && msg.createdAt != null)
                             _DateSeparator(date: msg.createdAt!),
+                          if (showUnreadDivider) const _UnreadDivider(),
                           _MessageBubble(message: msg, isMe: isMe),
                         ],
                       );
@@ -264,14 +294,38 @@ class _DateSeparator extends StatelessWidget {
             ).colorScheme.outlineVariant.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              // Inherits onSurfaceVariant from the theme for dark-mode safety
+          child: Text(label, style: const TextStyle(fontSize: 12)),
+        ),
+      ),
+    );
+  }
+}
+
+/// Visual separator indicating where the user's unread messages begin.
+class _UnreadDivider extends StatelessWidget {
+  const _UnreadDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    final primary = Theme.of(context).colorScheme.primary;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Expanded(child: Divider(color: primary.withValues(alpha: 0.4))),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Text(
+              '↑ New Messages',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: primary,
+              ),
             ),
           ),
-        ),
+          Expanded(child: Divider(color: primary.withValues(alpha: 0.4))),
+        ],
       ),
     );
   }
@@ -297,7 +351,7 @@ class _MessageBubble extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
           color: isMe
-              ? AppPalette.primary
+              ? Theme.of(context).colorScheme.primary
               : Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
@@ -363,10 +417,10 @@ class _StatusIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (status) {
       case MessageStatus.read:
-        return Icon(
+        return const Icon(
           Icons.done_all_rounded,
           size: 14,
-          color: Colors.lightBlue.shade300,
+          color: Color(0xFF4AC97E), // visible on both light & dark themes
         );
       case MessageStatus.delivered:
         return Icon(
@@ -457,7 +511,7 @@ class _ChatInput extends StatelessWidget {
                   )
                 : const Icon(Icons.send_rounded),
             style: IconButton.styleFrom(
-              backgroundColor: AppPalette.primary,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Colors.white,
             ),
           ),

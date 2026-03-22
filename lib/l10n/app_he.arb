@@ -1,0 +1,22 @@
+{
+  "@@locale": "he",
+  "appName": "AroundU",
+  "loginTitle": "התחברות",
+  "registerTitle": "יצירת חשבון",
+  "getStarted": "התחל",
+  "homeTab": "בית",
+  "jobsTab": "עבודות",
+  "chatTab": "צ'אט",
+  "profileTab": "פרופיל",
+  "conversations": "הודעות",
+  "typeMessage": "הקלד הודעה...",
+  "newMessages": "הודעות חדשות",
+  "settings": "הגדרות",
+  "language": "שפה",
+  "loading": "טוען...",
+  "error": "משהו השתבש",
+  "cancel": "ביטול",
+  "save": "שמור",
+  "search": "חיפוש",
+  "logout": "התנתק"
+}

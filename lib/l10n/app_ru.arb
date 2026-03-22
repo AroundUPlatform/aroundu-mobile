@@ -1,0 +1,22 @@
+{
+  "@@locale": "ru",
+  "appName": "AroundU",
+  "loginTitle": "Войти",
+  "registerTitle": "Создать аккаунт",
+  "getStarted": "Начать",
+  "homeTab": "Главная",
+  "jobsTab": "Задания",
+  "chatTab": "Чат",
+  "profileTab": "Профиль",
+  "conversations": "Сообщения",
+  "typeMessage": "Введите сообщение...",
+  "newMessages": "Новые сообщения",
+  "settings": "Настройки",
+  "language": "Язык",
+  "loading": "Загрузка...",
+  "error": "Что-то пошло не так",
+  "cancel": "Отмена",
+  "save": "Сохранить",
+  "search": "Поиск",
+  "logout": "Выйти"
+}

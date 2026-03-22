@@ -1,0 +1,22 @@
+{
+  "@@locale": "fa",
+  "appName": "AroundU",
+  "loginTitle": "ورود",
+  "registerTitle": "ایجاد حساب",
+  "getStarted": "شروع کنید",
+  "homeTab": "خانه",
+  "jobsTab": "مشاغل",
+  "chatTab": "گفتگو",
+  "profileTab": "پروفایل",
+  "conversations": "پیام‌ها",
+  "typeMessage": "پیام بنویسید...",
+  "newMessages": "پیام‌های جدید",
+  "settings": "تنظیمات",
+  "language": "زبان",
+  "loading": "در حال بارگذاری...",
+  "error": "مشکلی پیش آمد",
+  "cancel": "لغو",
+  "save": "ذخیره",
+  "search": "جستجو",
+  "logout": "خروج"
+}

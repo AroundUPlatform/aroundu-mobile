@@ -1,0 +1,23 @@
+{
+  "@@locale": "kn",
+  "appName": "AroundU",
+  "loginTitle": "ಲಾಗಿನ್",
+  "registerTitle": "ಖಾತೆ ರಚಿಸಿ",
+  "getStarted": "ಪ್ರಾರಂಭಿಸಿ",
+  "homeTab": "ಮುಖಪುಟ",
+  "jobsTab": "ಉದ್ಯೋಗಗಳು",
+  "chatTab": "ಚಾಟ್",
+  "profileTab": "ಪ್ರೊಫೈಲ್",
+  "myJobs": "ನನ್ನ ಕೆಲಸಗಳು",
+  "conversations": "ಸಂದೇಶಗಳು",
+  "typeMessage": "ಸಂದೇಶ ಟೈಪ್ ಮಾಡಿ...",
+  "newMessages": "ಹೊಸ ಸಂದೇಶಗಳು",
+  "settings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+  "language": "ಭಾಷೆ",
+  "loading": "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
+  "error": "ಏನೋ ತಪ್ಪಾಗಿದೆ",
+  "cancel": "ರದ್ದು",
+  "save": "ಉಳಿಸಿ",
+  "search": "ಹುಡುಕು",
+  "logout": "ಲಾಗ್ ಔಟ್"
+}

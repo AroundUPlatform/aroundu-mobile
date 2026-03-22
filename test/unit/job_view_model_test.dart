@@ -69,8 +69,22 @@ class FakeJobRepository implements JobRepository {
   }
 
   @override
-  Future<List<JobItem>> fetchWorkerFeed() async {
+  Future<List<JobItem>> fetchWorkerFeed({
+    double? radiusKm,
+    double? latitude,
+    double? longitude,
+  }) async {
     return workerJobs;
+  }
+
+  @override
+  Future<List<JobItem>> fetchWorkerMyJobs(List<String>? statuses) async {
+    return workerJobs;
+  }
+
+  @override
+  Future<JobCodeInfo> fetchCodes(int jobId) async {
+    return JobCodeInfo(id: 1, jobId: jobId, status: 'START_PENDING');
   }
 
   @override

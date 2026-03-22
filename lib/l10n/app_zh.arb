@@ -1,0 +1,22 @@
+{
+  "@@locale": "zh",
+  "appName": "AroundU",
+  "loginTitle": "登录",
+  "registerTitle": "创建账户",
+  "getStarted": "开始",
+  "homeTab": "首页",
+  "jobsTab": "工作",
+  "chatTab": "聊天",
+  "profileTab": "个人资料",
+  "conversations": "消息",
+  "typeMessage": "输入消息...",
+  "newMessages": "新消息",
+  "settings": "设置",
+  "language": "语言",
+  "loading": "加载中...",
+  "error": "出了点问题",
+  "cancel": "取消",
+  "save": "保存",
+  "search": "搜索",
+  "logout": "退出登录"
+}

@@ -1,0 +1,22 @@
+{
+  "@@locale": "bn",
+  "appName": "AroundU",
+  "loginTitle": "লগ ইন",
+  "registerTitle": "অ্যাকাউন্ট তৈরি করুন",
+  "getStarted": "শুরু করুন",
+  "homeTab": "হোম",
+  "jobsTab": "কাজ",
+  "chatTab": "চ্যাট",
+  "profileTab": "প্রোফাইল",
+  "conversations": "বার্তা",
+  "typeMessage": "একটি বার্তা লিখুন...",
+  "newMessages": "নতুন বার্তা",
+  "settings": "সেটিংস",
+  "language": "ভাষা",
+  "loading": "লোড হচ্ছে...",
+  "error": "কিছু ভুল হয়েছে",
+  "cancel": "বাতিল",
+  "save": "সংরক্ষণ",
+  "search": "অনুসন্ধান",
+  "logout": "লগ আউট"
+}

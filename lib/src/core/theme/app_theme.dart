@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Semantic palette that adapts to light / dark mode.
+/// The [primary] color is now derived from the user-chosen seed.
 class AppPalette {
-  static const Color primary = Color(0xFF0476FF);
+  const AppPalette._();
+
+  static const Color defaultPrimary = Color(0xFF0476FF);
   static const Color background = Color(0xFFF6F9FF);
   static const Color backgroundDark = Color(0xFF0E1218);
   static const Color surface = Colors.white;
@@ -16,17 +20,25 @@ class AppPalette {
   static const Color success = Color(0xFF2EAE63);
   static const Color warning = Color(0xFFE49B12);
   static const Color danger = Color(0xFFD64545);
+
+  /// Kept for backward-compat — screens that haven't migrated.
+  static const Color primary = defaultPrimary;
 }
 
-ThemeData buildAroundUTheme() {
-  return _buildTheme(brightness: Brightness.light);
+/// Build a light [ThemeData] from [seedColor].
+ThemeData buildAroundUTheme({Color seedColor = AppPalette.defaultPrimary}) {
+  return _buildTheme(brightness: Brightness.light, seedColor: seedColor);
 }
 
-ThemeData buildAroundUDarkTheme() {
-  return _buildTheme(brightness: Brightness.dark);
+/// Build a dark [ThemeData] from [seedColor].
+ThemeData buildAroundUDarkTheme({Color seedColor = AppPalette.defaultPrimary}) {
+  return _buildTheme(brightness: Brightness.dark, seedColor: seedColor);
 }
 
-ThemeData _buildTheme({required Brightness brightness}) {
+ThemeData _buildTheme({
+  required Brightness brightness,
+  required Color seedColor,
+}) {
   final isDark = brightness == Brightness.dark;
   final background = isDark ? AppPalette.backgroundDark : AppPalette.background;
   final surface = isDark ? AppPalette.surfaceDark : AppPalette.surface;
@@ -43,8 +55,8 @@ ThemeData _buildTheme({required Brightness brightness}) {
     useMaterial3: true,
     brightness: brightness,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: AppPalette.primary,
-      primary: AppPalette.primary,
+      seedColor: seedColor,
+      primary: seedColor,
       surface: surface,
       brightness: brightness,
     ),
@@ -52,14 +64,22 @@ ThemeData _buildTheme({required Brightness brightness}) {
     textTheme: textTheme.copyWith(
       titleLarge: textTheme.titleLarge?.copyWith(
         fontWeight: FontWeight.w700,
+        fontSize: 20,
         color: textPrimary,
       ),
       titleMedium: textTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.w600,
+        fontSize: 17,
         color: textPrimary,
       ),
-      bodyLarge: textTheme.bodyLarge?.copyWith(color: textPrimary),
-      bodyMedium: textTheme.bodyMedium?.copyWith(color: textSecondary),
+      bodyLarge: textTheme.bodyLarge?.copyWith(
+        fontSize: 15,
+        color: textPrimary,
+      ),
+      bodyMedium: textTheme.bodyMedium?.copyWith(
+        fontSize: 14,
+        color: textSecondary,
+      ),
       labelLarge: textTheme.labelLarge?.copyWith(color: textPrimary),
       labelMedium: textTheme.labelMedium?.copyWith(color: textSecondary),
     ),
@@ -85,7 +105,7 @@ ThemeData _buildTheme({required Brightness brightness}) {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: const BorderSide(color: AppPalette.primary, width: 1.5),
+        borderSide: BorderSide(color: seedColor, width: 1.5),
       ),
     ),
     cardTheme: CardThemeData(
@@ -93,6 +113,22 @@ ThemeData _buildTheme({required Brightness brightness}) {
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 0,
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: surface,
+      selectedItemColor: seedColor,
+      unselectedItemColor: textSecondary,
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+    ),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: surface,
+      indicatorColor: seedColor.withValues(alpha: 0.12),
+      elevation: 0,
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: seedColor,
+      foregroundColor: Colors.white,
     ),
   );
 }

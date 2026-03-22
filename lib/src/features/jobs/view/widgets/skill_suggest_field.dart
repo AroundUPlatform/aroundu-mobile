@@ -24,7 +24,7 @@ class SkillSuggestField extends ConsumerStatefulWidget {
   });
 
   final NotifierProvider<SkillSuggestController, SkillSuggestState>
-      controllerProvider;
+  controllerProvider;
   final String label;
   final String hintText;
 
@@ -206,20 +206,63 @@ class _SkillSuggestFieldState extends ConsumerState<SkillSuggestField> {
               ),
             ),
           ),
-        // ── Selected chips ──
+        // ── Selected pill tags ──
         if (state.selected.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: Wrap(
-              spacing: 6,
-              runSpacing: 4,
-              children: state.selected.map((skill) {
-                return Chip(
-                  label: Text(skill.skillName),
-                  deleteIcon: const Icon(Icons.close, size: 16),
-                  onDeleted: () => _removeSkill(skill.id),
-                );
-              }).toList(),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: state.selected.map((skill) {
+                  final cs = Theme.of(context).colorScheme;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 6),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: cs.primaryContainer.withValues(alpha: 0.7),
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(
+                          color: cs.primary.withValues(alpha: 0.3),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.handyman_rounded,
+                            size: 13,
+                            color: cs.primary,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            skill.skillName,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: cs.onPrimaryContainer,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          GestureDetector(
+                            onTap: () => _removeSkill(skill.id),
+                            child: Icon(
+                              Icons.close_rounded,
+                              size: 14,
+                              color: cs.onPrimaryContainer.withValues(
+                                alpha: 0.6,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
           ),
         Padding(
