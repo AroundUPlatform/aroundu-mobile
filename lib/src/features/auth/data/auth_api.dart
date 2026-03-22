@@ -522,7 +522,10 @@ class AuthApi {
       return;
     }
 
-    throw ApiException(response['message']?.toString() ?? 'Request failed');
+    throw ApiException(
+      response['message']?.toString() ?? 'Request failed',
+      code: ApiErrorCode.requestFailed,
+    );
   }
 
   Map<String, dynamic> _readDataMap(Map<String, dynamic> envelope) {
@@ -533,7 +536,10 @@ class AuthApi {
       return data;
     }
 
-    throw const ApiException('Malformed response payload');
+    throw const ApiException(
+      'Malformed response payload',
+      code: ApiErrorCode.malformedResponse,
+    );
   }
 
   PagedUserProfiles _mapPagedUsers(Map<String, dynamic> data) {

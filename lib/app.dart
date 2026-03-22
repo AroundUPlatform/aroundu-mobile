@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'l10n/app_localizations.dart';
 
+import 'src/core/l10n/l10n_provider.dart';
 import 'src/core/theme/app_theme.dart';
 import 'src/core/view_model/locale_view_model.dart';
 import 'src/core/view_model/theme_view_model.dart';
@@ -55,6 +56,17 @@ class AroundUApp extends ConsumerWidget {
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      builder: (context, child) {
+        // Sync the current AppLocalizations into Riverpod so non-widget code
+        // (ViewModels, services) can read localised strings.
+        final l10n = AppLocalizations.of(context);
+        if (l10n != null) {
+          Future.microtask(() {
+            ref.read(currentL10nProvider.notifier).state = l10n;
+          });
+        }
+        return child!;
+      },
       initialRoute: AppRoutes.splash,
       routes: {
         AppRoutes.splash: (_) => const SplashScreen(),

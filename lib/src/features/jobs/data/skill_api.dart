@@ -48,7 +48,10 @@ class SkillApi {
     if (data == null) return const <SkillItem>[];
 
     if (data is! List) {
-      throw const ApiException('Malformed skill suggest response');
+      throw const ApiException(
+        'Malformed skill suggest response',
+        code: ApiErrorCode.malformedSkillResponse,
+      );
     }
 
     return data

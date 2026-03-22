@@ -45,82 +45,81 @@ class AppLocalizationsJa extends AppLocalizations {
   String get alreadyHaveAccount => 'すでにアカウントをお持ちの方';
 
   @override
-  String get welcomeBack => 'Welcome Back';
+  String get welcomeBack => 'おかえりなさい';
 
   @override
-  String get loginSubtitle => 'Sign in to continue as provider or worker.';
+  String get loginSubtitle => 'AroundUアカウントにログイン';
 
   @override
-  String get noAccountYet => 'No account yet?';
+  String get noAccountYet => 'アカウントがない？';
 
   @override
-  String get createOne => 'Create one';
+  String get createOne => '作成';
 
   @override
-  String get emailRequired => 'Email is required';
+  String get emailRequired => 'メールアドレス必須';
 
   @override
-  String get enterValidEmail => 'Enter a valid email';
+  String get enterValidEmail => '有効なメールを入力';
 
   @override
-  String get passwordRequired => 'Password is required';
+  String get passwordRequired => 'パスワード必須';
 
   @override
-  String get minimumSixCharacters => 'Minimum 6 characters';
+  String get minimumSixCharacters => '6文字以上';
 
   @override
-  String get unableToLogin => 'Unable to login. Please retry.';
+  String get unableToLogin => 'ログインエラー';
 
   @override
   String fieldRequired(String field) {
-    return '$field is required';
+    return '$fieldは必須です';
   }
 
   @override
-  String get enterValidPhone => 'Enter a valid phone number';
+  String get enterValidPhone => '有効な電話番号を入力';
 
   @override
-  String get unableToRegister => 'Unable to register';
+  String get unableToRegister => '登録エラー';
 
   @override
-  String get registrationSuccess => 'Registration successful. Please log in.';
+  String get registrationSuccess => '登録成功';
 
   @override
-  String get registerSubtitle =>
-      'Register as provider or worker with your basic location profile.';
+  String get registerSubtitle => '提供者またはワーカーとして登録';
 
   @override
-  String get roleLabel => 'Role';
+  String get roleLabel => '役割';
 
   @override
-  String get roleJobProvider => 'Job Provider';
+  String get roleJobProvider => 'タスク提供者';
 
   @override
-  String get roleJobWorker => 'Job Worker';
+  String get roleJobWorker => 'ワーカー';
 
   @override
-  String get countryLabel => 'Country';
+  String get countryLabel => '国';
 
   @override
-  String get currencyLabel => 'Currency';
+  String get currencyLabel => '通貨';
 
   @override
-  String get cityLabel => 'City';
+  String get cityLabel => '都市';
 
   @override
-  String get postalCodeLabel => 'Postal code';
+  String get postalCodeLabel => '郵便番号';
 
   @override
-  String get areaOptionalLabel => 'Area (optional)';
+  String get areaOptionalLabel => 'エリア（任意）';
 
   @override
-  String get fullAddressOptionalLabel => 'Full address (optional)';
+  String get fullAddressOptionalLabel => '詳細住所（任意）';
 
   @override
-  String get alreadyRegistered => 'Already registered?';
+  String get alreadyRegistered => '登録済みですか？';
 
   @override
-  String get logInLink => 'Log in';
+  String get logInLink => 'ログイン';
 
   @override
   String get onboardingTitle1 => '周辺のタスクを見つけよう';
@@ -150,7 +149,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get next => '次へ';
 
   @override
-  String get newHereCreateAccount => 'New here? Create account';
+  String get newHereCreateAccount => '初めてですか？アカウント作成';
 
   @override
   String get roleSelectionTitle => '役割を選択';
@@ -171,19 +170,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get continueButton => '続ける';
 
   @override
-  String get roleSelectionSubtitle =>
-      'Select the workflow you want to use in AroundU.';
+  String get roleSelectionSubtitle => 'AroundUをどう使いますか？';
 
   @override
   String signedInAs(String email) {
-    return 'Signed in as $email';
+    return '$emailとしてログイン中';
   }
 
   @override
-  String get roleProviderDesc => 'Post jobs and manage incoming bids.';
+  String get roleProviderDesc => 'タスクを投稿してワーカーを見つける';
 
   @override
-  String get roleWorkerDescAlt => 'Browse nearby jobs and place bids quickly.';
+  String get roleWorkerDescAlt => 'タスクを見つけてスキルで稼ぐ';
 
   @override
   String get homeTab => 'ホーム';
@@ -198,22 +196,22 @@ class AppLocalizationsJa extends AppLocalizations {
   String get profileTab => 'プロフィール';
 
   @override
-  String get providerTabMyTasks => 'My Tasks';
+  String get providerTabMyTasks => 'マイタスク';
 
   @override
-  String get providerTabPostTask => 'Post Task';
+  String get providerTabPostTask => 'タスクを投稿';
 
   @override
-  String get tasksNavLabel => 'Tasks';
+  String get tasksNavLabel => 'タスク';
 
   @override
-  String get postNavLabel => 'Post';
+  String get postNavLabel => '投稿';
 
   @override
-  String get workerTabTaskFeed => 'Task Feed';
+  String get workerTabTaskFeed => 'タスクフィード';
 
   @override
-  String get feedNavLabel => 'Feed';
+  String get feedNavLabel => 'フィード';
 
   @override
   String get myJobs => '自分の仕事';
@@ -267,13 +265,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get urgencyNormal => '通常';
 
   @override
-  String get urgencyMedium => 'Medium';
+  String get urgencyMedium => '中程度';
 
   @override
   String get urgencyUrgent => '緊急';
 
   @override
-  String get urgencyAsap => 'ASAP';
+  String get urgencyAsap => '至急';
 
   @override
   String get paymentOffline => 'オフライン';
@@ -282,144 +280,142 @@ class AppLocalizationsJa extends AppLocalizations {
   String get paymentEscrow => 'エスクロー';
 
   @override
-  String get paymentMethod => 'Payment Method';
+  String get paymentMethod => '支払い方法';
 
   @override
-  String get payInCash => 'Pay in Cash';
+  String get payInCash => '現金で支払い';
 
   @override
-  String get secureEscrow => 'Secure Escrow';
+  String get secureEscrow => '安全なエスクロー';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => 'すべて';
 
   @override
-  String get filterOpen => 'Open';
+  String get filterOpen => 'オープン';
 
   @override
-  String get filterActive => 'Active';
+  String get filterActive => 'アクティブ';
 
   @override
-  String get filterInProgress => 'In Progress';
+  String get filterInProgress => '進行中';
 
   @override
-  String get filterCompleted => 'Completed';
+  String get filterCompleted => '完了';
 
   @override
-  String get filterCancelled => 'Cancelled';
+  String get filterCancelled => 'キャンセル';
 
   @override
-  String get filterExpired => 'Expired';
+  String get filterExpired => '期限切れ';
 
   @override
-  String get filterNearby => 'Nearby';
+  String get filterNearby => '近く';
 
   @override
-  String get filterAllMine => 'All Mine';
+  String get filterAllMine => 'すべて自分の';
 
   @override
-  String get filterBidPlaced => 'Bid Placed';
+  String get filterBidPlaced => '入札済み';
 
   @override
-  String get filterAccepted => 'Accepted';
+  String get filterAccepted => '承認済み';
 
   @override
-  String get noTasksPostedYet => 'No tasks posted yet';
+  String get noTasksPostedYet => '投稿されたタスクなし';
 
   @override
-  String get noOpenTasks => 'No open tasks';
+  String get noOpenTasks => 'オープンなタスクなし';
 
   @override
-  String get noActiveTasks => 'No active tasks';
+  String get noActiveTasks => 'アクティブなタスクなし';
 
   @override
-  String get noTasksInProgress => 'No tasks in progress';
+  String get noTasksInProgress => '進行中のタスクなし';
 
   @override
-  String get noCompletedTasks => 'No completed tasks';
+  String get noCompletedTasks => '完了したタスクなし';
 
   @override
-  String get noCancelledTasks => 'No cancelled tasks';
+  String get noCancelledTasks => 'キャンセルされたタスクなし';
 
   @override
-  String get noExpiredTasks => 'No expired tasks';
+  String get noExpiredTasks => '期限切れのタスクなし';
 
   @override
-  String get unableToLoadTasks => 'Unable to load tasks';
+  String get unableToLoadTasks => 'タスク読込エラー';
 
   @override
-  String get noNearbyJobs => 'No nearby jobs right now';
+  String get noNearbyJobs => '近くの仕事なし';
 
   @override
-  String get noJobsYetBid => 'No jobs yet — place a bid to get started!';
+  String get noJobsYetBid => '仕事なし — オファーしましょう';
 
   @override
-  String get noPendingBids => 'No pending bids';
+  String get noPendingBids => '保留中の入札なし';
 
   @override
-  String get noAcceptedJobs => 'No accepted jobs';
+  String get noAcceptedJobs => '承認済みの仕事なし';
 
   @override
-  String get noJobsInProgress => 'No jobs in progress';
+  String get noJobsInProgress => '進行中の仕事なし';
 
   @override
-  String get noCompletedJobsYet => 'No completed jobs yet';
+  String get noCompletedJobsYet => '完了した仕事なし';
 
   @override
-  String get noCancelledJobs => 'No cancelled jobs';
+  String get noCancelledJobs => 'キャンセルされた仕事なし';
 
   @override
-  String get noExpiredJobs => 'No expired jobs';
+  String get noExpiredJobs => '期限切れの仕事なし';
 
   @override
-  String get pullDownToRefreshCheck => 'Pull down to refresh and check again.';
+  String get pullDownToRefreshCheck => '下に引いて新しいタスクを確認';
 
   @override
-  String get unableToLoadJobs => 'Unable to load jobs';
+  String get unableToLoadJobs => '仕事の読込エラー';
 
   @override
-  String get postNewTask => 'Post a New Task';
+  String get postNewTask => '新規タスク';
 
   @override
-  String get postTaskSubtitle =>
-      'Add clear details so workers can send accurate offers.';
+  String get postTaskSubtitle => '正確なオファーのために明確な詳細を追加';
 
   @override
-  String get taskTitleLabel => 'Task title';
+  String get taskTitleLabel => 'タスクタイトル';
 
   @override
-  String get savingLocation => 'Saving location…';
+  String get savingLocation => '場所を保存中';
 
   @override
-  String get tapToSelectLocation => 'Tap to select location';
+  String get tapToSelectLocation => 'タップして場所を選択';
 
   @override
-  String get postTaskButton => 'Post Task';
+  String get postTaskButton => 'タスクを投稿';
 
   @override
-  String get addSkillWarning => 'Add at least one required skill for this task';
+  String get addSkillWarning => '必要なスキルを少なくとも1つ追加してください';
 
   @override
-  String get enterValidBudget => 'Enter a valid budget amount';
+  String get enterValidBudget => '有効な予算を入力';
 
   @override
-  String get setJobLocationWarning =>
-      'Please set a job location before posting';
+  String get setJobLocationWarning => 'タスクの場所を設定';
 
   @override
-  String get jobPostedSuccess => 'Job posted successfully';
+  String get jobPostedSuccess => 'タスク投稿完了';
 
   @override
-  String get failedToPostJob => 'Failed to post job. Please retry.';
+  String get failedToPostJob => '投稿エラー';
 
   @override
-  String get failedToSaveLocation => 'Failed to save location';
+  String get failedToSaveLocation => '保存エラー';
 
   @override
-  String get unableToLoadJobWorkflow => 'Unable to load job workflow';
+  String get unableToLoadJobWorkflow => 'ワークフロー読込エラー';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => '不明なエラー';
 
   @override
   String get statusOpenForBids => '入札受付中';
@@ -473,96 +469,95 @@ class AppLocalizationsJa extends AppLocalizations {
   String get bidPending => '保留中';
 
   @override
-  String get offersSection => 'Offers';
+  String get offersSection => 'オファー';
 
   @override
-  String get noOffersReceivedYet => 'No offers received yet.';
+  String get noOffersReceivedYet => 'オファー受信なし';
 
   @override
-  String get offerAccepted => 'Offer Accepted';
+  String get offerAccepted => 'オファー承認';
 
   @override
-  String get offerRejected => 'Offer Rejected';
+  String get offerRejected => 'オファー却下';
 
   @override
-  String get offerPending => 'Offer Pending';
+  String get offerPending => 'オファー保留中';
 
   @override
   String workerNumber(int id) {
-    return 'Worker #$id';
+    return 'ワーカー #$id';
   }
 
   @override
-  String get acceptThisOffer => 'Accept this Offer';
+  String get acceptThisOffer => 'このオファーを受ける';
 
   @override
-  String get messageWorker => 'Message Worker';
+  String get messageWorker => 'ワーカーにメッセージ';
 
   @override
-  String get offerAcceptedSnack => 'Offer accepted';
+  String get offerAcceptedSnack => 'オファー承認！';
 
   @override
-  String get yourOffer => 'Your Offer';
+  String get yourOffer => 'あなたのオファー';
 
   @override
-  String get bidStatusSelected => 'Selected';
+  String get bidStatusSelected => '選択済み';
 
   @override
-  String get bidStatusRejected => 'Rejected';
+  String get bidStatusRejected => '却下';
 
   @override
-  String get bidStatusPending => 'Pending';
+  String get bidStatusPending => '保留中';
 
   @override
-  String get placeYourOffer => 'Place Your Offer';
+  String get placeYourOffer => 'オファーする';
 
   @override
-  String get yourOfferAmount => 'Your offer amount';
+  String get yourOfferAmount => 'オファー金額';
 
   @override
-  String get messageToClientOptional => 'Message to client (optional)';
+  String get messageToClientOptional => 'クライアントへのメッセージ（任意）';
 
   @override
-  String get addPartnerOptional => 'Add a partner (optional)';
+  String get addPartnerOptional => 'パートナーを追加（任意）';
 
   @override
-  String get partnerNameLabel => 'Partner name';
+  String get partnerNameLabel => 'パートナー名';
 
   @override
-  String get partnerFeeLabel => 'Partner fee';
+  String get partnerFeeLabel => 'パートナー手数料';
 
   @override
   String partnerFeeAmount(String symbol, String amount) {
-    return '+ $symbol$amount partner fee';
+    return 'パートナー手数料: $amount';
   }
 
   @override
-  String get submitOffer => 'Submit Offer';
+  String get submitOffer => 'オファーを送信';
 
   @override
-  String get enterValidOfferAmount => 'Enter a valid offer amount';
+  String get enterValidOfferAmount => '有効な金額を入力';
 
   @override
-  String get offerSubmittedSuccess => 'Offer submitted successfully';
+  String get offerSubmittedSuccess => 'オファー送信完了';
 
   @override
-  String get clientSelectedYourOffer => 'Client Selected Your Offer!';
+  String get clientSelectedYourOffer => 'クライアントがあなたのオファーを選びました';
 
   @override
-  String get handshakeHint =>
-      'Accept to confirm this job, or decline if you\'re no longer available.';
+  String get handshakeHint => '両者がコードを共有して開始します';
 
   @override
-  String get handshakeAccepted => 'Handshake accepted';
+  String get handshakeAccepted => 'ハンドシェイク承認';
 
   @override
-  String get handshakeDeclined => 'Handshake declined';
+  String get handshakeDeclined => 'ハンドシェイク拒否';
 
   @override
-  String get acceptJob => 'Accept Job';
+  String get acceptJob => '仕事を受ける';
 
   @override
-  String get decline => 'Decline';
+  String get decline => '辞退';
 
   @override
   String get startCode => '開始コード';
@@ -580,72 +575,66 @@ class AppLocalizationsJa extends AppLocalizations {
   String get enterCode => 'コードを入力';
 
   @override
-  String get generateStartCode => 'Generate Start Code';
+  String get generateStartCode => 'スタートコード生成';
 
   @override
-  String get startCodeCopied => 'Start code copied';
+  String get startCodeCopied => 'スタートコードコピー済み';
 
   @override
   String reserveInEscrow(String symbol, String amount) {
-    return 'Reserve $symbol$amount in Escrow';
+    return '$amountをエスクローに確保';
   }
 
   @override
-  String get releaseCodeCopied => 'Release code copied';
+  String get releaseCodeCopied => 'リリースコードコピー済み';
 
   @override
-  String get releaseCodeHint =>
-      'Share this verbally with the worker. They enter it to confirm task completion.';
+  String get releaseCodeHint => 'リリースコードを入力';
 
   @override
-  String get regenerateCode => 'Regenerate Code';
+  String get regenerateCode => 'コード再生成';
 
   @override
-  String get generateReleaseCode => 'Generate Release Code';
+  String get generateReleaseCode => 'リリースコード生成';
 
   @override
-  String get taskCodesGenerated => 'Task codes generated';
+  String get taskCodesGenerated => 'タスクコード生成済み';
 
   @override
-  String get newReleaseCodeGenerated => 'New release code generated';
+  String get newReleaseCodeGenerated => '新しいリリースコード生成';
 
   @override
-  String get readyToBegin => 'Ready to Begin?';
+  String get readyToBegin => '開始準備完了';
 
   @override
-  String get startCodeHint =>
-      'Ask the client for the start code and enter it below to officially begin work.';
+  String get startCodeHint => 'スタートコードを入力';
 
   @override
-  String get verifyAndStartWork => 'Verify & Start Work';
+  String get verifyAndStartWork => '確認して開始';
 
   @override
-  String get startCodeVerified =>
-      'Start code verified. Task is now in progress.';
+  String get startCodeVerified => 'スタートコード確認済み';
 
   @override
-  String get enterStartCodeFirst => 'Enter start code first';
+  String get enterStartCodeFirst => '先にスタートコードを入力';
 
   @override
-  String get workInProgress => 'Work In Progress';
+  String get workInProgress => '作業中';
 
   @override
-  String get releaseCodePrompt =>
-      'Once done, ask the client for the 6-digit release code.';
+  String get releaseCodePrompt => '支払いを解放するコードを入力';
 
   @override
-  String get releaseCodeHelper => 'Enter the 6-digit code from the client';
+  String get releaseCodeHelper => '作業完了時にこのコードをワーカーに渡してください';
 
   @override
-  String get confirmWorkCompleted => 'Confirm Work Completed';
+  String get confirmWorkCompleted => '作業完了を確認';
 
   @override
-  String get workConfirmedPaymentReleased =>
-      'Work confirmed — payment released!';
+  String get workConfirmedPaymentReleased => '作業確認 — 支払い完了！';
 
   @override
-  String get enterReleaseCodeWarning =>
-      'Enter the release code from the client';
+  String get enterReleaseCodeWarning => 'リリースコードを入力';
 
   @override
   String get escrow => 'エスクロー';
@@ -663,35 +652,34 @@ class AppLocalizationsJa extends AppLocalizations {
   String get paymentReleased => '支払いリリース済み';
 
   @override
-  String get paymentSafelyReserved => 'Payment safely reserved';
+  String get paymentSafelyReserved => '支払いが安全に確保されました';
 
   @override
-  String get cancelTask => 'Cancel Task';
+  String get cancelTask => 'タスクをキャンセル';
 
   @override
-  String get taskCancelled => 'Task cancelled';
+  String get taskCancelled => 'タスクキャンセル';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'タスクを削除';
 
   @override
-  String get deleteTaskTitle => 'Delete task?';
+  String get deleteTaskTitle => 'タスクを削除？';
 
   @override
-  String get deleteTaskConfirm =>
-      'This will remove the task and all associated offers.';
+  String get deleteTaskConfirm => 'このタスクを削除しますか？';
 
   @override
-  String get taskDeleted => 'Task deleted';
+  String get taskDeleted => 'タスク削除';
 
   @override
-  String get typeFirstMessage => 'Type your first message…';
+  String get typeFirstMessage => '最初のメッセージを入力';
 
   @override
-  String get send => 'Send';
+  String get send => '送信';
 
   @override
-  String get failedToSendMessage => 'Failed to send message';
+  String get failedToSendMessage => '送信エラー';
 
   @override
   String get conversations => 'メッセージ';
@@ -734,14 +722,14 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get chatToday => 'Today';
+  String get chatToday => '今日';
 
   @override
-  String get chatYesterday => 'Yesterday';
+  String get chatYesterday => '昨日';
 
   @override
   String chatYouPrefix(String message) {
-    return 'You: $message';
+    return 'あなた: $message';
   }
 
   @override
@@ -750,7 +738,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get noConversationsYet => 'No conversations yet';
+  String get noConversationsYet => '会話なし';
 
   @override
   String get loadingConversations => '会話を読み込み中...';
@@ -786,100 +774,99 @@ class AppLocalizationsJa extends AppLocalizations {
   String get logoutConfirm => 'ログアウトしてもよろしいですか？';
 
   @override
-  String get myProfile => 'My Profile';
+  String get myProfile => 'マイプロフィール';
 
   @override
-  String get unknown => 'Unknown';
+  String get unknown => '不明';
 
   @override
-  String get experienceLabel => 'Experience';
+  String get experienceLabel => '経験';
 
   @override
-  String get statusLabel => 'Status';
+  String get statusLabel => 'ステータス';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => '未設定';
 
   @override
-  String get onDuty => 'On Duty';
+  String get onDuty => 'オン';
 
   @override
-  String get offDuty => 'Off Duty';
+  String get offDuty => 'オフ';
 
   @override
   String yearsCount(int count) {
-    return '$count years';
+    return '$count年';
   }
 
   @override
-  String get themeAndColors => 'Theme & Colors';
+  String get themeAndColors => 'テーマと色';
 
   @override
-  String get aiModelLabel => 'AI Model';
+  String get aiModelLabel => 'AIモデル';
 
   @override
-  String get availableForWork => 'Available for Work';
+  String get availableForWork => '仕事可能';
 
   @override
-  String get visibleToClients => 'You are visible to clients';
+  String get visibleToClients => 'クライアントに表示されています';
 
   @override
-  String get currentlyOffDuty => 'You are currently off duty';
+  String get currentlyOffDuty => '現在オフ';
 
   @override
-  String get myReviews => 'My Reviews';
+  String get myReviews => 'マイレビュー';
 
   @override
-  String get deleteAccount => 'Delete Account';
+  String get deleteAccount => 'アカウント削除';
 
   @override
-  String get deleteAccountConfirm =>
-      'This will permanently delete your account and all data. This cannot be undone.';
+  String get deleteAccountConfirm => '本当ですか？元に戻せません。';
 
   @override
-  String get couldNotDeleteAccount => 'Could not delete account';
+  String get couldNotDeleteAccount => 'アカウントを削除できませんでした';
 
   @override
-  String get profilePhotoUpdated => 'Profile photo updated';
+  String get profilePhotoUpdated => 'プロフィール写真更新';
 
   @override
-  String get profileUpdated => 'Profile updated';
+  String get profileUpdated => 'プロフィール更新';
 
   @override
-  String get nameLabel => 'Name';
+  String get nameLabel => '名前';
 
   @override
-  String get profileImageUrl => 'Profile Image URL';
+  String get profileImageUrl => 'プロフィール画像URL';
 
   @override
-  String get yearsOfExperience => 'Years of Experience';
+  String get yearsOfExperience => '経験年数';
 
   @override
-  String get certificationsLabel => 'Certifications';
+  String get certificationsLabel => '資格';
 
   @override
-  String get payoutAccountLabel => 'Payout Account';
+  String get payoutAccountLabel => '支払い口座';
 
   @override
-  String get onDutySubtitle => 'Toggle availability for new tasks';
+  String get onDutySubtitle => '新しいタスクに対して表示されています';
 
   @override
-  String get loadingProfile => 'Loading profile...';
+  String get loadingProfile => 'プロフィール読込中';
 
   @override
-  String get availabilityLabel => 'Availability';
+  String get availabilityLabel => '空き状況';
 
   @override
-  String get memberLabel => 'Member';
+  String get memberLabel => 'メンバー';
 
   @override
-  String get available => 'Available';
+  String get available => '利用可能';
 
   @override
-  String get unavailable => 'Unavailable';
+  String get unavailable => '利用不可';
 
   @override
-  String get viewAllReviews => 'View All Reviews';
+  String get viewAllReviews => '全レビューを見る';
 
   @override
   String get settings => '設定';
@@ -921,16 +908,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get secondary => 'セカンダリ';
 
   @override
-  String get modeLabel => 'Mode';
+  String get modeLabel => 'モード';
 
   @override
-  String get pickAColour => 'Pick a colour';
+  String get pickAColour => '色を選択';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'システムデフォルト';
 
   @override
-  String get darkModeSubtitle => 'Switch between light and dark themes';
+  String get darkModeSubtitle => 'システム、ライト、ダークモードから選択';
 
   @override
   String get reviews => 'レビュー';
@@ -952,64 +939,57 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String howWasWorker(String name) {
-    return 'How was $name?';
+    return '$nameはいかがでしたか？';
   }
 
   @override
-  String get feedbackHelps => 'Your feedback helps the community';
+  String get feedbackHelps => 'ご意見をお寄せください';
 
   @override
-  String get thanksForReview => 'Thanks for your review!';
+  String get thanksForReview => 'レビューありがとうございます';
 
   @override
-  String get shareExperienceHint => 'Share your experience (optional)';
+  String get shareExperienceHint => '体験をシェア';
 
   @override
-  String get ratingExcellent => 'Excellent!';
+  String get ratingExcellent => '素晴らしい';
 
   @override
-  String get ratingGreat => 'Great!';
+  String get ratingGreat => 'とても良い';
 
   @override
-  String get ratingGood => 'Good';
+  String get ratingGood => '良い';
 
   @override
-  String get ratingFair => 'Fair';
+  String get ratingFair => 'まあまあ';
 
   @override
-  String get ratingPoor => 'Poor';
+  String get ratingPoor => '悪い';
 
   @override
-  String get tapToRate => 'Tap to rate';
+  String get tapToRate => 'タップして評価';
 
   @override
   String workerReviewsTitle(String name) {
-    return '$name\'s Reviews';
+    return '$nameのレビュー';
   }
 
   @override
-  String get loadingReviews => 'Loading reviews...';
+  String get loadingReviews => 'レビュー読込中';
 
   @override
-  String get noReviewsSubtitle =>
-      'Reviews will appear here after completed tasks.';
+  String get noReviewsSubtitle => 'レビューなし';
 
   @override
-  String get allReviews => 'All Reviews';
+  String get allReviews => 'すべてのレビュー';
 
   @override
   String reviewCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count reviews',
-      one: '1 review',
-    );
-    return '$_temp0';
+    return '$count件のレビュー';
   }
 
   @override
-  String get anonymous => 'Anonymous';
+  String get anonymous => '匿名';
 
   @override
   String get loading => '読み込み中...';
@@ -1021,7 +1001,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get retry => '再試行';
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => '再試行';
 
   @override
   String get cancel => 'キャンセル';
@@ -1051,19 +1031,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pullToRefresh => '引っ張って更新';
 
   @override
-  String get pullDownToRefresh => 'Pull down to refresh.';
+  String get pullDownToRefresh => '下に引いて更新';
 
   @override
-  String get yes => 'Yes';
+  String get yes => 'はい';
 
   @override
-  String get required => 'Required';
+  String get required => '必須';
 
   @override
-  String get stop => 'Stop';
+  String get stop => '停止';
 
   @override
-  String get clear => 'Clear';
+  String get clear => 'クリア';
 
   @override
   String get aiSetup => 'AIセットアップ';
@@ -1112,165 +1092,159 @@ class AppLocalizationsJa extends AppLocalizations {
   String get analyzing => '分析中…';
 
   @override
-  String get aiCapabilities => 'AI Capabilities';
+  String get aiCapabilities => 'AI機能';
 
   @override
-  String get onDeviceAi => 'On-Device AI';
+  String get onDeviceAi => 'デバイス上のAI';
 
   @override
-  String get aiTaglineSetup => 'Private · Offline · Free';
+  String get aiTaglineSetup => 'プライベート · オフライン · 無料';
 
   @override
-  String get aiSetupDescription =>
-      'Get smart suggestions for tasks and bids powered by an AI model that runs entirely on your device. No data leaves your phone.';
+  String get aiSetupDescription => 'タスクとオファーのスマート提案を受け取る';
 
   @override
-  String get physicalDevice => 'Physical device';
+  String get physicalDevice => '実機';
 
   @override
-  String get emulatorDetected => 'Emulator detected';
+  String get emulatorDetected => 'エミュレータ検出';
 
   @override
   String get ram => 'RAM';
 
   @override
-  String get sufficient => 'Sufficient';
+  String get sufficient => '十分';
 
   @override
-  String get freeStorage => 'Free storage';
+  String get freeStorage => '空き容量';
 
   @override
   String mbFree(int mb) {
-    return '$mb MB free';
+    return '$mb MB空き';
   }
 
   @override
-  String get aiRequiresPhysicalDevice =>
-      'AI features require a physical device.';
+  String get aiRequiresPhysicalDevice => 'AI機能には実機が必要です。';
 
   @override
-  String get multilingual => 'Multilingual';
+  String get multilingual => '多言語';
 
   @override
   String downloadingProgress(String percent) {
-    return 'Downloading… $percent%';
+    return 'ダウンロード中 $percent%';
   }
 
   @override
-  String get loadingModel => 'Loading model…';
+  String get loadingModel => 'モデル読込中';
 
   @override
-  String get retryDownload => 'Retry Download';
+  String get retryDownload => 'ダウンロード再試行';
 
   @override
-  String get activeAndReady => 'Active & Ready';
+  String get activeAndReady => 'アクティブ＆準備完了';
 
   @override
-  String get remove => 'Remove';
+  String get remove => '削除';
 
   @override
-  String get enableAi => 'Enable AI';
+  String get enableAi => 'AIを有効にする';
 
   @override
-  String get downloadAiModel => 'Download AI Model';
+  String get downloadAiModel => 'AIモデルをダウンロード';
 
   @override
-  String get deviceNotSupported => 'Device not supported';
+  String get deviceNotSupported => 'デバイス非対応';
 
   @override
-  String get downloadBackgroundNote =>
-      'Download happens in the background — you can leave this screen. The model file will be stored on your device and can be removed at any time.';
+  String get downloadBackgroundNote => 'バックグラウンドでダウンロード中。アプリを閉じないでください。';
 
   @override
-  String get removeAiModelTitle => 'Remove AI Model?';
+  String get removeAiModelTitle => 'AIモデルを削除？';
 
   @override
-  String get removeAiModelConfirm =>
-      'This will delete the AI model from your device. You can re-download it later.';
+  String get removeAiModelConfirm => 'AIモデルを削除？ MBを解放します。';
 
   @override
-  String get analyzeWithAi => 'Analyze with AI';
+  String get analyzeWithAi => 'AIで分析';
 
   @override
-  String get aiAssistantAvailable => 'AI Assistant available';
+  String get aiAssistantAvailable => 'AIアシスタント利用可能';
 
   @override
-  String get aiSetupPrompt =>
-      'Set up an on-device AI model to get smart suggestions.';
+  String get aiSetupPrompt => 'スマート提案のためにデバイス上のAIモデルを設定します。';
 
   @override
-  String get setup => 'Setup';
+  String get setup => '設定';
 
   @override
-  String get adminDashboard => 'Admin Dashboard';
+  String get adminDashboard => '管理パネル';
 
   @override
-  String get failedToLoadDashboard => 'Failed to load dashboard';
+  String get failedToLoadDashboard => 'ダッシュボード読み込みエラー';
 
   @override
-  String get platformOverview => 'Platform Overview';
+  String get platformOverview => 'プラットフォーム概要';
 
   @override
-  String get liveStatistics => 'Live statistics from the backend.';
+  String get liveStatistics => 'リアルタイム統計';
 
   @override
-  String get usersSection => 'Users';
+  String get usersSection => 'ユーザー';
 
   @override
-  String get adminTabClients => 'Clients';
+  String get adminTabClients => 'クライアント';
 
   @override
-  String get adminTabWorkers => 'Workers';
+  String get adminTabWorkers => 'ワーカー';
 
   @override
-  String get adminTabAccount => 'Account';
+  String get adminTabAccount => 'アカウント';
 
   @override
-  String get jobsSection => 'Jobs';
+  String get jobsSection => '仕事';
 
   @override
-  String get activeLabel => 'Active';
+  String get activeLabel => 'アクティブ';
 
   @override
-  String get todaySection => 'Today';
+  String get todaySection => '今日';
 
   @override
-  String get createdLabel => 'Created';
+  String get createdLabel => '作成済み';
 
   @override
-  String get completedLabel => 'Completed';
+  String get completedLabel => '完了';
 
   @override
   String deleteUserTitle(String role) {
-    return 'Delete $role';
+    return '$roleを削除？';
   }
 
   @override
   String deleteUserConfirm(String name, String email) {
-    return 'This action removes $name ($email) permanently. Continue?';
+    return '$nameを削除しますか？';
   }
 
   @override
-  String get userDeletedSuccess => 'User deleted successfully';
+  String get userDeletedSuccess => 'ユーザー削除完了';
 
   @override
-  String get unableToLoadUsers => 'Unable to load users';
+  String get unableToLoadUsers => 'ユーザー読込エラー';
 
   @override
-  String get noClientsFound => 'No clients found';
+  String get noClientsFound => 'クライアントが見つかりません';
 
   @override
-  String get noWorkersFound => 'No workers found';
+  String get noWorkersFound => 'ワーカーが見つかりません';
 
   @override
-  String get deleteUserTooltip => 'Delete user';
+  String get deleteUserTooltip => 'ユーザーを削除';
 
   @override
-  String get adminSession => 'Admin Session';
+  String get adminSession => '管理セッション';
 
   @override
-  String get adminManageUsersHint =>
-      'Manage users from the Clients and Workers tabs.';
+  String get adminManageUsersHint => 'クライアントとワーカータブからユーザーを管理します。';
 
   @override
   String distanceKm(int radius) {
@@ -1278,154 +1252,142 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get youreOffline => 'You\'re Offline';
+  String get youreOffline => 'オフラインです';
 
   @override
-  String get offlineHint =>
-      'Toggle the switch in the top bar to go online and discover nearby jobs.';
+  String get offlineHint => 'オフラインです';
 
   @override
-  String get yourSkills => 'Your Skills';
+  String get yourSkills => 'あなたのスキル';
 
   @override
-  String get skillsSubtitle =>
-      'Search and add skills. These are sent to the server to filter your job feed.';
+  String get skillsSubtitle => 'スキルと専門知識を追加';
 
   @override
-  String get addSkillLabel => 'Add Skill';
+  String get addSkillLabel => 'スキルを追加';
 
   @override
-  String get typeToSearchSkills => 'Type to search skills…';
+  String get typeToSearchSkills => 'スキルを検索';
 
   @override
   String savedSkillsCount(int count) {
-    return 'Saved Skills ($count)';
+    return '$countスキル保存済み';
   }
 
   @override
-  String get noSkillsAdded =>
-      'No skills added yet. Search above to add relevant skills.';
+  String get noSkillsAdded => 'スキルなし';
 
   @override
-  String get unableToLoadTaskDetails => 'Unable to load task details';
+  String get unableToLoadTaskDetails => '詳細読込エラー';
 
   @override
-  String get detailDistance => 'Distance';
+  String get detailDistance => '距離';
 
   @override
-  String get chooseLocation => 'Choose Location';
+  String get chooseLocation => '場所を選択';
 
   @override
-  String get savedTab => 'Saved';
+  String get savedTab => '保存済み';
 
   @override
-  String get pinOnMapTab => 'Pin on Map';
+  String get pinOnMapTab => '地図にピン';
 
   @override
-  String get locationDeniedPermanently =>
-      'Location permanently denied. Enable it in Settings.';
+  String get locationDeniedPermanently => '位置情報の権限が永久拒否';
 
   @override
-  String get couldNotGetLocation => 'Could not get location';
+  String get couldNotGetLocation => '位置を取得できませんでした';
 
   @override
-  String get searchPlaces => 'Search places…';
+  String get searchPlaces => '場所を検索';
 
   @override
-  String get switchToSatellite => 'Switch to Satellite';
+  String get switchToSatellite => '衛星地図';
 
   @override
-  String get switchToRoadMap => 'Switch to Road map';
+  String get switchToRoadMap => '道路地図';
 
   @override
-  String get goToMyLocation => 'Go to my location';
+  String get goToMyLocation => '現在地へ';
 
   @override
-  String get confirmLocation => 'Confirm Location';
+  String get confirmLocation => '場所を確認';
 
   @override
-  String get saveAddress => 'Save Address';
+  String get saveAddress => 'アドレスを保存';
 
   @override
-  String get saveAddressSubtitle =>
-      'Add a label and recipient details for this location.';
+  String get saveAddressSubtitle => '将来のタスクのために保存';
 
   @override
-  String get labelField => 'Label';
+  String get labelField => 'ラベル';
 
   @override
-  String get labelHome => 'Home';
+  String get labelHome => '自宅';
 
   @override
-  String get labelWork => 'Work';
+  String get labelWork => '職場';
 
   @override
-  String get labelOther => 'Other';
+  String get labelOther => 'その他';
 
   @override
-  String get recipientName => 'Recipient Name';
+  String get recipientName => '受取人名';
 
   @override
-  String get recipientNameHint => 'e.g. Rahul Sharma';
+  String get recipientNameHint => '名前を入力';
 
   @override
-  String get recipientPhone => 'Recipient Phone';
+  String get recipientPhone => '受取人電話';
 
   @override
-  String get recipientPhoneHint => 'e.g. 9876543210';
+  String get recipientPhoneHint => '電話番号を入力';
 
   @override
-  String get pickFromContacts => 'Pick from contacts';
+  String get pickFromContacts => '連絡先から選択';
 
   @override
-  String get contactsAccessDenied =>
-      'Contacts access denied — name was copied. Please enter the phone number manually.';
+  String get contactsAccessDenied => '連絡先アクセス拒否';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => '設定を開く';
 
   @override
-  String get couldNotOpenContacts => 'Could not open contacts';
+  String get couldNotOpenContacts => '連絡先を開けませんでした';
 
   @override
-  String get areaNeighbourhood => 'Area / Neighbourhood';
+  String get areaNeighbourhood => 'エリア / 地区';
 
   @override
-  String get areaHint => 'e.g. Koramangala';
+  String get areaHint => '例: 渋谷、新宿';
 
   @override
-  String get cityHint => 'e.g. Bengaluru';
+  String get cityHint => '例: 東京';
 
   @override
-  String get postalCodeRequired => 'Postal Code';
+  String get postalCodeRequired => '郵便番号必須';
 
   @override
-  String get postalCodeHint => 'e.g. 560034';
+  String get postalCodeHint => '例: 100-0001';
 
   @override
-  String get countryCodeRequired => 'Country Code';
+  String get countryCodeRequired => '国コードが必要';
 
   @override
-  String get countryCodeHint => 'e.g. IN';
+  String get countryCodeHint => '+81';
 
   @override
-  String get requiredSkillsLabel => 'Required Skills';
+  String get requiredSkillsLabel => '必要なスキル';
 
   @override
-  String get skillHintText => 'e.g. plumbing, painting…';
+  String get skillHintText => 'スキルを入力してカンマで区切る';
 
   @override
-  String get skillHelperEmpty => 'Type skills and separate them with commas';
+  String get skillHelperEmpty => 'スキルがまだ追加されていません';
 
   @override
   String skillsAddedCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count skills added',
-      one: '1 skill added',
-    );
-    return '$_temp0';
+    return '$countスキル追加済み';
   }
 
   @override
@@ -1513,17 +1475,202 @@ class AppLocalizationsJa extends AppLocalizations {
   String get languageHebrew => 'עברית';
 
   @override
-  String get useWithoutSaving => 'Use Without Saving';
+  String get accentColorBlue => '青';
 
   @override
-  String get saveAndUse => 'Save & Use';
+  String get accentColorYellow => '黄';
 
   @override
-  String get useMyCurrentLocation => 'Use My Current Location';
+  String get accentColorGreen => '緑';
 
   @override
-  String get detectingLocation => 'Detecting location…';
+  String get accentColorPink => 'ピンク';
 
   @override
-  String get deleteAddress => 'Delete Address';
+  String get accentColorRed => '赤';
+
+  @override
+  String get accentColorPurple => '紫';
+
+  @override
+  String get accentColorOrange => 'オレンジ';
+
+  @override
+  String get accentColorTeal => 'ティール';
+
+  @override
+  String get accentColorCustom => 'カスタム';
+
+  @override
+  String get paymentStatusPending => '支払い待ち';
+
+  @override
+  String get paymentStatusLocked => '金額が安全に確保済み';
+
+  @override
+  String get paymentStatusReleased => '支払い完了';
+
+  @override
+  String get paymentStatusOffline => '完了時に直接支払い';
+
+  @override
+  String paymentStatusGeneric(String status) {
+    return '支払い状況: $status';
+  }
+
+  @override
+  String get jobStatusOpenForOffers => 'オファー受付中';
+
+  @override
+  String get jobStatusOfferAccepted => 'オファー承認';
+
+  @override
+  String get jobStatusReadyToStart => '開始準備完了';
+
+  @override
+  String get jobStatusInProgress => '進行中';
+
+  @override
+  String get jobStatusPendingPayment => '支払い待ち';
+
+  @override
+  String get jobStatusPaymentReleased => '支払い完了';
+
+  @override
+  String get jobStatusTaskCompleted => 'タスク完了';
+
+  @override
+  String get jobStatusCancelled => 'キャンセル';
+
+  @override
+  String get detailBudgetLabel => '予算';
+
+  @override
+  String get detailLocationLabel => '場所';
+
+  @override
+  String get detailSkillsLabel => 'スキル';
+
+  @override
+  String get detailJobIdLabel => 'ジョブID';
+
+  @override
+  String get tooltipCopy => 'コピー';
+
+  @override
+  String get tooltipDeleteAddress => 'アドレスを削除';
+
+  @override
+  String confirmDeleteAddress(String addressLabel) {
+    return '\"$addressLabel\"を保存済みアドレスから削除しますか？';
+  }
+
+  @override
+  String get errorNotAuthenticated => '未認証。再ログインしてください。';
+
+  @override
+  String get errorCouldNotOpenImagePicker => '画像選択を開けませんでした。';
+
+  @override
+  String get errorCouldNotReadImage => '画像を読み取れませんでした。';
+
+  @override
+  String get errorImageTooLarge => '画像は5MB未満にしてください。';
+
+  @override
+  String get errorUploadFailed => 'アップロード失敗。再試行してください。';
+
+  @override
+  String get errorNameRequired => '名前は必須です';
+
+  @override
+  String get errorRatingRequired => '評価を選択してください';
+
+  @override
+  String get errorNotLoggedIn => '先にログインしてください';
+
+  @override
+  String get errorAdminProfileUpdateNotSupported => '管理者プロフィール更新非対応';
+
+  @override
+  String get errorAdminDeletionDisabled => '管理者削除はアプリで無効';
+
+  @override
+  String get errorConnectionTimeout => '接続タイムアウト。再試行してください。';
+
+  @override
+  String get errorConnectionError => 'サーバー接続に失敗。';
+
+  @override
+  String get errorRequestCancelled => 'リクエストがキャンセルされました。';
+
+  @override
+  String get errorBadRequest => '無効なリクエスト。入力を確認してください。';
+
+  @override
+  String get errorSessionExpired => 'セッション期限切れ。再ログインしてください。';
+
+  @override
+  String get errorPermissionDenied => '権限がありません。';
+
+  @override
+  String get errorResourceNotFound => 'リソースが見つかりません。';
+
+  @override
+  String get errorConflict => '競合：操作を完了できません。';
+
+  @override
+  String get errorFileTooLarge => 'ファイルが大きすぎます。最大5MB。';
+
+  @override
+  String get errorValidationError => '検証エラー。入力を確認してください。';
+
+  @override
+  String get errorTooManyRequests => 'リクエストが多すぎます。お待ちください。';
+
+  @override
+  String get errorServerError => 'サーバーエラー。後で再試行してください。';
+
+  @override
+  String errorRequestFailed(String statusCode) {
+    return 'リクエスト失敗：ステータス $statusCode';
+  }
+
+  @override
+  String get errorNetworkFailed => 'ネットワークエラー。';
+
+  @override
+  String get errorNetworkRequestFailed => 'ネットワークエラー';
+
+  @override
+  String get errorMalformedSkillResponse => '不正なスキルレスポンス';
+
+  @override
+  String get errorMalformedResponse => '不正なレスポンス';
+
+  @override
+  String get errorMalformedAdminResponse => '不正な管理者レスポンス';
+
+  @override
+  String get errorAdminAccessRequired => '管理者アクセスが必要';
+
+  @override
+  String get errorDescriptionUnavailable => '説明が利用できません';
+
+  @override
+  String errorUnauthorizedAction(String roleLabel) {
+    return '$roleLabelのみ実行可能です';
+  }
+
+  @override
+  String get useWithoutSaving => '保存せずに使用';
+
+  @override
+  String get saveAndUse => '保存して使用';
+
+  @override
+  String get useMyCurrentLocation => '現在地を使用';
+
+  @override
+  String get detectingLocation => '位置を検出中…';
 }

@@ -545,7 +545,10 @@ class ApiJobRepository implements JobRepository {
 
   void _requireAuthenticated() {
     if (!_authState.isAuthenticated || _authState.userId == null) {
-      throw const ApiException('Please log in first');
+      throw const ApiException(
+        'Please log in first',
+        code: ApiErrorCode.sessionExpired,
+      );
     }
   }
 
@@ -557,7 +560,10 @@ class ApiJobRepository implements JobRepository {
         UserRole.worker => 'workers',
         UserRole.admin => 'admins',
       };
-      throw ApiException('Only $roleLabel can perform this action');
+      throw ApiException(
+        'Only $roleLabel can perform this action',
+        code: ApiErrorCode.permissionDenied,
+      );
     }
   }
 

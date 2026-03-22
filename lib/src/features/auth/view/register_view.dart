@@ -167,6 +167,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: const Icon(Icons.language_rounded),
+                    tooltip: context.l10n.multilingual,
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      AppRoutes.languagePicker,
+                    ),
+                  ),
+                ),
                 Text(
                   context.l10n.registerTitle,
                   style: Theme.of(

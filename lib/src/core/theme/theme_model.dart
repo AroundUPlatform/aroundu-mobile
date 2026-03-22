@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_extension.dart';
+
 /// Preset accent color choices available to the user.
 enum AppAccentColor {
   blue(Color(0xFF0476FF), 'Blue'),
@@ -14,7 +16,36 @@ enum AppAccentColor {
 
   const AppAccentColor(this.color, this.label);
   final Color color;
+
+  /// Fallback English label (used only when no BuildContext is available).
   final String label;
+}
+
+/// Provides locale-aware label for [AppAccentColor].
+extension AppAccentColorL10n on AppAccentColor {
+  String localizedLabel(BuildContext context) {
+    final l10n = context.l10n;
+    switch (this) {
+      case AppAccentColor.blue:
+        return l10n.accentColorBlue;
+      case AppAccentColor.yellow:
+        return l10n.accentColorYellow;
+      case AppAccentColor.green:
+        return l10n.accentColorGreen;
+      case AppAccentColor.pink:
+        return l10n.accentColorPink;
+      case AppAccentColor.red:
+        return l10n.accentColorRed;
+      case AppAccentColor.purple:
+        return l10n.accentColorPurple;
+      case AppAccentColor.orange:
+        return l10n.accentColorOrange;
+      case AppAccentColor.teal:
+        return l10n.accentColorTeal;
+      case AppAccentColor.custom:
+        return l10n.accentColorCustom;
+    }
+  }
 }
 
 /// Persisted theme settings: accent color, optional custom color, and mode.

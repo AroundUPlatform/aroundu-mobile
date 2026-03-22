@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme/app_theme.dart';
 
 enum JobStatus {
@@ -14,6 +15,7 @@ enum JobStatus {
 }
 
 extension JobStatusView on JobStatus {
+  /// Fallback English label (no context required). Prefer [localizedLabel].
   String get label {
     switch (this) {
       case JobStatus.openForBids:
@@ -32,6 +34,29 @@ extension JobStatusView on JobStatus {
         return 'Task Completed';
       case JobStatus.cancelled:
         return 'Cancelled';
+    }
+  }
+
+  /// Locale-aware label using the nearest [AppLocalizations].
+  String localizedLabel(BuildContext context) {
+    final l10n = context.l10n;
+    switch (this) {
+      case JobStatus.openForBids:
+        return l10n.jobStatusOpenForOffers;
+      case JobStatus.bidAccepted:
+        return l10n.jobStatusOfferAccepted;
+      case JobStatus.readyToStart:
+        return l10n.jobStatusReadyToStart;
+      case JobStatus.inProgress:
+        return l10n.jobStatusInProgress;
+      case JobStatus.completedPendingPayment:
+        return l10n.jobStatusPendingPayment;
+      case JobStatus.paymentReleased:
+        return l10n.jobStatusPaymentReleased;
+      case JobStatus.completed:
+        return l10n.jobStatusTaskCompleted;
+      case JobStatus.cancelled:
+        return l10n.jobStatusCancelled;
     }
   }
 

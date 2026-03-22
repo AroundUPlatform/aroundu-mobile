@@ -45,82 +45,81 @@ class AppLocalizationsHe extends AppLocalizations {
   String get alreadyHaveAccount => 'כבר יש לך חשבון?';
 
   @override
-  String get welcomeBack => 'Welcome Back';
+  String get welcomeBack => 'ברוך שובך';
 
   @override
-  String get loginSubtitle => 'Sign in to continue as provider or worker.';
+  String get loginSubtitle => 'היכנס לחשבון AroundU שלך';
 
   @override
-  String get noAccountYet => 'No account yet?';
+  String get noAccountYet => 'אין חשבון?';
 
   @override
-  String get createOne => 'Create one';
+  String get createOne => 'צור';
 
   @override
-  String get emailRequired => 'Email is required';
+  String get emailRequired => 'אימייל נדרש';
 
   @override
-  String get enterValidEmail => 'Enter a valid email';
+  String get enterValidEmail => 'הזן אימייל תקין';
 
   @override
-  String get passwordRequired => 'Password is required';
+  String get passwordRequired => 'סיסמה נדרשת';
 
   @override
-  String get minimumSixCharacters => 'Minimum 6 characters';
+  String get minimumSixCharacters => 'לפחות 6 תווים';
 
   @override
-  String get unableToLogin => 'Unable to login. Please retry.';
+  String get unableToLogin => 'כניסה נכשלה';
 
   @override
   String fieldRequired(String field) {
-    return '$field is required';
+    return 'השדה $field נדרש';
   }
 
   @override
-  String get enterValidPhone => 'Enter a valid phone number';
+  String get enterValidPhone => 'הזן טלפון תקין';
 
   @override
-  String get unableToRegister => 'Unable to register';
+  String get unableToRegister => 'הרשמה נכשלה';
 
   @override
-  String get registrationSuccess => 'Registration successful. Please log in.';
+  String get registrationSuccess => 'הרשמה הצליחה';
 
   @override
-  String get registerSubtitle =>
-      'Register as provider or worker with your basic location profile.';
+  String get registerSubtitle => 'הירשם כמזמין או עובד';
 
   @override
-  String get roleLabel => 'Role';
+  String get roleLabel => 'תפקיד';
 
   @override
-  String get roleJobProvider => 'Job Provider';
+  String get roleJobProvider => 'מזמין';
 
   @override
-  String get roleJobWorker => 'Job Worker';
+  String get roleJobWorker => 'עובד';
 
   @override
-  String get countryLabel => 'Country';
+  String get countryLabel => 'מדינה';
 
   @override
-  String get currencyLabel => 'Currency';
+  String get currencyLabel => 'מטבע';
 
   @override
-  String get cityLabel => 'City';
+  String get cityLabel => 'עיר';
 
   @override
-  String get postalCodeLabel => 'Postal code';
+  String get postalCodeLabel => 'מיקוד';
 
   @override
-  String get areaOptionalLabel => 'Area (optional)';
+  String get areaOptionalLabel => 'שכונה (אופציונלי)';
 
   @override
-  String get fullAddressOptionalLabel => 'Full address (optional)';
+  String get fullAddressOptionalLabel => 'כתובת מלאה (אופציונלי)';
 
   @override
-  String get alreadyRegistered => 'Already registered?';
+  String get alreadyRegistered => 'כבר רשום?';
 
   @override
-  String get logInLink => 'Log in';
+  String get logInLink => 'היכנס';
 
   @override
   String get onboardingTitle1 => 'מצא משימות סביבך';
@@ -152,7 +151,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get next => 'הבא';
 
   @override
-  String get newHereCreateAccount => 'New here? Create account';
+  String get newHereCreateAccount => 'חדש? צור חשבון';
 
   @override
   String get roleSelectionTitle => 'בחר את התפקיד שלך';
@@ -173,19 +172,18 @@ class AppLocalizationsHe extends AppLocalizations {
   String get continueButton => 'המשך';
 
   @override
-  String get roleSelectionSubtitle =>
-      'Select the workflow you want to use in AroundU.';
+  String get roleSelectionSubtitle => 'איך תרצה להשתמש ב-AroundU?';
 
   @override
   String signedInAs(String email) {
-    return 'Signed in as $email';
+    return 'מחובר כ-$email';
   }
 
   @override
-  String get roleProviderDesc => 'Post jobs and manage incoming bids.';
+  String get roleProviderDesc => 'פרסם משימות ומצא עובדים מתאימים';
 
   @override
-  String get roleWorkerDescAlt => 'Browse nearby jobs and place bids quickly.';
+  String get roleWorkerDescAlt => 'מצא משימות והרוויח עם הכישורים שלך';
 
   @override
   String get homeTab => 'בית';
@@ -200,22 +198,22 @@ class AppLocalizationsHe extends AppLocalizations {
   String get profileTab => 'פרופיל';
 
   @override
-  String get providerTabMyTasks => 'My Tasks';
+  String get providerTabMyTasks => 'המשימות שלי';
 
   @override
-  String get providerTabPostTask => 'Post Task';
+  String get providerTabPostTask => 'פרסם משימה';
 
   @override
-  String get tasksNavLabel => 'Tasks';
+  String get tasksNavLabel => 'משימות';
 
   @override
-  String get postNavLabel => 'Post';
+  String get postNavLabel => 'פרסם';
 
   @override
-  String get workerTabTaskFeed => 'Task Feed';
+  String get workerTabTaskFeed => 'פיד משימות';
 
   @override
-  String get feedNavLabel => 'Feed';
+  String get feedNavLabel => 'פיד';
 
   @override
   String get myJobs => 'העבודות שלי';
@@ -269,13 +267,13 @@ class AppLocalizationsHe extends AppLocalizations {
   String get urgencyNormal => 'רגיל';
 
   @override
-  String get urgencyMedium => 'Medium';
+  String get urgencyMedium => 'בינוני';
 
   @override
   String get urgencyUrgent => 'דחוף';
 
   @override
-  String get urgencyAsap => 'ASAP';
+  String get urgencyAsap => 'בהקדם';
 
   @override
   String get paymentOffline => 'לא מקוון';
@@ -284,144 +282,142 @@ class AppLocalizationsHe extends AppLocalizations {
   String get paymentEscrow => 'נאמנות';
 
   @override
-  String get paymentMethod => 'Payment Method';
+  String get paymentMethod => 'אמצעי תשלום';
 
   @override
-  String get payInCash => 'Pay in Cash';
+  String get payInCash => 'שלם במזומן';
 
   @override
-  String get secureEscrow => 'Secure Escrow';
+  String get secureEscrow => 'נאמנות מאובטחת';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => 'הכל';
 
   @override
-  String get filterOpen => 'Open';
+  String get filterOpen => 'פתוח';
 
   @override
-  String get filterActive => 'Active';
+  String get filterActive => 'פעיל';
 
   @override
-  String get filterInProgress => 'In Progress';
+  String get filterInProgress => 'בתהליך';
 
   @override
-  String get filterCompleted => 'Completed';
+  String get filterCompleted => 'הושלם';
 
   @override
-  String get filterCancelled => 'Cancelled';
+  String get filterCancelled => 'בוטל';
 
   @override
-  String get filterExpired => 'Expired';
+  String get filterExpired => 'פג';
 
   @override
-  String get filterNearby => 'Nearby';
+  String get filterNearby => 'בקרבת מקום';
 
   @override
-  String get filterAllMine => 'All Mine';
+  String get filterAllMine => 'כל שלי';
 
   @override
-  String get filterBidPlaced => 'Bid Placed';
+  String get filterBidPlaced => 'הצעה הוגשה';
 
   @override
-  String get filterAccepted => 'Accepted';
+  String get filterAccepted => 'התקבל';
 
   @override
-  String get noTasksPostedYet => 'No tasks posted yet';
+  String get noTasksPostedYet => 'לא פורסמו משימ';
 
   @override
-  String get noOpenTasks => 'No open tasks';
+  String get noOpenTasks => 'אין משימות פתוחות';
 
   @override
-  String get noActiveTasks => 'No active tasks';
+  String get noActiveTasks => 'אין משימות פעילות';
 
   @override
-  String get noTasksInProgress => 'No tasks in progress';
+  String get noTasksInProgress => 'אין משימות בתהליך';
 
   @override
-  String get noCompletedTasks => 'No completed tasks';
+  String get noCompletedTasks => 'אין משימות שהושלמו';
 
   @override
-  String get noCancelledTasks => 'No cancelled tasks';
+  String get noCancelledTasks => 'אין משימות שבוטלו';
 
   @override
-  String get noExpiredTasks => 'No expired tasks';
+  String get noExpiredTasks => 'אין משימות שפגו';
 
   @override
-  String get unableToLoadTasks => 'Unable to load tasks';
+  String get unableToLoadTasks => 'טעינת משימות נכשלה';
 
   @override
-  String get noNearbyJobs => 'No nearby jobs right now';
+  String get noNearbyJobs => 'אין עבודות קרובות';
 
   @override
-  String get noJobsYetBid => 'No jobs yet — place a bid to get started!';
+  String get noJobsYetBid => 'אין עבודות — הגש הצעה';
 
   @override
-  String get noPendingBids => 'No pending bids';
+  String get noPendingBids => 'אין הצעות ממתינות';
 
   @override
-  String get noAcceptedJobs => 'No accepted jobs';
+  String get noAcceptedJobs => 'אין עבודות שהתקבלו';
 
   @override
-  String get noJobsInProgress => 'No jobs in progress';
+  String get noJobsInProgress => 'אין עבודות בתהליך';
 
   @override
-  String get noCompletedJobsYet => 'No completed jobs yet';
+  String get noCompletedJobsYet => 'אין עבודות שהושלמו';
 
   @override
-  String get noCancelledJobs => 'No cancelled jobs';
+  String get noCancelledJobs => 'אין עבודות שבוטלו';
 
   @override
-  String get noExpiredJobs => 'No expired jobs';
+  String get noExpiredJobs => 'אין עבודות שפגו';
 
   @override
-  String get pullDownToRefreshCheck => 'Pull down to refresh and check again.';
+  String get pullDownToRefreshCheck => 'משוך כלפי מטה לבדוק משימות חדשות';
 
   @override
-  String get unableToLoadJobs => 'Unable to load jobs';
+  String get unableToLoadJobs => 'טעינת עבודות נכשלה';
 
   @override
-  String get postNewTask => 'Post a New Task';
+  String get postNewTask => 'משימה חדשה';
 
   @override
-  String get postTaskSubtitle =>
-      'Add clear details so workers can send accurate offers.';
+  String get postTaskSubtitle => 'הוסף פרטים ברורים להצעות מדויקות';
 
   @override
-  String get taskTitleLabel => 'Task title';
+  String get taskTitleLabel => 'כותרת משימה';
 
   @override
-  String get savingLocation => 'Saving location…';
+  String get savingLocation => 'שומר מיקום';
 
   @override
-  String get tapToSelectLocation => 'Tap to select location';
+  String get tapToSelectLocation => 'הקש לבחירת מיקום';
 
   @override
-  String get postTaskButton => 'Post Task';
+  String get postTaskButton => 'פרסם משימה';
 
   @override
-  String get addSkillWarning => 'Add at least one required skill for this task';
+  String get addSkillWarning => 'הוסף לפחות מיומנות נדרשת אחת';
 
   @override
-  String get enterValidBudget => 'Enter a valid budget amount';
+  String get enterValidBudget => 'הזן תקציב תקין';
 
   @override
-  String get setJobLocationWarning =>
-      'Please set a job location before posting';
+  String get setJobLocationWarning => 'הגדר מיקום משימה';
 
   @override
-  String get jobPostedSuccess => 'Job posted successfully';
+  String get jobPostedSuccess => 'משימה פורסמה';
 
   @override
-  String get failedToPostJob => 'Failed to post job. Please retry.';
+  String get failedToPostJob => 'פרסום נכשל';
 
   @override
-  String get failedToSaveLocation => 'Failed to save location';
+  String get failedToSaveLocation => 'שמירת מיקום נכשלה';
 
   @override
-  String get unableToLoadJobWorkflow => 'Unable to load job workflow';
+  String get unableToLoadJobWorkflow => 'טעינת תהליך נכשלה';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => 'שגיאה לא ידועה';
 
   @override
   String get statusOpenForBids => 'פתוח להצעות';
@@ -475,96 +471,95 @@ class AppLocalizationsHe extends AppLocalizations {
   String get bidPending => 'ממתין';
 
   @override
-  String get offersSection => 'Offers';
+  String get offersSection => 'הצעות';
 
   @override
-  String get noOffersReceivedYet => 'No offers received yet.';
+  String get noOffersReceivedYet => 'לא התקבלו הצעות';
 
   @override
-  String get offerAccepted => 'Offer Accepted';
+  String get offerAccepted => 'הצעה התקבלה';
 
   @override
-  String get offerRejected => 'Offer Rejected';
+  String get offerRejected => 'הצעה נדחתה';
 
   @override
-  String get offerPending => 'Offer Pending';
+  String get offerPending => 'הצעה ממתינה';
 
   @override
   String workerNumber(int id) {
-    return 'Worker #$id';
+    return 'עובד #$id';
   }
 
   @override
-  String get acceptThisOffer => 'Accept this Offer';
+  String get acceptThisOffer => 'קבל הצעה זו';
 
   @override
-  String get messageWorker => 'Message Worker';
+  String get messageWorker => 'שלח הודעה לעובד';
 
   @override
-  String get offerAcceptedSnack => 'Offer accepted';
+  String get offerAcceptedSnack => 'ההצעה התקבלה!';
 
   @override
-  String get yourOffer => 'Your Offer';
+  String get yourOffer => 'ההצעה שלך';
 
   @override
-  String get bidStatusSelected => 'Selected';
+  String get bidStatusSelected => 'נבחר';
 
   @override
-  String get bidStatusRejected => 'Rejected';
+  String get bidStatusRejected => 'נדחה';
 
   @override
-  String get bidStatusPending => 'Pending';
+  String get bidStatusPending => 'ממתין';
 
   @override
-  String get placeYourOffer => 'Place Your Offer';
+  String get placeYourOffer => 'הגש הצעה';
 
   @override
-  String get yourOfferAmount => 'Your offer amount';
+  String get yourOfferAmount => 'סכום ההצעה';
 
   @override
-  String get messageToClientOptional => 'Message to client (optional)';
+  String get messageToClientOptional => 'הודעה ללקוח (אופציונלי)';
 
   @override
-  String get addPartnerOptional => 'Add a partner (optional)';
+  String get addPartnerOptional => 'הוסף שותף (אופציונלי)';
 
   @override
-  String get partnerNameLabel => 'Partner name';
+  String get partnerNameLabel => 'שם שותף';
 
   @override
-  String get partnerFeeLabel => 'Partner fee';
+  String get partnerFeeLabel => 'עמלת שותף';
 
   @override
   String partnerFeeAmount(String symbol, String amount) {
-    return '+ $symbol$amount partner fee';
+    return 'עמלת שותף: $amount';
   }
 
   @override
-  String get submitOffer => 'Submit Offer';
+  String get submitOffer => 'שלח הצעה';
 
   @override
-  String get enterValidOfferAmount => 'Enter a valid offer amount';
+  String get enterValidOfferAmount => 'הזן סכום תקין';
 
   @override
-  String get offerSubmittedSuccess => 'Offer submitted successfully';
+  String get offerSubmittedSuccess => 'הצעה נשלחה';
 
   @override
-  String get clientSelectedYourOffer => 'Client Selected Your Offer!';
+  String get clientSelectedYourOffer => 'הלקוח בחר בהצעה שלך';
 
   @override
-  String get handshakeHint =>
-      'Accept to confirm this job, or decline if you\'re no longer available.';
+  String get handshakeHint => 'שני הצדדים צריכים לשתף קוד להתחלה';
 
   @override
-  String get handshakeAccepted => 'Handshake accepted';
+  String get handshakeAccepted => 'לחיצת יד התקבלה';
 
   @override
-  String get handshakeDeclined => 'Handshake declined';
+  String get handshakeDeclined => 'לחיצת יד נדחתה';
 
   @override
-  String get acceptJob => 'Accept Job';
+  String get acceptJob => 'קבל עבודה';
 
   @override
-  String get decline => 'Decline';
+  String get decline => 'דחה';
 
   @override
   String get startCode => 'קוד התחלה';
@@ -582,72 +577,66 @@ class AppLocalizationsHe extends AppLocalizations {
   String get enterCode => 'הזן קוד';
 
   @override
-  String get generateStartCode => 'Generate Start Code';
+  String get generateStartCode => 'צור קוד התחלה';
 
   @override
-  String get startCodeCopied => 'Start code copied';
+  String get startCodeCopied => 'קוד התחלה הועתק';
 
   @override
   String reserveInEscrow(String symbol, String amount) {
-    return 'Reserve $symbol$amount in Escrow';
+    return 'שמור $amount בנאמנות';
   }
 
   @override
-  String get releaseCodeCopied => 'Release code copied';
+  String get releaseCodeCopied => 'קוד הועתק';
 
   @override
-  String get releaseCodeHint =>
-      'Share this verbally with the worker. They enter it to confirm task completion.';
+  String get releaseCodeHint => 'הזן קוד שחרור';
 
   @override
-  String get regenerateCode => 'Regenerate Code';
+  String get regenerateCode => 'צור מחדש';
 
   @override
-  String get generateReleaseCode => 'Generate Release Code';
+  String get generateReleaseCode => 'צור קוד שחרור';
 
   @override
-  String get taskCodesGenerated => 'Task codes generated';
+  String get taskCodesGenerated => 'קודים נוצרו';
 
   @override
-  String get newReleaseCodeGenerated => 'New release code generated';
+  String get newReleaseCodeGenerated => 'קוד שחרור חדש נוצר';
 
   @override
-  String get readyToBegin => 'Ready to Begin?';
+  String get readyToBegin => 'מוכן להתחיל';
 
   @override
-  String get startCodeHint =>
-      'Ask the client for the start code and enter it below to officially begin work.';
+  String get startCodeHint => 'הזן קוד התחלה';
 
   @override
-  String get verifyAndStartWork => 'Verify & Start Work';
+  String get verifyAndStartWork => 'אמת והתחל';
 
   @override
-  String get startCodeVerified =>
-      'Start code verified. Task is now in progress.';
+  String get startCodeVerified => 'קוד התחלה אומת';
 
   @override
-  String get enterStartCodeFirst => 'Enter start code first';
+  String get enterStartCodeFirst => 'הזן קוד התחלה קודם';
 
   @override
-  String get workInProgress => 'Work In Progress';
+  String get workInProgress => 'עבודה בתהליך';
 
   @override
-  String get releaseCodePrompt =>
-      'Once done, ask the client for the 6-digit release code.';
+  String get releaseCodePrompt => 'הזן קוד לשחרור תשלום';
 
   @override
-  String get releaseCodeHelper => 'Enter the 6-digit code from the client';
+  String get releaseCodeHelper => 'תן קוד זה לעובד בסיום העבודה';
 
   @override
-  String get confirmWorkCompleted => 'Confirm Work Completed';
+  String get confirmWorkCompleted => 'אשר השלמת עבודה';
 
   @override
-  String get workConfirmedPaymentReleased =>
-      'Work confirmed — payment released!';
+  String get workConfirmedPaymentReleased => 'עבודה אושרה — תשלום שוחרר!';
 
   @override
-  String get enterReleaseCodeWarning =>
-      'Enter the release code from the client';
+  String get enterReleaseCodeWarning => 'הזן קוד שחרור';
 
   @override
   String get escrow => 'נאמנות';
@@ -665,35 +654,34 @@ class AppLocalizationsHe extends AppLocalizations {
   String get paymentReleased => 'התשלום שוחרר';
 
   @override
-  String get paymentSafelyReserved => 'Payment safely reserved';
+  String get paymentSafelyReserved => 'התשלום נשמר בבטחה';
 
   @override
-  String get cancelTask => 'Cancel Task';
+  String get cancelTask => 'בטל משימה';
 
   @override
-  String get taskCancelled => 'Task cancelled';
+  String get taskCancelled => 'משימה בוטלה';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'מחק משימה';
 
   @override
-  String get deleteTaskTitle => 'Delete task?';
+  String get deleteTaskTitle => 'למחוק משימה?';
 
   @override
-  String get deleteTaskConfirm =>
-      'This will remove the task and all associated offers.';
+  String get deleteTaskConfirm => 'למחוק משימה זו?';
 
   @override
-  String get taskDeleted => 'Task deleted';
+  String get taskDeleted => 'משימה נמחקה';
 
   @override
-  String get typeFirstMessage => 'Type your first message…';
+  String get typeFirstMessage => 'הקלד הודעה ראשונה';
 
   @override
-  String get send => 'Send';
+  String get send => 'שלח';
 
   @override
-  String get failedToSendMessage => 'Failed to send message';
+  String get failedToSendMessage => 'שליחת הודעה נכשלה';
 
   @override
   String get conversations => 'הודעות';
@@ -737,23 +725,23 @@ class AppLocalizationsHe extends AppLocalizations {
   }
 
   @override
-  String get chatToday => 'Today';
+  String get chatToday => 'היום';
 
   @override
-  String get chatYesterday => 'Yesterday';
+  String get chatYesterday => 'אתמול';
 
   @override
   String chatYouPrefix(String message) {
-    return 'You: $message';
+    return 'אתה: $message';
   }
 
   @override
   String chatReFallback(String jobTitle) {
-    return 'Re: $jobTitle';
+    return 'תשובה: $jobTitle';
   }
 
   @override
-  String get noConversationsYet => 'No conversations yet';
+  String get noConversationsYet => 'אין שיחות';
 
   @override
   String get loadingConversations => 'טוען שיחות...';
@@ -789,100 +777,99 @@ class AppLocalizationsHe extends AppLocalizations {
   String get logoutConfirm => 'האם אתה בטוח שברצונך להתנתק?';
 
   @override
-  String get myProfile => 'My Profile';
+  String get myProfile => 'הפרופיל שלי';
 
   @override
-  String get unknown => 'Unknown';
+  String get unknown => 'לא ידוע';
 
   @override
-  String get experienceLabel => 'Experience';
+  String get experienceLabel => 'ניסיון';
 
   @override
-  String get statusLabel => 'Status';
+  String get statusLabel => 'סטטוס';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'לא הוגדר';
 
   @override
-  String get onDuty => 'On Duty';
+  String get onDuty => 'בתפקיד';
 
   @override
-  String get offDuty => 'Off Duty';
+  String get offDuty => 'מחוץ לתפקיד';
 
   @override
   String yearsCount(int count) {
-    return '$count years';
+    return '$count שנים';
   }
 
   @override
-  String get themeAndColors => 'Theme & Colors';
+  String get themeAndColors => 'ערכת נושא וצבעים';
 
   @override
-  String get aiModelLabel => 'AI Model';
+  String get aiModelLabel => 'מודל AI';
 
   @override
-  String get availableForWork => 'Available for Work';
+  String get availableForWork => 'זמין לעבודה';
 
   @override
-  String get visibleToClients => 'You are visible to clients';
+  String get visibleToClients => 'גלוי ללקוחות';
 
   @override
-  String get currentlyOffDuty => 'You are currently off duty';
+  String get currentlyOffDuty => 'כרגע לא בתפקיד';
 
   @override
-  String get myReviews => 'My Reviews';
+  String get myReviews => 'הביקורות שלי';
 
   @override
-  String get deleteAccount => 'Delete Account';
+  String get deleteAccount => 'מחק חשבון';
 
   @override
-  String get deleteAccountConfirm =>
-      'This will permanently delete your account and all data. This cannot be undone.';
+  String get deleteAccountConfirm => 'בטוח? לא ניתן לבטל.';
 
   @override
-  String get couldNotDeleteAccount => 'Could not delete account';
+  String get couldNotDeleteAccount => 'לא ניתן למחוק חשבון';
 
   @override
-  String get profilePhotoUpdated => 'Profile photo updated';
+  String get profilePhotoUpdated => 'תמונה עודכנה';
 
   @override
-  String get profileUpdated => 'Profile updated';
+  String get profileUpdated => 'פרופיל עודכן';
 
   @override
-  String get nameLabel => 'Name';
+  String get nameLabel => 'שם';
 
   @override
-  String get profileImageUrl => 'Profile Image URL';
+  String get profileImageUrl => 'כתובת תמונה';
 
   @override
-  String get yearsOfExperience => 'Years of Experience';
+  String get yearsOfExperience => 'שנות ניסיון';
 
   @override
-  String get certificationsLabel => 'Certifications';
+  String get certificationsLabel => 'תעודות';
 
   @override
-  String get payoutAccountLabel => 'Payout Account';
+  String get payoutAccountLabel => 'חשבון תשלום';
 
   @override
-  String get onDutySubtitle => 'Toggle availability for new tasks';
+  String get onDutySubtitle => 'גלוי למשימות חדשות';
 
   @override
-  String get loadingProfile => 'Loading profile...';
+  String get loadingProfile => 'טוען פרופיל';
 
   @override
-  String get availabilityLabel => 'Availability';
+  String get availabilityLabel => 'זמינות';
 
   @override
-  String get memberLabel => 'Member';
+  String get memberLabel => 'חבר';
 
   @override
-  String get available => 'Available';
+  String get available => 'זמין';
 
   @override
-  String get unavailable => 'Unavailable';
+  String get unavailable => 'לא זמין';
 
   @override
-  String get viewAllReviews => 'View All Reviews';
+  String get viewAllReviews => 'צפה בכל הביקורות';
 
   @override
   String get settings => 'הגדרות';
@@ -924,16 +911,16 @@ class AppLocalizationsHe extends AppLocalizations {
   String get secondary => 'משני';
 
   @override
-  String get modeLabel => 'Mode';
+  String get modeLabel => 'מצב';
 
   @override
-  String get pickAColour => 'Pick a colour';
+  String get pickAColour => 'בחר צבע';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'ברירת מחדל';
 
   @override
-  String get darkModeSubtitle => 'Switch between light and dark themes';
+  String get darkModeSubtitle => 'בחר מערכת, בהיר או כהה';
 
   @override
   String get reviews => 'ביקורות';
@@ -955,64 +942,57 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String howWasWorker(String name) {
-    return 'How was $name?';
+    return 'איך היה $name?';
   }
 
   @override
-  String get feedbackHelps => 'Your feedback helps the community';
+  String get feedbackHelps => 'המשוב שלך עוזר';
 
   @override
-  String get thanksForReview => 'Thanks for your review!';
+  String get thanksForReview => 'תודה על הביקורת';
 
   @override
-  String get shareExperienceHint => 'Share your experience (optional)';
+  String get shareExperienceHint => 'שתף את החוויה שלך';
 
   @override
-  String get ratingExcellent => 'Excellent!';
+  String get ratingExcellent => 'מצוין';
 
   @override
-  String get ratingGreat => 'Great!';
+  String get ratingGreat => 'טוב מאוד';
 
   @override
-  String get ratingGood => 'Good';
+  String get ratingGood => 'טוב';
 
   @override
-  String get ratingFair => 'Fair';
+  String get ratingFair => 'סביר';
 
   @override
-  String get ratingPoor => 'Poor';
+  String get ratingPoor => 'גרוע';
 
   @override
-  String get tapToRate => 'Tap to rate';
+  String get tapToRate => 'הקש לדירוג';
 
   @override
   String workerReviewsTitle(String name) {
-    return '$name\'s Reviews';
+    return 'ביקורות על $name';
   }
 
   @override
-  String get loadingReviews => 'Loading reviews...';
+  String get loadingReviews => 'טוען ביקורות';
 
   @override
-  String get noReviewsSubtitle =>
-      'Reviews will appear here after completed tasks.';
+  String get noReviewsSubtitle => 'אין ביקורות';
 
   @override
-  String get allReviews => 'All Reviews';
+  String get allReviews => 'כל הביקורות';
 
   @override
   String reviewCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count reviews',
-      one: '1 review',
-    );
-    return '$_temp0';
+    return '$count ביקורות';
   }
 
   @override
-  String get anonymous => 'Anonymous';
+  String get anonymous => 'אנונימי';
 
   @override
   String get loading => 'טוען...';
@@ -1024,7 +1004,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get retry => 'נסה שוב';
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'נסה שוב';
 
   @override
   String get cancel => 'ביטול';
@@ -1054,19 +1034,19 @@ class AppLocalizationsHe extends AppLocalizations {
   String get pullToRefresh => 'משוך לרענון';
 
   @override
-  String get pullDownToRefresh => 'Pull down to refresh.';
+  String get pullDownToRefresh => 'משוך כלפי מטה לרענון';
 
   @override
-  String get yes => 'Yes';
+  String get yes => 'כן';
 
   @override
-  String get required => 'Required';
+  String get required => 'נדרש';
 
   @override
-  String get stop => 'Stop';
+  String get stop => 'עצור';
 
   @override
-  String get clear => 'Clear';
+  String get clear => 'נקה';
 
   @override
   String get aiSetup => 'הגדרת AI';
@@ -1116,320 +1096,302 @@ class AppLocalizationsHe extends AppLocalizations {
   String get analyzing => 'מנתח…';
 
   @override
-  String get aiCapabilities => 'AI Capabilities';
+  String get aiCapabilities => 'יכולות AI';
 
   @override
-  String get onDeviceAi => 'On-Device AI';
+  String get onDeviceAi => 'AI על המכשיר';
 
   @override
-  String get aiTaglineSetup => 'Private · Offline · Free';
+  String get aiTaglineSetup => 'פרטי · לא מקוון · חינם';
 
   @override
-  String get aiSetupDescription =>
-      'Get smart suggestions for tasks and bids powered by an AI model that runs entirely on your device. No data leaves your phone.';
+  String get aiSetupDescription => 'קבל הצעות חכמות למשימות והצעות';
 
   @override
-  String get physicalDevice => 'Physical device';
+  String get physicalDevice => 'מכשיר פיזי';
 
   @override
-  String get emulatorDetected => 'Emulator detected';
+  String get emulatorDetected => 'אמולטור זוהה';
 
   @override
   String get ram => 'RAM';
 
   @override
-  String get sufficient => 'Sufficient';
+  String get sufficient => 'מספיק';
 
   @override
-  String get freeStorage => 'Free storage';
+  String get freeStorage => 'אחסון פנוי';
 
   @override
   String mbFree(int mb) {
-    return '$mb MB free';
+    return '$mb MB פנוי';
   }
 
   @override
-  String get aiRequiresPhysicalDevice =>
-      'AI features require a physical device.';
+  String get aiRequiresPhysicalDevice => 'תכונות AI דורשות מכשיר פיזי.';
 
   @override
-  String get multilingual => 'Multilingual';
+  String get multilingual => 'רב-לשוני';
 
   @override
   String downloadingProgress(String percent) {
-    return 'Downloading… $percent%';
+    return 'מוריד $percent%';
   }
 
   @override
-  String get loadingModel => 'Loading model…';
+  String get loadingModel => 'טוען מודל';
 
   @override
-  String get retryDownload => 'Retry Download';
+  String get retryDownload => 'נסה הורדה שוב';
 
   @override
-  String get activeAndReady => 'Active & Ready';
+  String get activeAndReady => 'פעיל ומוכן';
 
   @override
-  String get remove => 'Remove';
+  String get remove => 'הסר';
 
   @override
-  String get enableAi => 'Enable AI';
+  String get enableAi => 'הפעל AI';
 
   @override
-  String get downloadAiModel => 'Download AI Model';
+  String get downloadAiModel => 'הורד מודל AI';
 
   @override
-  String get deviceNotSupported => 'Device not supported';
+  String get deviceNotSupported => 'מכשיר לא נתמך';
 
   @override
-  String get downloadBackgroundNote =>
-      'Download happens in the background — you can leave this screen. The model file will be stored on your device and can be removed at any time.';
+  String get downloadBackgroundNote => 'מוריד ברקע. אל תסגור את האפליקציה.';
 
   @override
-  String get removeAiModelTitle => 'Remove AI Model?';
+  String get removeAiModelTitle => 'להסיר מודל AI?';
 
   @override
-  String get removeAiModelConfirm =>
-      'This will delete the AI model from your device. You can re-download it later.';
+  String get removeAiModelConfirm => 'להסיר מודל AI? ישחרר  MB.';
 
   @override
-  String get analyzeWithAi => 'Analyze with AI';
+  String get analyzeWithAi => 'ניתוח עם AI';
 
   @override
-  String get aiAssistantAvailable => 'AI Assistant available';
+  String get aiAssistantAvailable => 'עוזר AI זמין';
 
   @override
-  String get aiSetupPrompt =>
-      'Set up an on-device AI model to get smart suggestions.';
+  String get aiSetupPrompt => 'הגדר מודל AI על המכשיר להצעות חכמות.';
 
   @override
-  String get setup => 'Setup';
+  String get setup => 'הגדרה';
 
   @override
-  String get adminDashboard => 'Admin Dashboard';
+  String get adminDashboard => 'לוח מנהל';
 
   @override
-  String get failedToLoadDashboard => 'Failed to load dashboard';
+  String get failedToLoadDashboard => 'טעינת לוח נכשלה';
 
   @override
-  String get platformOverview => 'Platform Overview';
+  String get platformOverview => 'סקירת פלטפורמה';
 
   @override
-  String get liveStatistics => 'Live statistics from the backend.';
+  String get liveStatistics => 'סטטיסטיקה בזמן אמת';
 
   @override
-  String get usersSection => 'Users';
+  String get usersSection => 'משתמשים';
 
   @override
-  String get adminTabClients => 'Clients';
+  String get adminTabClients => 'לקוחות';
 
   @override
-  String get adminTabWorkers => 'Workers';
+  String get adminTabWorkers => 'עובדים';
 
   @override
-  String get adminTabAccount => 'Account';
+  String get adminTabAccount => 'חשבון';
 
   @override
-  String get jobsSection => 'Jobs';
+  String get jobsSection => 'עבודות';
 
   @override
-  String get activeLabel => 'Active';
+  String get activeLabel => 'פעיל';
 
   @override
-  String get todaySection => 'Today';
+  String get todaySection => 'היום';
 
   @override
-  String get createdLabel => 'Created';
+  String get createdLabel => 'נוצר';
 
   @override
-  String get completedLabel => 'Completed';
+  String get completedLabel => 'הושלם';
 
   @override
   String deleteUserTitle(String role) {
-    return 'Delete $role';
+    return 'למחוק את $role?';
   }
 
   @override
   String deleteUserConfirm(String name, String email) {
-    return 'This action removes $name ($email) permanently. Continue?';
+    return 'למחוק את $name?';
   }
 
   @override
-  String get userDeletedSuccess => 'User deleted successfully';
+  String get userDeletedSuccess => 'משתמש נמחק';
 
   @override
-  String get unableToLoadUsers => 'Unable to load users';
+  String get unableToLoadUsers => 'טעינת משתמשים נכשלה';
 
   @override
-  String get noClientsFound => 'No clients found';
+  String get noClientsFound => 'לא נמצאו לקוחות';
 
   @override
-  String get noWorkersFound => 'No workers found';
+  String get noWorkersFound => 'לא נמצאו עובדים';
 
   @override
-  String get deleteUserTooltip => 'Delete user';
+  String get deleteUserTooltip => 'מחק משתמש';
 
   @override
-  String get adminSession => 'Admin Session';
+  String get adminSession => 'סשן מנהל';
 
   @override
-  String get adminManageUsersHint =>
-      'Manage users from the Clients and Workers tabs.';
+  String get adminManageUsersHint => 'נהל משתמשים מלשוניות לקוחות ועובדים.';
 
   @override
   String distanceKm(int radius) {
-    return '$radius km';
+    return '$radius ק\"מ';
   }
 
   @override
-  String get youreOffline => 'You\'re Offline';
+  String get youreOffline => 'אתה לא מקוון';
 
   @override
-  String get offlineHint =>
-      'Toggle the switch in the top bar to go online and discover nearby jobs.';
+  String get offlineHint => 'אתה לא מקוון';
 
   @override
-  String get yourSkills => 'Your Skills';
+  String get yourSkills => 'המיומנויות שלך';
 
   @override
-  String get skillsSubtitle =>
-      'Search and add skills. These are sent to the server to filter your job feed.';
+  String get skillsSubtitle => 'הוסף מיומנויות ומומחיות';
 
   @override
-  String get addSkillLabel => 'Add Skill';
+  String get addSkillLabel => 'הוסף מיומנות';
 
   @override
-  String get typeToSearchSkills => 'Type to search skills…';
+  String get typeToSearchSkills => 'חפש מיומנויות';
 
   @override
   String savedSkillsCount(int count) {
-    return 'Saved Skills ($count)';
+    return '$count מיומנויות נשמרו';
   }
 
   @override
-  String get noSkillsAdded =>
-      'No skills added yet. Search above to add relevant skills.';
+  String get noSkillsAdded => 'אין מיומנויות';
 
   @override
-  String get unableToLoadTaskDetails => 'Unable to load task details';
+  String get unableToLoadTaskDetails => 'טעינת פרטים נכשלה';
 
   @override
-  String get detailDistance => 'Distance';
+  String get detailDistance => 'מרחק';
 
   @override
-  String get chooseLocation => 'Choose Location';
+  String get chooseLocation => 'בחר מיקום';
 
   @override
-  String get savedTab => 'Saved';
+  String get savedTab => 'שמורים';
 
   @override
-  String get pinOnMapTab => 'Pin on Map';
+  String get pinOnMapTab => 'סמן על מפה';
 
   @override
-  String get locationDeniedPermanently =>
-      'Location permanently denied. Enable it in Settings.';
+  String get locationDeniedPermanently => 'הרשאת מיקום נדחתה לצמיתות';
 
   @override
-  String get couldNotGetLocation => 'Could not get location';
+  String get couldNotGetLocation => 'לא ניתן לקבל מיקום';
 
   @override
-  String get searchPlaces => 'Search places…';
+  String get searchPlaces => 'חפש מקומות';
 
   @override
-  String get switchToSatellite => 'Switch to Satellite';
+  String get switchToSatellite => 'לוויין';
 
   @override
-  String get switchToRoadMap => 'Switch to Road map';
+  String get switchToRoadMap => 'מפת כבישים';
 
   @override
-  String get goToMyLocation => 'Go to my location';
+  String get goToMyLocation => 'למיקום שלי';
 
   @override
-  String get confirmLocation => 'Confirm Location';
+  String get confirmLocation => 'אשר מיקום';
 
   @override
-  String get saveAddress => 'Save Address';
+  String get saveAddress => 'שמור כתובת';
 
   @override
-  String get saveAddressSubtitle =>
-      'Add a label and recipient details for this location.';
+  String get saveAddressSubtitle => 'שמור למשימות עתידיות';
 
   @override
-  String get labelField => 'Label';
+  String get labelField => 'תווית';
 
   @override
-  String get labelHome => 'Home';
+  String get labelHome => 'בית';
 
   @override
-  String get labelWork => 'Work';
+  String get labelWork => 'עבודה';
 
   @override
-  String get labelOther => 'Other';
+  String get labelOther => 'אחר';
 
   @override
-  String get recipientName => 'Recipient Name';
+  String get recipientName => 'שם מקבל';
 
   @override
-  String get recipientNameHint => 'e.g. Rahul Sharma';
+  String get recipientNameHint => 'הזן שם';
 
   @override
-  String get recipientPhone => 'Recipient Phone';
+  String get recipientPhone => 'טלפון מקבל';
 
   @override
-  String get recipientPhoneHint => 'e.g. 9876543210';
+  String get recipientPhoneHint => 'הזן טלפון';
 
   @override
-  String get pickFromContacts => 'Pick from contacts';
+  String get pickFromContacts => 'בחר מאנשי קשר';
 
   @override
-  String get contactsAccessDenied =>
-      'Contacts access denied — name was copied. Please enter the phone number manually.';
+  String get contactsAccessDenied => 'גישה לאנשי קשר נדחתה';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => 'פתח הגדרות';
 
   @override
-  String get couldNotOpenContacts => 'Could not open contacts';
+  String get couldNotOpenContacts => 'לא ניתן לפתוח אנשי קשר';
 
   @override
-  String get areaNeighbourhood => 'Area / Neighbourhood';
+  String get areaNeighbourhood => 'שכונה';
 
   @override
-  String get areaHint => 'e.g. Koramangala';
+  String get areaHint => 'למשל רמת גן, רעננה';
 
   @override
-  String get cityHint => 'e.g. Bengaluru';
+  String get cityHint => 'למשל תל אביב';
 
   @override
-  String get postalCodeRequired => 'Postal Code';
+  String get postalCodeRequired => 'מיקוד נדרש';
 
   @override
-  String get postalCodeHint => 'e.g. 560034';
+  String get postalCodeHint => 'למשל 6100000';
 
   @override
-  String get countryCodeRequired => 'Country Code';
+  String get countryCodeRequired => 'קוד מדינה נדרש';
 
   @override
-  String get countryCodeHint => 'e.g. IN';
+  String get countryCodeHint => '+972';
 
   @override
-  String get requiredSkillsLabel => 'Required Skills';
+  String get requiredSkillsLabel => 'מיומנויות נדרשות';
 
   @override
-  String get skillHintText => 'e.g. plumbing, painting…';
+  String get skillHintText => 'הזן מיומנויות, הפרד בפסיק';
 
   @override
-  String get skillHelperEmpty => 'Type skills and separate them with commas';
+  String get skillHelperEmpty => 'עדיין לא נוספו מיומנויות';
 
   @override
   String skillsAddedCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count skills added',
-      one: '1 skill added',
-    );
-    return '$_temp0';
+    return '$count מיומנויות נוספו';
   }
 
   @override
@@ -1451,7 +1413,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get languageKannada => 'ಕನ್ನಡ';
 
   @override
-  String get languageMalayalam => 'മലയാളം';
+  String get languageMalayalam => 'മലయാളം';
 
   @override
   String get languageBengali => 'বাংলা';
@@ -1517,17 +1479,202 @@ class AppLocalizationsHe extends AppLocalizations {
   String get languageHebrew => 'עברית';
 
   @override
-  String get useWithoutSaving => 'Use Without Saving';
+  String get accentColorBlue => 'כחול';
 
   @override
-  String get saveAndUse => 'Save & Use';
+  String get accentColorYellow => 'צהוב';
 
   @override
-  String get useMyCurrentLocation => 'Use My Current Location';
+  String get accentColorGreen => 'ירוק';
 
   @override
-  String get detectingLocation => 'Detecting location…';
+  String get accentColorPink => 'ורוד';
 
   @override
-  String get deleteAddress => 'Delete Address';
+  String get accentColorRed => 'אדום';
+
+  @override
+  String get accentColorPurple => 'סגול';
+
+  @override
+  String get accentColorOrange => 'כתום';
+
+  @override
+  String get accentColorTeal => 'טורקיז';
+
+  @override
+  String get accentColorCustom => 'מותאם אישית';
+
+  @override
+  String get paymentStatusPending => 'ממתין לתשלום';
+
+  @override
+  String get paymentStatusLocked => 'הסכום נשמר בבטחה';
+
+  @override
+  String get paymentStatusReleased => 'תשלום שוחרר';
+
+  @override
+  String get paymentStatusOffline => 'תשלום בסיום';
+
+  @override
+  String paymentStatusGeneric(String status) {
+    return 'סטטוס תשלום: $status';
+  }
+
+  @override
+  String get jobStatusOpenForOffers => 'פתוח להצעות';
+
+  @override
+  String get jobStatusOfferAccepted => 'הצעה התקבלה';
+
+  @override
+  String get jobStatusReadyToStart => 'מוכן להתחיל';
+
+  @override
+  String get jobStatusInProgress => 'בתהליך';
+
+  @override
+  String get jobStatusPendingPayment => 'ממתין לתשלום';
+
+  @override
+  String get jobStatusPaymentReleased => 'תשלום שוחרר';
+
+  @override
+  String get jobStatusTaskCompleted => 'משימה הושלמה';
+
+  @override
+  String get jobStatusCancelled => 'בוטל';
+
+  @override
+  String get detailBudgetLabel => 'תקציב';
+
+  @override
+  String get detailLocationLabel => 'מיקום';
+
+  @override
+  String get detailSkillsLabel => 'מיומנויות';
+
+  @override
+  String get detailJobIdLabel => 'מזהה עבודה';
+
+  @override
+  String get tooltipCopy => 'העתק';
+
+  @override
+  String get tooltipDeleteAddress => 'מחק כתובת';
+
+  @override
+  String confirmDeleteAddress(String addressLabel) {
+    return 'למחוק את \"$addressLabel\" מכתובות שמורות?';
+  }
+
+  @override
+  String get errorNotAuthenticated => 'לא מאומת. היכנס שוב.';
+
+  @override
+  String get errorCouldNotOpenImagePicker => 'לא ניתן לפתוח בורר תמונות.';
+
+  @override
+  String get errorCouldNotReadImage => 'לא ניתן לקרוא תמונה.';
+
+  @override
+  String get errorImageTooLarge => 'תמונה חייבת להיות פחות מ-5MB.';
+
+  @override
+  String get errorUploadFailed => 'העלאה נכשלה. נסה שוב.';
+
+  @override
+  String get errorNameRequired => 'שם נדרש';
+
+  @override
+  String get errorRatingRequired => 'בחר דירוג';
+
+  @override
+  String get errorNotLoggedIn => 'היכנס קודם';
+
+  @override
+  String get errorAdminProfileUpdateNotSupported => 'עדכון פרופיל מנהל לא נתמך';
+
+  @override
+  String get errorAdminDeletionDisabled => 'מחיקת מנהל מושבתת';
+
+  @override
+  String get errorConnectionTimeout => 'תם הזמן. נסה שוב.';
+
+  @override
+  String get errorConnectionError => 'חיבור לשרת נכשל.';
+
+  @override
+  String get errorRequestCancelled => 'הבקשה בוטלה.';
+
+  @override
+  String get errorBadRequest => 'בקשה לא תקינה. בדוק קלט.';
+
+  @override
+  String get errorSessionExpired => 'הסשן פג. היכנס שוב.';
+
+  @override
+  String get errorPermissionDenied => 'ההרשאה נדחתה.';
+
+  @override
+  String get errorResourceNotFound => 'משאב לא נמצא.';
+
+  @override
+  String get errorConflict => 'התנגשות: לא ניתן להשלים.';
+
+  @override
+  String get errorFileTooLarge => 'קובץ גדול מדי. מקס 5MB.';
+
+  @override
+  String get errorValidationError => 'שגיאת אימות. בדוק קלט.';
+
+  @override
+  String get errorTooManyRequests => 'יותר מדי בקשות. המתן.';
+
+  @override
+  String get errorServerError => 'שגיאת שרת. נסה מאוחר יותר.';
+
+  @override
+  String errorRequestFailed(String statusCode) {
+    return 'בקשה נכשלה: סטטוס $statusCode';
+  }
+
+  @override
+  String get errorNetworkFailed => 'שגיאת רשת.';
+
+  @override
+  String get errorNetworkRequestFailed => 'שגיאת רשת';
+
+  @override
+  String get errorMalformedSkillResponse => 'תגובת מיומנויות שגויה';
+
+  @override
+  String get errorMalformedResponse => 'תגובה שגויה';
+
+  @override
+  String get errorMalformedAdminResponse => 'תגובת מנהל שגויה';
+
+  @override
+  String get errorAdminAccessRequired => 'נדרשת גישת מנהל';
+
+  @override
+  String get errorDescriptionUnavailable => 'תיאור לא זמין';
+
+  @override
+  String errorUnauthorizedAction(String roleLabel) {
+    return 'רק $roleLabel יכולים לבצע זאת';
+  }
+
+  @override
+  String get useWithoutSaving => 'השתמש בלי לשמור';
+
+  @override
+  String get saveAndUse => 'שמור והשתמש';
+
+  @override
+  String get useMyCurrentLocation => 'השתמש במיקום הנוכחי';
+
+  @override
+  String get detectingLocation => 'מזהה מיקום…';
 }

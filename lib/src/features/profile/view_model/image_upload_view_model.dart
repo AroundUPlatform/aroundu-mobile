@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../core/l10n/l10n_provider.dart';
 import '../../../core/network/api_exception.dart';
 import '../../../core/providers/core_providers.dart';
 import '../../auth/view_model/auth_view_model.dart';
@@ -53,8 +54,11 @@ class ImageUploadController extends Notifier<ImageUploadState> {
     final token = auth.token;
 
     if (userId == null || token == null || token.isEmpty) {
+      final l10n = ref.read(currentL10nProvider);
       state = state.copyWith(
-        errorMessage: 'Not authenticated. Please log in again.',
+        errorMessage:
+            l10n?.errorNotAuthenticated ??
+            'Not authenticated. Please log in again.',
       );
       return false;
     }
@@ -68,7 +72,12 @@ class ImageUploadController extends Notifier<ImageUploadState> {
         imageQuality: 85,
       );
     } catch (e) {
-      state = state.copyWith(errorMessage: 'Could not open image picker.');
+      final l10n = ref.read(currentL10nProvider);
+      state = state.copyWith(
+        errorMessage:
+            l10n?.errorCouldNotOpenImagePicker ??
+            'Could not open image picker.',
+      );
       return false;
     }
 
@@ -79,13 +88,19 @@ class ImageUploadController extends Notifier<ImageUploadState> {
     try {
       bytes = await picked.readAsBytes();
     } catch (e) {
-      state = state.copyWith(errorMessage: 'Could not read the selected image.');
+      state = state.copyWith(
+        errorMessage:
+            ref.read(currentL10nProvider)?.errorCouldNotReadImage ??
+            'Could not read the selected image.',
+      );
       return false;
     }
 
     if (bytes.lengthInBytes > _maxImageBytes) {
       state = state.copyWith(
-        errorMessage: 'Image must be under 5 MB. Please choose a smaller file.',
+        errorMessage:
+            ref.read(currentL10nProvider)?.errorImageTooLarge ??
+            'Image must be under 5 MB. Please choose a smaller file.',
       );
       return false;
     }
@@ -109,15 +124,14 @@ class ImageUploadController extends Notifier<ImageUploadState> {
 
       return true;
     } on ApiException catch (e) {
-      state = state.copyWith(
-        isUploading: false,
-        errorMessage: e.userMessage,
-      );
+      state = state.copyWith(isUploading: false, errorMessage: e.userMessage);
       return false;
     } catch (e) {
       state = state.copyWith(
         isUploading: false,
-        errorMessage: 'Upload failed. Please try again.',
+        errorMessage:
+            ref.read(currentL10nProvider)?.errorUploadFailed ??
+            'Upload failed. Please try again.',
       );
       return false;
     }
@@ -126,5 +140,5 @@ class ImageUploadController extends Notifier<ImageUploadState> {
 
 final imageUploadControllerProvider =
     NotifierProvider<ImageUploadController, ImageUploadState>(
-  ImageUploadController.new,
-);
+      ImageUploadController.new,
+    );

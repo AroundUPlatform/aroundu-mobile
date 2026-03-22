@@ -46,7 +46,10 @@ class AdminApi {
 
     final data = response['data'];
     if (data is! Map<String, dynamic>) {
-      throw const ApiException('Malformed admin overview response');
+      throw const ApiException(
+        'Malformed admin overview response',
+        code: ApiErrorCode.malformedAdminResponse,
+      );
     }
 
     return AdminOverview.fromMap(data);

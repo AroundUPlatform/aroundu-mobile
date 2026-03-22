@@ -1518,17 +1518,211 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageHebrew => 'עברית';
 
   @override
-  String get useWithoutSaving => 'Use Without Saving';
+  String get accentColorBlue => 'Blue';
 
   @override
-  String get saveAndUse => 'Save & Use';
+  String get accentColorYellow => 'Yellow';
 
   @override
-  String get useMyCurrentLocation => 'Use My Current Location';
+  String get accentColorGreen => 'Green';
+
+  @override
+  String get accentColorPink => 'Pink';
+
+  @override
+  String get accentColorRed => 'Red';
+
+  @override
+  String get accentColorPurple => 'Purple';
+
+  @override
+  String get accentColorOrange => 'Orange';
+
+  @override
+  String get accentColorTeal => 'Teal';
+
+  @override
+  String get accentColorCustom => 'Custom';
+
+  @override
+  String get paymentStatusPending => 'Payment pending';
+
+  @override
+  String get paymentStatusLocked => 'Money is safely reserved';
+
+  @override
+  String get paymentStatusReleased => 'Payment released successfully';
+
+  @override
+  String get paymentStatusOffline => 'Pay directly upon completion';
+
+  @override
+  String paymentStatusGeneric(String status) {
+    return 'Payment status: $status';
+  }
+
+  @override
+  String get jobStatusOpenForOffers => 'Open For Offers';
+
+  @override
+  String get jobStatusOfferAccepted => 'Offer Accepted';
+
+  @override
+  String get jobStatusReadyToStart => 'Ready to Start';
+
+  @override
+  String get jobStatusInProgress => 'In Progress';
+
+  @override
+  String get jobStatusPendingPayment => 'Pending Payment';
+
+  @override
+  String get jobStatusPaymentReleased => 'Payment Released';
+
+  @override
+  String get jobStatusTaskCompleted => 'Task Completed';
+
+  @override
+  String get jobStatusCancelled => 'Cancelled';
+
+  @override
+  String get detailBudgetLabel => 'Budget';
+
+  @override
+  String get detailLocationLabel => 'Location';
+
+  @override
+  String get detailSkillsLabel => 'Skills';
+
+  @override
+  String get detailJobIdLabel => 'Job ID';
+
+  @override
+  String get tooltipCopy => 'Copy';
+
+  @override
+  String get tooltipDeleteAddress => 'Delete address';
+
+  @override
+  String confirmDeleteAddress(String addressLabel) {
+    return 'Remove \"$addressLabel\" from saved addresses?';
+  }
+
+  @override
+  String get errorNotAuthenticated => 'Not authenticated. Please log in again.';
+
+  @override
+  String get errorCouldNotOpenImagePicker => 'Could not open image picker.';
+
+  @override
+  String get errorCouldNotReadImage => 'Could not read the selected image.';
+
+  @override
+  String get errorImageTooLarge =>
+      'Image must be under 5 MB. Please choose a smaller file.';
+
+  @override
+  String get errorUploadFailed => 'Upload failed. Please try again.';
+
+  @override
+  String get errorNameRequired => 'Name is required';
+
+  @override
+  String get errorRatingRequired => 'Please select a rating';
+
+  @override
+  String get errorNotLoggedIn => 'Please log in first';
+
+  @override
+  String get errorAdminProfileUpdateNotSupported =>
+      'Admin profile updates are not supported in this flow';
+
+  @override
+  String get errorAdminDeletionDisabled =>
+      'Admin account deletion is disabled in mobile flow';
+
+  @override
+  String get errorConnectionTimeout =>
+      'Connection timed out. Check your network and try again.';
+
+  @override
+  String get errorConnectionError =>
+      'Unable to connect to the server. Check your network.';
+
+  @override
+  String get errorRequestCancelled => 'Request was cancelled.';
+
+  @override
+  String get errorBadRequest => 'Invalid request. Please check your input.';
+
+  @override
+  String get errorSessionExpired => 'Session expired. Please log in again.';
+
+  @override
+  String get errorPermissionDenied =>
+      'You do not have permission to perform this action.';
+
+  @override
+  String get errorResourceNotFound => 'Resource not found.';
+
+  @override
+  String get errorConflict =>
+      'Conflict: the action cannot be completed in the current state.';
+
+  @override
+  String get errorFileTooLarge => 'File too large. Maximum size is 5 MB.';
+
+  @override
+  String get errorValidationError =>
+      'Validation error. Please review your input.';
+
+  @override
+  String get errorTooManyRequests =>
+      'Too many requests. Please wait and try again.';
+
+  @override
+  String get errorServerError => 'Server error. Please try again later.';
+
+  @override
+  String errorRequestFailed(String statusCode) {
+    return 'Request failed with status $statusCode';
+  }
+
+  @override
+  String get errorNetworkFailed => 'Network request failed.';
+
+  @override
+  String get errorNetworkRequestFailed => 'Network request failed';
+
+  @override
+  String get errorMalformedSkillResponse => 'Malformed skill suggest response';
+
+  @override
+  String get errorMalformedResponse => 'Malformed response payload';
+
+  @override
+  String get errorMalformedAdminResponse => 'Malformed admin overview response';
+
+  @override
+  String get errorAdminAccessRequired => 'Admin access is required';
+
+  @override
+  String get errorDescriptionUnavailable => 'Description unavailable';
+
+  @override
+  String errorUnauthorizedAction(String roleLabel) {
+    return 'Only $roleLabel can perform this action';
+  }
+
+  @override
+  String get useWithoutSaving => 'Use without saving';
+
+  @override
+  String get saveAndUse => 'Save & use';
+
+  @override
+  String get useMyCurrentLocation => 'Use my current location';
 
   @override
   String get detectingLocation => 'Detecting location…';
-
-  @override
-  String get deleteAddress => 'Delete Address';
 }

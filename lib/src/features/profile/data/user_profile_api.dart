@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import '../../../core/network/api_client.dart';
+import '../../../core/network/api_exception.dart';
 
 /// API client for user profile image management.
 class UserProfileApi {
@@ -27,7 +28,10 @@ class UserProfileApi {
 
     final data = response['data'];
     if (data is String) return data;
-    throw Exception('Unexpected response: $response');
+    throw const ApiException(
+      'Malformed response payload',
+      code: ApiErrorCode.malformedResponse,
+    );
   }
 
   /// Deletes the user's profile image.

@@ -1,16 +1,90 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
+
+import '../l10n/l10n_extension.dart';
+
+/// Typed error codes so UI can map to localised messages.
+enum ApiErrorCode {
+  connectionTimeout,
+  connectionError,
+  requestCancelled,
+  badRequest,
+  sessionExpired,
+  permissionDenied,
+  resourceNotFound,
+  conflict,
+  fileTooLarge,
+  validationError,
+  tooManyRequests,
+  serverError,
+  requestFailed,
+  networkFailed,
+  malformedResponse,
+  malformedSkillResponse,
+  malformedAdminResponse,
+  adminAccessRequired,
+}
 
 class ApiException implements Exception {
-  const ApiException(this.message, {this.statusCode, this.details});
+  const ApiException(this.message, {this.statusCode, this.details, this.code});
 
   final String message;
   final int? statusCode;
   final String? details;
+  final ApiErrorCode? code;
+
+  /// Locale-aware error message for display in the UI.
+  String localizedMessage(BuildContext context) {
+    final l10n = context.l10n;
+    switch (code) {
+      case ApiErrorCode.connectionTimeout:
+        return l10n.errorConnectionTimeout;
+      case ApiErrorCode.connectionError:
+        return l10n.errorConnectionError;
+      case ApiErrorCode.requestCancelled:
+        return l10n.errorRequestCancelled;
+      case ApiErrorCode.badRequest:
+        return l10n.errorBadRequest;
+      case ApiErrorCode.sessionExpired:
+        return l10n.errorSessionExpired;
+      case ApiErrorCode.permissionDenied:
+        return l10n.errorPermissionDenied;
+      case ApiErrorCode.resourceNotFound:
+        return l10n.errorResourceNotFound;
+      case ApiErrorCode.conflict:
+        return l10n.errorConflict;
+      case ApiErrorCode.fileTooLarge:
+        return l10n.errorFileTooLarge;
+      case ApiErrorCode.validationError:
+        return l10n.errorValidationError;
+      case ApiErrorCode.tooManyRequests:
+        return l10n.errorTooManyRequests;
+      case ApiErrorCode.serverError:
+        return l10n.errorServerError;
+      case ApiErrorCode.requestFailed:
+        return l10n.errorRequestFailed(statusCode?.toString() ?? '?');
+      case ApiErrorCode.networkFailed:
+        return l10n.errorNetworkFailed;
+      case ApiErrorCode.malformedResponse:
+        return l10n.errorMalformedResponse;
+      case ApiErrorCode.malformedSkillResponse:
+        return l10n.errorMalformedSkillResponse;
+      case ApiErrorCode.malformedAdminResponse:
+        return l10n.errorMalformedAdminResponse;
+      case ApiErrorCode.adminAccessRequired:
+        return l10n.errorAdminAccessRequired;
+      case null:
+        return message;
+    }
+  }
 
   /// Convert a [DioException] into a structured [ApiException].
   factory ApiException.fromDioException(DioException err) {
     final response = err.response;
     final statusCode = response?.statusCode;
+
+    // Determine typed code first
+    ApiErrorCode code = _codeForDioType(err.type, statusCode);
 
     // Try to extract backend message from ApiResponse envelope
     String message = _defaultMessage(err.type, statusCode);
@@ -31,7 +105,57 @@ class ApiException implements Exception {
       }
     }
 
-    return ApiException(message, statusCode: statusCode, details: details);
+    return ApiException(
+      message,
+      statusCode: statusCode,
+      details: details,
+      code: code,
+    );
+  }
+
+  static ApiErrorCode _codeForDioType(DioExceptionType type, int? statusCode) {
+    switch (type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return ApiErrorCode.connectionTimeout;
+      case DioExceptionType.connectionError:
+        return ApiErrorCode.connectionError;
+      case DioExceptionType.cancel:
+        return ApiErrorCode.requestCancelled;
+      case DioExceptionType.badResponse:
+        return _codeForStatus(statusCode);
+      default:
+        return ApiErrorCode.networkFailed;
+    }
+  }
+
+  static ApiErrorCode _codeForStatus(int? statusCode) {
+    switch (statusCode) {
+      case 400:
+        return ApiErrorCode.badRequest;
+      case 401:
+        return ApiErrorCode.sessionExpired;
+      case 403:
+        return ApiErrorCode.permissionDenied;
+      case 404:
+        return ApiErrorCode.resourceNotFound;
+      case 409:
+        return ApiErrorCode.conflict;
+      case 413:
+        return ApiErrorCode.fileTooLarge;
+      case 422:
+        return ApiErrorCode.validationError;
+      case 429:
+        return ApiErrorCode.tooManyRequests;
+      case 500:
+      case 502:
+      case 503:
+      case 504:
+        return ApiErrorCode.serverError;
+      default:
+        return ApiErrorCode.requestFailed;
+    }
   }
 
   static String _defaultMessage(DioExceptionType type, int? statusCode) {

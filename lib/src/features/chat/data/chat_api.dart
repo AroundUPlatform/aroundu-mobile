@@ -97,11 +97,17 @@ class ChatApi {
           if (data is Map<String, dynamic>) return data;
           return payload;
         }
-        throw ApiException(payload['message']?.toString() ?? 'Request failed');
+        throw ApiException(
+          payload['message']?.toString() ?? 'Request failed',
+          code: ApiErrorCode.requestFailed,
+        );
       }
       return payload;
     }
-    throw const ApiException('Malformed response payload');
+    throw const ApiException(
+      'Malformed response payload',
+      code: ApiErrorCode.malformedResponse,
+    );
   }
 
   List<Map<String, dynamic>> _readListPayload(Object? payload) {
@@ -123,10 +129,16 @@ class ChatApi {
               .toList();
         }
       }
-      throw ApiException(payload['message']?.toString() ?? 'Request failed');
+      throw ApiException(
+        payload['message']?.toString() ?? 'Request failed',
+        code: ApiErrorCode.requestFailed,
+      );
     }
 
-    throw const ApiException('Malformed response payload');
+    throw const ApiException(
+      'Malformed response payload',
+      code: ApiErrorCode.malformedResponse,
+    );
   }
 
   List<int> _readIntListPayload(Object? payload) {
@@ -141,7 +153,10 @@ class ChatApi {
           return data.whereType<num>().map((n) => n.toInt()).toList();
         }
       }
-      throw ApiException(payload['message']?.toString() ?? 'Request failed');
+      throw ApiException(
+        payload['message']?.toString() ?? 'Request failed',
+        code: ApiErrorCode.requestFailed,
+      );
     }
 
     return const <int>[];

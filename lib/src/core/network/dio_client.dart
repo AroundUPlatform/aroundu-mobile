@@ -1,10 +1,10 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 import '../config/app_environment.dart';
 import '../logging/app_logger.dart';
 import 'api_exception.dart';
+import 'encryption_interceptor.dart';
 
 /// Centralised Dio wrapper.
 ///
@@ -70,6 +70,10 @@ class DioClient {
         },
       ),
     );
+
+    // Payload encryption — encrypts outgoing bodies and decrypts responses.
+    // Gracefully degrades if PAYLOAD_ENCRYPTION_KEY is not set.
+    _dio.interceptors.add(EncryptionInterceptor());
   }
 
   static final _log = AppLogger.tag('Network');

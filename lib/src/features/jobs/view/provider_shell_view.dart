@@ -28,6 +28,8 @@ import 'widgets/job_card.dart';
 import 'widgets/job_shared_widgets.dart';
 import 'widgets/skill_suggest_field.dart';
 import '../../../core/l10n/l10n_extension.dart';
+import '../../ai/view/ai_analysis_panel.dart';
+import '../../ai/view_model/ai_service_provider.dart';
 
 class ProviderShellScreen extends ConsumerStatefulWidget {
   const ProviderShellScreen({super.key});
@@ -372,7 +374,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
 
   String? _required(String? value, String field) {
     if (value == null || value.trim().isEmpty) {
-      return '$field is required';
+      return context.l10n.fieldRequired(field);
     }
     return null;
   }
@@ -525,7 +527,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                       TextFormField(
                         controller: _titleController,
                         textInputAction: TextInputAction.next,
-                        validator: (value) => _required(value, 'Title'),
+                        validator: (value) => _required(value, context.l10n.taskTitleLabel),
                         decoration: InputDecoration(
                           labelText: context.l10n.taskTitleLabel,
                           prefixIcon: const Icon(Icons.title_rounded),
@@ -546,7 +548,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                           decimal: true,
                         ),
                         textInputAction: TextInputAction.next,
-                        validator: (value) => _required(value, 'Budget'),
+                        validator: (value) => _required(value, context.l10n.jobBudget),
                         decoration: InputDecoration(
                           labelText: context.l10n.jobBudget,
                           prefixIcon: const Icon(Icons.currency_rupee_rounded),
@@ -559,7 +561,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                         controller: _descriptionController,
                         maxLines: 4,
                         textInputAction: TextInputAction.newline,
-                        validator: (value) => _required(value, 'Description'),
+                        validator: (value) => _required(value, context.l10n.jobDescription),
                         decoration: InputDecoration(
                           labelText: context.l10n.jobDescription,
                           alignLabelWithHint: true,
@@ -747,6 +749,17 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                                 ),
                               ),
                             ),
+                      const SizedBox(height: 12),
+
+                      // ── AI Analysis ─────────────────────────────────
+                      AIAnalysisPanel(
+                        useCase: AIUseCase.taskEnhancer,
+                        inputBuilder: () =>
+                            'Title: ${_titleController.text}\n'
+                            'Description: ${_descriptionController.text}\n'
+                            'Budget: ${_budgetController.text}\n'
+                            'Urgency: $_urgency',
+                      ),
                       const SizedBox(height: 20),
 
                       // ── Submit ─────────────────────────────────────────
@@ -1204,7 +1217,7 @@ class _ProviderJobWorkflowSheetState
                 ),
               ),
               child: Text(
-                job.status.label,
+                job.status.localizedLabel(context),
                 style: theme.textTheme.labelMedium?.copyWith(
                   color: job.status.color,
                   fontWeight: FontWeight.w700,
@@ -1238,7 +1251,7 @@ class _ProviderJobWorkflowSheetState
                   icon: escrowMode
                       ? Icons.lock_outline_rounded
                       : Icons.currency_rupee_rounded,
-                  label: 'Budget',
+                  label: context.l10n.detailBudgetLabel,
                   value:
                       '₹${job.budget.toStringAsFixed(0)}${escrowMode ? ' (Escrow)' : ' (Cash)'}',
                   iconColor: colors.primary,
@@ -1246,21 +1259,21 @@ class _ProviderJobWorkflowSheetState
                 const Divider(height: 16),
                 _DetailRow(
                   icon: Icons.location_on_outlined,
-                  label: 'Location',
+                  label: context.l10n.detailLocationLabel,
                   value: job.location,
                 ),
                 if (job.requiredSkillNames.isNotEmpty) ...[
                   const Divider(height: 16),
                   _DetailRow(
                     icon: Icons.handyman_outlined,
-                    label: 'Skills',
+                    label: context.l10n.detailSkillsLabel,
                     value: job.requiredSkillNames.join(', '),
                   ),
                 ],
                 const Divider(height: 16),
                 _DetailRow(
                   icon: Icons.tag_rounded,
-                  label: 'Job ID',
+                  label: context.l10n.detailJobIdLabel,
                   value: job.id,
                   valueStyle: theme.textTheme.bodyMedium?.copyWith(
                     fontFamily: 'monospace',
@@ -1722,7 +1735,7 @@ class _CodeCard extends StatelessWidget {
               const Spacer(),
               IconButton(
                 icon: const Icon(Icons.copy_rounded, size: 20),
-                tooltip: 'Copy',
+                tooltip: context.l10n.tooltipCopy,
                 color: colors.primary,
                 onPressed: onCopy,
                 visualDensity: VisualDensity.compact,

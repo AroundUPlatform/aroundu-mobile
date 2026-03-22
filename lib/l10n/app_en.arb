@@ -622,9 +622,96 @@
   "languageArabic": "العربية",
   "languagePersian": "فارسی",
   "languageHebrew": "עברית",
-  "useWithoutSaving": "Use Without Saving",
-  "saveAndUse": "Save & Use",
-  "useMyCurrentLocation": "Use My Current Location",
-  "detectingLocation": "Detecting location…",
-  "deleteAddress": "Delete Address"
+  "accentColorBlue": "Blue",
+  "accentColorYellow": "Yellow",
+  "accentColorGreen": "Green",
+  "accentColorPink": "Pink",
+  "accentColorRed": "Red",
+  "accentColorPurple": "Purple",
+  "accentColorOrange": "Orange",
+  "accentColorTeal": "Teal",
+  "accentColorCustom": "Custom",
+  "paymentStatusPending": "Payment pending",
+  "paymentStatusLocked": "Money is safely reserved",
+  "paymentStatusReleased": "Payment released successfully",
+  "paymentStatusOffline": "Pay directly upon completion",
+  "paymentStatusGeneric": "Payment status: {status}",
+  "@paymentStatusGeneric": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "jobStatusOpenForOffers": "Open For Offers",
+  "jobStatusOfferAccepted": "Offer Accepted",
+  "jobStatusReadyToStart": "Ready to Start",
+  "jobStatusInProgress": "In Progress",
+  "jobStatusPendingPayment": "Pending Payment",
+  "jobStatusPaymentReleased": "Payment Released",
+  "jobStatusTaskCompleted": "Task Completed",
+  "jobStatusCancelled": "Cancelled",
+  "detailBudgetLabel": "Budget",
+  "detailLocationLabel": "Location",
+  "detailSkillsLabel": "Skills",
+  "detailJobIdLabel": "Job ID",
+  "tooltipCopy": "Copy",
+  "tooltipDeleteAddress": "Delete address",
+  "confirmDeleteAddress": "Remove \"{addressLabel}\" from saved addresses?",
+  "@confirmDeleteAddress": {
+    "placeholders": {
+      "addressLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "errorNotAuthenticated": "Not authenticated. Please log in again.",
+  "errorCouldNotOpenImagePicker": "Could not open image picker.",
+  "errorCouldNotReadImage": "Could not read the selected image.",
+  "errorImageTooLarge": "Image must be under 5 MB. Please choose a smaller file.",
+  "errorUploadFailed": "Upload failed. Please try again.",
+  "errorNameRequired": "Name is required",
+  "errorRatingRequired": "Please select a rating",
+  "errorNotLoggedIn": "Please log in first",
+  "errorAdminProfileUpdateNotSupported": "Admin profile updates are not supported in this flow",
+  "errorAdminDeletionDisabled": "Admin account deletion is disabled in mobile flow",
+  "errorConnectionTimeout": "Connection timed out. Check your network and try again.",
+  "errorConnectionError": "Unable to connect to the server. Check your network.",
+  "errorRequestCancelled": "Request was cancelled.",
+  "errorBadRequest": "Invalid request. Please check your input.",
+  "errorSessionExpired": "Session expired. Please log in again.",
+  "errorPermissionDenied": "You do not have permission to perform this action.",
+  "errorResourceNotFound": "Resource not found.",
+  "errorConflict": "Conflict: the action cannot be completed in the current state.",
+  "errorFileTooLarge": "File too large. Maximum size is 5 MB.",
+  "errorValidationError": "Validation error. Please review your input.",
+  "errorTooManyRequests": "Too many requests. Please wait and try again.",
+  "errorServerError": "Server error. Please try again later.",
+  "errorRequestFailed": "Request failed with status {statusCode}",
+  "@errorRequestFailed": {
+    "placeholders": {
+      "statusCode": {
+        "type": "String"
+      }
+    }
+  },
+  "errorNetworkFailed": "Network request failed.",
+  "errorNetworkRequestFailed": "Network request failed",
+  "errorMalformedSkillResponse": "Malformed skill suggest response",
+  "errorMalformedResponse": "Malformed response payload",
+  "errorMalformedAdminResponse": "Malformed admin overview response",
+  "errorAdminAccessRequired": "Admin access is required",
+  "errorDescriptionUnavailable": "Description unavailable",
+  "errorUnauthorizedAction": "Only {roleLabel} can perform this action",
+  "@errorUnauthorizedAction": {
+    "placeholders": {
+      "roleLabel": {
+        "type": "String"
+      }
+    }
+  },
+  "useWithoutSaving": "Use without saving",
+  "saveAndUse": "Save & use",
+  "useMyCurrentLocation": "Use my current location",
+  "detectingLocation": "Detecting location…"
 }

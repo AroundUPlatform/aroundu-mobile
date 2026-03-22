@@ -8,8 +8,7 @@ class AppEnvironment {
   /// Google Maps API key — used for runtime Google services (geocoding, etc.).
   /// The same key must also be in `android/local.properties` for native tile
   /// rendering on Android.
-  static String get googleMapsApiKey =>
-      dotenv.env['GOOGLE_MAPS_API_KEY'] ?? '';
+  static String get googleMapsApiKey => dotenv.env['GOOGLE_MAPS_API_KEY'] ?? '';
 
   /// Backend API base URL.
   static String get apiBaseUrl {
@@ -23,4 +22,9 @@ class AppEnvironment {
       _ => commonBaseURL,
     };
   }
+
+  /// Symmetric key for payload encryption (ChaCha20-Poly1305).
+  /// Must be a 32-byte key, Base64-encoded in the .env file.
+  static String get payloadEncryptionKey =>
+      dotenv.env['PAYLOAD_ENCRYPTION_KEY'] ?? '';
 }

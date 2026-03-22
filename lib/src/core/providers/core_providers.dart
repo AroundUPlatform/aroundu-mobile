@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/auth/data/auth_api.dart';
+
+// L10n provider re-export for convenience.
+export '../l10n/l10n_provider.dart';
 import '../../features/admin/data/admin_api.dart';
 import '../../features/chat/data/chat_api.dart';
 import '../../features/jobs/data/job_api.dart';

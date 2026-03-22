@@ -45,82 +45,82 @@ class AppLocalizationsMl extends AppLocalizations {
   String get alreadyHaveAccount => 'ഇതിനകം അക്കൗണ്ട് ഉണ്ടോ?';
 
   @override
-  String get welcomeBack => 'Welcome Back';
+  String get welcomeBack => 'തിരികെ സ്വാഗതം';
 
   @override
-  String get loginSubtitle => 'Sign in to continue as provider or worker.';
+  String get loginSubtitle => 'നിങ്ങളുടെ AroundU അക്കൗണ്ടിൽ ലോഗിൻ ചെയ്യുക';
 
   @override
-  String get noAccountYet => 'No account yet?';
+  String get noAccountYet => 'അക്കൗണ്ട് ഇല്ലേ?';
 
   @override
-  String get createOne => 'Create one';
+  String get createOne => 'സൃഷ്‌ടിക്കുക';
 
   @override
-  String get emailRequired => 'Email is required';
+  String get emailRequired => 'ഇമെയിൽ ആവശ്യമാണ്';
 
   @override
-  String get enterValidEmail => 'Enter a valid email';
+  String get enterValidEmail => 'ശരിയായ ഇമെയിൽ നൽകുക';
 
   @override
-  String get passwordRequired => 'Password is required';
+  String get passwordRequired => 'പാസ്‌വേഡ് ആവശ്യമാണ്';
 
   @override
-  String get minimumSixCharacters => 'Minimum 6 characters';
+  String get minimumSixCharacters => 'കുറഞ്ഞത് 6 അക്ഷരങ്ങൾ';
 
   @override
-  String get unableToLogin => 'Unable to login. Please retry.';
+  String get unableToLogin => 'ലോഗിൻ പരാജയം';
 
   @override
   String fieldRequired(String field) {
-    return '$field is required';
+    return '$field ഫീൽഡ് ആവശ്യമാണ്';
   }
 
   @override
-  String get enterValidPhone => 'Enter a valid phone number';
+  String get enterValidPhone => 'ശരിയായ ഫോൺ നമ്പർ നൽകുക';
 
   @override
-  String get unableToRegister => 'Unable to register';
+  String get unableToRegister => 'രജിസ്‌ട്രേഷൻ പരാജയം';
 
   @override
-  String get registrationSuccess => 'Registration successful. Please log in.';
+  String get registrationSuccess => 'രജിസ്‌ട്രേഷൻ വിജയം';
 
   @override
   String get registerSubtitle =>
-      'Register as provider or worker with your basic location profile.';
+      'പ്രൊവൈഡർ അല്ലെങ്കിൽ വർക്കർ ആയി രജിസ്‌റ്റർ ചെയ്യുക';
 
   @override
-  String get roleLabel => 'Role';
+  String get roleLabel => 'പങ്ക്';
 
   @override
-  String get roleJobProvider => 'Job Provider';
+  String get roleJobProvider => 'ടാസ്‌ക് പ്രൊവൈഡർ';
 
   @override
-  String get roleJobWorker => 'Job Worker';
+  String get roleJobWorker => 'വർക്കർ';
 
   @override
-  String get countryLabel => 'Country';
+  String get countryLabel => 'രാജ്യം';
 
   @override
-  String get currencyLabel => 'Currency';
+  String get currencyLabel => 'കറൻസി';
 
   @override
-  String get cityLabel => 'City';
+  String get cityLabel => 'നഗരം';
 
   @override
-  String get postalCodeLabel => 'Postal code';
+  String get postalCodeLabel => 'പോസ്‌റ്റൽ കോഡ്';
 
   @override
-  String get areaOptionalLabel => 'Area (optional)';
+  String get areaOptionalLabel => 'പ്രദേശം (ഓപ്ഷണൽ)';
 
   @override
-  String get fullAddressOptionalLabel => 'Full address (optional)';
+  String get fullAddressOptionalLabel => 'പൂർണ്ണ വിലാസം (ഓപ്ഷണൽ)';
 
   @override
-  String get alreadyRegistered => 'Already registered?';
+  String get alreadyRegistered => 'ഇതിനകം രജിസ്‌റ്റർ ചെയ്‌തോ?';
 
   @override
-  String get logInLink => 'Log in';
+  String get logInLink => 'ലോഗിൻ';
 
   @override
   String get onboardingTitle1 => 'നിങ്ങളുടെ ചുറ്റുമുള്ള ജോലികൾ കണ്ടെത്തുക';
@@ -153,7 +153,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get next => 'അടുത്തത്';
 
   @override
-  String get newHereCreateAccount => 'New here? Create account';
+  String get newHereCreateAccount => 'പുതിയതാണോ? അക്കൗണ്ട് സൃഷ്‌ടിക്കുക';
 
   @override
   String get roleSelectionTitle => 'നിങ്ങളുടെ റോൾ തിരഞ്ഞെടുക്കുക';
@@ -176,18 +176,20 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get roleSelectionSubtitle =>
-      'Select the workflow you want to use in AroundU.';
+      'AroundU എങ്ങനെ ഉപയോഗിക്കാൻ ആഗ്രഹിക്കുന്നു?';
 
   @override
   String signedInAs(String email) {
-    return 'Signed in as $email';
+    return '$email ആയി സൈൻ ഇൻ';
   }
 
   @override
-  String get roleProviderDesc => 'Post jobs and manage incoming bids.';
+  String get roleProviderDesc =>
+      'ടാസ്‌ക്കുകൾ പോസ്‌റ്റ് ചെയ്‌ത് യോഗ്യരായ വർക്കർമാരെ കണ്ടെത്തുക';
 
   @override
-  String get roleWorkerDescAlt => 'Browse nearby jobs and place bids quickly.';
+  String get roleWorkerDescAlt =>
+      'ടാസ്‌ക്കുകൾ കണ്ടെത്തി വൈദഗ്ധ്യം കൊണ്ട് സമ്പാദിക്കുക';
 
   @override
   String get homeTab => 'ഹോം';
@@ -202,22 +204,22 @@ class AppLocalizationsMl extends AppLocalizations {
   String get profileTab => 'പ്രൊഫൈൽ';
 
   @override
-  String get providerTabMyTasks => 'My Tasks';
+  String get providerTabMyTasks => 'എന്റെ ടാസ്‌ക്കുകൾ';
 
   @override
-  String get providerTabPostTask => 'Post Task';
+  String get providerTabPostTask => 'ടാസ്‌ക് പോസ്‌റ്റ് ചെയ്യുക';
 
   @override
-  String get tasksNavLabel => 'Tasks';
+  String get tasksNavLabel => 'ടാസ്‌ക്കുകൾ';
 
   @override
-  String get postNavLabel => 'Post';
+  String get postNavLabel => 'പോസ്‌റ്റ്';
 
   @override
-  String get workerTabTaskFeed => 'Task Feed';
+  String get workerTabTaskFeed => 'ടാസ്‌ക് ഫീഡ്';
 
   @override
-  String get feedNavLabel => 'Feed';
+  String get feedNavLabel => 'ഫീഡ്';
 
   @override
   String get myJobs => 'എന്റെ ജോലികൾ';
@@ -271,13 +273,13 @@ class AppLocalizationsMl extends AppLocalizations {
   String get urgencyNormal => 'സാധാരണം';
 
   @override
-  String get urgencyMedium => 'Medium';
+  String get urgencyMedium => 'മധ്യനിലവാരം';
 
   @override
   String get urgencyUrgent => 'അടിയന്തിരം';
 
   @override
-  String get urgencyAsap => 'ASAP';
+  String get urgencyAsap => 'എത്രയും വേഗം';
 
   @override
   String get paymentOffline => 'ഓഫ്‌ലൈൻ';
@@ -286,144 +288,144 @@ class AppLocalizationsMl extends AppLocalizations {
   String get paymentEscrow => 'എസ്ക്രോ';
 
   @override
-  String get paymentMethod => 'Payment Method';
+  String get paymentMethod => 'പേയ്‌മെന്റ് രീതി';
 
   @override
-  String get payInCash => 'Pay in Cash';
+  String get payInCash => 'പണമായി നൽകുക';
 
   @override
-  String get secureEscrow => 'Secure Escrow';
+  String get secureEscrow => 'സുരക്ഷിത എസ്‌ക്രോ';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => 'എല്ലാം';
 
   @override
-  String get filterOpen => 'Open';
+  String get filterOpen => 'തുറന്നത്';
 
   @override
-  String get filterActive => 'Active';
+  String get filterActive => 'സജീവം';
 
   @override
-  String get filterInProgress => 'In Progress';
+  String get filterInProgress => 'നടക്കുന്നു';
 
   @override
-  String get filterCompleted => 'Completed';
+  String get filterCompleted => 'പൂർത്തിയായി';
 
   @override
-  String get filterCancelled => 'Cancelled';
+  String get filterCancelled => 'റദ്ദാക്കി';
 
   @override
-  String get filterExpired => 'Expired';
+  String get filterExpired => 'കാലാവധി കഴിഞ്ഞു';
 
   @override
-  String get filterNearby => 'Nearby';
+  String get filterNearby => 'സമീപം';
 
   @override
-  String get filterAllMine => 'All Mine';
+  String get filterAllMine => 'എന്റെ എല്ലാം';
 
   @override
-  String get filterBidPlaced => 'Bid Placed';
+  String get filterBidPlaced => 'ബിഡ് ഇട്ടു';
 
   @override
-  String get filterAccepted => 'Accepted';
+  String get filterAccepted => 'സ്വീകരിച്ചു';
 
   @override
-  String get noTasksPostedYet => 'No tasks posted yet';
+  String get noTasksPostedYet => 'പോസ്‌റ്റ് ചെയ്‌ത ടാസ്‌ക് ഇല്ല';
 
   @override
-  String get noOpenTasks => 'No open tasks';
+  String get noOpenTasks => 'തുറന്ന ടാസ്‌ക് ഇല്ല';
 
   @override
-  String get noActiveTasks => 'No active tasks';
+  String get noActiveTasks => 'സജീവ ടാസ്‌ക് ഇല്ല';
 
   @override
-  String get noTasksInProgress => 'No tasks in progress';
+  String get noTasksInProgress => 'നടക്കുന്ന ടാസ്‌ക് ഇല്ല';
 
   @override
-  String get noCompletedTasks => 'No completed tasks';
+  String get noCompletedTasks => 'പൂർത്തിയായ ടാസ്‌ക് ഇല്ല';
 
   @override
-  String get noCancelledTasks => 'No cancelled tasks';
+  String get noCancelledTasks => 'റദ്ദാക്കിയ ടാസ്‌ക് ഇല്ല';
 
   @override
-  String get noExpiredTasks => 'No expired tasks';
+  String get noExpiredTasks => 'കാലാവധി കഴിഞ്ഞ ടാസ്‌ക് ഇല്ല';
 
   @override
-  String get unableToLoadTasks => 'Unable to load tasks';
+  String get unableToLoadTasks => 'ടാസ്‌ക്കുകൾ ലോഡ് പരാജയം';
 
   @override
-  String get noNearbyJobs => 'No nearby jobs right now';
+  String get noNearbyJobs => 'സമീപത്ത് ജോലി ഇല്ല';
 
   @override
-  String get noJobsYetBid => 'No jobs yet — place a bid to get started!';
+  String get noJobsYetBid => 'ജോലി ഇല്ല — ബിഡ് ഇടൂ';
 
   @override
-  String get noPendingBids => 'No pending bids';
+  String get noPendingBids => 'തീർപ്പാകാത്ത ബിഡ് ഇല്ല';
 
   @override
-  String get noAcceptedJobs => 'No accepted jobs';
+  String get noAcceptedJobs => 'സ്വീകരിച്ച ജോലി ഇല്ല';
 
   @override
-  String get noJobsInProgress => 'No jobs in progress';
+  String get noJobsInProgress => 'നടക്കുന്ന ജോലി ഇല്ല';
 
   @override
-  String get noCompletedJobsYet => 'No completed jobs yet';
+  String get noCompletedJobsYet => 'പൂർത്തിയായ ജോലി ഇല്ല';
 
   @override
-  String get noCancelledJobs => 'No cancelled jobs';
+  String get noCancelledJobs => 'റദ്ദാക്കിയ ജോലി ഇല്ല';
 
   @override
-  String get noExpiredJobs => 'No expired jobs';
+  String get noExpiredJobs => 'കാലാവധി കഴിഞ്ഞ ജോലി ഇല്ല';
 
   @override
-  String get pullDownToRefreshCheck => 'Pull down to refresh and check again.';
+  String get pullDownToRefreshCheck =>
+      'പുതിയ ടാസ്‌ക്കുകൾ പരിശോധിക്കാൻ താഴേക്ക് വലിക്കുക';
 
   @override
-  String get unableToLoadJobs => 'Unable to load jobs';
+  String get unableToLoadJobs => 'ജോലികൾ ലോഡ് പരാജയം';
 
   @override
-  String get postNewTask => 'Post a New Task';
+  String get postNewTask => 'പുതിയ ടാസ്‌ക്';
 
   @override
   String get postTaskSubtitle =>
-      'Add clear details so workers can send accurate offers.';
+      'കൃത്യമായ ഓഫറുകൾക്ക് വ്യക്തമായ വിശദാംശങ്ങൾ ചേർക്കുക';
 
   @override
-  String get taskTitleLabel => 'Task title';
+  String get taskTitleLabel => 'ടാസ്‌ക് ശീർഷകം';
 
   @override
-  String get savingLocation => 'Saving location…';
+  String get savingLocation => 'സ്ഥലം സേവ് ചെയ്യുന്നു';
 
   @override
-  String get tapToSelectLocation => 'Tap to select location';
+  String get tapToSelectLocation => 'സ്ഥലം തിരഞ്ഞെടുക്കാൻ ടാപ്പ് ചെയ്യുക';
 
   @override
-  String get postTaskButton => 'Post Task';
+  String get postTaskButton => 'ടാസ്‌ക് പോസ്‌റ്റ് ചെയ്യുക';
 
   @override
-  String get addSkillWarning => 'Add at least one required skill for this task';
+  String get addSkillWarning => 'ഒരു ആവശ്യമായ വൈദഗ്ധ്യമെങ്കിലും ചേർക്കുക';
 
   @override
-  String get enterValidBudget => 'Enter a valid budget amount';
+  String get enterValidBudget => 'ശരിയായ ബജറ്റ് നൽകുക';
 
   @override
-  String get setJobLocationWarning =>
-      'Please set a job location before posting';
+  String get setJobLocationWarning => 'ടാസ്‌ക് സ്ഥലം സജ്ജമാക്കുക';
 
   @override
-  String get jobPostedSuccess => 'Job posted successfully';
+  String get jobPostedSuccess => 'ടാസ്‌ക് പോസ്‌റ്റ് ചെയ്‌തു';
 
   @override
-  String get failedToPostJob => 'Failed to post job. Please retry.';
+  String get failedToPostJob => 'പോസ്‌റ്റ് പരാജയം';
 
   @override
-  String get failedToSaveLocation => 'Failed to save location';
+  String get failedToSaveLocation => 'സ്ഥലം സേവ് പരാജയം';
 
   @override
-  String get unableToLoadJobWorkflow => 'Unable to load job workflow';
+  String get unableToLoadJobWorkflow => 'വർക്ക്‌ഫ്ലോ ലോഡ് പരാജയം';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => 'അജ്ഞാത പിശക്';
 
   @override
   String get statusOpenForBids => 'ബിഡ്ഡുകൾക്കായി തുറന്നിരിക്കുന്നു';
@@ -477,96 +479,95 @@ class AppLocalizationsMl extends AppLocalizations {
   String get bidPending => 'തീർപ്പാകാത്ത';
 
   @override
-  String get offersSection => 'Offers';
+  String get offersSection => 'ഓഫറുകൾ';
 
   @override
-  String get noOffersReceivedYet => 'No offers received yet.';
+  String get noOffersReceivedYet => 'ഓഫറുകൾ ലഭിച്ചിട്ടില്ല';
 
   @override
-  String get offerAccepted => 'Offer Accepted';
+  String get offerAccepted => 'ഓഫർ സ്വീകരിച്ചു';
 
   @override
-  String get offerRejected => 'Offer Rejected';
+  String get offerRejected => 'ഓഫർ നിരസിച്ചു';
 
   @override
-  String get offerPending => 'Offer Pending';
+  String get offerPending => 'ഓഫർ തീർപ്പാകാതെ';
 
   @override
   String workerNumber(int id) {
-    return 'Worker #$id';
+    return 'വർക്കർ #$id';
   }
 
   @override
-  String get acceptThisOffer => 'Accept this Offer';
+  String get acceptThisOffer => 'ഈ ഓഫർ സ്വീകരിക്കുക';
 
   @override
-  String get messageWorker => 'Message Worker';
+  String get messageWorker => 'വർക്കർക്ക് സന്ദേശം';
 
   @override
-  String get offerAcceptedSnack => 'Offer accepted';
+  String get offerAcceptedSnack => 'ഓഫർ സ്വീകരിച്ചു!';
 
   @override
-  String get yourOffer => 'Your Offer';
+  String get yourOffer => 'നിങ്ങളുടെ ഓഫർ';
 
   @override
-  String get bidStatusSelected => 'Selected';
+  String get bidStatusSelected => 'തിരഞ്ഞെടുത്തു';
 
   @override
-  String get bidStatusRejected => 'Rejected';
+  String get bidStatusRejected => 'നിരസിച്ചു';
 
   @override
-  String get bidStatusPending => 'Pending';
+  String get bidStatusPending => 'തീർപ്പാകാത്ത';
 
   @override
-  String get placeYourOffer => 'Place Your Offer';
+  String get placeYourOffer => 'ഓഫർ നൽകുക';
 
   @override
-  String get yourOfferAmount => 'Your offer amount';
+  String get yourOfferAmount => 'ഓഫർ തുക';
 
   @override
-  String get messageToClientOptional => 'Message to client (optional)';
+  String get messageToClientOptional => 'ക്ലയന്റിന് സന്ദേശം (ഓപ്ഷണൽ)';
 
   @override
-  String get addPartnerOptional => 'Add a partner (optional)';
+  String get addPartnerOptional => 'പങ്കാളി ചേർക്കുക (ഓപ്ഷണൽ)';
 
   @override
-  String get partnerNameLabel => 'Partner name';
+  String get partnerNameLabel => 'പങ്കാളി പേര്';
 
   @override
-  String get partnerFeeLabel => 'Partner fee';
+  String get partnerFeeLabel => 'പങ്കാളി ഫീസ്';
 
   @override
   String partnerFeeAmount(String symbol, String amount) {
-    return '+ $symbol$amount partner fee';
+    return 'പങ്കാളി ഫീസ്: $amount';
   }
 
   @override
-  String get submitOffer => 'Submit Offer';
+  String get submitOffer => 'ഓഫർ സമർപ്പിക്കുക';
 
   @override
-  String get enterValidOfferAmount => 'Enter a valid offer amount';
+  String get enterValidOfferAmount => 'ശരിയായ തുക നൽകുക';
 
   @override
-  String get offerSubmittedSuccess => 'Offer submitted successfully';
+  String get offerSubmittedSuccess => 'ഓഫർ സമർപ്പിച്ചു';
 
   @override
-  String get clientSelectedYourOffer => 'Client Selected Your Offer!';
+  String get clientSelectedYourOffer => 'ക്ലയന്റ് നിങ്ങളുടെ ഓഫർ തിരഞ്ഞെടുത്തു';
 
   @override
-  String get handshakeHint =>
-      'Accept to confirm this job, or decline if you\'re no longer available.';
+  String get handshakeHint => 'തുടങ്ങാൻ ഇരുവരും കോഡ് പങ്കിടണം';
 
   @override
-  String get handshakeAccepted => 'Handshake accepted';
+  String get handshakeAccepted => 'ഹാൻഡ്‌ഷേക്ക് സ്വീകരിച്ചു';
 
   @override
-  String get handshakeDeclined => 'Handshake declined';
+  String get handshakeDeclined => 'ഹാൻഡ്‌ഷേക്ക് നിരസിച്ചു';
 
   @override
-  String get acceptJob => 'Accept Job';
+  String get acceptJob => 'ജോലി സ്വീകരിക്കുക';
 
   @override
-  String get decline => 'Decline';
+  String get decline => 'നിരസിക്കുക';
 
   @override
   String get startCode => 'സ്റ്റാർട്ട് കോഡ്';
@@ -584,72 +585,68 @@ class AppLocalizationsMl extends AppLocalizations {
   String get enterCode => 'കോഡ് നൽകുക';
 
   @override
-  String get generateStartCode => 'Generate Start Code';
+  String get generateStartCode => 'സ്‌റ്റാർട്ട് കോഡ് സൃഷ്‌ടിക്കുക';
 
   @override
-  String get startCodeCopied => 'Start code copied';
+  String get startCodeCopied => 'സ്‌റ്റാർട്ട് കോഡ് കോപ്പി';
 
   @override
   String reserveInEscrow(String symbol, String amount) {
-    return 'Reserve $symbol$amount in Escrow';
+    return '$amount എസ്‌ക്രോയിൽ സംരക്ഷിക്കുക';
   }
 
   @override
-  String get releaseCodeCopied => 'Release code copied';
+  String get releaseCodeCopied => 'റിലീസ് കോഡ് കോപ്പി';
 
   @override
-  String get releaseCodeHint =>
-      'Share this verbally with the worker. They enter it to confirm task completion.';
+  String get releaseCodeHint => 'റിലീസ് കോഡ് നൽകുക';
 
   @override
-  String get regenerateCode => 'Regenerate Code';
+  String get regenerateCode => 'വീണ്ടും സൃഷ്‌ടിക്കുക';
 
   @override
-  String get generateReleaseCode => 'Generate Release Code';
+  String get generateReleaseCode => 'റിലീസ് കോഡ് സൃഷ്‌ടിക്കുക';
 
   @override
-  String get taskCodesGenerated => 'Task codes generated';
+  String get taskCodesGenerated => 'കോഡുകൾ സൃഷ്‌ടിച്ചു';
 
   @override
-  String get newReleaseCodeGenerated => 'New release code generated';
+  String get newReleaseCodeGenerated => 'പുതിയ റിലീസ് കോഡ് സൃഷ്‌ടിച്ചു';
 
   @override
-  String get readyToBegin => 'Ready to Begin?';
+  String get readyToBegin => 'തുടങ്ങാൻ തയ്യാർ';
 
   @override
-  String get startCodeHint =>
-      'Ask the client for the start code and enter it below to officially begin work.';
+  String get startCodeHint => 'സ്‌റ്റാർട്ട് കോഡ് നൽകുക';
 
   @override
-  String get verifyAndStartWork => 'Verify & Start Work';
+  String get verifyAndStartWork => 'സ്ഥിരീകരിച്ച് തുടങ്ങുക';
 
   @override
-  String get startCodeVerified =>
-      'Start code verified. Task is now in progress.';
+  String get startCodeVerified => 'സ്‌റ്റാർട്ട് കോഡ് സ്ഥിരീകരിച്ചു';
 
   @override
-  String get enterStartCodeFirst => 'Enter start code first';
+  String get enterStartCodeFirst => 'ആദ്യം സ്‌റ്റാർട്ട് കോഡ് നൽകുക';
 
   @override
-  String get workInProgress => 'Work In Progress';
+  String get workInProgress => 'ജോലി നടക്കുന്നു';
 
   @override
-  String get releaseCodePrompt =>
-      'Once done, ask the client for the 6-digit release code.';
+  String get releaseCodePrompt => 'പേയ്‌മെന്റ് റിലീസ് ചെയ്യാൻ കോഡ് നൽകുക';
 
   @override
-  String get releaseCodeHelper => 'Enter the 6-digit code from the client';
+  String get releaseCodeHelper =>
+      'ജോലി പൂർത്തിയായ ശേഷം ഈ കോഡ് വർക്കർക്ക് നൽകുക';
 
   @override
-  String get confirmWorkCompleted => 'Confirm Work Completed';
+  String get confirmWorkCompleted => 'ജോലി പൂർത്തിയായതായി സ്ഥിരീകരിക്കുക';
 
   @override
   String get workConfirmedPaymentReleased =>
-      'Work confirmed — payment released!';
+      'ജോലി സ്ഥിരീകരിച്ചു — പേയ്‌മെന്റ് റിലീസ് ചെയ്‌തു!';
 
   @override
-  String get enterReleaseCodeWarning =>
-      'Enter the release code from the client';
+  String get enterReleaseCodeWarning => 'റിലീസ് കോഡ് നൽകുക';
 
   @override
   String get escrow => 'എസ്ക്രോ';
@@ -667,35 +664,34 @@ class AppLocalizationsMl extends AppLocalizations {
   String get paymentReleased => 'പേയ്‌മെന്റ് റിലീസ്';
 
   @override
-  String get paymentSafelyReserved => 'Payment safely reserved';
+  String get paymentSafelyReserved => 'പേയ്‌മെന്റ് സുരക്ഷിതമായി സംരക്ഷിച്ചു';
 
   @override
-  String get cancelTask => 'Cancel Task';
+  String get cancelTask => 'ടാസ്‌ക് റദ്ദാക്കുക';
 
   @override
-  String get taskCancelled => 'Task cancelled';
+  String get taskCancelled => 'ടാസ്‌ക് റദ്ദാക്കി';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'ടാസ്‌ക് ഇല്ലാതാക്കുക';
 
   @override
-  String get deleteTaskTitle => 'Delete task?';
+  String get deleteTaskTitle => 'ടാസ്‌ക് ഇല്ലാതാക്കണോ?';
 
   @override
-  String get deleteTaskConfirm =>
-      'This will remove the task and all associated offers.';
+  String get deleteTaskConfirm => 'ഈ ടാസ്‌ക് ഇല്ലാതാക്കണോ?';
 
   @override
-  String get taskDeleted => 'Task deleted';
+  String get taskDeleted => 'ടാസ്‌ക് ഇല്ലാതാക്കി';
 
   @override
-  String get typeFirstMessage => 'Type your first message…';
+  String get typeFirstMessage => 'ആദ്യ സന്ദേശം ടൈപ്പ് ചെയ്യുക';
 
   @override
-  String get send => 'Send';
+  String get send => 'അയയ്‌ക്കുക';
 
   @override
-  String get failedToSendMessage => 'Failed to send message';
+  String get failedToSendMessage => 'സന്ദേശം അയയ്‌ക്കൽ പരാജയം';
 
   @override
   String get conversations => 'സന്ദേശങ്ങൾ';
@@ -739,23 +735,23 @@ class AppLocalizationsMl extends AppLocalizations {
   }
 
   @override
-  String get chatToday => 'Today';
+  String get chatToday => 'ഇന്ന്';
 
   @override
-  String get chatYesterday => 'Yesterday';
+  String get chatYesterday => 'ഇന്നലെ';
 
   @override
   String chatYouPrefix(String message) {
-    return 'You: $message';
+    return 'നിങ്ങൾ: $message';
   }
 
   @override
   String chatReFallback(String jobTitle) {
-    return 'Re: $jobTitle';
+    return 'മറുപടി: $jobTitle';
   }
 
   @override
-  String get noConversationsYet => 'No conversations yet';
+  String get noConversationsYet => 'സംഭാഷണം ഇല്ല';
 
   @override
   String get loadingConversations => 'സംഭാഷണങ്ങൾ ലോഡ് ചെയ്യുന്നു...';
@@ -791,100 +787,99 @@ class AppLocalizationsMl extends AppLocalizations {
   String get logoutConfirm => 'ലോഗ് ഔട്ട് ചെയ്യണോ?';
 
   @override
-  String get myProfile => 'My Profile';
+  String get myProfile => 'എന്റെ പ്രൊഫൈൽ';
 
   @override
-  String get unknown => 'Unknown';
+  String get unknown => 'അജ്ഞാതം';
 
   @override
-  String get experienceLabel => 'Experience';
+  String get experienceLabel => 'അനുഭവം';
 
   @override
-  String get statusLabel => 'Status';
+  String get statusLabel => 'സ്ഥിതി';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'സജ്ജമാക്കിയിട്ടില്ല';
 
   @override
-  String get onDuty => 'On Duty';
+  String get onDuty => 'ഡ്യൂട്ടിയിൽ';
 
   @override
-  String get offDuty => 'Off Duty';
+  String get offDuty => 'ഡ്യൂട്ടിയിലല്ല';
 
   @override
   String yearsCount(int count) {
-    return '$count years';
+    return '$count വർഷങ്ങൾ';
   }
 
   @override
-  String get themeAndColors => 'Theme & Colors';
+  String get themeAndColors => 'തീം & നിറങ്ങൾ';
 
   @override
-  String get aiModelLabel => 'AI Model';
+  String get aiModelLabel => 'AI മോഡൽ';
 
   @override
-  String get availableForWork => 'Available for Work';
+  String get availableForWork => 'ജോലിക്ക് ലഭ്യം';
 
   @override
-  String get visibleToClients => 'You are visible to clients';
+  String get visibleToClients => 'ക്ലയന്റുകൾക്ക് ദൃശ്യമാണ്';
 
   @override
-  String get currentlyOffDuty => 'You are currently off duty';
+  String get currentlyOffDuty => 'നിലവിൽ ഡ്യൂട്ടിയിലല്ല';
 
   @override
-  String get myReviews => 'My Reviews';
+  String get myReviews => 'എന്റെ അവലോകനങ്ങൾ';
 
   @override
-  String get deleteAccount => 'Delete Account';
+  String get deleteAccount => 'അക്കൗണ്ട് ഇല്ലാതാക്കുക';
 
   @override
-  String get deleteAccountConfirm =>
-      'This will permanently delete your account and all data. This cannot be undone.';
+  String get deleteAccountConfirm => 'ഉറപ്പാണോ? ഇത് മാറ്റാനാവില്ല.';
 
   @override
-  String get couldNotDeleteAccount => 'Could not delete account';
+  String get couldNotDeleteAccount => 'അക്കൗണ്ട് ഇല്ലാതാക്കാനായില്ല';
 
   @override
-  String get profilePhotoUpdated => 'Profile photo updated';
+  String get profilePhotoUpdated => 'പ്രൊഫൈൽ ഫോട്ടോ അപ്‌ഡേറ്റ്';
 
   @override
-  String get profileUpdated => 'Profile updated';
+  String get profileUpdated => 'പ്രൊഫൈൽ അപ്‌ഡേറ്റ്';
 
   @override
-  String get nameLabel => 'Name';
+  String get nameLabel => 'പേര്';
 
   @override
-  String get profileImageUrl => 'Profile Image URL';
+  String get profileImageUrl => 'പ്രൊഫൈൽ ചിത്രം URL';
 
   @override
-  String get yearsOfExperience => 'Years of Experience';
+  String get yearsOfExperience => 'അനുഭവ വർഷങ്ങൾ';
 
   @override
-  String get certificationsLabel => 'Certifications';
+  String get certificationsLabel => 'സർട്ടിഫിക്കറ്റുകൾ';
 
   @override
-  String get payoutAccountLabel => 'Payout Account';
+  String get payoutAccountLabel => 'പേഔട്ട് അക്കൗണ്ട്';
 
   @override
-  String get onDutySubtitle => 'Toggle availability for new tasks';
+  String get onDutySubtitle => 'പുതിയ ടാസ്‌ക്കുകൾക്ക് നിങ്ങൾ ദൃശ്യമാണ്';
 
   @override
-  String get loadingProfile => 'Loading profile...';
+  String get loadingProfile => 'പ്രൊഫൈൽ ലോഡ് ചെയ്യുന്നു';
 
   @override
-  String get availabilityLabel => 'Availability';
+  String get availabilityLabel => 'ലഭ്യത';
 
   @override
-  String get memberLabel => 'Member';
+  String get memberLabel => 'അംഗം';
 
   @override
-  String get available => 'Available';
+  String get available => 'ലഭ്യം';
 
   @override
-  String get unavailable => 'Unavailable';
+  String get unavailable => 'ലഭ്യമല്ല';
 
   @override
-  String get viewAllReviews => 'View All Reviews';
+  String get viewAllReviews => 'എല്ലാ അവലോകനങ്ങളും കാണുക';
 
   @override
   String get settings => 'ക്രമീകരണങ്ങൾ';
@@ -926,16 +921,17 @@ class AppLocalizationsMl extends AppLocalizations {
   String get secondary => 'ദ്വിതീയ';
 
   @override
-  String get modeLabel => 'Mode';
+  String get modeLabel => 'മോഡ്';
 
   @override
-  String get pickAColour => 'Pick a colour';
+  String get pickAColour => 'നിറം തിരഞ്ഞെടുക്കുക';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'സിസ്‌റ്റം ഡിഫോൾട്ട്';
 
   @override
-  String get darkModeSubtitle => 'Switch between light and dark themes';
+  String get darkModeSubtitle =>
+      'സിസ്‌റ്റം, ലൈറ്റ് അല്ലെങ്കിൽ ഡാർക്ക് മോഡ് തിരഞ്ഞെടുക്കുക';
 
   @override
   String get reviews => 'അവലോകനങ്ങൾ';
@@ -957,64 +953,57 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String howWasWorker(String name) {
-    return 'How was $name?';
+    return '$name എങ്ങനെയായിരുന്നു?';
   }
 
   @override
-  String get feedbackHelps => 'Your feedback helps the community';
+  String get feedbackHelps => 'നിങ്ങളുടെ ഫീഡ്‌ബാക്ക് സഹായകമാണ്';
 
   @override
-  String get thanksForReview => 'Thanks for your review!';
+  String get thanksForReview => 'അവലോകനത്തിന് നന്ദി';
 
   @override
-  String get shareExperienceHint => 'Share your experience (optional)';
+  String get shareExperienceHint => 'നിങ്ങളുടെ അനുഭവം പങ്കിടുക';
 
   @override
-  String get ratingExcellent => 'Excellent!';
+  String get ratingExcellent => 'മികച്ചത്';
 
   @override
-  String get ratingGreat => 'Great!';
+  String get ratingGreat => 'വളരെ നല്ലത്';
 
   @override
-  String get ratingGood => 'Good';
+  String get ratingGood => 'നല്ലത്';
 
   @override
-  String get ratingFair => 'Fair';
+  String get ratingFair => 'ശരാശരി';
 
   @override
-  String get ratingPoor => 'Poor';
+  String get ratingPoor => 'മോശം';
 
   @override
-  String get tapToRate => 'Tap to rate';
+  String get tapToRate => 'റേറ്റ് ചെയ്യാൻ ടാപ്പ് ചെയ്യുക';
 
   @override
   String workerReviewsTitle(String name) {
-    return '$name\'s Reviews';
+    return '$name അവലോകനങ്ങൾ';
   }
 
   @override
-  String get loadingReviews => 'Loading reviews...';
+  String get loadingReviews => 'അവലോകനങ്ങൾ ലോഡ് ചെയ്യുന്നു';
 
   @override
-  String get noReviewsSubtitle =>
-      'Reviews will appear here after completed tasks.';
+  String get noReviewsSubtitle => 'അവലോകനങ്ങൾ ഇല്ല';
 
   @override
-  String get allReviews => 'All Reviews';
+  String get allReviews => 'എല്ലാ അവലോകനങ്ങളും';
 
   @override
   String reviewCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count reviews',
-      one: '1 review',
-    );
-    return '$_temp0';
+    return '$count അവലോകനങ്ങൾ';
   }
 
   @override
-  String get anonymous => 'Anonymous';
+  String get anonymous => 'അജ്ഞാതം';
 
   @override
   String get loading => 'ലോഡ് ചെയ്യുന്നു...';
@@ -1026,7 +1015,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get retry => 'വീണ്ടും ശ്രമിക്കുക';
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'വീണ്ടും ശ്രമിക്കുക';
 
   @override
   String get cancel => 'റദ്ദാക്കുക';
@@ -1056,19 +1045,19 @@ class AppLocalizationsMl extends AppLocalizations {
   String get pullToRefresh => 'പുതുക്കാൻ വലിക്കുക';
 
   @override
-  String get pullDownToRefresh => 'Pull down to refresh.';
+  String get pullDownToRefresh => 'പുതുക്കാൻ താഴേക്ക് വലിക്കുക';
 
   @override
-  String get yes => 'Yes';
+  String get yes => 'അതെ';
 
   @override
-  String get required => 'Required';
+  String get required => 'ആവശ്യമാണ്';
 
   @override
-  String get stop => 'Stop';
+  String get stop => 'നിർത്തുക';
 
   @override
-  String get clear => 'Clear';
+  String get clear => 'മായ്‌ക്കുക';
 
   @override
   String get aiSetup => 'AI സെറ്റപ്';
@@ -1118,320 +1107,309 @@ class AppLocalizationsMl extends AppLocalizations {
   String get analyzing => 'വിശകലനം ചെയ്യുന്നു…';
 
   @override
-  String get aiCapabilities => 'AI Capabilities';
+  String get aiCapabilities => 'AI കഴിവുകൾ';
 
   @override
-  String get onDeviceAi => 'On-Device AI';
+  String get onDeviceAi => 'ഉപകരണത്തിൽ AI';
 
   @override
-  String get aiTaglineSetup => 'Private · Offline · Free';
+  String get aiTaglineSetup => 'സ്വകാര്യം · ഓഫ്‌ലൈൻ · സൗജന്യം';
 
   @override
   String get aiSetupDescription =>
-      'Get smart suggestions for tasks and bids powered by an AI model that runs entirely on your device. No data leaves your phone.';
+      'ടാസ്‌ക്കുകൾക്കും ഓഫറുകൾക്കും സ്‌മാർട്ട് നിർദ്ദേശങ്ങൾ നേടൂ';
 
   @override
-  String get physicalDevice => 'Physical device';
+  String get physicalDevice => 'ഫിസിക്കൽ ഉപകരണം';
 
   @override
-  String get emulatorDetected => 'Emulator detected';
+  String get emulatorDetected => 'എമുലേറ്റർ കണ്ടെത്തി';
 
   @override
   String get ram => 'RAM';
 
   @override
-  String get sufficient => 'Sufficient';
+  String get sufficient => 'മതിയായ';
 
   @override
-  String get freeStorage => 'Free storage';
+  String get freeStorage => 'ശൂന്യ സ്‌റ്റോറേജ്';
 
   @override
   String mbFree(int mb) {
-    return '$mb MB free';
+    return '$mb MB ശൂന്യം';
   }
 
   @override
   String get aiRequiresPhysicalDevice =>
-      'AI features require a physical device.';
+      'AI ഫീച്ചറുകൾക്ക് ഫിസിക്കൽ ഉപകരണം ആവശ്യമാണ്.';
 
   @override
-  String get multilingual => 'Multilingual';
+  String get multilingual => 'ബഹുഭാഷ';
 
   @override
   String downloadingProgress(String percent) {
-    return 'Downloading… $percent%';
+    return 'ഡൗൺലോഡ് ചെയ്യുന്നു $percent%';
   }
 
   @override
-  String get loadingModel => 'Loading model…';
+  String get loadingModel => 'മോഡൽ ലോഡ് ചെയ്യുന്നു';
 
   @override
-  String get retryDownload => 'Retry Download';
+  String get retryDownload => 'വീണ്ടും ഡൗൺലോഡ്';
 
   @override
-  String get activeAndReady => 'Active & Ready';
+  String get activeAndReady => 'സജീവവും തയ്യാറും';
 
   @override
-  String get remove => 'Remove';
+  String get remove => 'നീക്കം ചെയ്യുക';
 
   @override
-  String get enableAi => 'Enable AI';
+  String get enableAi => 'AI പ്രവർത്തനക്ഷമമാക്കുക';
 
   @override
-  String get downloadAiModel => 'Download AI Model';
+  String get downloadAiModel => 'AI മോഡൽ ഡൗൺലോഡ് ചെയ്യുക';
 
   @override
-  String get deviceNotSupported => 'Device not supported';
+  String get deviceNotSupported => 'ഉപകരണം പിന്തുണയ്‌ക്കുന്നില്ല';
 
   @override
   String get downloadBackgroundNote =>
-      'Download happens in the background — you can leave this screen. The model file will be stored on your device and can be removed at any time.';
+      'പശ്ചാത്തലത്തിൽ ഡൗൺലോഡ് ചെയ്യുന്നു. ആപ്പ് അടയ്‌ക്കരുത്.';
 
   @override
-  String get removeAiModelTitle => 'Remove AI Model?';
+  String get removeAiModelTitle => 'AI മോഡൽ നീക്കം ചെയ്യണോ?';
 
   @override
-  String get removeAiModelConfirm =>
-      'This will delete the AI model from your device. You can re-download it later.';
+  String get removeAiModelConfirm => 'AI മോഡൽ നീക്കം ചെയ്യണോ?  MB ലഭ്യമാകും.';
 
   @override
-  String get analyzeWithAi => 'Analyze with AI';
+  String get analyzeWithAi => 'AI ഉപയോഗിച്ച് വിശകലനം';
 
   @override
-  String get aiAssistantAvailable => 'AI Assistant available';
+  String get aiAssistantAvailable => 'AI സഹായി ലഭ്യമാണ്';
 
   @override
   String get aiSetupPrompt =>
-      'Set up an on-device AI model to get smart suggestions.';
+      'സ്‌മാർട്ട് നിർദ്ദേശങ്ങൾക്കായി ഉപകരണത്തിൽ AI മോഡൽ സജ്ജമാക്കുക.';
 
   @override
-  String get setup => 'Setup';
+  String get setup => 'സെറ്റപ്പ്';
 
   @override
-  String get adminDashboard => 'Admin Dashboard';
+  String get adminDashboard => 'അഡ്‌മിൻ ഡാഷ്‌ബോർഡ്';
 
   @override
-  String get failedToLoadDashboard => 'Failed to load dashboard';
+  String get failedToLoadDashboard => 'ഡാഷ്‌ബോർഡ് ലോഡ് പരാജയം';
 
   @override
-  String get platformOverview => 'Platform Overview';
+  String get platformOverview => 'പ്ലാറ്റ്‌ഫോം അവലോകനം';
 
   @override
-  String get liveStatistics => 'Live statistics from the backend.';
+  String get liveStatistics => 'ലൈവ് സ്ഥിതിവിവരക്കണക്കുകൾ';
 
   @override
-  String get usersSection => 'Users';
+  String get usersSection => 'ഉപയോക്താക്കൾ';
 
   @override
-  String get adminTabClients => 'Clients';
+  String get adminTabClients => 'ക്ലയന്റുകൾ';
 
   @override
-  String get adminTabWorkers => 'Workers';
+  String get adminTabWorkers => 'വർക്കർമാർ';
 
   @override
-  String get adminTabAccount => 'Account';
+  String get adminTabAccount => 'അക്കൗണ്ട്';
 
   @override
-  String get jobsSection => 'Jobs';
+  String get jobsSection => 'ജോലികൾ';
 
   @override
-  String get activeLabel => 'Active';
+  String get activeLabel => 'സജീവം';
 
   @override
-  String get todaySection => 'Today';
+  String get todaySection => 'ഇന്ന്';
 
   @override
-  String get createdLabel => 'Created';
+  String get createdLabel => 'സൃഷ്‌ടിച്ചു';
 
   @override
-  String get completedLabel => 'Completed';
+  String get completedLabel => 'പൂർത്തിയായി';
 
   @override
   String deleteUserTitle(String role) {
-    return 'Delete $role';
+    return '$role ഇല്ലാതാക്കണോ?';
   }
 
   @override
   String deleteUserConfirm(String name, String email) {
-    return 'This action removes $name ($email) permanently. Continue?';
+    return '$name ഇല്ലാതാക്കണോ?';
   }
 
   @override
-  String get userDeletedSuccess => 'User deleted successfully';
+  String get userDeletedSuccess => 'ഉപയോക്താവ് നീക്കം ചെയ്‌തു';
 
   @override
-  String get unableToLoadUsers => 'Unable to load users';
+  String get unableToLoadUsers => 'ഉപയോക്താക്കൾ ലോഡ് പരാജയം';
 
   @override
-  String get noClientsFound => 'No clients found';
+  String get noClientsFound => 'ക്ലയന്റുകൾ കണ്ടെത്തിയില്ല';
 
   @override
-  String get noWorkersFound => 'No workers found';
+  String get noWorkersFound => 'വർക്കർമാർ കണ്ടെത്തിയില്ല';
 
   @override
-  String get deleteUserTooltip => 'Delete user';
+  String get deleteUserTooltip => 'ഉപയോക്താവിനെ ഇല്ലാതാക്കുക';
 
   @override
-  String get adminSession => 'Admin Session';
+  String get adminSession => 'അഡ്‌മിൻ സെഷൻ';
 
   @override
   String get adminManageUsersHint =>
-      'Manage users from the Clients and Workers tabs.';
+      'ക്ലയന്റുകൾ, വർക്കർമാർ ടാബുകളിൽ നിന്ന് ഉപയോക്താക്കളെ നിയന്ത്രിക്കുക.';
 
   @override
   String distanceKm(int radius) {
-    return '$radius km';
+    return '$radius കി.മീ';
   }
 
   @override
-  String get youreOffline => 'You\'re Offline';
+  String get youreOffline => 'നിങ്ങൾ ഓഫ്‌ലൈൻ ആണ്';
 
   @override
-  String get offlineHint =>
-      'Toggle the switch in the top bar to go online and discover nearby jobs.';
+  String get offlineHint => 'നിങ്ങൾ ഓഫ്‌ലൈൻ ആണ്';
 
   @override
-  String get yourSkills => 'Your Skills';
+  String get yourSkills => 'നിങ്ങളുടെ വൈദഗ്ധ്യങ്ങൾ';
 
   @override
-  String get skillsSubtitle =>
-      'Search and add skills. These are sent to the server to filter your job feed.';
+  String get skillsSubtitle => 'നിങ്ങളുടെ വൈദഗ്ധ്യങ്ങളും പ്രാവീണ്യവും ചേർക്കുക';
 
   @override
-  String get addSkillLabel => 'Add Skill';
+  String get addSkillLabel => 'വൈദഗ്ധ്യം ചേർക്കുക';
 
   @override
-  String get typeToSearchSkills => 'Type to search skills…';
+  String get typeToSearchSkills => 'വൈദഗ്ധ്യങ്ങൾ തിരയുക';
 
   @override
   String savedSkillsCount(int count) {
-    return 'Saved Skills ($count)';
+    return '$count വൈദഗ്ധ്യങ്ങൾ സേവ് ചെയ്‌തു';
   }
 
   @override
-  String get noSkillsAdded =>
-      'No skills added yet. Search above to add relevant skills.';
+  String get noSkillsAdded => 'വൈദഗ്ധ്യങ്ങൾ ഇല്ല';
 
   @override
-  String get unableToLoadTaskDetails => 'Unable to load task details';
+  String get unableToLoadTaskDetails => 'വിശദാംശങ്ങൾ ലോഡ് പരാജയം';
 
   @override
-  String get detailDistance => 'Distance';
+  String get detailDistance => 'ദൂരം';
 
   @override
-  String get chooseLocation => 'Choose Location';
+  String get chooseLocation => 'സ്ഥലം തിരഞ്ഞെടുക്കുക';
 
   @override
-  String get savedTab => 'Saved';
+  String get savedTab => 'സേവ് ചെയ്‌തവ';
 
   @override
-  String get pinOnMapTab => 'Pin on Map';
+  String get pinOnMapTab => 'മാപ്പിൽ പിൻ ചെയ്യുക';
 
   @override
-  String get locationDeniedPermanently =>
-      'Location permanently denied. Enable it in Settings.';
+  String get locationDeniedPermanently => 'സ്ഥല അനുമതി ശാശ്വതമായി നിഷേധിച്ചു';
 
   @override
-  String get couldNotGetLocation => 'Could not get location';
+  String get couldNotGetLocation => 'സ്ഥലം ലഭിച്ചില്ല';
 
   @override
-  String get searchPlaces => 'Search places…';
+  String get searchPlaces => 'സ്ഥലങ്ങൾ തിരയുക';
 
   @override
-  String get switchToSatellite => 'Switch to Satellite';
+  String get switchToSatellite => 'സാറ്റലൈറ്റ്';
 
   @override
-  String get switchToRoadMap => 'Switch to Road map';
+  String get switchToRoadMap => 'റോഡ് മാപ്പ്';
 
   @override
-  String get goToMyLocation => 'Go to my location';
+  String get goToMyLocation => 'എന്റെ സ്ഥലത്തേക്ക് പോകുക';
 
   @override
-  String get confirmLocation => 'Confirm Location';
+  String get confirmLocation => 'സ്ഥലം സ്ഥിരീകരിക്കുക';
 
   @override
-  String get saveAddress => 'Save Address';
+  String get saveAddress => 'വിലാസം സേവ് ചെയ്യുക';
 
   @override
-  String get saveAddressSubtitle =>
-      'Add a label and recipient details for this location.';
+  String get saveAddressSubtitle => 'ഭാവി ടാസ്‌ക്കുകൾക്കായി സേവ് ചെയ്യുക';
 
   @override
-  String get labelField => 'Label';
+  String get labelField => 'ലേബൽ';
 
   @override
-  String get labelHome => 'Home';
+  String get labelHome => 'വീട്';
 
   @override
-  String get labelWork => 'Work';
+  String get labelWork => 'ഓഫീസ്';
 
   @override
-  String get labelOther => 'Other';
+  String get labelOther => 'മറ്റുള്ളവ';
 
   @override
-  String get recipientName => 'Recipient Name';
+  String get recipientName => 'സ്വീകർത്താവിന്റെ പേര്';
 
   @override
-  String get recipientNameHint => 'e.g. Rahul Sharma';
+  String get recipientNameHint => 'പേര് നൽകുക';
 
   @override
-  String get recipientPhone => 'Recipient Phone';
+  String get recipientPhone => 'സ്വീകർത്താവിന്റെ ഫോൺ';
 
   @override
-  String get recipientPhoneHint => 'e.g. 9876543210';
+  String get recipientPhoneHint => 'ഫോൺ നമ്പർ നൽകുക';
 
   @override
-  String get pickFromContacts => 'Pick from contacts';
+  String get pickFromContacts => 'കോൺടാക്‌റ്റുകളിൽ നിന്ന് തിരഞ്ഞെടുക്കുക';
 
   @override
   String get contactsAccessDenied =>
-      'Contacts access denied — name was copied. Please enter the phone number manually.';
+      'കോൺടാക്‌റ്റുകളിലേക്കുള്ള പ്രവേശനം നിഷേധിച്ചു';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => 'സെറ്റിംഗ്‌സ് തുറക്കുക';
 
   @override
-  String get couldNotOpenContacts => 'Could not open contacts';
+  String get couldNotOpenContacts => 'കോൺടാക്‌റ്റുകൾ തുറക്കാനായില്ല';
 
   @override
-  String get areaNeighbourhood => 'Area / Neighbourhood';
+  String get areaNeighbourhood => 'പ്രദേശം / അയൽപക്കം';
 
   @override
-  String get areaHint => 'e.g. Koramangala';
+  String get areaHint => 'ഉദാ., എറണാകുളം, തിരുവനന്തപുരം';
 
   @override
-  String get cityHint => 'e.g. Bengaluru';
+  String get cityHint => 'ഉദാ., കൊച്ചി';
 
   @override
-  String get postalCodeRequired => 'Postal Code';
+  String get postalCodeRequired => 'പോസ്‌റ്റൽ കോഡ് ആവശ്യമാണ്';
 
   @override
-  String get postalCodeHint => 'e.g. 560034';
+  String get postalCodeHint => 'ഉദാ., 682001';
 
   @override
-  String get countryCodeRequired => 'Country Code';
+  String get countryCodeRequired => 'രാജ്യ കോഡ് ആവശ്യമാണ്';
 
   @override
-  String get countryCodeHint => 'e.g. IN';
+  String get countryCodeHint => '+91';
 
   @override
-  String get requiredSkillsLabel => 'Required Skills';
+  String get requiredSkillsLabel => 'ആവശ്യമായ വൈദഗ്ധ്യങ്ങൾ';
 
   @override
-  String get skillHintText => 'e.g. plumbing, painting…';
+  String get skillHintText =>
+      'വൈദഗ്ധ്യങ്ങൾ ടൈപ്പ് ചെയ്യുക, കോമ കൊണ്ട് വേർതിരിക്കുക';
 
   @override
-  String get skillHelperEmpty => 'Type skills and separate them with commas';
+  String get skillHelperEmpty => 'ഇതുവരെ വൈദഗ്ധ്യങ്ങൾ ചേർത്തിട്ടില്ല';
 
   @override
   String skillsAddedCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count skills added',
-      one: '1 skill added',
-    );
-    return '$_temp0';
+    return '$count വൈദഗ്ധ്യങ്ങൾ ചേർത്തു';
   }
 
   @override
@@ -1519,17 +1497,208 @@ class AppLocalizationsMl extends AppLocalizations {
   String get languageHebrew => 'עברית';
 
   @override
-  String get useWithoutSaving => 'Use Without Saving';
+  String get accentColorBlue => 'നീല';
 
   @override
-  String get saveAndUse => 'Save & Use';
+  String get accentColorYellow => 'മഞ്ഞ';
 
   @override
-  String get useMyCurrentLocation => 'Use My Current Location';
+  String get accentColorGreen => 'പച്ച';
 
   @override
-  String get detectingLocation => 'Detecting location…';
+  String get accentColorPink => 'പിങ്ക്';
 
   @override
-  String get deleteAddress => 'Delete Address';
+  String get accentColorRed => 'ചുവപ്പ്';
+
+  @override
+  String get accentColorPurple => 'പർപ്പിൾ';
+
+  @override
+  String get accentColorOrange => 'ഓറഞ്ച്';
+
+  @override
+  String get accentColorTeal => 'ടീൽ';
+
+  @override
+  String get accentColorCustom => 'ഇഷ്ടാനുസൃതം';
+
+  @override
+  String get paymentStatusPending => 'പേയ്‌മെന്റ് തീർപ്പാകാതെ';
+
+  @override
+  String get paymentStatusLocked => 'തുക സുരക്ഷിതമായി സംരക്ഷിച്ചു';
+
+  @override
+  String get paymentStatusReleased => 'പേയ്‌മെന്റ് റിലീസ് ചെയ്‌തു';
+
+  @override
+  String get paymentStatusOffline => 'പൂർത്തിയായ ശേഷം നേരിട്ട് പേയ്‌മെന്റ്';
+
+  @override
+  String paymentStatusGeneric(String status) {
+    return 'പേയ്‌മെന്റ് സ്ഥിതി: $status';
+  }
+
+  @override
+  String get jobStatusOpenForOffers => 'ഓഫറുകൾക്ക് തുറന്നിരിക്കുന്നു';
+
+  @override
+  String get jobStatusOfferAccepted => 'ഓഫർ സ്വീകരിച്ചു';
+
+  @override
+  String get jobStatusReadyToStart => 'തുടങ്ങാൻ തയ്യാർ';
+
+  @override
+  String get jobStatusInProgress => 'നടക്കുന്നു';
+
+  @override
+  String get jobStatusPendingPayment => 'പേയ്‌മെന്റ് തീർപ്പാകാതെ';
+
+  @override
+  String get jobStatusPaymentReleased => 'പേയ്‌മെന്റ് റിലീസ് ചെയ്‌തു';
+
+  @override
+  String get jobStatusTaskCompleted => 'ടാസ്‌ക് പൂർത്തിയായി';
+
+  @override
+  String get jobStatusCancelled => 'റദ്ദാക്കി';
+
+  @override
+  String get detailBudgetLabel => 'ബജറ്റ്';
+
+  @override
+  String get detailLocationLabel => 'സ്ഥലം';
+
+  @override
+  String get detailSkillsLabel => 'വൈദഗ്ധ്യങ്ങൾ';
+
+  @override
+  String get detailJobIdLabel => 'ജോബ് ID';
+
+  @override
+  String get tooltipCopy => 'കോപ്പി';
+
+  @override
+  String get tooltipDeleteAddress => 'വിലാസം ഇല്ലാതാക്കുക';
+
+  @override
+  String confirmDeleteAddress(String addressLabel) {
+    return 'സേവ് ചെയ്ത വിലാസങ്ങളിൽ നിന്ന് \"$addressLabel\" നീക്കം ചെയ്യണോ?';
+  }
+
+  @override
+  String get errorNotAuthenticated =>
+      'പ്രാമാണീകരിച്ചിട്ടില്ല. വീണ്ടും ലോഗിൻ ചെയ്യുക.';
+
+  @override
+  String get errorCouldNotOpenImagePicker => 'ഇമേജ് പിക്കർ തുറക്കാനായില്ല.';
+
+  @override
+  String get errorCouldNotReadImage => 'ഇമേജ് വായിക്കാനായില്ല.';
+
+  @override
+  String get errorImageTooLarge => 'ഇമേജ് 5MB-യിൽ കുറവായിരിക്കണം.';
+
+  @override
+  String get errorUploadFailed => 'അപ്‌ലോഡ് പരാജയം. വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get errorNameRequired => 'പേര് ആവശ്യമാണ്';
+
+  @override
+  String get errorRatingRequired => 'റേറ്റിംഗ് തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get errorNotLoggedIn => 'ആദ്യം ലോഗിൻ ചെയ്യുക';
+
+  @override
+  String get errorAdminProfileUpdateNotSupported =>
+      'അഡ്‌മിൻ പ്രൊഫൈൽ അപ്‌ഡേറ്റ് പിന്തുണയ്‌ക്കുന്നില്ല';
+
+  @override
+  String get errorAdminDeletionDisabled =>
+      'ആപ്പിൽ അഡ്‌മിൻ ഡിലീറ്റ് നിർജ്ജീവമാക്കി';
+
+  @override
+  String get errorConnectionTimeout =>
+      'കണക്ഷൻ സമയം കഴിഞ്ഞു. വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get errorConnectionError => 'സെർവറിലേക്ക് കണക്‌റ്റ് ചെയ്യാനായില്ല.';
+
+  @override
+  String get errorRequestCancelled => 'അഭ്യർത്ഥന റദ്ദാക്കി.';
+
+  @override
+  String get errorBadRequest => 'അസാധുവായ അഭ്യർത്ഥന. ഇൻപുട്ട് പരിശോധിക്കുക.';
+
+  @override
+  String get errorSessionExpired =>
+      'സെഷൻ കാലാവധി കഴിഞ്ഞു. വീണ്ടും ലോഗിൻ ചെയ്യുക.';
+
+  @override
+  String get errorPermissionDenied => 'അനുമതി നിഷേധിച്ചു.';
+
+  @override
+  String get errorResourceNotFound => 'വിഭവം കണ്ടെത്തിയില്ല.';
+
+  @override
+  String get errorConflict => 'വൈരുദ്ധ്യം: പ്രവൃത്തി പൂർത്തിയാക്കാനായില്ല.';
+
+  @override
+  String get errorFileTooLarge => 'ഫയൽ വളരെ വലുതാണ്. പരമാവധി 5MB.';
+
+  @override
+  String get errorValidationError =>
+      'മൂല്യനിർണ്ണയ പിശക്. ഇൻപുട്ട് പരിശോധിക്കുക.';
+
+  @override
+  String get errorTooManyRequests => 'അധികം അഭ്യർത്ഥനകൾ. കാത്തിരിക്കുക.';
+
+  @override
+  String get errorServerError => 'സെർവർ പിശക്. പിന്നീട് ശ്രമിക്കുക.';
+
+  @override
+  String errorRequestFailed(String statusCode) {
+    return 'അഭ്യർത്ഥന പരാജയം: സ്ഥിതി $statusCode';
+  }
+
+  @override
+  String get errorNetworkFailed => 'നെറ്റ്‌വർക്ക് പിശക്.';
+
+  @override
+  String get errorNetworkRequestFailed => 'നെറ്റ്‌വർക്ക് പിശക്';
+
+  @override
+  String get errorMalformedSkillResponse => 'തെറ്റായ വൈദഗ്ധ്യ പ്രതികരണം';
+
+  @override
+  String get errorMalformedResponse => 'തെറ്റായ പ്രതികരണം';
+
+  @override
+  String get errorMalformedAdminResponse => 'തെറ്റായ അഡ്‌മിൻ പ്രതികരണം';
+
+  @override
+  String get errorAdminAccessRequired => 'അഡ്‌മിൻ പ്രവേശനം ആവശ്യമാണ്';
+
+  @override
+  String get errorDescriptionUnavailable => 'വിവരണം ലഭ്യമല്ല';
+
+  @override
+  String errorUnauthorizedAction(String roleLabel) {
+    return '$roleLabel മാത്രമേ ഇത് ചെയ്യാൻ കഴിയൂ';
+  }
+
+  @override
+  String get useWithoutSaving => 'സേവ് ചെയ്യാതെ ഉപയോഗിക്കുക';
+
+  @override
+  String get saveAndUse => 'സേവ് ചെയ്‌ത് ഉപയോഗിക്കുക';
+
+  @override
+  String get useMyCurrentLocation => 'എന്റെ നിലവിലെ സ്ഥലം ഉപയോഗിക്കുക';
+
+  @override
+  String get detectingLocation => 'സ്ഥലം കണ്ടെത്തുന്നു…';
 }

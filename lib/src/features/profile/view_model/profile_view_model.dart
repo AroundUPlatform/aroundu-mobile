@@ -160,7 +160,11 @@ class EditProfileController extends Notifier<EditProfileState> {
 
   Future<bool> save() async {
     if (state.name.trim().isEmpty) {
-      state = state.copyWith(errorMessage: 'Name is required');
+      state = state.copyWith(
+        errorMessage:
+            ref.read(currentL10nProvider)?.errorNameRequired ??
+            'Name is required',
+      );
       return false;
     }
 

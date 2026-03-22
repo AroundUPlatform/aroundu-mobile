@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n_extension.dart';
 import '../theme/app_theme.dart';
 
 /// A reusable banner widget to show payment/escrow status
@@ -17,7 +18,7 @@ class PaymentStatusBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final config = _configForStatus(status);
+    final config = _configForStatus(status, context);
     final amountText = amount != null && currency != null
         ? ' (${currency!} ${amount!.toStringAsFixed(2)})'
         : '';
@@ -49,36 +50,37 @@ class PaymentStatusBanner extends StatelessWidget {
     );
   }
 
-  _BannerConfig _configForStatus(String status) {
+  _BannerConfig _configForStatus(String status, BuildContext context) {
+    final l10n = context.l10n;
     switch (status.toUpperCase()) {
       case 'PENDING_ESCROW':
         return _BannerConfig(
-          label: 'Payment pending',
+          label: l10n.paymentStatusPending,
           icon: Icons.hourglass_empty_rounded,
           color: AppPalette.warning,
         );
       case 'ESCROW_LOCKED':
         return _BannerConfig(
-          label: 'Money is safely reserved',
+          label: l10n.paymentStatusLocked,
           icon: Icons.lock_rounded,
           color: AppPalette.primary,
         );
       case 'ESCROW_RELEASED':
       case 'RELEASED':
         return _BannerConfig(
-          label: 'Payment released successfully',
+          label: l10n.paymentStatusReleased,
           icon: Icons.check_circle_rounded,
           color: AppPalette.success,
         );
       case 'OFFLINE':
         return _BannerConfig(
-          label: 'Pay directly upon completion',
+          label: l10n.paymentStatusOffline,
           icon: Icons.payments_outlined,
           color: AppPalette.textSecondary,
         );
       default:
         return _BannerConfig(
-          label: 'Payment status: $status',
+          label: l10n.paymentStatusGeneric(status),
           icon: Icons.info_outline_rounded,
           color: AppPalette.textSecondary,
         );

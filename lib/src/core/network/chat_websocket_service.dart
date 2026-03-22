@@ -4,6 +4,7 @@ import 'package:stomp_dart_client/stomp_dart_client.dart';
 
 import '../config/app_environment.dart';
 import '../logging/app_logger.dart';
+import '../security/payload_crypto.dart';
 
 /// Callback types for WebSocket events.
 typedef OnMessageReceived = void Function(Map<String, dynamic> payload);
@@ -104,11 +105,20 @@ class ChatWebSocketService {
     required int jobId,
     required int recipientId,
     required String content,
-  }) {
-    _client?.send(
-      destination: '/app/chat.send/$jobId',
-      body: jsonEncode({'recipientId': recipientId, 'content': content}),
-    );
+  }) async {
+    final plain = jsonEncode({'recipientId': recipientId, 'content': content});
+    String body;
+    if (PayloadCrypto.isEnabled) {
+      try {
+        final encrypted = await PayloadCrypto.encrypt(plain);
+        body = jsonEncode({'data': encrypted});
+      } catch (_) {
+        body = plain;
+      }
+    } else {
+      body = plain;
+    }
+    _client?.send(destination: '/app/chat.send/$jobId', body: body);
   }
 
   /// Send a typing indicator.
@@ -196,9 +206,7 @@ class ChatWebSocketService {
 
   void _handleConversationFrame(int conversationId, StompFrame frame) {
     if (frame.body == null) return;
-    try {
-      final payload = jsonDecode(frame.body!) as Map<String, dynamic>;
-
+    _decryptAndHandle(frame.body!, (payload) {
       // Status update frames have messageId + status but no 'content'
       if (payload.containsKey('messageId') &&
           payload.containsKey('status') &&
@@ -207,18 +215,43 @@ class ChatWebSocketService {
       } else {
         _messageCallbacks[conversationId]?.call(payload);
       }
-    } catch (e) {
-      AppLogger.error('Failed to parse WS frame', error: e);
-    }
+    });
   }
 
   void _handleTypingFrame(int conversationId, StompFrame frame) {
     if (frame.body == null) return;
-    try {
-      final payload = jsonDecode(frame.body!) as Map<String, dynamic>;
+    _decryptAndHandle(frame.body!, (payload) {
       _typingCallbacks[conversationId]?.call(payload);
+    });
+  }
+
+  /// Decrypt a STOMP frame body if it's wrapped in `{"data": "..."}`,
+  /// otherwise parse as plain JSON.
+  Future<void> _decryptAndHandle(
+    String body,
+    void Function(Map<String, dynamic>) callback,
+  ) async {
+    try {
+      var payload = jsonDecode(body) as Map<String, dynamic>;
+
+      // Check if this is an encrypted wrapper
+      if (PayloadCrypto.isEnabled &&
+          payload.length == 1 &&
+          payload.containsKey('data') &&
+          payload['data'] is String) {
+        try {
+          final decrypted = await PayloadCrypto.decrypt(
+            payload['data'] as String,
+          );
+          payload = jsonDecode(decrypted) as Map<String, dynamic>;
+        } catch (e) {
+          AppLogger.error('WS frame decryption failed, using as-is', error: e);
+        }
+      }
+
+      callback(payload);
     } catch (e) {
-      AppLogger.error('Failed to parse typing frame', error: e);
+      AppLogger.error('Failed to parse WS frame', error: e);
     }
   }
 

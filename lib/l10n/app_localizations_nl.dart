@@ -45,82 +45,81 @@ class AppLocalizationsNl extends AppLocalizations {
   String get alreadyHaveAccount => 'Al een account?';
 
   @override
-  String get welcomeBack => 'Welcome Back';
+  String get welcomeBack => 'Welkom terug';
 
   @override
-  String get loginSubtitle => 'Sign in to continue as provider or worker.';
+  String get loginSubtitle => 'Log in op je AroundU-account';
 
   @override
-  String get noAccountYet => 'No account yet?';
+  String get noAccountYet => 'Nog geen account?';
 
   @override
-  String get createOne => 'Create one';
+  String get createOne => 'Aanmaken';
 
   @override
-  String get emailRequired => 'Email is required';
+  String get emailRequired => 'E-mail vereist';
 
   @override
-  String get enterValidEmail => 'Enter a valid email';
+  String get enterValidEmail => 'Voer geldig e-mailadres in';
 
   @override
-  String get passwordRequired => 'Password is required';
+  String get passwordRequired => 'Wachtwoord vereist';
 
   @override
-  String get minimumSixCharacters => 'Minimum 6 characters';
+  String get minimumSixCharacters => 'Minimaal 6 tekens';
 
   @override
-  String get unableToLogin => 'Unable to login. Please retry.';
+  String get unableToLogin => 'Inloggen mislukt';
 
   @override
   String fieldRequired(String field) {
-    return '$field is required';
+    return '$field is vereist';
   }
 
   @override
-  String get enterValidPhone => 'Enter a valid phone number';
+  String get enterValidPhone => 'Voer geldig telefoonnummer in';
 
   @override
-  String get unableToRegister => 'Unable to register';
+  String get unableToRegister => 'Registratie mislukt';
 
   @override
-  String get registrationSuccess => 'Registration successful. Please log in.';
+  String get registrationSuccess => 'Registratie geslaagd';
 
   @override
-  String get registerSubtitle =>
-      'Register as provider or worker with your basic location profile.';
+  String get registerSubtitle => 'Registreer als aanbieder of werker';
 
   @override
-  String get roleLabel => 'Role';
+  String get roleLabel => 'Rol';
 
   @override
-  String get roleJobProvider => 'Job Provider';
+  String get roleJobProvider => 'Opdrachtgever';
 
   @override
-  String get roleJobWorker => 'Job Worker';
+  String get roleJobWorker => 'Werker';
 
   @override
-  String get countryLabel => 'Country';
+  String get countryLabel => 'Land';
 
   @override
-  String get currencyLabel => 'Currency';
+  String get currencyLabel => 'Valuta';
 
   @override
-  String get cityLabel => 'City';
+  String get cityLabel => 'Stad';
 
   @override
-  String get postalCodeLabel => 'Postal code';
+  String get postalCodeLabel => 'Postcode';
 
   @override
-  String get areaOptionalLabel => 'Area (optional)';
+  String get areaOptionalLabel => 'Gebied (optioneel)';
 
   @override
-  String get fullAddressOptionalLabel => 'Full address (optional)';
+  String get fullAddressOptionalLabel => 'Volledig adres (optioneel)';
 
   @override
-  String get alreadyRegistered => 'Already registered?';
+  String get alreadyRegistered => 'Al geregistreerd?';
 
   @override
-  String get logInLink => 'Log in';
+  String get logInLink => 'Inloggen';
 
   @override
   String get onboardingTitle1 => 'Vind Taken bij Jou in de Buurt';
@@ -153,7 +152,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get next => 'Volgende';
 
   @override
-  String get newHereCreateAccount => 'New here? Create account';
+  String get newHereCreateAccount => 'Nieuw? Maak een account';
 
   @override
   String get roleSelectionTitle => 'Kies Je Rol';
@@ -174,19 +173,19 @@ class AppLocalizationsNl extends AppLocalizations {
   String get continueButton => 'Doorgaan';
 
   @override
-  String get roleSelectionSubtitle =>
-      'Select the workflow you want to use in AroundU.';
+  String get roleSelectionSubtitle => 'Hoe wil je AroundU gebruiken?';
 
   @override
   String signedInAs(String email) {
-    return 'Signed in as $email';
+    return 'Ingelogd als $email';
   }
 
   @override
-  String get roleProviderDesc => 'Post jobs and manage incoming bids.';
+  String get roleProviderDesc => 'Plaats taken en vind gekwalificeerde werkers';
 
   @override
-  String get roleWorkerDescAlt => 'Browse nearby jobs and place bids quickly.';
+  String get roleWorkerDescAlt =>
+      'Vind opdrachten en verdien met je vaardigheden';
 
   @override
   String get homeTab => 'Home';
@@ -201,19 +200,19 @@ class AppLocalizationsNl extends AppLocalizations {
   String get profileTab => 'Profiel';
 
   @override
-  String get providerTabMyTasks => 'My Tasks';
+  String get providerTabMyTasks => 'Mijn taken';
 
   @override
-  String get providerTabPostTask => 'Post Task';
+  String get providerTabPostTask => 'Taak plaatsen';
 
   @override
-  String get tasksNavLabel => 'Tasks';
+  String get tasksNavLabel => 'Taken';
 
   @override
-  String get postNavLabel => 'Post';
+  String get postNavLabel => 'Plaatsen';
 
   @override
-  String get workerTabTaskFeed => 'Task Feed';
+  String get workerTabTaskFeed => 'Takenfeed';
 
   @override
   String get feedNavLabel => 'Feed';
@@ -271,13 +270,13 @@ class AppLocalizationsNl extends AppLocalizations {
   String get urgencyNormal => 'Normaal';
 
   @override
-  String get urgencyMedium => 'Medium';
+  String get urgencyMedium => 'Gemiddeld';
 
   @override
   String get urgencyUrgent => 'Urgent';
 
   @override
-  String get urgencyAsap => 'ASAP';
+  String get urgencyAsap => 'Zo snel mogelijk';
 
   @override
   String get paymentOffline => 'Offline';
@@ -286,144 +285,143 @@ class AppLocalizationsNl extends AppLocalizations {
   String get paymentEscrow => 'Escrow';
 
   @override
-  String get paymentMethod => 'Payment Method';
+  String get paymentMethod => 'Betaalmethode';
 
   @override
-  String get payInCash => 'Pay in Cash';
+  String get payInCash => 'Contant betalen';
 
   @override
-  String get secureEscrow => 'Secure Escrow';
+  String get secureEscrow => 'Veilige bewaring';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => 'Alle';
 
   @override
   String get filterOpen => 'Open';
 
   @override
-  String get filterActive => 'Active';
+  String get filterActive => 'Actief';
 
   @override
-  String get filterInProgress => 'In Progress';
+  String get filterInProgress => 'Bezig';
 
   @override
-  String get filterCompleted => 'Completed';
+  String get filterCompleted => 'Voltooid';
 
   @override
-  String get filterCancelled => 'Cancelled';
+  String get filterCancelled => 'Geannuleerd';
 
   @override
-  String get filterExpired => 'Expired';
+  String get filterExpired => 'Verlopen';
 
   @override
-  String get filterNearby => 'Nearby';
+  String get filterNearby => 'Dichtbij';
 
   @override
-  String get filterAllMine => 'All Mine';
+  String get filterAllMine => 'Al mijn';
 
   @override
-  String get filterBidPlaced => 'Bid Placed';
+  String get filterBidPlaced => 'Bod geplaatst';
 
   @override
-  String get filterAccepted => 'Accepted';
+  String get filterAccepted => 'Geaccepteerd';
 
   @override
-  String get noTasksPostedYet => 'No tasks posted yet';
+  String get noTasksPostedYet => 'Geen taken geplaatst';
 
   @override
-  String get noOpenTasks => 'No open tasks';
+  String get noOpenTasks => 'Geen open taken';
 
   @override
-  String get noActiveTasks => 'No active tasks';
+  String get noActiveTasks => 'Geen actieve taken';
 
   @override
-  String get noTasksInProgress => 'No tasks in progress';
+  String get noTasksInProgress => 'Geen taken bezig';
 
   @override
-  String get noCompletedTasks => 'No completed tasks';
+  String get noCompletedTasks => 'Geen voltooide taken';
 
   @override
-  String get noCancelledTasks => 'No cancelled tasks';
+  String get noCancelledTasks => 'Geen geannuleerde taken';
 
   @override
-  String get noExpiredTasks => 'No expired tasks';
+  String get noExpiredTasks => 'Geen verlopen taken';
 
   @override
-  String get unableToLoadTasks => 'Unable to load tasks';
+  String get unableToLoadTasks => 'Taken laden mislukt';
 
   @override
-  String get noNearbyJobs => 'No nearby jobs right now';
+  String get noNearbyJobs => 'Geen opdrachten in de buurt';
 
   @override
-  String get noJobsYetBid => 'No jobs yet — place a bid to get started!';
+  String get noJobsYetBid => 'Geen opdrachten — doe een bod';
 
   @override
-  String get noPendingBids => 'No pending bids';
+  String get noPendingBids => 'Geen biedingen in afwachting';
 
   @override
-  String get noAcceptedJobs => 'No accepted jobs';
+  String get noAcceptedJobs => 'Geen geaccepteerde opdrachten';
 
   @override
-  String get noJobsInProgress => 'No jobs in progress';
+  String get noJobsInProgress => 'Geen opdrachten bezig';
 
   @override
-  String get noCompletedJobsYet => 'No completed jobs yet';
+  String get noCompletedJobsYet => 'Geen voltooide opdrachten';
 
   @override
-  String get noCancelledJobs => 'No cancelled jobs';
+  String get noCancelledJobs => 'Geen geannuleerde opdrachten';
 
   @override
-  String get noExpiredJobs => 'No expired jobs';
+  String get noExpiredJobs => 'Geen verlopen opdrachten';
 
   @override
-  String get pullDownToRefreshCheck => 'Pull down to refresh and check again.';
+  String get pullDownToRefreshCheck => 'Trek omlaag om taken te zoeken';
 
   @override
-  String get unableToLoadJobs => 'Unable to load jobs';
+  String get unableToLoadJobs => 'Opdrachten laden mislukt';
 
   @override
-  String get postNewTask => 'Post a New Task';
+  String get postNewTask => 'Nieuwe taak';
 
   @override
   String get postTaskSubtitle =>
-      'Add clear details so workers can send accurate offers.';
+      'Voeg duidelijke details toe voor nauwkeurige aanbiedingen';
 
   @override
-  String get taskTitleLabel => 'Task title';
+  String get taskTitleLabel => 'Taaktitel';
 
   @override
-  String get savingLocation => 'Saving location…';
+  String get savingLocation => 'Locatie opslaan';
 
   @override
-  String get tapToSelectLocation => 'Tap to select location';
+  String get tapToSelectLocation => 'Tik om locatie te kiezen';
 
   @override
-  String get postTaskButton => 'Post Task';
+  String get postTaskButton => 'Taak plaatsen';
 
   @override
-  String get addSkillWarning => 'Add at least one required skill for this task';
+  String get addSkillWarning => 'Voeg minimaal één vereiste vaardigheid toe';
 
   @override
-  String get enterValidBudget => 'Enter a valid budget amount';
+  String get enterValidBudget => 'Voer geldig budget in';
 
   @override
-  String get setJobLocationWarning =>
-      'Please set a job location before posting';
+  String get setJobLocationWarning => 'Stel de taaklocatie in';
 
   @override
-  String get jobPostedSuccess => 'Job posted successfully';
+  String get jobPostedSuccess => 'Taak geplaatst';
 
   @override
-  String get failedToPostJob => 'Failed to post job. Please retry.';
+  String get failedToPostJob => 'Plaatsen mislukt';
 
   @override
-  String get failedToSaveLocation => 'Failed to save location';
+  String get failedToSaveLocation => 'Opslaan mislukt';
 
   @override
-  String get unableToLoadJobWorkflow => 'Unable to load job workflow';
+  String get unableToLoadJobWorkflow => 'Workflow laden mislukt';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => 'Onbekende fout';
 
   @override
   String get statusOpenForBids => 'Open voor Biedingen';
@@ -477,96 +475,96 @@ class AppLocalizationsNl extends AppLocalizations {
   String get bidPending => 'In Afwachting';
 
   @override
-  String get offersSection => 'Offers';
+  String get offersSection => 'Aanbiedingen';
 
   @override
-  String get noOffersReceivedYet => 'No offers received yet.';
+  String get noOffersReceivedYet => 'Geen aanbiedingen ontvangen';
 
   @override
-  String get offerAccepted => 'Offer Accepted';
+  String get offerAccepted => 'Aanbod geaccepteerd';
 
   @override
-  String get offerRejected => 'Offer Rejected';
+  String get offerRejected => 'Aanbod afgewezen';
 
   @override
-  String get offerPending => 'Offer Pending';
+  String get offerPending => 'Aanbod in afwachting';
 
   @override
   String workerNumber(int id) {
-    return 'Worker #$id';
+    return 'Werker #$id';
   }
 
   @override
-  String get acceptThisOffer => 'Accept this Offer';
+  String get acceptThisOffer => 'Dit aanbod accepteren';
 
   @override
-  String get messageWorker => 'Message Worker';
+  String get messageWorker => 'Bericht aan werker';
 
   @override
-  String get offerAcceptedSnack => 'Offer accepted';
+  String get offerAcceptedSnack => 'Aanbod geaccepteerd!';
 
   @override
-  String get yourOffer => 'Your Offer';
+  String get yourOffer => 'Je aanbod';
 
   @override
-  String get bidStatusSelected => 'Selected';
+  String get bidStatusSelected => 'Geselecteerd';
 
   @override
-  String get bidStatusRejected => 'Rejected';
+  String get bidStatusRejected => 'Afgewezen';
 
   @override
-  String get bidStatusPending => 'Pending';
+  String get bidStatusPending => 'In afwachting';
 
   @override
-  String get placeYourOffer => 'Place Your Offer';
+  String get placeYourOffer => 'Doe je aanbod';
 
   @override
-  String get yourOfferAmount => 'Your offer amount';
+  String get yourOfferAmount => 'Je aanbodbedrag';
 
   @override
-  String get messageToClientOptional => 'Message to client (optional)';
+  String get messageToClientOptional => 'Bericht aan klant (optioneel)';
 
   @override
-  String get addPartnerOptional => 'Add a partner (optional)';
+  String get addPartnerOptional => 'Partner toevoegen (optioneel)';
 
   @override
-  String get partnerNameLabel => 'Partner name';
+  String get partnerNameLabel => 'Partnernaam';
 
   @override
-  String get partnerFeeLabel => 'Partner fee';
+  String get partnerFeeLabel => 'Partnervergoeding';
 
   @override
   String partnerFeeAmount(String symbol, String amount) {
-    return '+ $symbol$amount partner fee';
+    return 'Partnervergoeding: $amount';
   }
 
   @override
-  String get submitOffer => 'Submit Offer';
+  String get submitOffer => 'Aanbod indienen';
 
   @override
-  String get enterValidOfferAmount => 'Enter a valid offer amount';
+  String get enterValidOfferAmount => 'Voer geldig bedrag in';
 
   @override
-  String get offerSubmittedSuccess => 'Offer submitted successfully';
+  String get offerSubmittedSuccess => 'Aanbod ingediend';
 
   @override
-  String get clientSelectedYourOffer => 'Client Selected Your Offer!';
+  String get clientSelectedYourOffer => 'De klant heeft je aanbod gekozen';
 
   @override
   String get handshakeHint =>
-      'Accept to confirm this job, or decline if you\'re no longer available.';
+      'Beide partijen moeten de code delen om te beginnen';
 
   @override
-  String get handshakeAccepted => 'Handshake accepted';
+  String get handshakeAccepted => 'Handdruk geaccepteerd';
 
   @override
-  String get handshakeDeclined => 'Handshake declined';
+  String get handshakeDeclined => 'Handdruk geweigerd';
 
   @override
-  String get acceptJob => 'Accept Job';
+  String get acceptJob => 'Opdracht accepteren';
 
   @override
-  String get decline => 'Decline';
+  String get decline => 'Weigeren';
 
   @override
   String get startCode => 'Startcode';
@@ -584,72 +582,68 @@ class AppLocalizationsNl extends AppLocalizations {
   String get enterCode => 'Code Invoeren';
 
   @override
-  String get generateStartCode => 'Generate Start Code';
+  String get generateStartCode => 'Startcode genereren';
 
   @override
-  String get startCodeCopied => 'Start code copied';
+  String get startCodeCopied => 'Startcode gekopieerd';
 
   @override
   String reserveInEscrow(String symbol, String amount) {
-    return 'Reserve $symbol$amount in Escrow';
+    return '$amount in bewaring reserveren';
   }
 
   @override
-  String get releaseCodeCopied => 'Release code copied';
+  String get releaseCodeCopied => 'Code gekopieerd';
 
   @override
-  String get releaseCodeHint =>
-      'Share this verbally with the worker. They enter it to confirm task completion.';
+  String get releaseCodeHint => 'Voer vrijgavecode in';
 
   @override
-  String get regenerateCode => 'Regenerate Code';
+  String get regenerateCode => 'Code opnieuw genereren';
 
   @override
-  String get generateReleaseCode => 'Generate Release Code';
+  String get generateReleaseCode => 'Vrijgavecode genereren';
 
   @override
-  String get taskCodesGenerated => 'Task codes generated';
+  String get taskCodesGenerated => 'Taakcodes gegenereerd';
 
   @override
-  String get newReleaseCodeGenerated => 'New release code generated';
+  String get newReleaseCodeGenerated => 'Nieuwe code gegenereerd';
 
   @override
-  String get readyToBegin => 'Ready to Begin?';
+  String get readyToBegin => 'Klaar om te beginnen';
 
   @override
-  String get startCodeHint =>
-      'Ask the client for the start code and enter it below to officially begin work.';
+  String get startCodeHint => 'Voer startcode in';
 
   @override
-  String get verifyAndStartWork => 'Verify & Start Work';
+  String get verifyAndStartWork => 'Verifiëren en starten';
 
   @override
-  String get startCodeVerified =>
-      'Start code verified. Task is now in progress.';
+  String get startCodeVerified => 'Startcode geverifieerd';
 
   @override
-  String get enterStartCodeFirst => 'Enter start code first';
+  String get enterStartCodeFirst => 'Voer eerst de startcode in';
 
   @override
-  String get workInProgress => 'Work In Progress';
+  String get workInProgress => 'Werk bezig';
 
   @override
-  String get releaseCodePrompt =>
-      'Once done, ask the client for the 6-digit release code.';
+  String get releaseCodePrompt => 'Voer code in om betaling vrij te geven';
 
   @override
-  String get releaseCodeHelper => 'Enter the 6-digit code from the client';
+  String get releaseCodeHelper =>
+      'Geef deze code aan de werker wanneer het werk klaar is';
 
   @override
-  String get confirmWorkCompleted => 'Confirm Work Completed';
+  String get confirmWorkCompleted => 'Werk als voltooid bevestigen';
 
   @override
   String get workConfirmedPaymentReleased =>
-      'Work confirmed — payment released!';
+      'Werk bevestigd — betaling vrijgegeven!';
 
   @override
-  String get enterReleaseCodeWarning =>
-      'Enter the release code from the client';
+  String get enterReleaseCodeWarning => 'Voer vrijgavecode in';
 
   @override
   String get escrow => 'Escrow';
@@ -667,35 +661,34 @@ class AppLocalizationsNl extends AppLocalizations {
   String get paymentReleased => 'Betaling Vrijgegeven';
 
   @override
-  String get paymentSafelyReserved => 'Payment safely reserved';
+  String get paymentSafelyReserved => 'Betaling veilig gereserveerd';
 
   @override
-  String get cancelTask => 'Cancel Task';
+  String get cancelTask => 'Taak annuleren';
 
   @override
-  String get taskCancelled => 'Task cancelled';
+  String get taskCancelled => 'Taak geannuleerd';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => 'Taak verwijderen';
 
   @override
-  String get deleteTaskTitle => 'Delete task?';
+  String get deleteTaskTitle => 'Taak verwijderen?';
 
   @override
-  String get deleteTaskConfirm =>
-      'This will remove the task and all associated offers.';
+  String get deleteTaskConfirm => 'Deze taak verwijderen?';
 
   @override
-  String get taskDeleted => 'Task deleted';
+  String get taskDeleted => 'Taak verwijderd';
 
   @override
-  String get typeFirstMessage => 'Type your first message…';
+  String get typeFirstMessage => 'Typ het eerste bericht';
 
   @override
-  String get send => 'Send';
+  String get send => 'Verzenden';
 
   @override
-  String get failedToSendMessage => 'Failed to send message';
+  String get failedToSendMessage => 'Verzenden mislukt';
 
   @override
   String get conversations => 'Berichten';
@@ -739,14 +732,14 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get chatToday => 'Today';
+  String get chatToday => 'Vandaag';
 
   @override
-  String get chatYesterday => 'Yesterday';
+  String get chatYesterday => 'Gisteren';
 
   @override
   String chatYouPrefix(String message) {
-    return 'You: $message';
+    return 'Jij: $message';
   }
 
   @override
@@ -755,7 +748,7 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get noConversationsYet => 'No conversations yet';
+  String get noConversationsYet => 'Geen gesprekken';
 
   @override
   String get loadingConversations => 'Gesprekken laden...';
@@ -791,100 +784,99 @@ class AppLocalizationsNl extends AppLocalizations {
   String get logoutConfirm => 'Weet je zeker dat je wilt uitloggen?';
 
   @override
-  String get myProfile => 'My Profile';
+  String get myProfile => 'Mijn profiel';
 
   @override
-  String get unknown => 'Unknown';
+  String get unknown => 'Onbekend';
 
   @override
-  String get experienceLabel => 'Experience';
+  String get experienceLabel => 'Ervaring';
 
   @override
   String get statusLabel => 'Status';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => 'Niet ingesteld';
 
   @override
-  String get onDuty => 'On Duty';
+  String get onDuty => 'Beschikbaar';
 
   @override
-  String get offDuty => 'Off Duty';
+  String get offDuty => 'Niet beschikbaar';
 
   @override
   String yearsCount(int count) {
-    return '$count years';
+    return '$count jaar';
   }
 
   @override
-  String get themeAndColors => 'Theme & Colors';
+  String get themeAndColors => 'Thema en kleuren';
 
   @override
-  String get aiModelLabel => 'AI Model';
+  String get aiModelLabel => 'AI-model';
 
   @override
-  String get availableForWork => 'Available for Work';
+  String get availableForWork => 'Beschikbaar voor werk';
 
   @override
-  String get visibleToClients => 'You are visible to clients';
+  String get visibleToClients => 'Zichtbaar voor klanten';
 
   @override
-  String get currentlyOffDuty => 'You are currently off duty';
+  String get currentlyOffDuty => 'Momenteel niet beschikbaar';
 
   @override
-  String get myReviews => 'My Reviews';
+  String get myReviews => 'Mijn beoordelingen';
 
   @override
-  String get deleteAccount => 'Delete Account';
+  String get deleteAccount => 'Account verwijderen';
 
   @override
-  String get deleteAccountConfirm =>
-      'This will permanently delete your account and all data. This cannot be undone.';
+  String get deleteAccountConfirm => 'Weet je het zeker? Dit is onomkeerbaar.';
 
   @override
-  String get couldNotDeleteAccount => 'Could not delete account';
+  String get couldNotDeleteAccount => 'Kon account niet verwijderen';
 
   @override
-  String get profilePhotoUpdated => 'Profile photo updated';
+  String get profilePhotoUpdated => 'Profielfoto bijgewerkt';
 
   @override
-  String get profileUpdated => 'Profile updated';
+  String get profileUpdated => 'Profiel bijgewerkt';
 
   @override
-  String get nameLabel => 'Name';
+  String get nameLabel => 'Naam';
 
   @override
-  String get profileImageUrl => 'Profile Image URL';
+  String get profileImageUrl => 'Profielfoto-URL';
 
   @override
-  String get yearsOfExperience => 'Years of Experience';
+  String get yearsOfExperience => 'Jaren ervaring';
 
   @override
-  String get certificationsLabel => 'Certifications';
+  String get certificationsLabel => 'Certificeringen';
 
   @override
-  String get payoutAccountLabel => 'Payout Account';
+  String get payoutAccountLabel => 'Uitbetalingsrekening';
 
   @override
-  String get onDutySubtitle => 'Toggle availability for new tasks';
+  String get onDutySubtitle => 'Je bent zichtbaar voor nieuwe taken';
 
   @override
-  String get loadingProfile => 'Loading profile...';
+  String get loadingProfile => 'Profiel laden';
 
   @override
-  String get availabilityLabel => 'Availability';
+  String get availabilityLabel => 'Beschikbaarheid';
 
   @override
-  String get memberLabel => 'Member';
+  String get memberLabel => 'Lid';
 
   @override
-  String get available => 'Available';
+  String get available => 'Beschikbaar';
 
   @override
-  String get unavailable => 'Unavailable';
+  String get unavailable => 'Niet beschikbaar';
 
   @override
-  String get viewAllReviews => 'View All Reviews';
+  String get viewAllReviews => 'Alle beoordelingen bekijken';
 
   @override
   String get settings => 'Instellingen';
@@ -926,16 +918,16 @@ class AppLocalizationsNl extends AppLocalizations {
   String get secondary => 'Secundair';
 
   @override
-  String get modeLabel => 'Mode';
+  String get modeLabel => 'Modus';
 
   @override
-  String get pickAColour => 'Pick a colour';
+  String get pickAColour => 'Kies een kleur';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => 'Systeemstandaard';
 
   @override
-  String get darkModeSubtitle => 'Switch between light and dark themes';
+  String get darkModeSubtitle => 'Kies systeem-, licht- of donkermodus';
 
   @override
   String get reviews => 'Beoordelingen';
@@ -957,64 +949,57 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String howWasWorker(String name) {
-    return 'How was $name?';
+    return 'Hoe was $name?';
   }
 
   @override
-  String get feedbackHelps => 'Your feedback helps the community';
+  String get feedbackHelps => 'Je feedback helpt';
 
   @override
-  String get thanksForReview => 'Thanks for your review!';
+  String get thanksForReview => 'Bedankt voor je beoordeling';
 
   @override
-  String get shareExperienceHint => 'Share your experience (optional)';
+  String get shareExperienceHint => 'Deel je ervaring';
 
   @override
-  String get ratingExcellent => 'Excellent!';
+  String get ratingExcellent => 'Uitstekend';
 
   @override
-  String get ratingGreat => 'Great!';
+  String get ratingGreat => 'Heel goed';
 
   @override
-  String get ratingGood => 'Good';
+  String get ratingGood => 'Goed';
 
   @override
-  String get ratingFair => 'Fair';
+  String get ratingFair => 'Redelijk';
 
   @override
-  String get ratingPoor => 'Poor';
+  String get ratingPoor => 'Slecht';
 
   @override
-  String get tapToRate => 'Tap to rate';
+  String get tapToRate => 'Tik om te beoordelen';
 
   @override
   String workerReviewsTitle(String name) {
-    return '$name\'s Reviews';
+    return 'Beoordelingen van $name';
   }
 
   @override
-  String get loadingReviews => 'Loading reviews...';
+  String get loadingReviews => 'Beoordelingen laden';
 
   @override
-  String get noReviewsSubtitle =>
-      'Reviews will appear here after completed tasks.';
+  String get noReviewsSubtitle => 'Geen beoordelingen';
 
   @override
-  String get allReviews => 'All Reviews';
+  String get allReviews => 'Alle beoordelingen';
 
   @override
   String reviewCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count reviews',
-      one: '1 review',
-    );
-    return '$_temp0';
+    return '$count beoordelingen';
   }
 
   @override
-  String get anonymous => 'Anonymous';
+  String get anonymous => 'Anoniem';
 
   @override
   String get loading => 'Laden...';
@@ -1026,7 +1011,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get retry => 'Opnieuw Proberen';
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => 'Opnieuw proberen';
 
   @override
   String get cancel => 'Annuleren';
@@ -1056,19 +1041,19 @@ class AppLocalizationsNl extends AppLocalizations {
   String get pullToRefresh => 'Trek om te vernieuwen';
 
   @override
-  String get pullDownToRefresh => 'Pull down to refresh.';
+  String get pullDownToRefresh => 'Naar beneden trekken om te vernieuwen';
 
   @override
-  String get yes => 'Yes';
+  String get yes => 'Ja';
 
   @override
-  String get required => 'Required';
+  String get required => 'Vereist';
 
   @override
   String get stop => 'Stop';
 
   @override
-  String get clear => 'Clear';
+  String get clear => 'Wissen';
 
   @override
   String get aiSetup => 'AI-Instelling';
@@ -1118,165 +1103,163 @@ class AppLocalizationsNl extends AppLocalizations {
   String get analyzing => 'Analyseren…';
 
   @override
-  String get aiCapabilities => 'AI Capabilities';
+  String get aiCapabilities => 'AI-mogelijkheden';
 
   @override
-  String get onDeviceAi => 'On-Device AI';
+  String get onDeviceAi => 'AI op apparaat';
 
   @override
-  String get aiTaglineSetup => 'Private · Offline · Free';
+  String get aiTaglineSetup => 'Privé · Offline · Gratis';
 
   @override
   String get aiSetupDescription =>
-      'Get smart suggestions for tasks and bids powered by an AI model that runs entirely on your device. No data leaves your phone.';
+      'Ontvang slimme suggesties voor taken en aanbiedingen';
 
   @override
-  String get physicalDevice => 'Physical device';
+  String get physicalDevice => 'Fysiek apparaat';
 
   @override
-  String get emulatorDetected => 'Emulator detected';
+  String get emulatorDetected => 'Emulator gedetecteerd';
 
   @override
   String get ram => 'RAM';
 
   @override
-  String get sufficient => 'Sufficient';
+  String get sufficient => 'Voldoende';
 
   @override
-  String get freeStorage => 'Free storage';
+  String get freeStorage => 'Vrije opslag';
 
   @override
   String mbFree(int mb) {
-    return '$mb MB free';
+    return '$mb MB vrij';
   }
 
   @override
   String get aiRequiresPhysicalDevice =>
-      'AI features require a physical device.';
+      'AI-functies vereisen een fysiek apparaat.';
 
   @override
-  String get multilingual => 'Multilingual';
+  String get multilingual => 'Meertalig';
 
   @override
   String downloadingProgress(String percent) {
-    return 'Downloading… $percent%';
+    return '$percent% gedownload';
   }
 
   @override
-  String get loadingModel => 'Loading model…';
+  String get loadingModel => 'Model laden';
 
   @override
-  String get retryDownload => 'Retry Download';
+  String get retryDownload => 'Download opnieuw';
 
   @override
-  String get activeAndReady => 'Active & Ready';
+  String get activeAndReady => 'Actief & gereed';
 
   @override
-  String get remove => 'Remove';
+  String get remove => 'Verwijderen';
 
   @override
-  String get enableAi => 'Enable AI';
+  String get enableAi => 'AI inschakelen';
 
   @override
-  String get downloadAiModel => 'Download AI Model';
+  String get downloadAiModel => 'AI-model downloaden';
 
   @override
-  String get deviceNotSupported => 'Device not supported';
+  String get deviceNotSupported => 'Apparaat niet ondersteund';
 
   @override
   String get downloadBackgroundNote =>
-      'Download happens in the background — you can leave this screen. The model file will be stored on your device and can be removed at any time.';
+      'Download op achtergrond. Sluit de app niet.';
 
   @override
-  String get removeAiModelTitle => 'Remove AI Model?';
+  String get removeAiModelTitle => 'AI-model verwijderen?';
 
   @override
-  String get removeAiModelConfirm =>
-      'This will delete the AI model from your device. You can re-download it later.';
+  String get removeAiModelConfirm => 'AI-model verwijderen? Maakt  MB vrij.';
 
   @override
-  String get analyzeWithAi => 'Analyze with AI';
+  String get analyzeWithAi => 'Analyseren met AI';
 
   @override
-  String get aiAssistantAvailable => 'AI Assistant available';
+  String get aiAssistantAvailable => 'AI-assistent beschikbaar';
 
   @override
   String get aiSetupPrompt =>
-      'Set up an on-device AI model to get smart suggestions.';
+      'Stel een AI-model op het apparaat in voor slimme suggesties.';
 
   @override
-  String get setup => 'Setup';
+  String get setup => 'Instellen';
 
   @override
-  String get adminDashboard => 'Admin Dashboard';
+  String get adminDashboard => 'Beheerderspaneel';
 
   @override
-  String get failedToLoadDashboard => 'Failed to load dashboard';
+  String get failedToLoadDashboard => 'Laden paneel mislukt';
 
   @override
-  String get platformOverview => 'Platform Overview';
+  String get platformOverview => 'Platformoverzicht';
 
   @override
-  String get liveStatistics => 'Live statistics from the backend.';
+  String get liveStatistics => 'Live statistieken';
 
   @override
-  String get usersSection => 'Users';
+  String get usersSection => 'Gebruikers';
 
   @override
-  String get adminTabClients => 'Clients';
+  String get adminTabClients => 'Klanten';
 
   @override
-  String get adminTabWorkers => 'Workers';
+  String get adminTabWorkers => 'Werkers';
 
   @override
   String get adminTabAccount => 'Account';
 
   @override
-  String get jobsSection => 'Jobs';
+  String get jobsSection => 'Opdrachten';
 
   @override
-  String get activeLabel => 'Active';
+  String get activeLabel => 'Actief';
 
   @override
-  String get todaySection => 'Today';
+  String get todaySection => 'Vandaag';
 
   @override
-  String get createdLabel => 'Created';
+  String get createdLabel => 'Aangemaakt';
 
   @override
-  String get completedLabel => 'Completed';
+  String get completedLabel => 'Voltooid';
 
   @override
   String deleteUserTitle(String role) {
-    return 'Delete $role';
+    return '$role verwijderen?';
   }
 
   @override
   String deleteUserConfirm(String name, String email) {
-    return 'This action removes $name ($email) permanently. Continue?';
+    return '$name verwijderen?';
   }
 
   @override
-  String get userDeletedSuccess => 'User deleted successfully';
+  String get userDeletedSuccess => 'Gebruiker verwijderd';
 
   @override
-  String get unableToLoadUsers => 'Unable to load users';
+  String get unableToLoadUsers => 'Gebruikers laden mislukt';
 
   @override
-  String get noClientsFound => 'No clients found';
+  String get noClientsFound => 'Geen klanten gevonden';
 
   @override
-  String get noWorkersFound => 'No workers found';
+  String get noWorkersFound => 'Geen werkers gevonden';
 
   @override
-  String get deleteUserTooltip => 'Delete user';
+  String get deleteUserTooltip => 'Gebruiker verwijderen';
 
   @override
-  String get adminSession => 'Admin Session';
+  String get adminSession => 'Beheersessie';
 
   @override
-  String get adminManageUsersHint =>
-      'Manage users from the Clients and Workers tabs.';
+  String get adminManageUsersHint => 'Beheer gebruikers via de tabbladen.';
 
   @override
   String distanceKm(int radius) {
@@ -1284,154 +1267,142 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get youreOffline => 'You\'re Offline';
+  String get youreOffline => 'Je bent offline';
 
   @override
-  String get offlineHint =>
-      'Toggle the switch in the top bar to go online and discover nearby jobs.';
+  String get offlineHint => 'Je bent offline';
 
   @override
-  String get yourSkills => 'Your Skills';
+  String get yourSkills => 'Je vaardigheden';
 
   @override
-  String get skillsSubtitle =>
-      'Search and add skills. These are sent to the server to filter your job feed.';
+  String get skillsSubtitle => 'Voeg je vaardigheden en expertise toe';
 
   @override
-  String get addSkillLabel => 'Add Skill';
+  String get addSkillLabel => 'Vaardigheid toevoegen';
 
   @override
-  String get typeToSearchSkills => 'Type to search skills…';
+  String get typeToSearchSkills => 'Vaardigheden zoeken';
 
   @override
   String savedSkillsCount(int count) {
-    return 'Saved Skills ($count)';
+    return '$count vaardigheden opgeslagen';
   }
 
   @override
-  String get noSkillsAdded =>
-      'No skills added yet. Search above to add relevant skills.';
+  String get noSkillsAdded => 'Geen vaardigheden';
 
   @override
-  String get unableToLoadTaskDetails => 'Unable to load task details';
+  String get unableToLoadTaskDetails => 'Details laden mislukt';
 
   @override
-  String get detailDistance => 'Distance';
+  String get detailDistance => 'Afstand';
 
   @override
-  String get chooseLocation => 'Choose Location';
+  String get chooseLocation => 'Locatie kiezen';
 
   @override
-  String get savedTab => 'Saved';
+  String get savedTab => 'Opgeslagen';
 
   @override
-  String get pinOnMapTab => 'Pin on Map';
+  String get pinOnMapTab => 'Markeer op kaart';
 
   @override
-  String get locationDeniedPermanently =>
-      'Location permanently denied. Enable it in Settings.';
+  String get locationDeniedPermanently => 'Locatietoestemming geweigerd';
 
   @override
-  String get couldNotGetLocation => 'Could not get location';
+  String get couldNotGetLocation => 'Kon locatie niet ophalen';
 
   @override
-  String get searchPlaces => 'Search places…';
+  String get searchPlaces => 'Plaatsen zoeken';
 
   @override
-  String get switchToSatellite => 'Switch to Satellite';
+  String get switchToSatellite => 'Satelliet';
 
   @override
-  String get switchToRoadMap => 'Switch to Road map';
+  String get switchToRoadMap => 'Wegenkaart';
 
   @override
-  String get goToMyLocation => 'Go to my location';
+  String get goToMyLocation => 'Naar mijn locatie';
 
   @override
-  String get confirmLocation => 'Confirm Location';
+  String get confirmLocation => 'Locatie bevestigen';
 
   @override
-  String get saveAddress => 'Save Address';
+  String get saveAddress => 'Adres opslaan';
 
   @override
-  String get saveAddressSubtitle =>
-      'Add a label and recipient details for this location.';
+  String get saveAddressSubtitle => 'Opslaan voor toekomstige taken';
 
   @override
   String get labelField => 'Label';
 
   @override
-  String get labelHome => 'Home';
+  String get labelHome => 'Thuis';
 
   @override
-  String get labelWork => 'Work';
+  String get labelWork => 'Werk';
 
   @override
-  String get labelOther => 'Other';
+  String get labelOther => 'Anders';
 
   @override
-  String get recipientName => 'Recipient Name';
+  String get recipientName => 'Naam ontvanger';
 
   @override
-  String get recipientNameHint => 'e.g. Rahul Sharma';
+  String get recipientNameHint => 'Voer naam in';
 
   @override
-  String get recipientPhone => 'Recipient Phone';
+  String get recipientPhone => 'Telefoon ontvanger';
 
   @override
-  String get recipientPhoneHint => 'e.g. 9876543210';
+  String get recipientPhoneHint => 'Voer telefoon in';
 
   @override
-  String get pickFromContacts => 'Pick from contacts';
+  String get pickFromContacts => 'Kies uit contacten';
 
   @override
-  String get contactsAccessDenied =>
-      'Contacts access denied — name was copied. Please enter the phone number manually.';
+  String get contactsAccessDenied => 'Contacttoegang geweigerd';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => 'Instellingen openen';
 
   @override
-  String get couldNotOpenContacts => 'Could not open contacts';
+  String get couldNotOpenContacts => 'Kon contacten niet openen';
 
   @override
-  String get areaNeighbourhood => 'Area / Neighbourhood';
+  String get areaNeighbourhood => 'Gebied / Wijk';
 
   @override
-  String get areaHint => 'e.g. Koramangala';
+  String get areaHint => 'Bijv. Jordaan, De Pijp';
 
   @override
-  String get cityHint => 'e.g. Bengaluru';
+  String get cityHint => 'Bijv. Amsterdam';
 
   @override
-  String get postalCodeRequired => 'Postal Code';
+  String get postalCodeRequired => 'Postcode vereist';
 
   @override
-  String get postalCodeHint => 'e.g. 560034';
+  String get postalCodeHint => 'Bijv. 1012';
 
   @override
-  String get countryCodeRequired => 'Country Code';
+  String get countryCodeRequired => 'Landcode vereist';
 
   @override
-  String get countryCodeHint => 'e.g. IN';
+  String get countryCodeHint => '+31';
 
   @override
-  String get requiredSkillsLabel => 'Required Skills';
+  String get requiredSkillsLabel => 'Vereiste vaardigheden';
 
   @override
-  String get skillHintText => 'e.g. plumbing, painting…';
+  String get skillHintText => 'Typ vaardigheden, scheid met komma\'s';
 
   @override
-  String get skillHelperEmpty => 'Type skills and separate them with commas';
+  String get skillHelperEmpty => 'Nog geen vaardigheden';
 
   @override
   String skillsAddedCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count skills added',
-      one: '1 skill added',
-    );
-    return '$_temp0';
+    return '$count vaardigheden toegevoegd';
   }
 
   @override
@@ -1519,17 +1490,204 @@ class AppLocalizationsNl extends AppLocalizations {
   String get languageHebrew => 'עברית';
 
   @override
-  String get useWithoutSaving => 'Use Without Saving';
+  String get accentColorBlue => 'Blauw';
 
   @override
-  String get saveAndUse => 'Save & Use';
+  String get accentColorYellow => 'Geel';
 
   @override
-  String get useMyCurrentLocation => 'Use My Current Location';
+  String get accentColorGreen => 'Groen';
 
   @override
-  String get detectingLocation => 'Detecting location…';
+  String get accentColorPink => 'Roze';
 
   @override
-  String get deleteAddress => 'Delete Address';
+  String get accentColorRed => 'Rood';
+
+  @override
+  String get accentColorPurple => 'Paars';
+
+  @override
+  String get accentColorOrange => 'Oranje';
+
+  @override
+  String get accentColorTeal => 'Blauwgroen';
+
+  @override
+  String get accentColorCustom => 'Aangepast';
+
+  @override
+  String get paymentStatusPending => 'Betaling in afwachting';
+
+  @override
+  String get paymentStatusLocked => 'Bedrag veilig gereserveerd';
+
+  @override
+  String get paymentStatusReleased => 'Betaling vrijgegeven';
+
+  @override
+  String get paymentStatusOffline => 'Betaal bij voltooiing';
+
+  @override
+  String paymentStatusGeneric(String status) {
+    return 'Betalingsstatus: $status';
+  }
+
+  @override
+  String get jobStatusOpenForOffers => 'Open voor aanbiedingen';
+
+  @override
+  String get jobStatusOfferAccepted => 'Aanbod geaccepteerd';
+
+  @override
+  String get jobStatusReadyToStart => 'Klaar om te beginnen';
+
+  @override
+  String get jobStatusInProgress => 'Bezig';
+
+  @override
+  String get jobStatusPendingPayment => 'Betaling in afwachting';
+
+  @override
+  String get jobStatusPaymentReleased => 'Betaling vrijgegeven';
+
+  @override
+  String get jobStatusTaskCompleted => 'Taak voltooid';
+
+  @override
+  String get jobStatusCancelled => 'Geannuleerd';
+
+  @override
+  String get detailBudgetLabel => 'Budget';
+
+  @override
+  String get detailLocationLabel => 'Locatie';
+
+  @override
+  String get detailSkillsLabel => 'Vaardigheden';
+
+  @override
+  String get detailJobIdLabel => 'Opdracht-ID';
+
+  @override
+  String get tooltipCopy => 'Kopiëren';
+
+  @override
+  String get tooltipDeleteAddress => 'Adres verwijderen';
+
+  @override
+  String confirmDeleteAddress(String addressLabel) {
+    return '\"$addressLabel\" verwijderen uit opgeslagen adressen?';
+  }
+
+  @override
+  String get errorNotAuthenticated => 'Niet geverifieerd. Log opnieuw in.';
+
+  @override
+  String get errorCouldNotOpenImagePicker => 'Kon beeldselectie niet openen.';
+
+  @override
+  String get errorCouldNotReadImage => 'Kon afbeelding niet lezen.';
+
+  @override
+  String get errorImageTooLarge => 'Afbeelding moet kleiner zijn dan 5 MB.';
+
+  @override
+  String get errorUploadFailed => 'Upload mislukt. Probeer opnieuw.';
+
+  @override
+  String get errorNameRequired => 'Naam is vereist';
+
+  @override
+  String get errorRatingRequired => 'Selecteer een beoordeling';
+
+  @override
+  String get errorNotLoggedIn => 'Log eerst in';
+
+  @override
+  String get errorAdminProfileUpdateNotSupported =>
+      'Admin-profielupdate niet ondersteund';
+
+  @override
+  String get errorAdminDeletionDisabled =>
+      'Admin-verwijdering uitgeschakeld in app';
+
+  @override
+  String get errorConnectionTimeout => 'Verbindingstime-out. Probeer opnieuw.';
+
+  @override
+  String get errorConnectionError => 'Verbinding met server mislukt.';
+
+  @override
+  String get errorRequestCancelled => 'Aanvraag geannuleerd.';
+
+  @override
+  String get errorBadRequest => 'Ongeldige aanvraag. Controleer invoer.';
+
+  @override
+  String get errorSessionExpired => 'Sessie verlopen. Log opnieuw in.';
+
+  @override
+  String get errorPermissionDenied => 'Geen toestemming.';
+
+  @override
+  String get errorResourceNotFound => 'Bron niet gevonden.';
+
+  @override
+  String get errorConflict => 'Conflict: actie kan niet worden uitgevoerd.';
+
+  @override
+  String get errorFileTooLarge => 'Bestand te groot. Max 5 MB.';
+
+  @override
+  String get errorValidationError => 'Validatiefout. Controleer invoer.';
+
+  @override
+  String get errorTooManyRequests => 'Te veel aanvragen. Wacht even.';
+
+  @override
+  String get errorServerError => 'Serverfout. Probeer later opnieuw.';
+
+  @override
+  String errorRequestFailed(String statusCode) {
+    return 'Aanvraag mislukt: status $statusCode';
+  }
+
+  @override
+  String get errorNetworkFailed => 'Netwerkfout.';
+
+  @override
+  String get errorNetworkRequestFailed => 'Netwerkfout';
+
+  @override
+  String get errorMalformedSkillResponse => 'Onjuiste vaardigheden-respons';
+
+  @override
+  String get errorMalformedResponse => 'Onjuiste respons';
+
+  @override
+  String get errorMalformedAdminResponse => 'Onjuiste admin-respons';
+
+  @override
+  String get errorAdminAccessRequired => 'Beheertoegang vereist';
+
+  @override
+  String get errorDescriptionUnavailable => 'Beschrijving niet beschikbaar';
+
+  @override
+  String errorUnauthorizedAction(String roleLabel) {
+    return 'Alleen $roleLabel kunnen dit doen';
+  }
+
+  @override
+  String get useWithoutSaving => 'Gebruiken zonder opslaan';
+
+  @override
+  String get saveAndUse => 'Opslaan en gebruiken';
+
+  @override
+  String get useMyCurrentLocation => 'Mijn huidige locatie gebruiken';
+
+  @override
+  String get detectingLocation => 'Locatie detecteren…';
 }

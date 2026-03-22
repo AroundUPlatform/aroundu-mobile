@@ -1292,14 +1292,16 @@ class _SavedAddressesTabState extends ConsumerState<_SavedAddressesTab> {
                 if (addr.id != null)
                   IconButton(
                     icon: const Icon(Icons.delete_outline_rounded, size: 20),
-                    tooltip: 'Delete address',
+                    tooltip: context.l10n.tooltipDeleteAddress,
                     onPressed: () async {
                       final confirmed = await showDialog<bool>(
                         context: context,
                         builder: (ctx) => AlertDialog(
-                          title: Text(context.l10n.deleteAddress),
+                          title: Text(context.l10n.tooltipDeleteAddress),
                           content: Text(
-                            'Remove "${addr.addressLabel ?? addr.displayName}" from saved addresses?',
+                            context.l10n.confirmDeleteAddress(
+                              addr.addressLabel ?? addr.displayName,
+                            ),
                           ),
                           actions: [
                             TextButton(

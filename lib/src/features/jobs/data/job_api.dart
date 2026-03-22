@@ -523,7 +523,10 @@ class JobApi {
       return data;
     }
 
-    throw const ApiException('Malformed response payload');
+    throw const ApiException(
+      'Malformed response payload',
+      code: ApiErrorCode.malformedResponse,
+    );
   }
 
   Map<String, dynamic> _readMapPayload(Object? payload) {
@@ -537,12 +540,18 @@ class JobApi {
           }
           return payload;
         }
-        throw ApiException(payload['message']?.toString() ?? 'Request failed');
+        throw ApiException(
+          payload['message']?.toString() ?? 'Request failed',
+          code: ApiErrorCode.requestFailed,
+        );
       }
       return payload;
     }
 
-    throw const ApiException('Malformed response payload');
+    throw const ApiException(
+      'Malformed response payload',
+      code: ApiErrorCode.malformedResponse,
+    );
   }
 
   List<Map<String, dynamic>> _readListPayload(Object? payload) {
@@ -564,7 +573,10 @@ class JobApi {
       }
     }
 
-    throw const ApiException('Malformed response payload');
+    throw const ApiException(
+      'Malformed response payload',
+      code: ApiErrorCode.malformedResponse,
+    );
   }
 
   void _ensureSuccessEnvelope(Map<String, dynamic> response) {
@@ -573,6 +585,9 @@ class JobApi {
       return;
     }
 
-    throw ApiException(response['message']?.toString() ?? 'Request failed');
+    throw ApiException(
+      response['message']?.toString() ?? 'Request failed',
+      code: ApiErrorCode.requestFailed,
+    );
   }
 }

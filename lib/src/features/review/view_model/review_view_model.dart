@@ -102,7 +102,11 @@ class SubmitReviewController extends FamilyNotifier<SubmitReviewState, int> {
 
   Future<bool> submit() async {
     if (state.rating < 1) {
-      state = state.copyWith(errorMessage: 'Please select a rating');
+      state = state.copyWith(
+        errorMessage:
+            ref.read(currentL10nProvider)?.errorRatingRequired ??
+            'Please select a rating',
+      );
       return false;
     }
 
@@ -113,7 +117,9 @@ class SubmitReviewController extends FamilyNotifier<SubmitReviewState, int> {
       if (!auth.isAuthenticated || auth.userId == null) {
         state = state.copyWith(
           isSubmitting: false,
-          errorMessage: 'Please log in first',
+          errorMessage:
+              ref.read(currentL10nProvider)?.errorNotLoggedIn ??
+              'Please log in first',
         );
         return false;
       }

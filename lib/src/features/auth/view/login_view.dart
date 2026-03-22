@@ -92,7 +92,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: const Icon(Icons.language_rounded),
+                    tooltip: context.l10n.multilingual,
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      AppRoutes.languagePicker,
+                    ),
+                  ),
+                ),
                 Text(
                   context.l10n.welcomeBack,
                   style: Theme.of(

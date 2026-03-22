@@ -45,82 +45,81 @@ class AppLocalizationsZh extends AppLocalizations {
   String get alreadyHaveAccount => '已有账户？';
 
   @override
-  String get welcomeBack => 'Welcome Back';
+  String get welcomeBack => '欢迎回来';
 
   @override
-  String get loginSubtitle => 'Sign in to continue as provider or worker.';
+  String get loginSubtitle => '登录您的AroundU账户';
 
   @override
-  String get noAccountYet => 'No account yet?';
+  String get noAccountYet => '还没有账户？';
 
   @override
-  String get createOne => 'Create one';
+  String get createOne => '创建';
 
   @override
-  String get emailRequired => 'Email is required';
+  String get emailRequired => '邮箱必填';
 
   @override
-  String get enterValidEmail => 'Enter a valid email';
+  String get enterValidEmail => '输入有效邮箱';
 
   @override
-  String get passwordRequired => 'Password is required';
+  String get passwordRequired => '密码必填';
 
   @override
-  String get minimumSixCharacters => 'Minimum 6 characters';
+  String get minimumSixCharacters => '最少6个字符';
 
   @override
-  String get unableToLogin => 'Unable to login. Please retry.';
+  String get unableToLogin => '登录失败';
 
   @override
   String fieldRequired(String field) {
-    return '$field is required';
+    return '$field必填';
   }
 
   @override
-  String get enterValidPhone => 'Enter a valid phone number';
+  String get enterValidPhone => '输入有效电话';
 
   @override
-  String get unableToRegister => 'Unable to register';
+  String get unableToRegister => '注册失败';
 
   @override
-  String get registrationSuccess => 'Registration successful. Please log in.';
+  String get registrationSuccess => '注册成功';
 
   @override
-  String get registerSubtitle =>
-      'Register as provider or worker with your basic location profile.';
+  String get registerSubtitle => '注册为提供者或工人';
 
   @override
-  String get roleLabel => 'Role';
+  String get roleLabel => '角色';
 
   @override
-  String get roleJobProvider => 'Job Provider';
+  String get roleJobProvider => '任务提供者';
 
   @override
-  String get roleJobWorker => 'Job Worker';
+  String get roleJobWorker => '工人';
 
   @override
-  String get countryLabel => 'Country';
+  String get countryLabel => '国家';
 
   @override
-  String get currencyLabel => 'Currency';
+  String get currencyLabel => '货币';
 
   @override
-  String get cityLabel => 'City';
+  String get cityLabel => '城市';
 
   @override
-  String get postalCodeLabel => 'Postal code';
+  String get postalCodeLabel => '邮编';
 
   @override
-  String get areaOptionalLabel => 'Area (optional)';
+  String get areaOptionalLabel => '区域（可选）';
 
   @override
-  String get fullAddressOptionalLabel => 'Full address (optional)';
+  String get fullAddressOptionalLabel => '详细地址（可选）';
 
   @override
-  String get alreadyRegistered => 'Already registered?';
+  String get alreadyRegistered => '已注册？';
 
   @override
-  String get logInLink => 'Log in';
+  String get logInLink => '登录';
 
   @override
   String get onboardingTitle1 => '发现身边的任务';
@@ -150,7 +149,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get next => '下一步';
 
   @override
-  String get newHereCreateAccount => 'New here? Create account';
+  String get newHereCreateAccount => '新用户？创建账户';
 
   @override
   String get roleSelectionTitle => '选择您的角色';
@@ -171,19 +170,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get continueButton => '继续';
 
   @override
-  String get roleSelectionSubtitle =>
-      'Select the workflow you want to use in AroundU.';
+  String get roleSelectionSubtitle => '您想如何使用AroundU？';
 
   @override
   String signedInAs(String email) {
-    return 'Signed in as $email';
+    return '登录为$email';
   }
 
   @override
-  String get roleProviderDesc => 'Post jobs and manage incoming bids.';
+  String get roleProviderDesc => '发布任务并寻找合格工人';
 
   @override
-  String get roleWorkerDescAlt => 'Browse nearby jobs and place bids quickly.';
+  String get roleWorkerDescAlt => '寻找任务，用技能赚钱';
 
   @override
   String get homeTab => '首页';
@@ -198,22 +196,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get profileTab => '个人资料';
 
   @override
-  String get providerTabMyTasks => 'My Tasks';
+  String get providerTabMyTasks => '我的任务';
 
   @override
-  String get providerTabPostTask => 'Post Task';
+  String get providerTabPostTask => '发布任务';
 
   @override
-  String get tasksNavLabel => 'Tasks';
+  String get tasksNavLabel => '任务';
 
   @override
-  String get postNavLabel => 'Post';
+  String get postNavLabel => '发布';
 
   @override
-  String get workerTabTaskFeed => 'Task Feed';
+  String get workerTabTaskFeed => '任务动态';
 
   @override
-  String get feedNavLabel => 'Feed';
+  String get feedNavLabel => '动态';
 
   @override
   String get myJobs => '我的工作';
@@ -267,13 +265,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get urgencyNormal => '普通';
 
   @override
-  String get urgencyMedium => 'Medium';
+  String get urgencyMedium => '中等';
 
   @override
   String get urgencyUrgent => '紧急';
 
   @override
-  String get urgencyAsap => 'ASAP';
+  String get urgencyAsap => '尽快';
 
   @override
   String get paymentOffline => '线下';
@@ -282,144 +280,142 @@ class AppLocalizationsZh extends AppLocalizations {
   String get paymentEscrow => '担保';
 
   @override
-  String get paymentMethod => 'Payment Method';
+  String get paymentMethod => '支付方式';
 
   @override
-  String get payInCash => 'Pay in Cash';
+  String get payInCash => '现金支付';
 
   @override
-  String get secureEscrow => 'Secure Escrow';
+  String get secureEscrow => '安全托管';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => '全部';
 
   @override
-  String get filterOpen => 'Open';
+  String get filterOpen => '开放';
 
   @override
-  String get filterActive => 'Active';
+  String get filterActive => '活跃';
 
   @override
-  String get filterInProgress => 'In Progress';
+  String get filterInProgress => '进行中';
 
   @override
-  String get filterCompleted => 'Completed';
+  String get filterCompleted => '已完成';
 
   @override
-  String get filterCancelled => 'Cancelled';
+  String get filterCancelled => '已取消';
 
   @override
-  String get filterExpired => 'Expired';
+  String get filterExpired => '已过期';
 
   @override
-  String get filterNearby => 'Nearby';
+  String get filterNearby => '附近';
 
   @override
-  String get filterAllMine => 'All Mine';
+  String get filterAllMine => '我的全部';
 
   @override
-  String get filterBidPlaced => 'Bid Placed';
+  String get filterBidPlaced => '已投标';
 
   @override
-  String get filterAccepted => 'Accepted';
+  String get filterAccepted => '已接受';
 
   @override
-  String get noTasksPostedYet => 'No tasks posted yet';
+  String get noTasksPostedYet => '未发布任务';
 
   @override
-  String get noOpenTasks => 'No open tasks';
+  String get noOpenTasks => '无开放任务';
 
   @override
-  String get noActiveTasks => 'No active tasks';
+  String get noActiveTasks => '无活跃任务';
 
   @override
-  String get noTasksInProgress => 'No tasks in progress';
+  String get noTasksInProgress => '无进行中的任务';
 
   @override
-  String get noCompletedTasks => 'No completed tasks';
+  String get noCompletedTasks => '无已完成的任务';
 
   @override
-  String get noCancelledTasks => 'No cancelled tasks';
+  String get noCancelledTasks => '无已取消的任务';
 
   @override
-  String get noExpiredTasks => 'No expired tasks';
+  String get noExpiredTasks => '无已过期的任务';
 
   @override
-  String get unableToLoadTasks => 'Unable to load tasks';
+  String get unableToLoadTasks => '加载任务失败';
 
   @override
-  String get noNearbyJobs => 'No nearby jobs right now';
+  String get noNearbyJobs => '附近无工作';
 
   @override
-  String get noJobsYetBid => 'No jobs yet — place a bid to get started!';
+  String get noJobsYetBid => '暂无工作 — 去投标';
 
   @override
-  String get noPendingBids => 'No pending bids';
+  String get noPendingBids => '无待定投标';
 
   @override
-  String get noAcceptedJobs => 'No accepted jobs';
+  String get noAcceptedJobs => '无已接受的工作';
 
   @override
-  String get noJobsInProgress => 'No jobs in progress';
+  String get noJobsInProgress => '无进行中的工作';
 
   @override
-  String get noCompletedJobsYet => 'No completed jobs yet';
+  String get noCompletedJobsYet => '无已完成的工作';
 
   @override
-  String get noCancelledJobs => 'No cancelled jobs';
+  String get noCancelledJobs => '无已取消的工作';
 
   @override
-  String get noExpiredJobs => 'No expired jobs';
+  String get noExpiredJobs => '无已过期的工作';
 
   @override
-  String get pullDownToRefreshCheck => 'Pull down to refresh and check again.';
+  String get pullDownToRefreshCheck => '下拉查看新任务';
 
   @override
-  String get unableToLoadJobs => 'Unable to load jobs';
+  String get unableToLoadJobs => '加载工作失败';
 
   @override
-  String get postNewTask => 'Post a New Task';
+  String get postNewTask => '新任务';
 
   @override
-  String get postTaskSubtitle =>
-      'Add clear details so workers can send accurate offers.';
+  String get postTaskSubtitle => '添加清晰细节以获得准确报价';
 
   @override
-  String get taskTitleLabel => 'Task title';
+  String get taskTitleLabel => '任务标题';
 
   @override
-  String get savingLocation => 'Saving location…';
+  String get savingLocation => '保存位置';
 
   @override
-  String get tapToSelectLocation => 'Tap to select location';
+  String get tapToSelectLocation => '点击选择位置';
 
   @override
-  String get postTaskButton => 'Post Task';
+  String get postTaskButton => '发布任务';
 
   @override
-  String get addSkillWarning => 'Add at least one required skill for this task';
+  String get addSkillWarning => '请至少添加一项必需技能';
 
   @override
-  String get enterValidBudget => 'Enter a valid budget amount';
+  String get enterValidBudget => '输入有效预算';
 
   @override
-  String get setJobLocationWarning =>
-      'Please set a job location before posting';
+  String get setJobLocationWarning => '请设置任务位置';
 
   @override
-  String get jobPostedSuccess => 'Job posted successfully';
+  String get jobPostedSuccess => '任务发布成功';
 
   @override
-  String get failedToPostJob => 'Failed to post job. Please retry.';
+  String get failedToPostJob => '发布失败';
 
   @override
-  String get failedToSaveLocation => 'Failed to save location';
+  String get failedToSaveLocation => '保存位置失败';
 
   @override
-  String get unableToLoadJobWorkflow => 'Unable to load job workflow';
+  String get unableToLoadJobWorkflow => '加载工作流失败';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => '未知错误';
 
   @override
   String get statusOpenForBids => '接受竞标';
@@ -473,96 +469,95 @@ class AppLocalizationsZh extends AppLocalizations {
   String get bidPending => '待定';
 
   @override
-  String get offersSection => 'Offers';
+  String get offersSection => '报价';
 
   @override
-  String get noOffersReceivedYet => 'No offers received yet.';
+  String get noOffersReceivedYet => '未收到报价';
 
   @override
-  String get offerAccepted => 'Offer Accepted';
+  String get offerAccepted => '报价已接受';
 
   @override
-  String get offerRejected => 'Offer Rejected';
+  String get offerRejected => '报价已拒绝';
 
   @override
-  String get offerPending => 'Offer Pending';
+  String get offerPending => '报价待定';
 
   @override
   String workerNumber(int id) {
-    return 'Worker #$id';
+    return '工人 #$id';
   }
 
   @override
-  String get acceptThisOffer => 'Accept this Offer';
+  String get acceptThisOffer => '接受此报价';
 
   @override
-  String get messageWorker => 'Message Worker';
+  String get messageWorker => '给工人发消息';
 
   @override
-  String get offerAcceptedSnack => 'Offer accepted';
+  String get offerAcceptedSnack => '报价已接受！';
 
   @override
-  String get yourOffer => 'Your Offer';
+  String get yourOffer => '您的报价';
 
   @override
-  String get bidStatusSelected => 'Selected';
+  String get bidStatusSelected => '已选择';
 
   @override
-  String get bidStatusRejected => 'Rejected';
+  String get bidStatusRejected => '已拒绝';
 
   @override
-  String get bidStatusPending => 'Pending';
+  String get bidStatusPending => '待定';
 
   @override
-  String get placeYourOffer => 'Place Your Offer';
+  String get placeYourOffer => '提交报价';
 
   @override
-  String get yourOfferAmount => 'Your offer amount';
+  String get yourOfferAmount => '报价金额';
 
   @override
-  String get messageToClientOptional => 'Message to client (optional)';
+  String get messageToClientOptional => '给客户的消息（可选）';
 
   @override
-  String get addPartnerOptional => 'Add a partner (optional)';
+  String get addPartnerOptional => '添加伙伴（可选）';
 
   @override
-  String get partnerNameLabel => 'Partner name';
+  String get partnerNameLabel => '伙伴姓名';
 
   @override
-  String get partnerFeeLabel => 'Partner fee';
+  String get partnerFeeLabel => '伙伴费用';
 
   @override
   String partnerFeeAmount(String symbol, String amount) {
-    return '+ $symbol$amount partner fee';
+    return '伙伴费用：$amount';
   }
 
   @override
-  String get submitOffer => 'Submit Offer';
+  String get submitOffer => '提交报价';
 
   @override
-  String get enterValidOfferAmount => 'Enter a valid offer amount';
+  String get enterValidOfferAmount => '输入有效金额';
 
   @override
-  String get offerSubmittedSuccess => 'Offer submitted successfully';
+  String get offerSubmittedSuccess => '报价已提交';
 
   @override
-  String get clientSelectedYourOffer => 'Client Selected Your Offer!';
+  String get clientSelectedYourOffer => '客户选择了你的报价';
 
   @override
-  String get handshakeHint =>
-      'Accept to confirm this job, or decline if you\'re no longer available.';
+  String get handshakeHint => '双方须共享验证码才能开始';
 
   @override
-  String get handshakeAccepted => 'Handshake accepted';
+  String get handshakeAccepted => '握手已接受';
 
   @override
-  String get handshakeDeclined => 'Handshake declined';
+  String get handshakeDeclined => '握手已拒绝';
 
   @override
-  String get acceptJob => 'Accept Job';
+  String get acceptJob => '接受工作';
 
   @override
-  String get decline => 'Decline';
+  String get decline => '拒绝';
 
   @override
   String get startCode => '开始代码';
@@ -580,72 +575,66 @@ class AppLocalizationsZh extends AppLocalizations {
   String get enterCode => '输入代码';
 
   @override
-  String get generateStartCode => 'Generate Start Code';
+  String get generateStartCode => '生成启动码';
 
   @override
-  String get startCodeCopied => 'Start code copied';
+  String get startCodeCopied => '启动码已复制';
 
   @override
   String reserveInEscrow(String symbol, String amount) {
-    return 'Reserve $symbol$amount in Escrow';
+    return '将$amount存入托管';
   }
 
   @override
-  String get releaseCodeCopied => 'Release code copied';
+  String get releaseCodeCopied => '释放码已复制';
 
   @override
-  String get releaseCodeHint =>
-      'Share this verbally with the worker. They enter it to confirm task completion.';
+  String get releaseCodeHint => '输入释放码';
 
   @override
-  String get regenerateCode => 'Regenerate Code';
+  String get regenerateCode => '重新生成';
 
   @override
-  String get generateReleaseCode => 'Generate Release Code';
+  String get generateReleaseCode => '生成释放码';
 
   @override
-  String get taskCodesGenerated => 'Task codes generated';
+  String get taskCodesGenerated => '任务码已生成';
 
   @override
-  String get newReleaseCodeGenerated => 'New release code generated';
+  String get newReleaseCodeGenerated => '新释放码已生成';
 
   @override
-  String get readyToBegin => 'Ready to Begin?';
+  String get readyToBegin => '准备开始';
 
   @override
-  String get startCodeHint =>
-      'Ask the client for the start code and enter it below to officially begin work.';
+  String get startCodeHint => '输入启动码';
 
   @override
-  String get verifyAndStartWork => 'Verify & Start Work';
+  String get verifyAndStartWork => '验证并开始';
 
   @override
-  String get startCodeVerified =>
-      'Start code verified. Task is now in progress.';
+  String get startCodeVerified => '启动码已验证';
 
   @override
-  String get enterStartCodeFirst => 'Enter start code first';
+  String get enterStartCodeFirst => '请先输入启动码';
 
   @override
-  String get workInProgress => 'Work In Progress';
+  String get workInProgress => '工作进行中';
 
   @override
-  String get releaseCodePrompt =>
-      'Once done, ask the client for the 6-digit release code.';
+  String get releaseCodePrompt => '输入释放码以释放付款';
 
   @override
-  String get releaseCodeHelper => 'Enter the 6-digit code from the client';
+  String get releaseCodeHelper => '工作完成后将此码给工人';
 
   @override
-  String get confirmWorkCompleted => 'Confirm Work Completed';
+  String get confirmWorkCompleted => '确认工作完成';
 
   @override
-  String get workConfirmedPaymentReleased =>
-      'Work confirmed — payment released!';
+  String get workConfirmedPaymentReleased => '工作已确认 — 付款已释放！';
 
   @override
-  String get enterReleaseCodeWarning =>
-      'Enter the release code from the client';
+  String get enterReleaseCodeWarning => '输入释放码';
 
   @override
   String get escrow => '担保';
@@ -663,35 +652,34 @@ class AppLocalizationsZh extends AppLocalizations {
   String get paymentReleased => '付款已释放';
 
   @override
-  String get paymentSafelyReserved => 'Payment safely reserved';
+  String get paymentSafelyReserved => '付款已安全保留';
 
   @override
-  String get cancelTask => 'Cancel Task';
+  String get cancelTask => '取消任务';
 
   @override
-  String get taskCancelled => 'Task cancelled';
+  String get taskCancelled => '任务已取消';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => '删除任务';
 
   @override
-  String get deleteTaskTitle => 'Delete task?';
+  String get deleteTaskTitle => '删除任务？';
 
   @override
-  String get deleteTaskConfirm =>
-      'This will remove the task and all associated offers.';
+  String get deleteTaskConfirm => '删除此任务？';
 
   @override
-  String get taskDeleted => 'Task deleted';
+  String get taskDeleted => '任务已删除';
 
   @override
-  String get typeFirstMessage => 'Type your first message…';
+  String get typeFirstMessage => '输入第一条消息';
 
   @override
-  String get send => 'Send';
+  String get send => '发送';
 
   @override
-  String get failedToSendMessage => 'Failed to send message';
+  String get failedToSendMessage => '发送消息失败';
 
   @override
   String get conversations => '消息';
@@ -734,23 +722,23 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get chatToday => 'Today';
+  String get chatToday => '今天';
 
   @override
-  String get chatYesterday => 'Yesterday';
+  String get chatYesterday => '昨天';
 
   @override
   String chatYouPrefix(String message) {
-    return 'You: $message';
+    return '你：$message';
   }
 
   @override
   String chatReFallback(String jobTitle) {
-    return 'Re: $jobTitle';
+    return '回复：$jobTitle';
   }
 
   @override
-  String get noConversationsYet => 'No conversations yet';
+  String get noConversationsYet => '无对话';
 
   @override
   String get loadingConversations => '加载对话中...';
@@ -786,100 +774,99 @@ class AppLocalizationsZh extends AppLocalizations {
   String get logoutConfirm => '确定要退出登录吗？';
 
   @override
-  String get myProfile => 'My Profile';
+  String get myProfile => '我的资料';
 
   @override
-  String get unknown => 'Unknown';
+  String get unknown => '未知';
 
   @override
-  String get experienceLabel => 'Experience';
+  String get experienceLabel => '经验';
 
   @override
-  String get statusLabel => 'Status';
+  String get statusLabel => '状态';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => '未设置';
 
   @override
-  String get onDuty => 'On Duty';
+  String get onDuty => '在线';
 
   @override
-  String get offDuty => 'Off Duty';
+  String get offDuty => '离线';
 
   @override
   String yearsCount(int count) {
-    return '$count years';
+    return '$count年';
   }
 
   @override
-  String get themeAndColors => 'Theme & Colors';
+  String get themeAndColors => '主题与颜色';
 
   @override
-  String get aiModelLabel => 'AI Model';
+  String get aiModelLabel => 'AI模型';
 
   @override
-  String get availableForWork => 'Available for Work';
+  String get availableForWork => '可接受工作';
 
   @override
-  String get visibleToClients => 'You are visible to clients';
+  String get visibleToClients => '对客户可见';
 
   @override
-  String get currentlyOffDuty => 'You are currently off duty';
+  String get currentlyOffDuty => '当前离线';
 
   @override
-  String get myReviews => 'My Reviews';
+  String get myReviews => '我的评价';
 
   @override
-  String get deleteAccount => 'Delete Account';
+  String get deleteAccount => '删除账户';
 
   @override
-  String get deleteAccountConfirm =>
-      'This will permanently delete your account and all data. This cannot be undone.';
+  String get deleteAccountConfirm => '确定吗？此操作不可撤销。';
 
   @override
-  String get couldNotDeleteAccount => 'Could not delete account';
+  String get couldNotDeleteAccount => '无法删除账户';
 
   @override
-  String get profilePhotoUpdated => 'Profile photo updated';
+  String get profilePhotoUpdated => '头像已更新';
 
   @override
-  String get profileUpdated => 'Profile updated';
+  String get profileUpdated => '资料已更新';
 
   @override
-  String get nameLabel => 'Name';
+  String get nameLabel => '姓名';
 
   @override
-  String get profileImageUrl => 'Profile Image URL';
+  String get profileImageUrl => '头像URL';
 
   @override
-  String get yearsOfExperience => 'Years of Experience';
+  String get yearsOfExperience => '工作年限';
 
   @override
-  String get certificationsLabel => 'Certifications';
+  String get certificationsLabel => '证书';
 
   @override
-  String get payoutAccountLabel => 'Payout Account';
+  String get payoutAccountLabel => '收款账户';
 
   @override
-  String get onDutySubtitle => 'Toggle availability for new tasks';
+  String get onDutySubtitle => '您对新任务可见';
 
   @override
-  String get loadingProfile => 'Loading profile...';
+  String get loadingProfile => '加载资料';
 
   @override
-  String get availabilityLabel => 'Availability';
+  String get availabilityLabel => '可用性';
 
   @override
-  String get memberLabel => 'Member';
+  String get memberLabel => '会员';
 
   @override
-  String get available => 'Available';
+  String get available => '可用';
 
   @override
-  String get unavailable => 'Unavailable';
+  String get unavailable => '不可用';
 
   @override
-  String get viewAllReviews => 'View All Reviews';
+  String get viewAllReviews => '查看所有评价';
 
   @override
   String get settings => '设置';
@@ -921,16 +908,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get secondary => '次要';
 
   @override
-  String get modeLabel => 'Mode';
+  String get modeLabel => '模式';
 
   @override
-  String get pickAColour => 'Pick a colour';
+  String get pickAColour => '选择颜色';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => '系统默认';
 
   @override
-  String get darkModeSubtitle => 'Switch between light and dark themes';
+  String get darkModeSubtitle => '选择系统、浅色或深色模式';
 
   @override
   String get reviews => '评价';
@@ -952,64 +939,57 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String howWasWorker(String name) {
-    return 'How was $name?';
+    return '$name表现如何？';
   }
 
   @override
-  String get feedbackHelps => 'Your feedback helps the community';
+  String get feedbackHelps => '你的反馈很有帮助';
 
   @override
-  String get thanksForReview => 'Thanks for your review!';
+  String get thanksForReview => '感谢您的评价';
 
   @override
-  String get shareExperienceHint => 'Share your experience (optional)';
+  String get shareExperienceHint => '分享您的体验';
 
   @override
-  String get ratingExcellent => 'Excellent!';
+  String get ratingExcellent => '优秀';
 
   @override
-  String get ratingGreat => 'Great!';
+  String get ratingGreat => '很好';
 
   @override
-  String get ratingGood => 'Good';
+  String get ratingGood => '好';
 
   @override
-  String get ratingFair => 'Fair';
+  String get ratingFair => '一般';
 
   @override
-  String get ratingPoor => 'Poor';
+  String get ratingPoor => '差';
 
   @override
-  String get tapToRate => 'Tap to rate';
+  String get tapToRate => '点击评分';
 
   @override
   String workerReviewsTitle(String name) {
-    return '$name\'s Reviews';
+    return '$name的评价';
   }
 
   @override
-  String get loadingReviews => 'Loading reviews...';
+  String get loadingReviews => '加载评价';
 
   @override
-  String get noReviewsSubtitle =>
-      'Reviews will appear here after completed tasks.';
+  String get noReviewsSubtitle => '暂无评价';
 
   @override
-  String get allReviews => 'All Reviews';
+  String get allReviews => '所有评价';
 
   @override
   String reviewCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count reviews',
-      one: '1 review',
-    );
-    return '$_temp0';
+    return '$count条评价';
   }
 
   @override
-  String get anonymous => 'Anonymous';
+  String get anonymous => '匿名';
 
   @override
   String get loading => '加载中...';
@@ -1021,7 +1001,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get retry => '重试';
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => '重试';
 
   @override
   String get cancel => '取消';
@@ -1051,19 +1031,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pullToRefresh => '下拉刷新';
 
   @override
-  String get pullDownToRefresh => 'Pull down to refresh.';
+  String get pullDownToRefresh => '下拉刷新';
 
   @override
-  String get yes => 'Yes';
+  String get yes => '是';
 
   @override
-  String get required => 'Required';
+  String get required => '必填';
 
   @override
-  String get stop => 'Stop';
+  String get stop => '停止';
 
   @override
-  String get clear => 'Clear';
+  String get clear => '清除';
 
   @override
   String get aiSetup => 'AI设置';
@@ -1111,320 +1091,302 @@ class AppLocalizationsZh extends AppLocalizations {
   String get analyzing => '分析中…';
 
   @override
-  String get aiCapabilities => 'AI Capabilities';
+  String get aiCapabilities => 'AI功能';
 
   @override
-  String get onDeviceAi => 'On-Device AI';
+  String get onDeviceAi => '设备端AI';
 
   @override
-  String get aiTaglineSetup => 'Private · Offline · Free';
+  String get aiTaglineSetup => '私密 · 离线 · 免费';
 
   @override
-  String get aiSetupDescription =>
-      'Get smart suggestions for tasks and bids powered by an AI model that runs entirely on your device. No data leaves your phone.';
+  String get aiSetupDescription => '获取任务和报价的智能建议';
 
   @override
-  String get physicalDevice => 'Physical device';
+  String get physicalDevice => '物理设备';
 
   @override
-  String get emulatorDetected => 'Emulator detected';
+  String get emulatorDetected => '检测到模拟器';
 
   @override
-  String get ram => 'RAM';
+  String get ram => '内存';
 
   @override
-  String get sufficient => 'Sufficient';
+  String get sufficient => '足够';
 
   @override
-  String get freeStorage => 'Free storage';
+  String get freeStorage => '可用存储';
 
   @override
   String mbFree(int mb) {
-    return '$mb MB free';
+    return '$mb MB可用';
   }
 
   @override
-  String get aiRequiresPhysicalDevice =>
-      'AI features require a physical device.';
+  String get aiRequiresPhysicalDevice => 'AI功能需要物理设备。';
 
   @override
-  String get multilingual => 'Multilingual';
+  String get multilingual => '多语言';
 
   @override
   String downloadingProgress(String percent) {
-    return 'Downloading… $percent%';
+    return '下载中 $percent%';
   }
 
   @override
-  String get loadingModel => 'Loading model…';
+  String get loadingModel => '加载模型';
 
   @override
-  String get retryDownload => 'Retry Download';
+  String get retryDownload => '重试下载';
 
   @override
-  String get activeAndReady => 'Active & Ready';
+  String get activeAndReady => '活跃且就绪';
 
   @override
-  String get remove => 'Remove';
+  String get remove => '移除';
 
   @override
-  String get enableAi => 'Enable AI';
+  String get enableAi => '启用AI';
 
   @override
-  String get downloadAiModel => 'Download AI Model';
+  String get downloadAiModel => '下载AI模型';
 
   @override
-  String get deviceNotSupported => 'Device not supported';
+  String get deviceNotSupported => '设备不支持';
 
   @override
-  String get downloadBackgroundNote =>
-      'Download happens in the background — you can leave this screen. The model file will be stored on your device and can be removed at any time.';
+  String get downloadBackgroundNote => '后台下载中，请勿关闭应用。';
 
   @override
-  String get removeAiModelTitle => 'Remove AI Model?';
+  String get removeAiModelTitle => '移除AI模型？';
 
   @override
-  String get removeAiModelConfirm =>
-      'This will delete the AI model from your device. You can re-download it later.';
+  String get removeAiModelConfirm => '移除AI模型？将释放MB。';
 
   @override
-  String get analyzeWithAi => 'Analyze with AI';
+  String get analyzeWithAi => 'AI分析';
 
   @override
-  String get aiAssistantAvailable => 'AI Assistant available';
+  String get aiAssistantAvailable => 'AI助手可用';
 
   @override
-  String get aiSetupPrompt =>
-      'Set up an on-device AI model to get smart suggestions.';
+  String get aiSetupPrompt => '设置设备上的AI模型以获取智能建议。';
 
   @override
-  String get setup => 'Setup';
+  String get setup => '设置';
 
   @override
-  String get adminDashboard => 'Admin Dashboard';
+  String get adminDashboard => '管理面板';
 
   @override
-  String get failedToLoadDashboard => 'Failed to load dashboard';
+  String get failedToLoadDashboard => '加载面板失败';
 
   @override
-  String get platformOverview => 'Platform Overview';
+  String get platformOverview => '平台概览';
 
   @override
-  String get liveStatistics => 'Live statistics from the backend.';
+  String get liveStatistics => '实时统计';
 
   @override
-  String get usersSection => 'Users';
+  String get usersSection => '用户';
 
   @override
-  String get adminTabClients => 'Clients';
+  String get adminTabClients => '客户';
 
   @override
-  String get adminTabWorkers => 'Workers';
+  String get adminTabWorkers => '工人';
 
   @override
-  String get adminTabAccount => 'Account';
+  String get adminTabAccount => '账户';
 
   @override
-  String get jobsSection => 'Jobs';
+  String get jobsSection => '工作';
 
   @override
-  String get activeLabel => 'Active';
+  String get activeLabel => '活跃';
 
   @override
-  String get todaySection => 'Today';
+  String get todaySection => '今天';
 
   @override
-  String get createdLabel => 'Created';
+  String get createdLabel => '已创建';
 
   @override
-  String get completedLabel => 'Completed';
+  String get completedLabel => '已完成';
 
   @override
   String deleteUserTitle(String role) {
-    return 'Delete $role';
+    return '删除$role？';
   }
 
   @override
   String deleteUserConfirm(String name, String email) {
-    return 'This action removes $name ($email) permanently. Continue?';
+    return '删除$name？';
   }
 
   @override
-  String get userDeletedSuccess => 'User deleted successfully';
+  String get userDeletedSuccess => '用户已删除';
 
   @override
-  String get unableToLoadUsers => 'Unable to load users';
+  String get unableToLoadUsers => '加载用户失败';
 
   @override
-  String get noClientsFound => 'No clients found';
+  String get noClientsFound => '未找到客户';
 
   @override
-  String get noWorkersFound => 'No workers found';
+  String get noWorkersFound => '未找到工人';
 
   @override
-  String get deleteUserTooltip => 'Delete user';
+  String get deleteUserTooltip => '删除用户';
 
   @override
-  String get adminSession => 'Admin Session';
+  String get adminSession => '管理员会话';
 
   @override
-  String get adminManageUsersHint =>
-      'Manage users from the Clients and Workers tabs.';
+  String get adminManageUsersHint => '从客户和工人标签管理用户。';
 
   @override
   String distanceKm(int radius) {
-    return '$radius km';
+    return '$radius 公里';
   }
 
   @override
-  String get youreOffline => 'You\'re Offline';
+  String get youreOffline => '您处于离线状态';
 
   @override
-  String get offlineHint =>
-      'Toggle the switch in the top bar to go online and discover nearby jobs.';
+  String get offlineHint => '您处于离线状态';
 
   @override
-  String get yourSkills => 'Your Skills';
+  String get yourSkills => '您的技能';
 
   @override
-  String get skillsSubtitle =>
-      'Search and add skills. These are sent to the server to filter your job feed.';
+  String get skillsSubtitle => '添加您的技能和专长';
 
   @override
-  String get addSkillLabel => 'Add Skill';
+  String get addSkillLabel => '添加技能';
 
   @override
-  String get typeToSearchSkills => 'Type to search skills…';
+  String get typeToSearchSkills => '搜索技能';
 
   @override
   String savedSkillsCount(int count) {
-    return 'Saved Skills ($count)';
+    return '已保存$count项技能';
   }
 
   @override
-  String get noSkillsAdded =>
-      'No skills added yet. Search above to add relevant skills.';
+  String get noSkillsAdded => '未添加技能';
 
   @override
-  String get unableToLoadTaskDetails => 'Unable to load task details';
+  String get unableToLoadTaskDetails => '加载详情失败';
 
   @override
-  String get detailDistance => 'Distance';
+  String get detailDistance => '距离';
 
   @override
-  String get chooseLocation => 'Choose Location';
+  String get chooseLocation => '选择位置';
 
   @override
-  String get savedTab => 'Saved';
+  String get savedTab => '已保存';
 
   @override
-  String get pinOnMapTab => 'Pin on Map';
+  String get pinOnMapTab => '在地图上标记';
 
   @override
-  String get locationDeniedPermanently =>
-      'Location permanently denied. Enable it in Settings.';
+  String get locationDeniedPermanently => '位置权限被永久拒绝';
 
   @override
-  String get couldNotGetLocation => 'Could not get location';
+  String get couldNotGetLocation => '无法获取位置';
 
   @override
-  String get searchPlaces => 'Search places…';
+  String get searchPlaces => '搜索地点';
 
   @override
-  String get switchToSatellite => 'Switch to Satellite';
+  String get switchToSatellite => '卫星地图';
 
   @override
-  String get switchToRoadMap => 'Switch to Road map';
+  String get switchToRoadMap => '道路地图';
 
   @override
-  String get goToMyLocation => 'Go to my location';
+  String get goToMyLocation => '到我的位置';
 
   @override
-  String get confirmLocation => 'Confirm Location';
+  String get confirmLocation => '确认位置';
 
   @override
-  String get saveAddress => 'Save Address';
+  String get saveAddress => '保存地址';
 
   @override
-  String get saveAddressSubtitle =>
-      'Add a label and recipient details for this location.';
+  String get saveAddressSubtitle => '为将来的任务保存';
 
   @override
-  String get labelField => 'Label';
+  String get labelField => '标签';
 
   @override
-  String get labelHome => 'Home';
+  String get labelHome => '家';
 
   @override
-  String get labelWork => 'Work';
+  String get labelWork => '工作';
 
   @override
-  String get labelOther => 'Other';
+  String get labelOther => '其他';
 
   @override
-  String get recipientName => 'Recipient Name';
+  String get recipientName => '收件人姓名';
 
   @override
-  String get recipientNameHint => 'e.g. Rahul Sharma';
+  String get recipientNameHint => '输入姓名';
 
   @override
-  String get recipientPhone => 'Recipient Phone';
+  String get recipientPhone => '收件人电话';
 
   @override
-  String get recipientPhoneHint => 'e.g. 9876543210';
+  String get recipientPhoneHint => '输入电话';
 
   @override
-  String get pickFromContacts => 'Pick from contacts';
+  String get pickFromContacts => '从联系人选择';
 
   @override
-  String get contactsAccessDenied =>
-      'Contacts access denied — name was copied. Please enter the phone number manually.';
+  String get contactsAccessDenied => '联系人访问被拒绝';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => '打开设置';
 
   @override
-  String get couldNotOpenContacts => 'Could not open contacts';
+  String get couldNotOpenContacts => '无法打开联系人';
 
   @override
-  String get areaNeighbourhood => 'Area / Neighbourhood';
+  String get areaNeighbourhood => '区域/社区';
 
   @override
-  String get areaHint => 'e.g. Koramangala';
+  String get areaHint => '例如：朝阳区、浦东';
 
   @override
-  String get cityHint => 'e.g. Bengaluru';
+  String get cityHint => '例如：北京';
 
   @override
-  String get postalCodeRequired => 'Postal Code';
+  String get postalCodeRequired => '邮编必填';
 
   @override
-  String get postalCodeHint => 'e.g. 560034';
+  String get postalCodeHint => '例如：100000';
 
   @override
-  String get countryCodeRequired => 'Country Code';
+  String get countryCodeRequired => '国家代码必填';
 
   @override
-  String get countryCodeHint => 'e.g. IN';
+  String get countryCodeHint => '+86';
 
   @override
-  String get requiredSkillsLabel => 'Required Skills';
+  String get requiredSkillsLabel => '必需技能';
 
   @override
-  String get skillHintText => 'e.g. plumbing, painting…';
+  String get skillHintText => '输入技能，用逗号分隔';
 
   @override
-  String get skillHelperEmpty => 'Type skills and separate them with commas';
+  String get skillHelperEmpty => '尚未添加技能';
 
   @override
   String skillsAddedCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count skills added',
-      one: '1 skill added',
-    );
-    return '$_temp0';
+    return '已添加$count项技能';
   }
 
   @override
@@ -1512,19 +1474,204 @@ class AppLocalizationsZh extends AppLocalizations {
   String get languageHebrew => 'עברית';
 
   @override
-  String get useWithoutSaving => 'Use Without Saving';
+  String get accentColorBlue => '蓝色';
 
   @override
-  String get saveAndUse => 'Save & Use';
+  String get accentColorYellow => '黄色';
 
   @override
-  String get useMyCurrentLocation => 'Use My Current Location';
+  String get accentColorGreen => '绿色';
 
   @override
-  String get detectingLocation => 'Detecting location…';
+  String get accentColorPink => '粉红';
 
   @override
-  String get deleteAddress => 'Delete Address';
+  String get accentColorRed => '红色';
+
+  @override
+  String get accentColorPurple => '紫色';
+
+  @override
+  String get accentColorOrange => '橙色';
+
+  @override
+  String get accentColorTeal => '青色';
+
+  @override
+  String get accentColorCustom => '自定义';
+
+  @override
+  String get paymentStatusPending => '待付款';
+
+  @override
+  String get paymentStatusLocked => '金额已安全保留';
+
+  @override
+  String get paymentStatusReleased => '付款已释放';
+
+  @override
+  String get paymentStatusOffline => '完成后直接支付';
+
+  @override
+  String paymentStatusGeneric(String status) {
+    return '付款状态：$status';
+  }
+
+  @override
+  String get jobStatusOpenForOffers => '开放报价';
+
+  @override
+  String get jobStatusOfferAccepted => '报价已接受';
+
+  @override
+  String get jobStatusReadyToStart => '准备开始';
+
+  @override
+  String get jobStatusInProgress => '进行中';
+
+  @override
+  String get jobStatusPendingPayment => '待付款';
+
+  @override
+  String get jobStatusPaymentReleased => '付款已释放';
+
+  @override
+  String get jobStatusTaskCompleted => '任务完成';
+
+  @override
+  String get jobStatusCancelled => '已取消';
+
+  @override
+  String get detailBudgetLabel => '预算';
+
+  @override
+  String get detailLocationLabel => '位置';
+
+  @override
+  String get detailSkillsLabel => '技能';
+
+  @override
+  String get detailJobIdLabel => '工作ID';
+
+  @override
+  String get tooltipCopy => '复制';
+
+  @override
+  String get tooltipDeleteAddress => '删除地址';
+
+  @override
+  String confirmDeleteAddress(String addressLabel) {
+    return '从保存的地址中删除\"$addressLabel\"？';
+  }
+
+  @override
+  String get errorNotAuthenticated => '未认证。请重新登录。';
+
+  @override
+  String get errorCouldNotOpenImagePicker => '无法打开图片选择器。';
+
+  @override
+  String get errorCouldNotReadImage => '无法读取图片。';
+
+  @override
+  String get errorImageTooLarge => '图片须小于5MB。';
+
+  @override
+  String get errorUploadFailed => '上传失败。请重试。';
+
+  @override
+  String get errorNameRequired => '姓名必填';
+
+  @override
+  String get errorRatingRequired => '请选择评分';
+
+  @override
+  String get errorNotLoggedIn => '请先登录';
+
+  @override
+  String get errorAdminProfileUpdateNotSupported => '不支持管理员资料更新';
+
+  @override
+  String get errorAdminDeletionDisabled => '应用内禁止删除管理员';
+
+  @override
+  String get errorConnectionTimeout => '连接超时。请重试。';
+
+  @override
+  String get errorConnectionError => '连接服务器失败。';
+
+  @override
+  String get errorRequestCancelled => '请求已取消。';
+
+  @override
+  String get errorBadRequest => '无效请求。请检查输入。';
+
+  @override
+  String get errorSessionExpired => '会话已过期。请重新登录。';
+
+  @override
+  String get errorPermissionDenied => '没有权限。';
+
+  @override
+  String get errorResourceNotFound => '资源未找到。';
+
+  @override
+  String get errorConflict => '冲突：无法完成操作。';
+
+  @override
+  String get errorFileTooLarge => '文件过大。最大5MB。';
+
+  @override
+  String get errorValidationError => '验证错误。请检查输入。';
+
+  @override
+  String get errorTooManyRequests => '请求过多。请稍候。';
+
+  @override
+  String get errorServerError => '服务器错误。请稍后重试。';
+
+  @override
+  String errorRequestFailed(String statusCode) {
+    return '请求失败：状态 $statusCode';
+  }
+
+  @override
+  String get errorNetworkFailed => '网络错误。';
+
+  @override
+  String get errorNetworkRequestFailed => '网络错误';
+
+  @override
+  String get errorMalformedSkillResponse => '技能响应格式错误';
+
+  @override
+  String get errorMalformedResponse => '响应格式错误';
+
+  @override
+  String get errorMalformedAdminResponse => '管理员响应格式错误';
+
+  @override
+  String get errorAdminAccessRequired => '需要管理员权限';
+
+  @override
+  String get errorDescriptionUnavailable => '描述不可用';
+
+  @override
+  String errorUnauthorizedAction(String roleLabel) {
+    return '仅$roleLabel可执行此操作';
+  }
+
+  @override
+  String get useWithoutSaving => '不保存直接使用';
+
+  @override
+  String get saveAndUse => '保存并使用';
+
+  @override
+  String get useMyCurrentLocation => '使用我的当前位置';
+
+  @override
+  String get detectingLocation => '正在检测位置…';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1568,82 +1715,81 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get alreadyHaveAccount => '已有帳號？';
 
   @override
-  String get welcomeBack => 'Welcome Back';
+  String get welcomeBack => '歡迎回來';
 
   @override
-  String get loginSubtitle => 'Sign in to continue as provider or worker.';
+  String get loginSubtitle => '登入您的AroundU帳戶';
 
   @override
-  String get noAccountYet => 'No account yet?';
+  String get noAccountYet => '還沒有帳戶？';
 
   @override
-  String get createOne => 'Create one';
+  String get createOne => '建立';
 
   @override
-  String get emailRequired => 'Email is required';
+  String get emailRequired => '電子郵件必填';
 
   @override
-  String get enterValidEmail => 'Enter a valid email';
+  String get enterValidEmail => '輸入有效電子郵件';
 
   @override
-  String get passwordRequired => 'Password is required';
+  String get passwordRequired => '密碼必填';
 
   @override
-  String get minimumSixCharacters => 'Minimum 6 characters';
+  String get minimumSixCharacters => '最少6個字元';
 
   @override
-  String get unableToLogin => 'Unable to login. Please retry.';
+  String get unableToLogin => '登入失敗';
 
   @override
   String fieldRequired(String field) {
-    return '$field is required';
+    return '$field必填';
   }
 
   @override
-  String get enterValidPhone => 'Enter a valid phone number';
+  String get enterValidPhone => '輸入有效電話';
 
   @override
-  String get unableToRegister => 'Unable to register';
+  String get unableToRegister => '註冊失敗';
 
   @override
-  String get registrationSuccess => 'Registration successful. Please log in.';
+  String get registrationSuccess => '註冊成功';
 
   @override
-  String get registerSubtitle =>
-      'Register as provider or worker with your basic location profile.';
+  String get registerSubtitle => '註冊為提供者或工人';
 
   @override
-  String get roleLabel => 'Role';
+  String get roleLabel => '角色';
 
   @override
-  String get roleJobProvider => 'Job Provider';
+  String get roleJobProvider => '任务提供者';
 
   @override
-  String get roleJobWorker => 'Job Worker';
+  String get roleJobWorker => '工人';
 
   @override
-  String get countryLabel => 'Country';
+  String get countryLabel => '國家';
 
   @override
-  String get currencyLabel => 'Currency';
+  String get currencyLabel => '貨幣';
 
   @override
-  String get cityLabel => 'City';
+  String get cityLabel => '城市';
 
   @override
-  String get postalCodeLabel => 'Postal code';
+  String get postalCodeLabel => '郵遞區號';
 
   @override
-  String get areaOptionalLabel => 'Area (optional)';
+  String get areaOptionalLabel => '區域（選填）';
 
   @override
-  String get fullAddressOptionalLabel => 'Full address (optional)';
+  String get fullAddressOptionalLabel => '詳細地址（選填）';
 
   @override
-  String get alreadyRegistered => 'Already registered?';
+  String get alreadyRegistered => '已註冊？';
 
   @override
-  String get logInLink => 'Log in';
+  String get logInLink => '登入';
 
   @override
   String get onboardingTitle1 => '尋找身邊的任務';
@@ -1673,7 +1819,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get next => '下一步';
 
   @override
-  String get newHereCreateAccount => 'New here? Create account';
+  String get newHereCreateAccount => '新使用者？建立帳戶';
 
   @override
   String get roleSelectionTitle => '選擇您的角色';
@@ -1694,19 +1840,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get continueButton => '繼續';
 
   @override
-  String get roleSelectionSubtitle =>
-      'Select the workflow you want to use in AroundU.';
+  String get roleSelectionSubtitle => '您想如何使用AroundU？';
 
   @override
   String signedInAs(String email) {
-    return 'Signed in as $email';
+    return '登入為$email';
   }
 
   @override
-  String get roleProviderDesc => 'Post jobs and manage incoming bids.';
+  String get roleProviderDesc => '發布任務並尋找合格工人';
 
   @override
-  String get roleWorkerDescAlt => 'Browse nearby jobs and place bids quickly.';
+  String get roleWorkerDescAlt => '尋找任務，用技能賺錢';
 
   @override
   String get homeTab => '首頁';
@@ -1721,22 +1866,22 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get profileTab => '個人資料';
 
   @override
-  String get providerTabMyTasks => 'My Tasks';
+  String get providerTabMyTasks => '我的任務';
 
   @override
-  String get providerTabPostTask => 'Post Task';
+  String get providerTabPostTask => '發布任務';
 
   @override
-  String get tasksNavLabel => 'Tasks';
+  String get tasksNavLabel => '任务';
 
   @override
-  String get postNavLabel => 'Post';
+  String get postNavLabel => '发布';
 
   @override
-  String get workerTabTaskFeed => 'Task Feed';
+  String get workerTabTaskFeed => '任務動態';
 
   @override
-  String get feedNavLabel => 'Feed';
+  String get feedNavLabel => '動態';
 
   @override
   String get myJobs => '我的工作';
@@ -1790,13 +1935,13 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get urgencyNormal => '普通';
 
   @override
-  String get urgencyMedium => 'Medium';
+  String get urgencyMedium => '中等';
 
   @override
   String get urgencyUrgent => '緊急';
 
   @override
-  String get urgencyAsap => 'ASAP';
+  String get urgencyAsap => '尽快';
 
   @override
   String get paymentOffline => '線下';
@@ -1805,144 +1950,142 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get paymentEscrow => '擔保';
 
   @override
-  String get paymentMethod => 'Payment Method';
+  String get paymentMethod => '支付方式';
 
   @override
-  String get payInCash => 'Pay in Cash';
+  String get payInCash => '现金支付';
 
   @override
-  String get secureEscrow => 'Secure Escrow';
+  String get secureEscrow => '安全托管';
 
   @override
-  String get filterAll => 'All';
+  String get filterAll => '全部';
 
   @override
-  String get filterOpen => 'Open';
+  String get filterOpen => '開放';
 
   @override
-  String get filterActive => 'Active';
+  String get filterActive => '活跃';
 
   @override
-  String get filterInProgress => 'In Progress';
+  String get filterInProgress => '進行中';
 
   @override
-  String get filterCompleted => 'Completed';
+  String get filterCompleted => '已完成';
 
   @override
-  String get filterCancelled => 'Cancelled';
+  String get filterCancelled => '已取消';
 
   @override
-  String get filterExpired => 'Expired';
+  String get filterExpired => '已過期';
 
   @override
-  String get filterNearby => 'Nearby';
+  String get filterNearby => '附近';
 
   @override
-  String get filterAllMine => 'All Mine';
+  String get filterAllMine => '我的全部';
 
   @override
-  String get filterBidPlaced => 'Bid Placed';
+  String get filterBidPlaced => '已投标';
 
   @override
-  String get filterAccepted => 'Accepted';
+  String get filterAccepted => '已接受';
 
   @override
-  String get noTasksPostedYet => 'No tasks posted yet';
+  String get noTasksPostedYet => '未發布任務';
 
   @override
-  String get noOpenTasks => 'No open tasks';
+  String get noOpenTasks => '无开放任务';
 
   @override
-  String get noActiveTasks => 'No active tasks';
+  String get noActiveTasks => '無活躍任務';
 
   @override
-  String get noTasksInProgress => 'No tasks in progress';
+  String get noTasksInProgress => '无进行中的任务';
 
   @override
-  String get noCompletedTasks => 'No completed tasks';
+  String get noCompletedTasks => '無已完成的任務';
 
   @override
-  String get noCancelledTasks => 'No cancelled tasks';
+  String get noCancelledTasks => '无已取消的任务';
 
   @override
-  String get noExpiredTasks => 'No expired tasks';
+  String get noExpiredTasks => '无已过期的任务';
 
   @override
-  String get unableToLoadTasks => 'Unable to load tasks';
+  String get unableToLoadTasks => '載入任務失敗';
 
   @override
-  String get noNearbyJobs => 'No nearby jobs right now';
+  String get noNearbyJobs => '附近無工作';
 
   @override
-  String get noJobsYetBid => 'No jobs yet — place a bid to get started!';
+  String get noJobsYetBid => '暫無工作 — 去投標';
 
   @override
-  String get noPendingBids => 'No pending bids';
+  String get noPendingBids => '无待定投标';
 
   @override
-  String get noAcceptedJobs => 'No accepted jobs';
+  String get noAcceptedJobs => '無已接受的工作';
 
   @override
-  String get noJobsInProgress => 'No jobs in progress';
+  String get noJobsInProgress => '无进行中的工作';
 
   @override
-  String get noCompletedJobsYet => 'No completed jobs yet';
+  String get noCompletedJobsYet => '無已完成的工作';
 
   @override
-  String get noCancelledJobs => 'No cancelled jobs';
+  String get noCancelledJobs => '无已取消的工作';
 
   @override
-  String get noExpiredJobs => 'No expired jobs';
+  String get noExpiredJobs => '无已过期的工作';
 
   @override
-  String get pullDownToRefreshCheck => 'Pull down to refresh and check again.';
+  String get pullDownToRefreshCheck => '下拉查看新任務';
 
   @override
-  String get unableToLoadJobs => 'Unable to load jobs';
+  String get unableToLoadJobs => '載入工作失敗';
 
   @override
-  String get postNewTask => 'Post a New Task';
+  String get postNewTask => '新任務';
 
   @override
-  String get postTaskSubtitle =>
-      'Add clear details so workers can send accurate offers.';
+  String get postTaskSubtitle => '新增清晰細節以取得準確報價';
 
   @override
-  String get taskTitleLabel => 'Task title';
+  String get taskTitleLabel => '任务标题';
 
   @override
-  String get savingLocation => 'Saving location…';
+  String get savingLocation => '儲存位置';
 
   @override
-  String get tapToSelectLocation => 'Tap to select location';
+  String get tapToSelectLocation => '點擊選擇位置';
 
   @override
-  String get postTaskButton => 'Post Task';
+  String get postTaskButton => '發布任務';
 
   @override
-  String get addSkillWarning => 'Add at least one required skill for this task';
+  String get addSkillWarning => '請至少新增一項必要技能';
 
   @override
-  String get enterValidBudget => 'Enter a valid budget amount';
+  String get enterValidBudget => '輸入有效預算';
 
   @override
-  String get setJobLocationWarning =>
-      'Please set a job location before posting';
+  String get setJobLocationWarning => '請設定任務位置';
 
   @override
-  String get jobPostedSuccess => 'Job posted successfully';
+  String get jobPostedSuccess => '任務發布成功';
 
   @override
-  String get failedToPostJob => 'Failed to post job. Please retry.';
+  String get failedToPostJob => '發布失敗';
 
   @override
-  String get failedToSaveLocation => 'Failed to save location';
+  String get failedToSaveLocation => '儲存位置失敗';
 
   @override
-  String get unableToLoadJobWorkflow => 'Unable to load job workflow';
+  String get unableToLoadJobWorkflow => '載入工作流程失敗';
 
   @override
-  String get unknownError => 'Unknown error';
+  String get unknownError => '未知錯誤';
 
   @override
   String get statusOpenForBids => '接受競標';
@@ -1996,96 +2139,95 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get bidPending => '待定';
 
   @override
-  String get offersSection => 'Offers';
+  String get offersSection => '报价';
 
   @override
-  String get noOffersReceivedYet => 'No offers received yet.';
+  String get noOffersReceivedYet => '未收到報價';
 
   @override
-  String get offerAccepted => 'Offer Accepted';
+  String get offerAccepted => '報價已接受';
 
   @override
-  String get offerRejected => 'Offer Rejected';
+  String get offerRejected => '报价已拒绝';
 
   @override
-  String get offerPending => 'Offer Pending';
+  String get offerPending => '报价待定';
 
   @override
   String workerNumber(int id) {
-    return 'Worker #$id';
+    return '工人 #$id';
   }
 
   @override
-  String get acceptThisOffer => 'Accept this Offer';
+  String get acceptThisOffer => '接受此報價';
 
   @override
-  String get messageWorker => 'Message Worker';
+  String get messageWorker => '給工人傳訊息';
 
   @override
-  String get offerAcceptedSnack => 'Offer accepted';
+  String get offerAcceptedSnack => '報價已接受！';
 
   @override
-  String get yourOffer => 'Your Offer';
+  String get yourOffer => '您的报价';
 
   @override
-  String get bidStatusSelected => 'Selected';
+  String get bidStatusSelected => '已选择';
 
   @override
-  String get bidStatusRejected => 'Rejected';
+  String get bidStatusRejected => '已拒绝';
 
   @override
-  String get bidStatusPending => 'Pending';
+  String get bidStatusPending => '待定';
 
   @override
-  String get placeYourOffer => 'Place Your Offer';
+  String get placeYourOffer => '提交報價';
 
   @override
-  String get yourOfferAmount => 'Your offer amount';
+  String get yourOfferAmount => '报价金额';
 
   @override
-  String get messageToClientOptional => 'Message to client (optional)';
+  String get messageToClientOptional => '給客戶的訊息（選填）';
 
   @override
-  String get addPartnerOptional => 'Add a partner (optional)';
+  String get addPartnerOptional => '新增夥伴（選填）';
 
   @override
-  String get partnerNameLabel => 'Partner name';
+  String get partnerNameLabel => '伙伴姓名';
 
   @override
-  String get partnerFeeLabel => 'Partner fee';
+  String get partnerFeeLabel => '伙伴费用';
 
   @override
   String partnerFeeAmount(String symbol, String amount) {
-    return '+ $symbol$amount partner fee';
+    return '伙伴费用：$amount';
   }
 
   @override
-  String get submitOffer => 'Submit Offer';
+  String get submitOffer => '提交报价';
 
   @override
-  String get enterValidOfferAmount => 'Enter a valid offer amount';
+  String get enterValidOfferAmount => '輸入有效金額';
 
   @override
-  String get offerSubmittedSuccess => 'Offer submitted successfully';
+  String get offerSubmittedSuccess => '報價已提交';
 
   @override
-  String get clientSelectedYourOffer => 'Client Selected Your Offer!';
+  String get clientSelectedYourOffer => '客戶選擇了你的報價';
 
   @override
-  String get handshakeHint =>
-      'Accept to confirm this job, or decline if you\'re no longer available.';
+  String get handshakeHint => '双方须共享验证码才能开始';
 
   @override
-  String get handshakeAccepted => 'Handshake accepted';
+  String get handshakeAccepted => '握手已接受';
 
   @override
-  String get handshakeDeclined => 'Handshake declined';
+  String get handshakeDeclined => '握手已拒绝';
 
   @override
-  String get acceptJob => 'Accept Job';
+  String get acceptJob => '接受工作';
 
   @override
-  String get decline => 'Decline';
+  String get decline => '拒絕';
 
   @override
   String get startCode => '開始代碼';
@@ -2103,72 +2245,66 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get enterCode => '輸入代碼';
 
   @override
-  String get generateStartCode => 'Generate Start Code';
+  String get generateStartCode => '產生啟動碼';
 
   @override
-  String get startCodeCopied => 'Start code copied';
+  String get startCodeCopied => '启动码已复制';
 
   @override
   String reserveInEscrow(String symbol, String amount) {
-    return 'Reserve $symbol$amount in Escrow';
+    return '將$amount存入託管';
   }
 
   @override
-  String get releaseCodeCopied => 'Release code copied';
+  String get releaseCodeCopied => '释放码已复制';
 
   @override
-  String get releaseCodeHint =>
-      'Share this verbally with the worker. They enter it to confirm task completion.';
+  String get releaseCodeHint => '输入释放码';
 
   @override
-  String get regenerateCode => 'Regenerate Code';
+  String get regenerateCode => '重新產生';
 
   @override
-  String get generateReleaseCode => 'Generate Release Code';
+  String get generateReleaseCode => '產生釋放碼';
 
   @override
-  String get taskCodesGenerated => 'Task codes generated';
+  String get taskCodesGenerated => '任務碼已產生';
 
   @override
-  String get newReleaseCodeGenerated => 'New release code generated';
+  String get newReleaseCodeGenerated => '新释放码已生成';
 
   @override
-  String get readyToBegin => 'Ready to Begin?';
+  String get readyToBegin => '准备开始';
 
   @override
-  String get startCodeHint =>
-      'Ask the client for the start code and enter it below to officially begin work.';
+  String get startCodeHint => '输入启动码';
 
   @override
-  String get verifyAndStartWork => 'Verify & Start Work';
+  String get verifyAndStartWork => '驗證並開始';
 
   @override
-  String get startCodeVerified =>
-      'Start code verified. Task is now in progress.';
+  String get startCodeVerified => '启动码已验证';
 
   @override
-  String get enterStartCodeFirst => 'Enter start code first';
+  String get enterStartCodeFirst => '请先输入启动码';
 
   @override
-  String get workInProgress => 'Work In Progress';
+  String get workInProgress => '工作進行中';
 
   @override
-  String get releaseCodePrompt =>
-      'Once done, ask the client for the 6-digit release code.';
+  String get releaseCodePrompt => '輸入釋放碼以釋放付款';
 
   @override
-  String get releaseCodeHelper => 'Enter the 6-digit code from the client';
+  String get releaseCodeHelper => '工作完成後將此碼給工人';
 
   @override
-  String get confirmWorkCompleted => 'Confirm Work Completed';
+  String get confirmWorkCompleted => '確認工作完成';
 
   @override
-  String get workConfirmedPaymentReleased =>
-      'Work confirmed — payment released!';
+  String get workConfirmedPaymentReleased => '工作已確認 — 付款已釋放！';
 
   @override
-  String get enterReleaseCodeWarning =>
-      'Enter the release code from the client';
+  String get enterReleaseCodeWarning => '输入释放码';
 
   @override
   String get escrow => '擔保';
@@ -2186,35 +2322,34 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get paymentReleased => '付款已釋放';
 
   @override
-  String get paymentSafelyReserved => 'Payment safely reserved';
+  String get paymentSafelyReserved => '付款已安全保留';
 
   @override
-  String get cancelTask => 'Cancel Task';
+  String get cancelTask => '取消任務';
 
   @override
-  String get taskCancelled => 'Task cancelled';
+  String get taskCancelled => '任務已取消';
 
   @override
-  String get deleteTask => 'Delete Task';
+  String get deleteTask => '刪除任務';
 
   @override
-  String get deleteTaskTitle => 'Delete task?';
+  String get deleteTaskTitle => '刪除任務？';
 
   @override
-  String get deleteTaskConfirm =>
-      'This will remove the task and all associated offers.';
+  String get deleteTaskConfirm => '刪除此任務？';
 
   @override
-  String get taskDeleted => 'Task deleted';
+  String get taskDeleted => '任務已刪除';
 
   @override
-  String get typeFirstMessage => 'Type your first message…';
+  String get typeFirstMessage => '輸入第一則訊息';
 
   @override
-  String get send => 'Send';
+  String get send => '发送';
 
   @override
-  String get failedToSendMessage => 'Failed to send message';
+  String get failedToSendMessage => '傳送訊息失敗';
 
   @override
   String get conversations => '訊息';
@@ -2257,23 +2392,23 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   }
 
   @override
-  String get chatToday => 'Today';
+  String get chatToday => '今天';
 
   @override
-  String get chatYesterday => 'Yesterday';
+  String get chatYesterday => '昨天';
 
   @override
   String chatYouPrefix(String message) {
-    return 'You: $message';
+    return '你：$message';
   }
 
   @override
   String chatReFallback(String jobTitle) {
-    return 'Re: $jobTitle';
+    return '回复：$jobTitle';
   }
 
   @override
-  String get noConversationsYet => 'No conversations yet';
+  String get noConversationsYet => '無對話';
 
   @override
   String get loadingConversations => '載入對話中...';
@@ -2309,100 +2444,99 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get logoutConfirm => '確定要登出嗎？';
 
   @override
-  String get myProfile => 'My Profile';
+  String get myProfile => '我的資料';
 
   @override
-  String get unknown => 'Unknown';
+  String get unknown => '未知';
 
   @override
-  String get experienceLabel => 'Experience';
+  String get experienceLabel => '经验';
 
   @override
-  String get statusLabel => 'Status';
+  String get statusLabel => '状态';
 
   @override
-  String get notSet => 'Not set';
+  String get notSet => '未設定';
 
   @override
-  String get onDuty => 'On Duty';
+  String get onDuty => '在线';
 
   @override
-  String get offDuty => 'Off Duty';
+  String get offDuty => '离线';
 
   @override
   String yearsCount(int count) {
-    return '$count years';
+    return '$count年';
   }
 
   @override
-  String get themeAndColors => 'Theme & Colors';
+  String get themeAndColors => '主题与颜色';
 
   @override
-  String get aiModelLabel => 'AI Model';
+  String get aiModelLabel => 'AI模型';
 
   @override
-  String get availableForWork => 'Available for Work';
+  String get availableForWork => '可接受工作';
 
   @override
-  String get visibleToClients => 'You are visible to clients';
+  String get visibleToClients => '對客戶可見';
 
   @override
-  String get currentlyOffDuty => 'You are currently off duty';
+  String get currentlyOffDuty => '目前離線';
 
   @override
-  String get myReviews => 'My Reviews';
+  String get myReviews => '我的評價';
 
   @override
-  String get deleteAccount => 'Delete Account';
+  String get deleteAccount => '刪除帳戶';
 
   @override
-  String get deleteAccountConfirm =>
-      'This will permanently delete your account and all data. This cannot be undone.';
+  String get deleteAccountConfirm => '確定嗎？此操作不可撤銷。';
 
   @override
-  String get couldNotDeleteAccount => 'Could not delete account';
+  String get couldNotDeleteAccount => '無法刪除帳戶';
 
   @override
-  String get profilePhotoUpdated => 'Profile photo updated';
+  String get profilePhotoUpdated => '頭像已更新';
 
   @override
-  String get profileUpdated => 'Profile updated';
+  String get profileUpdated => '資料已更新';
 
   @override
-  String get nameLabel => 'Name';
+  String get nameLabel => '姓名';
 
   @override
-  String get profileImageUrl => 'Profile Image URL';
+  String get profileImageUrl => '头像URL';
 
   @override
-  String get yearsOfExperience => 'Years of Experience';
+  String get yearsOfExperience => '工作年限';
 
   @override
-  String get certificationsLabel => 'Certifications';
+  String get certificationsLabel => '證書';
 
   @override
-  String get payoutAccountLabel => 'Payout Account';
+  String get payoutAccountLabel => '收款账户';
 
   @override
-  String get onDutySubtitle => 'Toggle availability for new tasks';
+  String get onDutySubtitle => '您對新任務可見';
 
   @override
-  String get loadingProfile => 'Loading profile...';
+  String get loadingProfile => '載入資料';
 
   @override
-  String get availabilityLabel => 'Availability';
+  String get availabilityLabel => '可用性';
 
   @override
-  String get memberLabel => 'Member';
+  String get memberLabel => '会员';
 
   @override
-  String get available => 'Available';
+  String get available => '可用';
 
   @override
-  String get unavailable => 'Unavailable';
+  String get unavailable => '不可用';
 
   @override
-  String get viewAllReviews => 'View All Reviews';
+  String get viewAllReviews => '查看所有評價';
 
   @override
   String get settings => '設定';
@@ -2444,16 +2578,16 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get secondary => '次要';
 
   @override
-  String get modeLabel => 'Mode';
+  String get modeLabel => '模式';
 
   @override
-  String get pickAColour => 'Pick a colour';
+  String get pickAColour => '選擇顏色';
 
   @override
-  String get systemDefault => 'System default';
+  String get systemDefault => '系统默认';
 
   @override
-  String get darkModeSubtitle => 'Switch between light and dark themes';
+  String get darkModeSubtitle => '選擇系統、淺色或深色模式';
 
   @override
   String get reviews => '評價';
@@ -2475,64 +2609,57 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String howWasWorker(String name) {
-    return 'How was $name?';
+    return '$name表现如何？';
   }
 
   @override
-  String get feedbackHelps => 'Your feedback helps the community';
+  String get feedbackHelps => '你的回饋很有幫助';
 
   @override
-  String get thanksForReview => 'Thanks for your review!';
+  String get thanksForReview => '感謝您的評價';
 
   @override
-  String get shareExperienceHint => 'Share your experience (optional)';
+  String get shareExperienceHint => '分享您的體驗';
 
   @override
-  String get ratingExcellent => 'Excellent!';
+  String get ratingExcellent => '优秀';
 
   @override
-  String get ratingGreat => 'Great!';
+  String get ratingGreat => '很好';
 
   @override
-  String get ratingGood => 'Good';
+  String get ratingGood => '好';
 
   @override
-  String get ratingFair => 'Fair';
+  String get ratingFair => '一般';
 
   @override
-  String get ratingPoor => 'Poor';
+  String get ratingPoor => '差';
 
   @override
-  String get tapToRate => 'Tap to rate';
+  String get tapToRate => '點擊評分';
 
   @override
   String workerReviewsTitle(String name) {
-    return '$name\'s Reviews';
+    return '$name的評價';
   }
 
   @override
-  String get loadingReviews => 'Loading reviews...';
+  String get loadingReviews => '載入評價';
 
   @override
-  String get noReviewsSubtitle =>
-      'Reviews will appear here after completed tasks.';
+  String get noReviewsSubtitle => '暫無評價';
 
   @override
-  String get allReviews => 'All Reviews';
+  String get allReviews => '所有評價';
 
   @override
   String reviewCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count reviews',
-      one: '1 review',
-    );
-    return '$_temp0';
+    return '$count則評價';
   }
 
   @override
-  String get anonymous => 'Anonymous';
+  String get anonymous => '匿名';
 
   @override
   String get loading => '載入中...';
@@ -2544,7 +2671,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get retry => '重試';
 
   @override
-  String get tryAgain => 'Try Again';
+  String get tryAgain => '重试';
 
   @override
   String get cancel => '取消';
@@ -2574,19 +2701,19 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get pullToRefresh => '下拉重新整理';
 
   @override
-  String get pullDownToRefresh => 'Pull down to refresh.';
+  String get pullDownToRefresh => '下拉重新整理';
 
   @override
-  String get yes => 'Yes';
+  String get yes => '是';
 
   @override
-  String get required => 'Required';
+  String get required => '必填';
 
   @override
-  String get stop => 'Stop';
+  String get stop => '停止';
 
   @override
-  String get clear => 'Clear';
+  String get clear => '清除';
 
   @override
   String get aiSetup => 'AI設定';
@@ -2634,320 +2761,302 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get analyzing => '分析中…';
 
   @override
-  String get aiCapabilities => 'AI Capabilities';
+  String get aiCapabilities => 'AI功能';
 
   @override
-  String get onDeviceAi => 'On-Device AI';
+  String get onDeviceAi => '设备端AI';
 
   @override
-  String get aiTaglineSetup => 'Private · Offline · Free';
+  String get aiTaglineSetup => '私密 · 离线 · 免费';
 
   @override
-  String get aiSetupDescription =>
-      'Get smart suggestions for tasks and bids powered by an AI model that runs entirely on your device. No data leaves your phone.';
+  String get aiSetupDescription => '取得任務和報價的智慧建議';
 
   @override
-  String get physicalDevice => 'Physical device';
+  String get physicalDevice => '物理设备';
 
   @override
-  String get emulatorDetected => 'Emulator detected';
+  String get emulatorDetected => '偵測到模擬器';
 
   @override
-  String get ram => 'RAM';
+  String get ram => '内存';
 
   @override
-  String get sufficient => 'Sufficient';
+  String get sufficient => '足够';
 
   @override
-  String get freeStorage => 'Free storage';
+  String get freeStorage => '可用儲存空間';
 
   @override
   String mbFree(int mb) {
-    return '$mb MB free';
+    return '$mb MB可用';
   }
 
   @override
-  String get aiRequiresPhysicalDevice =>
-      'AI features require a physical device.';
+  String get aiRequiresPhysicalDevice => 'AI功能需要實體裝置。';
 
   @override
-  String get multilingual => 'Multilingual';
+  String get multilingual => '多语言';
 
   @override
   String downloadingProgress(String percent) {
-    return 'Downloading… $percent%';
+    return '下載中 $percent%';
   }
 
   @override
-  String get loadingModel => 'Loading model…';
+  String get loadingModel => '載入模型';
 
   @override
-  String get retryDownload => 'Retry Download';
+  String get retryDownload => '重試下載';
 
   @override
-  String get activeAndReady => 'Active & Ready';
+  String get activeAndReady => '活躍且就緒';
 
   @override
-  String get remove => 'Remove';
+  String get remove => '移除';
 
   @override
-  String get enableAi => 'Enable AI';
+  String get enableAi => '啟用AI';
 
   @override
-  String get downloadAiModel => 'Download AI Model';
+  String get downloadAiModel => '下載AI模型';
 
   @override
-  String get deviceNotSupported => 'Device not supported';
+  String get deviceNotSupported => '裝置不支援';
 
   @override
-  String get downloadBackgroundNote =>
-      'Download happens in the background — you can leave this screen. The model file will be stored on your device and can be removed at any time.';
+  String get downloadBackgroundNote => '背景下載中，請勿關閉應用程式。';
 
   @override
-  String get removeAiModelTitle => 'Remove AI Model?';
+  String get removeAiModelTitle => '移除AI模型？';
 
   @override
-  String get removeAiModelConfirm =>
-      'This will delete the AI model from your device. You can re-download it later.';
+  String get removeAiModelConfirm => '移除AI模型？將釋放MB。';
 
   @override
-  String get analyzeWithAi => 'Analyze with AI';
+  String get analyzeWithAi => 'AI分析';
 
   @override
-  String get aiAssistantAvailable => 'AI Assistant available';
+  String get aiAssistantAvailable => 'AI助手可用';
 
   @override
-  String get aiSetupPrompt =>
-      'Set up an on-device AI model to get smart suggestions.';
+  String get aiSetupPrompt => '設定裝置上的AI模型以取得智慧建議。';
 
   @override
-  String get setup => 'Setup';
+  String get setup => '设置';
 
   @override
-  String get adminDashboard => 'Admin Dashboard';
+  String get adminDashboard => '管理面板';
 
   @override
-  String get failedToLoadDashboard => 'Failed to load dashboard';
+  String get failedToLoadDashboard => '載入面板失敗';
 
   @override
-  String get platformOverview => 'Platform Overview';
+  String get platformOverview => '平台概览';
 
   @override
-  String get liveStatistics => 'Live statistics from the backend.';
+  String get liveStatistics => '实时统计';
 
   @override
-  String get usersSection => 'Users';
+  String get usersSection => '使用者';
 
   @override
-  String get adminTabClients => 'Clients';
+  String get adminTabClients => '客户';
 
   @override
-  String get adminTabWorkers => 'Workers';
+  String get adminTabWorkers => '工人';
 
   @override
-  String get adminTabAccount => 'Account';
+  String get adminTabAccount => '帳戶';
 
   @override
-  String get jobsSection => 'Jobs';
+  String get jobsSection => '工作';
 
   @override
-  String get activeLabel => 'Active';
+  String get activeLabel => '活跃';
 
   @override
-  String get todaySection => 'Today';
+  String get todaySection => '今天';
 
   @override
-  String get createdLabel => 'Created';
+  String get createdLabel => '已建立';
 
   @override
-  String get completedLabel => 'Completed';
+  String get completedLabel => '已完成';
 
   @override
   String deleteUserTitle(String role) {
-    return 'Delete $role';
+    return '刪除$role？';
   }
 
   @override
   String deleteUserConfirm(String name, String email) {
-    return 'This action removes $name ($email) permanently. Continue?';
+    return '刪除$name？';
   }
 
   @override
-  String get userDeletedSuccess => 'User deleted successfully';
+  String get userDeletedSuccess => '使用者已刪除';
 
   @override
-  String get unableToLoadUsers => 'Unable to load users';
+  String get unableToLoadUsers => '載入使用者失敗';
 
   @override
-  String get noClientsFound => 'No clients found';
+  String get noClientsFound => '未找到客户';
 
   @override
-  String get noWorkersFound => 'No workers found';
+  String get noWorkersFound => '未找到工人';
 
   @override
-  String get deleteUserTooltip => 'Delete user';
+  String get deleteUserTooltip => '刪除使用者';
 
   @override
-  String get adminSession => 'Admin Session';
+  String get adminSession => '管理員工作階段';
 
   @override
-  String get adminManageUsersHint =>
-      'Manage users from the Clients and Workers tabs.';
+  String get adminManageUsersHint => '從客戶和工人標籤管理使用者。';
 
   @override
   String distanceKm(int radius) {
-    return '$radius km';
+    return '$radius 公里';
   }
 
   @override
-  String get youreOffline => 'You\'re Offline';
+  String get youreOffline => '您處於離線狀態';
 
   @override
-  String get offlineHint =>
-      'Toggle the switch in the top bar to go online and discover nearby jobs.';
+  String get offlineHint => '您處於離線狀態';
 
   @override
-  String get yourSkills => 'Your Skills';
+  String get yourSkills => '您的技能';
 
   @override
-  String get skillsSubtitle =>
-      'Search and add skills. These are sent to the server to filter your job feed.';
+  String get skillsSubtitle => '新增您的技能和專長';
 
   @override
-  String get addSkillLabel => 'Add Skill';
+  String get addSkillLabel => '新增技能';
 
   @override
-  String get typeToSearchSkills => 'Type to search skills…';
+  String get typeToSearchSkills => '搜尋技能';
 
   @override
   String savedSkillsCount(int count) {
-    return 'Saved Skills ($count)';
+    return '已儲存$count項技能';
   }
 
   @override
-  String get noSkillsAdded =>
-      'No skills added yet. Search above to add relevant skills.';
+  String get noSkillsAdded => '未新增技能';
 
   @override
-  String get unableToLoadTaskDetails => 'Unable to load task details';
+  String get unableToLoadTaskDetails => '載入詳情失敗';
 
   @override
-  String get detailDistance => 'Distance';
+  String get detailDistance => '距離';
 
   @override
-  String get chooseLocation => 'Choose Location';
+  String get chooseLocation => '選擇位置';
 
   @override
-  String get savedTab => 'Saved';
+  String get savedTab => '已儲存';
 
   @override
-  String get pinOnMapTab => 'Pin on Map';
+  String get pinOnMapTab => '在地圖上標記';
 
   @override
-  String get locationDeniedPermanently =>
-      'Location permanently denied. Enable it in Settings.';
+  String get locationDeniedPermanently => '位置權限被永久拒絕';
 
   @override
-  String get couldNotGetLocation => 'Could not get location';
+  String get couldNotGetLocation => '無法取得位置';
 
   @override
-  String get searchPlaces => 'Search places…';
+  String get searchPlaces => '搜尋地點';
 
   @override
-  String get switchToSatellite => 'Switch to Satellite';
+  String get switchToSatellite => '卫星地图';
 
   @override
-  String get switchToRoadMap => 'Switch to Road map';
+  String get switchToRoadMap => '道路地图';
 
   @override
-  String get goToMyLocation => 'Go to my location';
+  String get goToMyLocation => '到我的位置';
 
   @override
-  String get confirmLocation => 'Confirm Location';
+  String get confirmLocation => '確認位置';
 
   @override
-  String get saveAddress => 'Save Address';
+  String get saveAddress => '儲存地址';
 
   @override
-  String get saveAddressSubtitle =>
-      'Add a label and recipient details for this location.';
+  String get saveAddressSubtitle => '為將來的任務儲存';
 
   @override
-  String get labelField => 'Label';
+  String get labelField => '标签';
 
   @override
-  String get labelHome => 'Home';
+  String get labelHome => '家';
 
   @override
-  String get labelWork => 'Work';
+  String get labelWork => '工作';
 
   @override
-  String get labelOther => 'Other';
+  String get labelOther => '其他';
 
   @override
-  String get recipientName => 'Recipient Name';
+  String get recipientName => '收件人姓名';
 
   @override
-  String get recipientNameHint => 'e.g. Rahul Sharma';
+  String get recipientNameHint => '輸入姓名';
 
   @override
-  String get recipientPhone => 'Recipient Phone';
+  String get recipientPhone => '收件人电话';
 
   @override
-  String get recipientPhoneHint => 'e.g. 9876543210';
+  String get recipientPhoneHint => '輸入電話';
 
   @override
-  String get pickFromContacts => 'Pick from contacts';
+  String get pickFromContacts => '從聯絡人選擇';
 
   @override
-  String get contactsAccessDenied =>
-      'Contacts access denied — name was copied. Please enter the phone number manually.';
+  String get contactsAccessDenied => '聯絡人存取被拒絕';
 
   @override
-  String get openSettings => 'Open Settings';
+  String get openSettings => '開啟設定';
 
   @override
-  String get couldNotOpenContacts => 'Could not open contacts';
+  String get couldNotOpenContacts => '無法開啟聯絡人';
 
   @override
-  String get areaNeighbourhood => 'Area / Neighbourhood';
+  String get areaNeighbourhood => '區域/社區';
 
   @override
-  String get areaHint => 'e.g. Koramangala';
+  String get areaHint => '例如：信義區、大安區';
 
   @override
-  String get cityHint => 'e.g. Bengaluru';
+  String get cityHint => '例如：台北';
 
   @override
-  String get postalCodeRequired => 'Postal Code';
+  String get postalCodeRequired => '郵遞區號必填';
 
   @override
-  String get postalCodeHint => 'e.g. 560034';
+  String get postalCodeHint => '例如：100';
 
   @override
-  String get countryCodeRequired => 'Country Code';
+  String get countryCodeRequired => '國碼必填';
 
   @override
-  String get countryCodeHint => 'e.g. IN';
+  String get countryCodeHint => '+86';
 
   @override
-  String get requiredSkillsLabel => 'Required Skills';
+  String get requiredSkillsLabel => '必要技能';
 
   @override
-  String get skillHintText => 'e.g. plumbing, painting…';
+  String get skillHintText => '輸入技能，用逗號分隔';
 
   @override
-  String get skillHelperEmpty => 'Type skills and separate them with commas';
+  String get skillHelperEmpty => '尚未新增技能';
 
   @override
   String skillsAddedCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count skills added',
-      one: '1 skill added',
-    );
-    return '$_temp0';
+    return '已新增$count項技能';
   }
 
   @override
@@ -3035,17 +3144,202 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get languageHebrew => 'עברית';
 
   @override
-  String get useWithoutSaving => 'Use Without Saving';
+  String get accentColorBlue => '蓝色';
 
   @override
-  String get saveAndUse => 'Save & Use';
+  String get accentColorYellow => '黄色';
 
   @override
-  String get useMyCurrentLocation => 'Use My Current Location';
+  String get accentColorGreen => '绿色';
 
   @override
-  String get detectingLocation => 'Detecting location…';
+  String get accentColorPink => '粉红';
 
   @override
-  String get deleteAddress => 'Delete Address';
+  String get accentColorRed => '红色';
+
+  @override
+  String get accentColorPurple => '紫色';
+
+  @override
+  String get accentColorOrange => '橙色';
+
+  @override
+  String get accentColorTeal => '青色';
+
+  @override
+  String get accentColorCustom => '自訂';
+
+  @override
+  String get paymentStatusPending => '待付款';
+
+  @override
+  String get paymentStatusLocked => '金額已安全保留';
+
+  @override
+  String get paymentStatusReleased => '付款已釋放';
+
+  @override
+  String get paymentStatusOffline => '完成後直接支付';
+
+  @override
+  String paymentStatusGeneric(String status) {
+    return '付款状态：$status';
+  }
+
+  @override
+  String get jobStatusOpenForOffers => '開放報價';
+
+  @override
+  String get jobStatusOfferAccepted => '報價已接受';
+
+  @override
+  String get jobStatusReadyToStart => '準備開始';
+
+  @override
+  String get jobStatusInProgress => '進行中';
+
+  @override
+  String get jobStatusPendingPayment => '待付款';
+
+  @override
+  String get jobStatusPaymentReleased => '付款已釋放';
+
+  @override
+  String get jobStatusTaskCompleted => '任務完成';
+
+  @override
+  String get jobStatusCancelled => '已取消';
+
+  @override
+  String get detailBudgetLabel => '預算';
+
+  @override
+  String get detailLocationLabel => '位置';
+
+  @override
+  String get detailSkillsLabel => '技能';
+
+  @override
+  String get detailJobIdLabel => '工作ID';
+
+  @override
+  String get tooltipCopy => '复制';
+
+  @override
+  String get tooltipDeleteAddress => '刪除地址';
+
+  @override
+  String confirmDeleteAddress(String addressLabel) {
+    return '從已儲存的地址中刪除\"$addressLabel\"？';
+  }
+
+  @override
+  String get errorNotAuthenticated => '未驗證。請重新登入。';
+
+  @override
+  String get errorCouldNotOpenImagePicker => '无法打开图片选择器。';
+
+  @override
+  String get errorCouldNotReadImage => '无法读取图片。';
+
+  @override
+  String get errorImageTooLarge => '圖片須小於5MB。';
+
+  @override
+  String get errorUploadFailed => '上傳失敗。請重試。';
+
+  @override
+  String get errorNameRequired => '姓名必填';
+
+  @override
+  String get errorRatingRequired => '請選擇評分';
+
+  @override
+  String get errorNotLoggedIn => '請先登入';
+
+  @override
+  String get errorAdminProfileUpdateNotSupported => '不支持管理员资料更新';
+
+  @override
+  String get errorAdminDeletionDisabled => '应用内禁止删除管理员';
+
+  @override
+  String get errorConnectionTimeout => '連接逾時。請重試。';
+
+  @override
+  String get errorConnectionError => '連接伺服器失敗。';
+
+  @override
+  String get errorRequestCancelled => '请求已取消。';
+
+  @override
+  String get errorBadRequest => '無效請求。請檢查輸入。';
+
+  @override
+  String get errorSessionExpired => '工作階段已過期。請重新登入。';
+
+  @override
+  String get errorPermissionDenied => '沒有權限。';
+
+  @override
+  String get errorResourceNotFound => '找不到資源。';
+
+  @override
+  String get errorConflict => '冲突：无法完成操作。';
+
+  @override
+  String get errorFileTooLarge => '檔案過大。最大5MB。';
+
+  @override
+  String get errorValidationError => '驗證錯誤。請檢查輸入。';
+
+  @override
+  String get errorTooManyRequests => '請求過多。請稍候。';
+
+  @override
+  String get errorServerError => '伺服器錯誤。請稍後重試。';
+
+  @override
+  String errorRequestFailed(String statusCode) {
+    return '請求失敗：狀態 $statusCode';
+  }
+
+  @override
+  String get errorNetworkFailed => '網路錯誤。';
+
+  @override
+  String get errorNetworkRequestFailed => '網路錯誤';
+
+  @override
+  String get errorMalformedSkillResponse => '技能响应格式错误';
+
+  @override
+  String get errorMalformedResponse => '响应格式错误';
+
+  @override
+  String get errorMalformedAdminResponse => '管理员响应格式错误';
+
+  @override
+  String get errorAdminAccessRequired => '需要管理員權限';
+
+  @override
+  String get errorDescriptionUnavailable => '描述不可用';
+
+  @override
+  String errorUnauthorizedAction(String roleLabel) {
+    return '僅$roleLabel可執行此操作';
+  }
+
+  @override
+  String get useWithoutSaving => '不儲存直接使用';
+
+  @override
+  String get saveAndUse => '儲存並使用';
+
+  @override
+  String get useMyCurrentLocation => '使用我的目前位置';
+
+  @override
+  String get detectingLocation => '正在偵測位置…';
 }

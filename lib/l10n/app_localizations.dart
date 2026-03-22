@@ -2985,22 +2985,382 @@ abstract class AppLocalizations {
   /// **'עברית'**
   String get languageHebrew;
 
+  /// No description provided for @accentColorBlue.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue'**
+  String get accentColorBlue;
+
+  /// No description provided for @accentColorYellow.
+  ///
+  /// In en, this message translates to:
+  /// **'Yellow'**
+  String get accentColorYellow;
+
+  /// No description provided for @accentColorGreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Green'**
+  String get accentColorGreen;
+
+  /// No description provided for @accentColorPink.
+  ///
+  /// In en, this message translates to:
+  /// **'Pink'**
+  String get accentColorPink;
+
+  /// No description provided for @accentColorRed.
+  ///
+  /// In en, this message translates to:
+  /// **'Red'**
+  String get accentColorRed;
+
+  /// No description provided for @accentColorPurple.
+  ///
+  /// In en, this message translates to:
+  /// **'Purple'**
+  String get accentColorPurple;
+
+  /// No description provided for @accentColorOrange.
+  ///
+  /// In en, this message translates to:
+  /// **'Orange'**
+  String get accentColorOrange;
+
+  /// No description provided for @accentColorTeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Teal'**
+  String get accentColorTeal;
+
+  /// No description provided for @accentColorCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get accentColorCustom;
+
+  /// No description provided for @paymentStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment pending'**
+  String get paymentStatusPending;
+
+  /// No description provided for @paymentStatusLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Money is safely reserved'**
+  String get paymentStatusLocked;
+
+  /// No description provided for @paymentStatusReleased.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment released successfully'**
+  String get paymentStatusReleased;
+
+  /// No description provided for @paymentStatusOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay directly upon completion'**
+  String get paymentStatusOffline;
+
+  /// No description provided for @paymentStatusGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment status: {status}'**
+  String paymentStatusGeneric(String status);
+
+  /// No description provided for @jobStatusOpenForOffers.
+  ///
+  /// In en, this message translates to:
+  /// **'Open For Offers'**
+  String get jobStatusOpenForOffers;
+
+  /// No description provided for @jobStatusOfferAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer Accepted'**
+  String get jobStatusOfferAccepted;
+
+  /// No description provided for @jobStatusReadyToStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to Start'**
+  String get jobStatusReadyToStart;
+
+  /// No description provided for @jobStatusInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get jobStatusInProgress;
+
+  /// No description provided for @jobStatusPendingPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Payment'**
+  String get jobStatusPendingPayment;
+
+  /// No description provided for @jobStatusPaymentReleased.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Released'**
+  String get jobStatusPaymentReleased;
+
+  /// No description provided for @jobStatusTaskCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Completed'**
+  String get jobStatusTaskCompleted;
+
+  /// No description provided for @jobStatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get jobStatusCancelled;
+
+  /// No description provided for @detailBudgetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget'**
+  String get detailBudgetLabel;
+
+  /// No description provided for @detailLocationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get detailLocationLabel;
+
+  /// No description provided for @detailSkillsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Skills'**
+  String get detailSkillsLabel;
+
+  /// No description provided for @detailJobIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Job ID'**
+  String get detailJobIdLabel;
+
+  /// No description provided for @tooltipCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get tooltipCopy;
+
+  /// No description provided for @tooltipDeleteAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete address'**
+  String get tooltipDeleteAddress;
+
+  /// No description provided for @confirmDeleteAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove \"{addressLabel}\" from saved addresses?'**
+  String confirmDeleteAddress(String addressLabel);
+
+  /// No description provided for @errorNotAuthenticated.
+  ///
+  /// In en, this message translates to:
+  /// **'Not authenticated. Please log in again.'**
+  String get errorNotAuthenticated;
+
+  /// No description provided for @errorCouldNotOpenImagePicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open image picker.'**
+  String get errorCouldNotOpenImagePicker;
+
+  /// No description provided for @errorCouldNotReadImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read the selected image.'**
+  String get errorCouldNotReadImage;
+
+  /// No description provided for @errorImageTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Image must be under 5 MB. Please choose a smaller file.'**
+  String get errorImageTooLarge;
+
+  /// No description provided for @errorUploadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload failed. Please try again.'**
+  String get errorUploadFailed;
+
+  /// No description provided for @errorNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get errorNameRequired;
+
+  /// No description provided for @errorRatingRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a rating'**
+  String get errorRatingRequired;
+
+  /// No description provided for @errorNotLoggedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Please log in first'**
+  String get errorNotLoggedIn;
+
+  /// No description provided for @errorAdminProfileUpdateNotSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin profile updates are not supported in this flow'**
+  String get errorAdminProfileUpdateNotSupported;
+
+  /// No description provided for @errorAdminDeletionDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin account deletion is disabled in mobile flow'**
+  String get errorAdminDeletionDisabled;
+
+  /// No description provided for @errorConnectionTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timed out. Check your network and try again.'**
+  String get errorConnectionTimeout;
+
+  /// No description provided for @errorConnectionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to connect to the server. Check your network.'**
+  String get errorConnectionError;
+
+  /// No description provided for @errorRequestCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Request was cancelled.'**
+  String get errorRequestCancelled;
+
+  /// No description provided for @errorBadRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid request. Please check your input.'**
+  String get errorBadRequest;
+
+  /// No description provided for @errorSessionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Session expired. Please log in again.'**
+  String get errorSessionExpired;
+
+  /// No description provided for @errorPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'You do not have permission to perform this action.'**
+  String get errorPermissionDenied;
+
+  /// No description provided for @errorResourceNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Resource not found.'**
+  String get errorResourceNotFound;
+
+  /// No description provided for @errorConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'Conflict: the action cannot be completed in the current state.'**
+  String get errorConflict;
+
+  /// No description provided for @errorFileTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'File too large. Maximum size is 5 MB.'**
+  String get errorFileTooLarge;
+
+  /// No description provided for @errorValidationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Validation error. Please review your input.'**
+  String get errorValidationError;
+
+  /// No description provided for @errorTooManyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many requests. Please wait and try again.'**
+  String get errorTooManyRequests;
+
+  /// No description provided for @errorServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error. Please try again later.'**
+  String get errorServerError;
+
+  /// No description provided for @errorRequestFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Request failed with status {statusCode}'**
+  String errorRequestFailed(String statusCode);
+
+  /// No description provided for @errorNetworkFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Network request failed.'**
+  String get errorNetworkFailed;
+
+  /// No description provided for @errorNetworkRequestFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Network request failed'**
+  String get errorNetworkRequestFailed;
+
+  /// No description provided for @errorMalformedSkillResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Malformed skill suggest response'**
+  String get errorMalformedSkillResponse;
+
+  /// No description provided for @errorMalformedResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Malformed response payload'**
+  String get errorMalformedResponse;
+
+  /// No description provided for @errorMalformedAdminResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Malformed admin overview response'**
+  String get errorMalformedAdminResponse;
+
+  /// No description provided for @errorAdminAccessRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin access is required'**
+  String get errorAdminAccessRequired;
+
+  /// No description provided for @errorDescriptionUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Description unavailable'**
+  String get errorDescriptionUnavailable;
+
+  /// No description provided for @errorUnauthorizedAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Only {roleLabel} can perform this action'**
+  String errorUnauthorizedAction(String roleLabel);
+
   /// No description provided for @useWithoutSaving.
   ///
   /// In en, this message translates to:
-  /// **'Use Without Saving'**
+  /// **'Use without saving'**
   String get useWithoutSaving;
 
   /// No description provided for @saveAndUse.
   ///
   /// In en, this message translates to:
-  /// **'Save & Use'**
+  /// **'Save & use'**
   String get saveAndUse;
 
   /// No description provided for @useMyCurrentLocation.
   ///
   /// In en, this message translates to:
-  /// **'Use My Current Location'**
+  /// **'Use my current location'**
   String get useMyCurrentLocation;
 
   /// No description provided for @detectingLocation.
@@ -3008,12 +3368,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Detecting location…'**
   String get detectingLocation;
-
-  /// No description provided for @deleteAddress.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete Address'**
-  String get deleteAddress;
 }
 
 class _AppLocalizationsDelegate

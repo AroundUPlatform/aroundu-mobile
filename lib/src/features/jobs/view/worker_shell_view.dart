@@ -18,6 +18,8 @@ import 'widgets/job_card.dart';
 import 'widgets/job_shared_widgets.dart';
 import 'widgets/skill_suggest_field.dart';
 import '../../../core/l10n/l10n_extension.dart';
+import '../../ai/view/ai_analysis_panel.dart';
+import '../../ai/view_model/ai_service_provider.dart';
 
 class WorkerShellScreen extends ConsumerStatefulWidget {
   const WorkerShellScreen({super.key});
@@ -862,7 +864,7 @@ class _WorkerJobWorkflowSheetState
                 ),
               ),
               child: Text(
-                job.status.label,
+                job.status.localizedLabel(context),
                 style: theme.textTheme.labelMedium?.copyWith(
                   color: job.status.color,
                   fontWeight: FontWeight.w700,
@@ -1122,6 +1124,16 @@ class _WorkerJobWorkflowSheetState
                       ),
                       const SizedBox(height: 4),
                     ],
+                  ),
+                  const SizedBox(height: 12),
+                  AIAnalysisPanel(
+                    useCase: AIUseCase.bidExplainerWorker,
+                    inputBuilder: () =>
+                        'Job: ${job.title}\n'
+                        'Description: ${job.description}\n'
+                        'Budget: ₹${job.budget.toStringAsFixed(0)}\n'
+                        'My offer: ${_amountController.text}\n'
+                        'Notes: ${_notesController.text}',
                   ),
                   const SizedBox(height: 12),
                   SizedBox(

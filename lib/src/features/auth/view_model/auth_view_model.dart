@@ -390,7 +390,11 @@ class AuthController extends Notifier<AuthState> {
 
     if (state.role == UserRole.admin) {
       state = state.copyWith(
-        errorMessage: 'Admin profile updates are not supported in this flow',
+        errorMessage:
+            ref
+                .read(currentL10nProvider)
+                ?.errorAdminProfileUpdateNotSupported ??
+            'Admin profile updates are not supported in this flow',
       );
       return false;
     }
@@ -573,7 +577,9 @@ class AuthController extends Notifier<AuthState> {
 
     if (state.role == UserRole.admin) {
       state = state.copyWith(
-        errorMessage: 'Admin account deletion is disabled in mobile flow',
+        errorMessage:
+            ref.read(currentL10nProvider)?.errorAdminDeletionDisabled ??
+            'Admin account deletion is disabled in mobile flow',
       );
       return false;
     }
