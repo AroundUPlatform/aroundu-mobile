@@ -42,7 +42,8 @@ class EncryptionInterceptor extends Interceptor {
 
     // Encrypt the request body only when there is a JSON-serialisable body.
     // Skip multipart form data and raw binary payloads.
-    final hasEncryptableBody = options.data != null &&
+    final hasEncryptableBody =
+        options.data != null &&
         options.data is! FormData &&
         options.data is! List<int>;
 

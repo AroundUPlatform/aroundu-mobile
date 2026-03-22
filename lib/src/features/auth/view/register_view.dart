@@ -172,10 +172,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   child: IconButton(
                     icon: const Icon(Icons.language_rounded),
                     tooltip: context.l10n.multilingual,
-                    onPressed: () => Navigator.pushNamed(
-                      context,
-                      AppRoutes.languagePicker,
-                    ),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, AppRoutes.languagePicker),
                   ),
                 ),
                 Text(

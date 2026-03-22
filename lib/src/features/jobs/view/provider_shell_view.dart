@@ -527,7 +527,8 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                       TextFormField(
                         controller: _titleController,
                         textInputAction: TextInputAction.next,
-                        validator: (value) => _required(value, context.l10n.taskTitleLabel),
+                        validator: (value) =>
+                            _required(value, context.l10n.taskTitleLabel),
                         decoration: InputDecoration(
                           labelText: context.l10n.taskTitleLabel,
                           prefixIcon: const Icon(Icons.title_rounded),
@@ -548,7 +549,8 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                           decimal: true,
                         ),
                         textInputAction: TextInputAction.next,
-                        validator: (value) => _required(value, context.l10n.jobBudget),
+                        validator: (value) =>
+                            _required(value, context.l10n.jobBudget),
                         decoration: InputDecoration(
                           labelText: context.l10n.jobBudget,
                           prefixIcon: const Icon(Icons.currency_rupee_rounded),
@@ -561,7 +563,8 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                         controller: _descriptionController,
                         maxLines: 4,
                         textInputAction: TextInputAction.newline,
-                        validator: (value) => _required(value, context.l10n.jobDescription),
+                        validator: (value) =>
+                            _required(value, context.l10n.jobDescription),
                         decoration: InputDecoration(
                           labelText: context.l10n.jobDescription,
                           alignLabelWithHint: true,
