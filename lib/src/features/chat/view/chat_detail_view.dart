@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
@@ -157,9 +158,9 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
           children: [
             Text(widget.otherUserName, style: const TextStyle(fontSize: 16)),
             if (chatState.isOtherTyping)
-              const Text(
-                'typing...',
-                style: TextStyle(
+              Text(
+                context.l10n.typing,
+                style: const TextStyle(
                   fontSize: 12,
                   color: AppPalette.success,
                   fontWeight: FontWeight.w500,
@@ -183,7 +184,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
           // Messages
           Expanded(
             child: chatState.isLoading && chatState.messages.isEmpty
-                ? const LoadingState(message: 'Loading messages...')
+                ? LoadingState(message: context.l10n.loadingMessages)
                 : chatState.errorMessage != null && chatState.messages.isEmpty
                 ? ErrorState(
                     message: chatState.errorMessage!,
@@ -212,7 +213,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'Start the conversation!',
+                            context.l10n.startConversation,
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
@@ -276,9 +277,9 @@ class _DateSeparator extends StatelessWidget {
     final diff = now.difference(date);
     String label;
     if (diff.inDays == 0) {
-      label = 'Today';
+      label = context.l10n.chatToday;
     } else if (diff.inDays == 1) {
-      label = 'Yesterday';
+      label = context.l10n.chatYesterday;
     } else {
       label = DateFormat.MMMd().format(date);
     }
@@ -316,7 +317,7 @@ class _UnreadDivider extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Text(
-              '↑ New Messages',
+              context.l10n.newMessages,
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
@@ -480,7 +481,7 @@ class _ChatInput extends StatelessWidget {
               maxLines: 4,
               minLines: 1,
               decoration: InputDecoration(
-                hintText: 'Type a message...',
+                hintText: context.l10n.typeMessage,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(24),
                   borderSide: BorderSide.none,

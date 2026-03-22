@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme/app_theme.dart';
 import '../model/chat_models.dart';
 import 'conversations_view.dart';
@@ -65,7 +66,7 @@ class JobConversationsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'No conversations yet',
+                      context.l10n.noConversationsYet,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],

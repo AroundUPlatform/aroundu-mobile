@@ -12,29 +12,75 @@
   "orContinueWith": "Or continue with",
   "dontHaveAccount": "Don't have an account?",
   "alreadyHaveAccount": "Already have an account?",
-
-  "onboardingTitle1": "Find Tasks Around You",
-  "onboardingSubtitle1": "Discover local jobs and services right in your neighbourhood.",
-  "onboardingTitle2": "Bid & Get Hired",
-  "onboardingSubtitle2": "Place competitive bids and get hired for tasks that match your skills.",
-  "onboardingTitle3": "Secure Payments",
-  "onboardingSubtitle3": "Escrow-backed payments ensure fair and safe transactions.",
+  "welcomeBack": "Welcome Back",
+  "loginSubtitle": "Sign in to continue as provider or worker.",
+  "noAccountYet": "No account yet?",
+  "createOne": "Create one",
+  "emailRequired": "Email is required",
+  "enterValidEmail": "Enter a valid email",
+  "passwordRequired": "Password is required",
+  "minimumSixCharacters": "Minimum 6 characters",
+  "unableToLogin": "Unable to login. Please retry.",
+  "fieldRequired": "{field} is required",
+  "@fieldRequired": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "enterValidPhone": "Enter a valid phone number",
+  "unableToRegister": "Unable to register",
+  "registrationSuccess": "Registration successful. Please log in.",
+  "registerSubtitle": "Register as provider or worker with your basic location profile.",
+  "roleLabel": "Role",
+  "roleJobProvider": "Job Provider",
+  "roleJobWorker": "Job Worker",
+  "countryLabel": "Country",
+  "currencyLabel": "Currency",
+  "cityLabel": "City",
+  "postalCodeLabel": "Postal code",
+  "areaOptionalLabel": "Area (optional)",
+  "fullAddressOptionalLabel": "Full address (optional)",
+  "alreadyRegistered": "Already registered?",
+  "logInLink": "Log in",
+  "onboardingTitle1": "Book Local Services Fast",
+  "onboardingSubtitle1": "Post your requirement in minutes and get matched with nearby verified workers.",
+  "onboardingTitle2": "Compare Bids Transparently",
+  "onboardingSubtitle2": "Review pricing, profiles, and timelines before assigning your job with confidence.",
+  "onboardingTitle3": "Track Every Job Clearly",
+  "onboardingSubtitle3": "Stay updated from job creation to completion with role-based dashboards.",
   "getStarted": "Get Started",
   "skip": "Skip",
   "next": "Next",
-
+  "newHereCreateAccount": "New here? Create account",
   "roleSelectionTitle": "Choose Your Role",
   "roleClient": "Client",
   "roleClientDesc": "I need help with tasks",
   "roleWorker": "Worker",
   "roleWorkerDesc": "I want to offer my skills",
   "continueButton": "Continue",
-
+  "roleSelectionSubtitle": "Select the workflow you want to use in AroundU.",
+  "signedInAs": "Signed in as {email}",
+  "@signedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "roleProviderDesc": "Post jobs and manage incoming bids.",
+  "roleWorkerDescAlt": "Browse nearby jobs and place bids quickly.",
   "homeTab": "Home",
   "jobsTab": "Jobs",
   "chatTab": "Chat",
   "profileTab": "Profile",
-
+  "providerTabMyTasks": "My Tasks",
+  "providerTabPostTask": "Post Task",
+  "tasksNavLabel": "Tasks",
+  "postNavLabel": "Post",
+  "workerTabTaskFeed": "Task Feed",
+  "feedNavLabel": "Feed",
   "myJobs": "My Jobs",
   "workerFeed": "Available Jobs",
   "createJob": "Create Job",
@@ -42,7 +88,6 @@
   "editJob": "Edit Job",
   "deleteJob": "Delete Job",
   "deleteJobConfirm": "Are you sure you want to delete this job?",
-
   "jobTitle": "Title",
   "jobDescription": "Description",
   "jobCategory": "Category",
@@ -53,17 +98,63 @@
   "jobUrgency": "Urgency",
   "jobPaymentMode": "Payment Mode",
   "urgencyNormal": "Normal",
+  "urgencyMedium": "Medium",
   "urgencyUrgent": "Urgent",
+  "urgencyAsap": "ASAP",
   "paymentOffline": "Offline",
   "paymentEscrow": "Escrow",
-
+  "paymentMethod": "Payment Method",
+  "payInCash": "Pay in Cash",
+  "secureEscrow": "Secure Escrow",
+  "filterAll": "All",
+  "filterOpen": "Open",
+  "filterActive": "Active",
+  "filterInProgress": "In Progress",
+  "filterCompleted": "Completed",
+  "filterCancelled": "Cancelled",
+  "filterExpired": "Expired",
+  "filterNearby": "Nearby",
+  "filterAllMine": "All Mine",
+  "filterBidPlaced": "Bid Placed",
+  "filterAccepted": "Accepted",
+  "noTasksPostedYet": "No tasks posted yet",
+  "noOpenTasks": "No open tasks",
+  "noActiveTasks": "No active tasks",
+  "noTasksInProgress": "No tasks in progress",
+  "noCompletedTasks": "No completed tasks",
+  "noCancelledTasks": "No cancelled tasks",
+  "noExpiredTasks": "No expired tasks",
+  "unableToLoadTasks": "Unable to load tasks",
+  "noNearbyJobs": "No nearby jobs right now",
+  "noJobsYetBid": "No jobs yet — place a bid to get started!",
+  "noPendingBids": "No pending bids",
+  "noAcceptedJobs": "No accepted jobs",
+  "noJobsInProgress": "No jobs in progress",
+  "noCompletedJobsYet": "No completed jobs yet",
+  "noCancelledJobs": "No cancelled jobs",
+  "noExpiredJobs": "No expired jobs",
+  "pullDownToRefreshCheck": "Pull down to refresh and check again.",
+  "unableToLoadJobs": "Unable to load jobs",
+  "postNewTask": "Post a New Task",
+  "postTaskSubtitle": "Add clear details so workers can send accurate offers.",
+  "taskTitleLabel": "Task title",
+  "savingLocation": "Saving location…",
+  "tapToSelectLocation": "Tap to select location",
+  "postTaskButton": "Post Task",
+  "addSkillWarning": "Add at least one required skill for this task",
+  "enterValidBudget": "Enter a valid budget amount",
+  "setJobLocationWarning": "Please set a job location before posting",
+  "jobPostedSuccess": "Job posted successfully",
+  "failedToPostJob": "Failed to post job. Please retry.",
+  "failedToSaveLocation": "Failed to save location",
+  "unableToLoadJobWorkflow": "Unable to load job workflow",
+  "unknownError": "Unknown error",
   "statusOpenForBids": "Open for Bids",
   "statusInProgress": "In Progress",
   "statusCompleted": "Completed",
   "statusCancelled": "Cancelled",
   "statusPendingStart": "Pending Start",
   "statusPendingRelease": "Pending Release",
-
   "bids": "Bids",
   "noBids": "No bids yet",
   "placeBid": "Place Bid",
@@ -75,19 +166,102 @@
   "bidAccepted": "Bid Accepted",
   "bidRejected": "Bid Rejected",
   "bidPending": "Pending",
-
+  "offersSection": "Offers",
+  "noOffersReceivedYet": "No offers received yet.",
+  "offerAccepted": "Offer Accepted",
+  "offerRejected": "Offer Rejected",
+  "offerPending": "Offer Pending",
+  "workerNumber": "Worker #{id}",
+  "@workerNumber": {
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "acceptThisOffer": "Accept this Offer",
+  "messageWorker": "Message Worker",
+  "offerAcceptedSnack": "Offer accepted",
+  "yourOffer": "Your Offer",
+  "bidStatusSelected": "Selected",
+  "bidStatusRejected": "Rejected",
+  "bidStatusPending": "Pending",
+  "placeYourOffer": "Place Your Offer",
+  "yourOfferAmount": "Your offer amount",
+  "messageToClientOptional": "Message to client (optional)",
+  "addPartnerOptional": "Add a partner (optional)",
+  "partnerNameLabel": "Partner name",
+  "partnerFeeLabel": "Partner fee",
+  "partnerFeeAmount": "+ {symbol}{amount} partner fee",
+  "@partnerFeeAmount": {
+    "placeholders": {
+      "symbol": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "submitOffer": "Submit Offer",
+  "enterValidOfferAmount": "Enter a valid offer amount",
+  "offerSubmittedSuccess": "Offer submitted successfully",
+  "clientSelectedYourOffer": "Client Selected Your Offer!",
+  "handshakeHint": "Accept to confirm this job, or decline if you're no longer available.",
+  "handshakeAccepted": "Handshake accepted",
+  "handshakeDeclined": "Handshake declined",
+  "acceptJob": "Accept Job",
+  "decline": "Decline",
   "startCode": "Start Code",
   "releaseCode": "Release Code",
   "generateCodes": "Generate Codes",
   "verifyCode": "Verify Code",
   "enterCode": "Enter Code",
-
+  "generateStartCode": "Generate Start Code",
+  "startCodeCopied": "Start code copied",
+  "reserveInEscrow": "Reserve {symbol}{amount} in Escrow",
+  "@reserveInEscrow": {
+    "placeholders": {
+      "symbol": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "releaseCodeCopied": "Release code copied",
+  "releaseCodeHint": "Share this verbally with the worker. They enter it to confirm task completion.",
+  "regenerateCode": "Regenerate Code",
+  "generateReleaseCode": "Generate Release Code",
+  "taskCodesGenerated": "Task codes generated",
+  "newReleaseCodeGenerated": "New release code generated",
+  "readyToBegin": "Ready to Begin?",
+  "startCodeHint": "Ask the client for the start code and enter it below to officially begin work.",
+  "verifyAndStartWork": "Verify & Start Work",
+  "startCodeVerified": "Start code verified. Task is now in progress.",
+  "enterStartCodeFirst": "Enter start code first",
+  "workInProgress": "Work In Progress",
+  "releaseCodePrompt": "Once done, ask the client for the 6-digit release code.",
+  "releaseCodeHelper": "Enter the 6-digit code from the client",
+  "confirmWorkCompleted": "Confirm Work Completed",
+  "workConfirmedPaymentReleased": "Work confirmed — payment released!",
+  "enterReleaseCodeWarning": "Enter the release code from the client",
   "escrow": "Escrow",
   "lockEscrow": "Lock Escrow",
   "releaseEscrow": "Release Payment",
   "paymentLocked": "Payment Locked",
   "paymentReleased": "Payment Released",
-
+  "paymentSafelyReserved": "Payment safely reserved",
+  "cancelTask": "Cancel Task",
+  "taskCancelled": "Task cancelled",
+  "deleteTask": "Delete Task",
+  "deleteTaskTitle": "Delete task?",
+  "deleteTaskConfirm": "This will remove the task and all associated offers.",
+  "taskDeleted": "Task deleted",
+  "typeFirstMessage": "Type your first message…",
+  "send": "Send",
+  "failedToSendMessage": "Failed to send message",
   "conversations": "Messages",
   "noMessagesYet": "No messages yet",
   "noMessagesSubtitle": "Your conversations will appear here when you start chatting about a task.",
@@ -99,16 +273,40 @@
   "minutesAgo": "{count}m ago",
   "@minutesAgo": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "workersCount": "{count, plural, =1{1 worker} other{{count} workers}}",
   "@workersCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
-
+  "chatToday": "Today",
+  "chatYesterday": "Yesterday",
+  "chatYouPrefix": "You: {message}",
+  "@chatYouPrefix": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "chatReFallback": "Re: {jobTitle}",
+  "@chatReFallback": {
+    "placeholders": {
+      "jobTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "noConversationsYet": "No conversations yet",
+  "loadingConversations": "Loading conversations...",
+  "loadingMessages": "Loading messages...",
   "profile": "Profile",
   "editProfile": "Edit Profile",
   "fullName": "Full Name",
@@ -118,7 +316,44 @@
   "saveChanges": "Save Changes",
   "logout": "Log Out",
   "logoutConfirm": "Are you sure you want to log out?",
-
+  "myProfile": "My Profile",
+  "unknown": "Unknown",
+  "experienceLabel": "Experience",
+  "statusLabel": "Status",
+  "notSet": "Not set",
+  "onDuty": "On Duty",
+  "offDuty": "Off Duty",
+  "yearsCount": "{count} years",
+  "@yearsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "themeAndColors": "Theme & Colors",
+  "aiModelLabel": "AI Model",
+  "availableForWork": "Available for Work",
+  "visibleToClients": "You are visible to clients",
+  "currentlyOffDuty": "You are currently off duty",
+  "myReviews": "My Reviews",
+  "deleteAccount": "Delete Account",
+  "deleteAccountConfirm": "This will permanently delete your account and all data. This cannot be undone.",
+  "couldNotDeleteAccount": "Could not delete account",
+  "profilePhotoUpdated": "Profile photo updated",
+  "profileUpdated": "Profile updated",
+  "nameLabel": "Name",
+  "profileImageUrl": "Profile Image URL",
+  "yearsOfExperience": "Years of Experience",
+  "certificationsLabel": "Certifications",
+  "payoutAccountLabel": "Payout Account",
+  "onDutySubtitle": "Toggle availability for new tasks",
+  "loadingProfile": "Loading profile...",
+  "availabilityLabel": "Availability",
+  "memberLabel": "Member",
+  "available": "Available",
+  "unavailable": "Unavailable",
+  "viewAllReviews": "View All Reviews",
   "settings": "Settings",
   "appearance": "Appearance",
   "language": "Language",
@@ -132,19 +367,57 @@
   "previewSubtitle": "This is how your app will look.",
   "primary": "Primary",
   "secondary": "Secondary",
-
+  "modeLabel": "Mode",
+  "pickAColour": "Pick a colour",
+  "systemDefault": "System default",
+  "darkModeSubtitle": "Switch between light and dark themes",
   "reviews": "Reviews",
   "leaveReview": "Leave a Review",
   "noReviews": "No reviews yet",
   "rating": "Rating",
   "reviewComment": "Comment",
   "submitReview": "Submit Review",
-
+  "howWasWorker": "How was {name}?",
+  "@howWasWorker": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feedbackHelps": "Your feedback helps the community",
+  "thanksForReview": "Thanks for your review!",
+  "shareExperienceHint": "Share your experience (optional)",
+  "ratingExcellent": "Excellent!",
+  "ratingGreat": "Great!",
+  "ratingGood": "Good",
+  "ratingFair": "Fair",
+  "ratingPoor": "Poor",
+  "tapToRate": "Tap to rate",
+  "workerReviewsTitle": "{name}'s Reviews",
+  "@workerReviewsTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingReviews": "Loading reviews...",
+  "noReviewsSubtitle": "Reviews will appear here after completed tasks.",
+  "allReviews": "All Reviews",
+  "reviewCount": "{count, plural, =1{1 review} other{{count} reviews}}",
+  "@reviewCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "anonymous": "Anonymous",
   "loading": "Loading...",
-  "loadingConversations": "Loading conversations...",
-  "loadingMessages": "Loading messages...",
   "error": "Something went wrong",
   "retry": "Retry",
+  "tryAgain": "Try Again",
   "cancel": "Cancel",
   "confirm": "Confirm",
   "delete": "Delete",
@@ -154,7 +427,11 @@
   "search": "Search",
   "noResults": "No results found",
   "pullToRefresh": "Pull to refresh",
-
+  "pullDownToRefresh": "Pull down to refresh.",
+  "yes": "Yes",
+  "required": "Required",
+  "stop": "Stop",
+  "clear": "Clear",
   "aiSetup": "AI Setup",
   "aiAnalysis": "AI Analysis",
   "unlockAi": "Unlock AI Analysis",
@@ -170,7 +447,153 @@
   "whyThisJob": "Why this?",
   "suggestPrice": "Suggest Price",
   "analyzing": "Analyzing…",
-
+  "aiCapabilities": "AI Capabilities",
+  "onDeviceAi": "On-Device AI",
+  "aiTaglineSetup": "Private · Offline · Free",
+  "aiSetupDescription": "Get smart suggestions for tasks and bids powered by an AI model that runs entirely on your device. No data leaves your phone.",
+  "physicalDevice": "Physical device",
+  "emulatorDetected": "Emulator detected",
+  "ram": "RAM",
+  "sufficient": "Sufficient",
+  "freeStorage": "Free storage",
+  "mbFree": "{mb} MB free",
+  "@mbFree": {
+    "placeholders": {
+      "mb": {
+        "type": "int"
+      }
+    }
+  },
+  "aiRequiresPhysicalDevice": "AI features require a physical device.",
+  "multilingual": "Multilingual",
+  "downloadingProgress": "Downloading… {percent}%",
+  "@downloadingProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingModel": "Loading model…",
+  "retryDownload": "Retry Download",
+  "activeAndReady": "Active & Ready",
+  "remove": "Remove",
+  "enableAi": "Enable AI",
+  "downloadAiModel": "Download AI Model",
+  "deviceNotSupported": "Device not supported",
+  "downloadBackgroundNote": "Download happens in the background — you can leave this screen. The model file will be stored on your device and can be removed at any time.",
+  "removeAiModelTitle": "Remove AI Model?",
+  "removeAiModelConfirm": "This will delete the AI model from your device. You can re-download it later.",
+  "analyzeWithAi": "Analyze with AI",
+  "aiAssistantAvailable": "AI Assistant available",
+  "aiSetupPrompt": "Set up an on-device AI model to get smart suggestions.",
+  "setup": "Setup",
+  "adminDashboard": "Admin Dashboard",
+  "failedToLoadDashboard": "Failed to load dashboard",
+  "platformOverview": "Platform Overview",
+  "liveStatistics": "Live statistics from the backend.",
+  "usersSection": "Users",
+  "adminTabClients": "Clients",
+  "adminTabWorkers": "Workers",
+  "adminTabAccount": "Account",
+  "jobsSection": "Jobs",
+  "activeLabel": "Active",
+  "todaySection": "Today",
+  "createdLabel": "Created",
+  "completedLabel": "Completed",
+  "deleteUserTitle": "Delete {role}",
+  "@deleteUserTitle": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteUserConfirm": "This action removes {name} ({email}) permanently. Continue?",
+  "@deleteUserConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "userDeletedSuccess": "User deleted successfully",
+  "unableToLoadUsers": "Unable to load users",
+  "noClientsFound": "No clients found",
+  "noWorkersFound": "No workers found",
+  "deleteUserTooltip": "Delete user",
+  "adminSession": "Admin Session",
+  "adminManageUsersHint": "Manage users from the Clients and Workers tabs.",
+  "distanceKm": "{radius} km",
+  "@distanceKm": {
+    "placeholders": {
+      "radius": {
+        "type": "int"
+      }
+    }
+  },
+  "youreOffline": "You're Offline",
+  "offlineHint": "Toggle the switch in the top bar to go online and discover nearby jobs.",
+  "yourSkills": "Your Skills",
+  "skillsSubtitle": "Search and add skills. These are sent to the server to filter your job feed.",
+  "addSkillLabel": "Add Skill",
+  "typeToSearchSkills": "Type to search skills…",
+  "savedSkillsCount": "Saved Skills ({count})",
+  "@savedSkillsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noSkillsAdded": "No skills added yet. Search above to add relevant skills.",
+  "unableToLoadTaskDetails": "Unable to load task details",
+  "detailDistance": "Distance",
+  "chooseLocation": "Choose Location",
+  "savedTab": "Saved",
+  "pinOnMapTab": "Pin on Map",
+  "locationDeniedPermanently": "Location permanently denied. Enable it in Settings.",
+  "couldNotGetLocation": "Could not get location",
+  "searchPlaces": "Search places…",
+  "switchToSatellite": "Switch to Satellite",
+  "switchToRoadMap": "Switch to Road map",
+  "goToMyLocation": "Go to my location",
+  "confirmLocation": "Confirm Location",
+  "saveAddress": "Save Address",
+  "saveAddressSubtitle": "Add a label and recipient details for this location.",
+  "labelField": "Label",
+  "labelHome": "Home",
+  "labelWork": "Work",
+  "labelOther": "Other",
+  "recipientName": "Recipient Name",
+  "recipientNameHint": "e.g. Rahul Sharma",
+  "recipientPhone": "Recipient Phone",
+  "recipientPhoneHint": "e.g. 9876543210",
+  "pickFromContacts": "Pick from contacts",
+  "contactsAccessDenied": "Contacts access denied — name was copied. Please enter the phone number manually.",
+  "openSettings": "Open Settings",
+  "couldNotOpenContacts": "Could not open contacts",
+  "areaNeighbourhood": "Area / Neighbourhood",
+  "areaHint": "e.g. Koramangala",
+  "cityHint": "e.g. Bengaluru",
+  "postalCodeRequired": "Postal Code",
+  "postalCodeHint": "e.g. 560034",
+  "countryCodeRequired": "Country Code",
+  "countryCodeHint": "e.g. IN",
+  "requiredSkillsLabel": "Required Skills",
+  "skillHintText": "e.g. plumbing, painting…",
+  "skillHelperEmpty": "Type skills and separate them with commas",
+  "skillsAddedCount": "{count, plural, =1{1 skill added} other{{count} skills added}}",
+  "@skillsAddedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "languagePicker": "Select Language",
   "languageEnglish": "English",
   "languageHindi": "हिन्दी",
@@ -198,5 +621,10 @@
   "languageChineseTraditional": "繁體中文",
   "languageArabic": "العربية",
   "languagePersian": "فارسی",
-  "languageHebrew": "עברית"
+  "languageHebrew": "עברית",
+  "useWithoutSaving": "Use Without Saving",
+  "saveAndUse": "Save & Use",
+  "useMyCurrentLocation": "Use My Current Location",
+  "detectingLocation": "Detecting location…",
+  "deleteAddress": "Delete Address"
 }

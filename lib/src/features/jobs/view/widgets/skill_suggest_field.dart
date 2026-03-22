@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/l10n_extension.dart';
 import '../../view_model/skill_suggest_view_model.dart';
 import '../../data/skill_api.dart';
 
@@ -178,8 +179,12 @@ class _SkillSuggestFieldState extends ConsumerState<SkillSuggestField> {
             onFieldSubmitted: _onSubmitted,
             textInputAction: TextInputAction.done,
             decoration: InputDecoration(
-              labelText: widget.label,
-              hintText: widget.hintText,
+              labelText: widget.label.isNotEmpty
+                  ? widget.label
+                  : context.l10n.requiredSkillsLabel,
+              hintText: widget.hintText.isNotEmpty
+                  ? widget.hintText
+                  : context.l10n.skillHintText,
               prefixIcon: const Icon(Icons.handyman_outlined),
               suffixIcon: state.isLoading
                   ? const Padding(
@@ -269,8 +274,8 @@ class _SkillSuggestFieldState extends ConsumerState<SkillSuggestField> {
           padding: const EdgeInsets.only(top: 6, left: 4),
           child: Text(
             state.selected.isEmpty
-                ? 'Type skills and separate them with commas'
-                : '${state.selected.length} skill${state.selected.length == 1 ? '' : 's'} added',
+                ? context.l10n.skillHelperEmpty
+                : context.l10n.skillsAddedCount(state.selected.length),
             style: TextStyle(
               fontSize: 12,
               color: state.selected.isEmpty

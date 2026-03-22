@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
@@ -29,9 +30,9 @@ class PublicProfileScreen extends ConsumerWidget {
         : ref.watch(publicClientProfileProvider(userId));
 
     return Scaffold(
-      appBar: AppBar(title: Text(userName ?? 'Profile')),
+      appBar: AppBar(title: Text(userName ?? context.l10n.profile)),
       body: profileAsync.when(
-        loading: () => const LoadingState(message: 'Loading profile...'),
+        loading: () => LoadingState(message: context.l10n.loadingProfile),
         error: (error, _) => ErrorState(
           message: error.toString(),
           onRetry: () {
@@ -97,12 +98,12 @@ class _ProfileContent extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                profile.name ?? 'Unknown',
+                profile.name ?? context.l10n.unknown,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 4),
               Text(
-                isWorker ? 'Worker' : 'Client',
+                isWorker ? context.l10n.roleWorker : context.l10n.roleClient,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w600,
@@ -128,24 +129,24 @@ class _ProfileContent extends ConsumerWidget {
                 if (isWorker) ...[
                   _InfoRow(
                     icon: Icons.work_history_outlined,
-                    label: 'Experience',
+                    label: context.l10n.experienceLabel,
                     value: profile.experienceYears != null
-                        ? '${profile.experienceYears} years'
+                        ? context.l10n.yearsCount(profile.experienceYears!)
                         : '—',
                   ),
                   const Divider(height: 20),
                   _InfoRow(
                     icon: Icons.badge_outlined,
-                    label: 'Certifications',
+                    label: context.l10n.certificationsLabel,
                     value: profile.certifications ?? '—',
                   ),
                   const Divider(height: 20),
                   _InfoRow(
                     icon: Icons.circle,
-                    label: 'Availability',
+                    label: context.l10n.availabilityLabel,
                     value: profile.isOnDuty == true
-                        ? 'Available'
-                        : 'Unavailable',
+                        ? context.l10n.available
+                        : context.l10n.unavailable,
                     valueColor: profile.isOnDuty == true
                         ? AppPalette.success
                         : Theme.of(context).colorScheme.onSurfaceVariant,
@@ -153,7 +154,7 @@ class _ProfileContent extends ConsumerWidget {
                 ] else ...[
                   _InfoRow(
                     icon: Icons.person_outline,
-                    label: 'Member',
+                    label: context.l10n.memberLabel,
                     value: profile.name ?? '—',
                   ),
                 ],
@@ -168,7 +169,7 @@ class _ProfileContent extends ConsumerWidget {
           Card(
             child: ListTile(
               leading: const Icon(Icons.star_outline_rounded),
-              title: const Text('View All Reviews'),
+              title: Text(context.l10n.viewAllReviews),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () {
                 Navigator.of(context).push(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../view_model/ai_service_provider.dart';
 import '../view_model/model_manager_provider.dart';
 import '../view/ai_setup_screen.dart';
@@ -14,7 +15,7 @@ class AIAnalysisPanel extends ConsumerWidget {
     super.key,
     required this.useCase,
     required this.inputBuilder,
-    this.buttonLabel = 'Analyze with AI',
+    this.buttonLabel,
   });
 
   final AIUseCase useCase;
@@ -23,7 +24,7 @@ class AIAnalysisPanel extends ConsumerWidget {
   /// Called when the user taps the analyze button.
   final String Function() inputBuilder;
 
-  final String buttonLabel;
+  final String? buttonLabel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,7 +46,7 @@ class AIAnalysisPanel extends ConsumerWidget {
             Icon(Icons.auto_awesome, size: 18, color: cs.primary),
             const SizedBox(width: 6),
             Text(
-              'On-Device AI',
+              context.l10n.onDeviceAi,
               style: Theme.of(
                 context,
               ).textTheme.titleSmall?.copyWith(color: cs.primary),
@@ -54,14 +55,14 @@ class AIAnalysisPanel extends ConsumerWidget {
             if (analysis.isGenerating)
               TextButton(
                 onPressed: () => ref.read(aiAnalysisProvider.notifier).stop(),
-                child: const Text('Stop'),
+                child: Text(context.l10n.stop),
               )
             else
               FilledButton.tonal(
                 onPressed: () => ref
                     .read(aiAnalysisProvider.notifier)
                     .analyze(useCase, inputBuilder()),
-                child: Text(buttonLabel),
+                child: Text(buttonLabel ?? context.l10n.analyzeWithAi),
               ),
           ],
         ),
@@ -93,7 +94,7 @@ class AIAnalysisPanel extends ConsumerWidget {
             child: TextButton.icon(
               onPressed: () => ref.read(aiAnalysisProvider.notifier).reset(),
               icon: const Icon(Icons.refresh, size: 16),
-              label: const Text('Clear'),
+              label: Text(context.l10n.clear),
             ),
           ),
         ],
@@ -126,13 +127,16 @@ class _SetupPrompt extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'AI Assistant available',
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                  Text(
+                    context.l10n.aiAssistantAvailable,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'Set up an on-device AI model to get smart suggestions.',
+                    context.l10n.aiSetupPrompt,
                     style: TextStyle(
                       fontSize: 12,
                       color: colorScheme.onSurfaceVariant,
@@ -146,7 +150,7 @@ class _SetupPrompt extends StatelessWidget {
               onPressed: () => Navigator.of(
                 context,
               ).push(MaterialPageRoute(builder: (_) => const AISetupScreen())),
-              child: const Text('Setup'),
+              child: Text(context.l10n.setup),
             ),
           ],
         ),

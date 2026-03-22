@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/view_model/locale_view_model.dart';
 
 class LanguagePickerScreen extends ConsumerWidget {
@@ -12,14 +13,14 @@ class LanguagePickerScreen extends ConsumerWidget {
     final cs = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Language')),
+      appBar: AppBar(title: Text(context.l10n.language)),
       body: ListView.builder(
         itemCount: kSupportedLocales.length + 1, // +1 for "System default"
         itemBuilder: (context, index) {
           if (index == 0) {
             final selected = currentLocale == null;
             return _LanguageTile(
-              nativeName: 'System default',
+              nativeName: context.l10n.systemDefault,
               englishName: '',
               selected: selected,
               onTap: () => ref.read(localeProvider.notifier).setLocale(null),

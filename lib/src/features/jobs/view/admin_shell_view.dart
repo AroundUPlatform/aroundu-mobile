@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../auth/view_model/admin_view_model.dart';
 import '../../auth/view_model/auth_view_model.dart';
 import '../../../core/theme/app_theme.dart';
@@ -12,14 +13,17 @@ import '../view_model/navigation_view_model.dart';
 class AdminShellScreen extends ConsumerWidget {
   const AdminShellScreen({super.key});
 
-  static const List<String> _titles = ['Clients', 'Workers', 'Admin'];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tabIndex = ref.watch(adminTabIndexProvider);
+    final titles = [
+      context.l10n.adminTabClients,
+      context.l10n.adminTabWorkers,
+      context.l10n.adminTabAccount,
+    ];
 
     return Scaffold(
-      appBar: AppBar(title: Text(_titles[tabIndex])),
+      appBar: AppBar(title: Text(titles[tabIndex])),
       body: IndexedStack(
         index: tabIndex,
         children: const [
@@ -33,21 +37,21 @@ class AdminShellScreen extends ConsumerWidget {
         onDestinationSelected: (index) {
           ref.read(adminTabIndexProvider.notifier).setIndex(index);
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.groups_outlined),
-            selectedIcon: Icon(Icons.groups_rounded),
-            label: 'Clients',
+            icon: const Icon(Icons.groups_outlined),
+            selectedIcon: const Icon(Icons.groups_rounded),
+            label: context.l10n.adminTabClients,
           ),
           NavigationDestination(
-            icon: Icon(Icons.engineering_outlined),
-            selectedIcon: Icon(Icons.engineering_rounded),
-            label: 'Workers',
+            icon: const Icon(Icons.engineering_outlined),
+            selectedIcon: const Icon(Icons.engineering_rounded),
+            label: context.l10n.adminTabWorkers,
           ),
           NavigationDestination(
-            icon: Icon(Icons.admin_panel_settings_outlined),
-            selectedIcon: Icon(Icons.admin_panel_settings_rounded),
-            label: 'Account',
+            icon: const Icon(Icons.admin_panel_settings_outlined),
+            selectedIcon: const Icon(Icons.admin_panel_settings_rounded),
+            label: context.l10n.adminTabAccount,
           ),
         ],
       ),
@@ -76,22 +80,19 @@ class _AdminUsersTab extends ConsumerWidget {
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (context) {
+        final roleLabel = role == UserRole.provider ? 'client' : 'worker';
         return AlertDialog(
-          title: Text(
-            'Delete ${role == UserRole.provider ? 'client' : 'worker'}',
-          ),
-          content: Text(
-            'This action removes ${user.name} (${user.email}) permanently. Continue?',
-          ),
+          title: Text(context.l10n.deleteUserTitle(roleLabel)),
+          content: Text(context.l10n.deleteUserConfirm(user.name, user.email)),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancel'),
+              child: Text(context.l10n.cancel),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
               style: FilledButton.styleFrom(backgroundColor: AppPalette.danger),
-              child: const Text('Delete'),
+              child: Text(context.l10n.delete),
             ),
           ],
         );
@@ -114,7 +115,7 @@ class _AdminUsersTab extends ConsumerWidget {
       }
 
       if (context.mounted) {
-        AppNotifier.showSuccess(context, 'User deleted successfully');
+        AppNotifier.showSuccess(context, context.l10n.userDeletedSuccess);
       }
     } catch (error) {
       if (context.mounted) {
@@ -145,7 +146,7 @@ class _AdminUsersTab extends ConsumerWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'Unable to load users',
+              context.l10n.unableToLoadUsers,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             ),
@@ -159,7 +160,7 @@ class _AdminUsersTab extends ConsumerWidget {
             OutlinedButton.icon(
               onPressed: () => _refresh(ref),
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Retry'),
+              label: Text(context.l10n.retry),
             ),
           ],
         ),
@@ -178,14 +179,14 @@ class _AdminUsersTab extends ConsumerWidget {
                 const SizedBox(height: 14),
                 Text(
                   role == UserRole.provider
-                      ? 'No clients found'
-                      : 'No workers found',
+                      ? context.l10n.noClientsFound
+                      : context.l10n.noWorkersFound,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'Pull down to refresh this list.',
+                  context.l10n.pullDownToRefresh,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
@@ -238,7 +239,7 @@ class _AdminUsersTab extends ConsumerWidget {
                     subtitle: Text('${user.email}\n${user.phoneNumber}'),
                     isThreeLine: true,
                     trailing: IconButton(
-                      tooltip: 'Delete user',
+                      tooltip: context.l10n.deleteUserTooltip,
                       onPressed: () => _deleteUser(context, ref, user),
                       icon: const Icon(
                         Icons.delete_outline_rounded,
@@ -291,17 +292,17 @@ class _AdminAccountTab extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Admin Session',
+                  context.l10n.adminSession,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  authState.email ?? 'Unknown',
+                  authState.email ?? context.l10n.unknown,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'Manage users from the Clients and Workers tabs.',
+                  context.l10n.adminManageUsersHint,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
@@ -311,8 +312,8 @@ class _AdminAccountTab extends ConsumerWidget {
         const SizedBox(height: 12),
         Card(
           child: SwitchListTile(
-            title: const Text('Dark Mode'),
-            subtitle: const Text('Switch between light and dark themes'),
+            title: Text(context.l10n.darkMode),
+            subtitle: Text(context.l10n.darkModeSubtitle),
             value: isDarkMode,
             onChanged: (enabled) {
               ref
@@ -330,7 +331,7 @@ class _AdminAccountTab extends ConsumerWidget {
             minimumSize: const Size.fromHeight(48),
           ),
           icon: const Icon(Icons.logout_rounded),
-          label: const Text('Logout'),
+          label: Text(context.l10n.logout),
         ),
       ],
     );

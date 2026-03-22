@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
@@ -25,10 +26,14 @@ class WorkerReviewsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(workerName != null ? '$workerName\'s Reviews' : 'Reviews'),
+        title: Text(
+          workerName != null
+              ? context.l10n.workerReviewsTitle(workerName!)
+              : context.l10n.reviews,
+        ),
       ),
       body: reviewsAsync.when(
-        loading: () => const LoadingState(message: 'Loading reviews...'),
+        loading: () => LoadingState(message: context.l10n.loadingReviews),
         error: (error, _) => ErrorState(
           message: error.toString(),
           onRetry: () => ref
@@ -37,10 +42,10 @@ class WorkerReviewsScreen extends ConsumerWidget {
         ),
         data: (stats) {
           if (stats.reviews.isEmpty) {
-            return const EmptyState(
+            return EmptyState(
               icon: Icons.rate_review_outlined,
-              title: 'No reviews yet',
-              subtitle: 'Reviews will appear here after completed tasks.',
+              title: context.l10n.noReviews,
+              subtitle: context.l10n.noReviewsSubtitle,
             );
           }
 
@@ -55,7 +60,7 @@ class WorkerReviewsScreen extends ConsumerWidget {
                 _ReviewSummaryCard(stats: stats),
                 const SizedBox(height: 20),
                 Text(
-                  'All Reviews',
+                  context.l10n.allReviews,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 12),
@@ -101,7 +106,7 @@ class _ReviewSummaryCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              '${stats.totalReviews} review${stats.totalReviews == 1 ? '' : 's'}',
+              context.l10n.reviewCount(stats.totalReviews),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontSize: 14,
@@ -147,7 +152,7 @@ class _ReviewCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        review.reviewerName ?? 'Anonymous',
+                        review.reviewerName ?? context.l10n.anonymous,
                         style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                       if (review.createdAt != null)

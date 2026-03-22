@@ -8,6 +8,7 @@ import '../../auth/view_model/auth_view_model.dart';
 import '../../review/view/review_list_view.dart';
 import '../../review/view_model/review_view_model.dart';
 import '../../../../app.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../view_model/image_upload_view_model.dart';
 import 'edit_profile_view.dart';
 
@@ -21,7 +22,7 @@ class ProfileScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Profile'),
+        title: Text(context.l10n.myProfile),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit_rounded),
@@ -46,12 +47,14 @@ class ProfileScreen extends ConsumerWidget {
                   _UploadableAvatar(auth: auth),
                   const SizedBox(height: 12),
                   Text(
-                    auth.name ?? 'Unknown',
+                    auth.name ?? context.l10n.unknown,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    auth.role == UserRole.provider ? 'Client' : 'Worker',
+                    auth.role == UserRole.provider
+                        ? context.l10n.roleClient
+                        : context.l10n.roleWorker,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w600,
@@ -76,41 +79,43 @@ class ProfileScreen extends ConsumerWidget {
                   children: [
                     _InfoRow(
                       icon: Icons.email_outlined,
-                      label: 'Email',
+                      label: context.l10n.emailLabel,
                       value: auth.email ?? '—',
                     ),
                     const Divider(height: 20),
                     _InfoRow(
                       icon: Icons.phone_outlined,
-                      label: 'Phone',
+                      label: context.l10n.phone,
                       value: auth.phoneNumber ?? '—',
                     ),
                     const Divider(height: 20),
                     _InfoRow(
                       icon: Icons.currency_exchange_rounded,
-                      label: 'Currency',
+                      label: context.l10n.currencyLabel,
                       value: auth.currency,
                     ),
                     if (isWorker) ...[
                       const Divider(height: 20),
                       _InfoRow(
                         icon: Icons.work_history_outlined,
-                        label: 'Experience',
+                        label: context.l10n.experienceLabel,
                         value: auth.experienceYears != null
-                            ? '${auth.experienceYears} years'
-                            : 'Not set',
+                            ? context.l10n.yearsCount(auth.experienceYears!)
+                            : context.l10n.notSet,
                       ),
                       const Divider(height: 20),
                       _InfoRow(
                         icon: Icons.badge_outlined,
-                        label: 'Certifications',
+                        label: context.l10n.certificationsLabel,
                         value: auth.certifications ?? '—',
                       ),
                       const Divider(height: 20),
                       _InfoRow(
                         icon: Icons.circle,
-                        label: 'Status',
-                        value: auth.isOnDuty == true ? 'On Duty' : 'Off Duty',
+                        label: context.l10n.statusLabel,
+                        value: auth.isOnDuty == true
+                            ? context.l10n.onDuty
+                            : context.l10n.offDuty,
                         valueColor: auth.isOnDuty == true
                             ? AppPalette.success
                             : Theme.of(context).colorScheme.onSurfaceVariant,
@@ -128,7 +133,7 @@ class ProfileScreen extends ConsumerWidget {
                 children: [
                   ListTile(
                     leading: const Icon(Icons.palette_outlined),
-                    title: const Text('Theme & Colors'),
+                    title: Text(context.l10n.themeAndColors),
                     trailing: const Icon(Icons.chevron_right_rounded),
                     onTap: () =>
                         Navigator.pushNamed(context, AppRoutes.themePicker),
@@ -136,7 +141,7 @@ class ProfileScreen extends ConsumerWidget {
                   const Divider(height: 1),
                   ListTile(
                     leading: const Icon(Icons.language_outlined),
-                    title: const Text('Language'),
+                    title: Text(context.l10n.language),
                     trailing: const Icon(Icons.chevron_right_rounded),
                     onTap: () =>
                         Navigator.pushNamed(context, AppRoutes.languagePicker),
@@ -144,7 +149,7 @@ class ProfileScreen extends ConsumerWidget {
                   const Divider(height: 1),
                   ListTile(
                     leading: const Icon(Icons.auto_awesome_outlined),
-                    title: const Text('AI Model'),
+                    title: Text(context.l10n.aiModelLabel),
                     trailing: const Icon(Icons.chevron_right_rounded),
                     onTap: () =>
                         Navigator.pushNamed(context, AppRoutes.aiSetup),
@@ -160,11 +165,11 @@ class ProfileScreen extends ConsumerWidget {
                             ? AppPalette.success
                             : null,
                       ),
-                      title: const Text('Available for Work'),
+                      title: Text(context.l10n.availableForWork),
                       subtitle: Text(
                         (auth.isOnDuty ?? false)
-                            ? 'You are visible to clients'
-                            : 'You are currently off duty',
+                            ? context.l10n.visibleToClients
+                            : context.l10n.currentlyOffDuty,
                       ),
                       trailing: Switch.adaptive(
                         value: auth.isOnDuty ?? false,
@@ -180,7 +185,7 @@ class ProfileScreen extends ConsumerWidget {
                   if (isWorker && auth.userId != null)
                     ListTile(
                       leading: const Icon(Icons.star_outline_rounded),
-                      title: const Text('My Reviews'),
+                      title: Text(context.l10n.myReviews),
                       trailing: const Icon(Icons.chevron_right_rounded),
                       onTap: () {
                         Navigator.of(context).push(
@@ -199,26 +204,24 @@ class ProfileScreen extends ConsumerWidget {
                       Icons.logout_rounded,
                       color: AppPalette.danger,
                     ),
-                    title: const Text(
-                      'Log Out',
-                      style: TextStyle(color: AppPalette.danger),
+                    title: Text(
+                      context.l10n.logout,
+                      style: const TextStyle(color: AppPalette.danger),
                     ),
                     onTap: () async {
                       final confirmed = await showDialog<bool>(
                         context: context,
                         builder: (ctx) => AlertDialog(
-                          title: const Text('Log Out'),
-                          content: const Text(
-                            'Are you sure you want to log out?',
-                          ),
+                          title: Text(context.l10n.logout),
+                          content: Text(context.l10n.logoutConfirm),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.of(ctx).pop(false),
-                              child: const Text('Cancel'),
+                              child: Text(context.l10n.cancel),
                             ),
                             FilledButton(
                               onPressed: () => Navigator.of(ctx).pop(true),
-                              child: const Text('Log Out'),
+                              child: Text(context.l10n.logout),
                             ),
                           ],
                         ),
@@ -247,21 +250,19 @@ class ProfileScreen extends ConsumerWidget {
                 final confirmed = await showDialog<bool>(
                   context: context,
                   builder: (ctx) => AlertDialog(
-                    title: const Text('Delete Account'),
-                    content: const Text(
-                      'This will permanently delete your account and all data. This cannot be undone.',
-                    ),
+                    title: Text(context.l10n.deleteAccount),
+                    content: Text(context.l10n.deleteAccountConfirm),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(ctx).pop(false),
-                        child: const Text('Cancel'),
+                        child: Text(context.l10n.cancel),
                       ),
                       FilledButton(
                         style: FilledButton.styleFrom(
                           backgroundColor: AppPalette.danger,
                         ),
                         onPressed: () => Navigator.of(ctx).pop(true),
-                        child: const Text('Delete'),
+                        child: Text(context.l10n.delete),
                       ),
                     ],
                   ),
@@ -279,15 +280,15 @@ class ProfileScreen extends ConsumerWidget {
                     } else {
                       AppNotifier.showError(
                         context,
-                        'Could not delete account',
+                        context.l10n.couldNotDeleteAccount,
                       );
                     }
                   }
                 }
               },
-              child: const Text(
-                'Delete Account',
-                style: TextStyle(color: AppPalette.danger, fontSize: 13),
+              child: Text(
+                context.l10n.deleteAccount,
+                style: const TextStyle(color: AppPalette.danger, fontSize: 13),
               ),
             ),
           ],
@@ -378,7 +379,7 @@ class _UploadableAvatar extends ConsumerWidget {
         if (next.errorMessage != null) {
           AppNotifier.showError(context, next.errorMessage!);
         } else if (next.successUrl != null) {
-          AppNotifier.showSuccess(context, 'Profile photo updated');
+          AppNotifier.showSuccess(context, context.l10n.profilePhotoUpdated);
         }
       }
     });

@@ -10,6 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../auth/data/auth_api.dart';
 import '../../auth/view_model/auth_view_model.dart';
 import '../../../core/config/app_environment.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/logging/app_logger.dart';
 
 // ── Places autocomplete suggestion ────────────────────────────────────────────
@@ -226,11 +227,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
         _log.w('Location permission permanently denied');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Location permanently denied. Enable it in Settings.',
-              ),
-            ),
+            SnackBar(content: Text(context.l10n.locationDeniedPermanently)),
           );
         }
         return;
@@ -254,9 +251,9 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
     } catch (e, st) {
       _log.e('Failed to get current location', error: e, stackTrace: st);
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Could not get location: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.couldNotGetLocation)),
+        );
       }
     } finally {
       if (mounted) setState(() => _isGettingLocation = false);
@@ -486,12 +483,18 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choose Location'),
+        title: Text(context.l10n.chooseLocation),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(icon: Icon(Icons.bookmark_outline_rounded), text: 'Saved'),
-            Tab(icon: Icon(Icons.map_outlined), text: 'Pin on Map'),
+          tabs: [
+            Tab(
+              icon: const Icon(Icons.bookmark_outline_rounded),
+              text: context.l10n.savedTab,
+            ),
+            Tab(
+              icon: const Icon(Icons.map_outlined),
+              text: context.l10n.pinOnMapTab,
+            ),
           ],
         ),
       ),
@@ -559,7 +562,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
                   onChanged: _searchPlaces,
                   textInputAction: TextInputAction.search,
                   decoration: InputDecoration(
-                    hintText: 'Search places…',
+                    hintText: context.l10n.searchPlaces,
                     prefixIcon: const Icon(Icons.search_rounded),
                     suffixIcon: _isSearching
                         ? const Padding(
@@ -643,8 +646,8 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
               FloatingActionButton.small(
                 heroTag: 'mapType',
                 tooltip: _mapType == MapType.normal
-                    ? 'Switch to Satellite'
-                    : 'Switch to Road map',
+                    ? context.l10n.switchToSatellite
+                    : context.l10n.switchToRoadMap,
                 backgroundColor: Theme.of(context).colorScheme.surface,
                 foregroundColor: Theme.of(context).colorScheme.primary,
                 elevation: 4,
@@ -658,7 +661,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
               const SizedBox(height: 10),
               FloatingActionButton.small(
                 heroTag: 'myLocation',
-                tooltip: 'Go to my location',
+                tooltip: context.l10n.goToMyLocation,
                 backgroundColor: Theme.of(context).colorScheme.surface,
                 foregroundColor: Theme.of(context).colorScheme.primary,
                 elevation: 4,
@@ -686,7 +689,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen>
           child: FilledButton.icon(
             onPressed: _mapReady ? _confirmPinnedLocation : null,
             icon: const Icon(Icons.check_circle_outline_rounded),
-            label: const Text('Confirm Location'),
+            label: Text(context.l10n.confirmLocation),
             style: FilledButton.styleFrom(
               minimumSize: const Size.fromHeight(52),
             ),
@@ -806,11 +809,9 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text(
-                'Contacts access denied — name was copied. Please enter the phone number manually.',
-              ),
+              content: Text(context.l10n.contactsAccessDenied),
               action: SnackBarAction(
-                label: 'Open Settings',
+                label: context.l10n.openSettings,
                 onPressed: () async {
                   // flutter_contacts doesn't expose openAppSettings, so we
                   // rely on the user going to Settings manually on iOS or
@@ -826,9 +827,9 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Could not open contacts: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.couldNotOpenContacts)),
+        );
       }
     } finally {
       if (mounted) setState(() => _isPickingContact = false);
@@ -890,14 +891,11 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
               ),
 
               Text(
-                'Save Address',
+                context.l10n.saveAddress,
                 style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 4),
-              Text(
-                'Add a label and recipient details for this location.',
-                style: tt.bodySmall,
-              ),
+              Text(context.l10n.saveAddressSubtitle, style: tt.bodySmall),
               const SizedBox(height: 16),
 
               // Full address banner (read-only)
@@ -931,16 +929,25 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
               ],
 
               // Label chips: Home / Work / Other
-              Text('Label', style: tt.labelMedium),
+              Text(context.l10n.labelField, style: tt.labelMedium),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 children: _AddressLabel.values.map((l) {
                   final selected = _label == l;
                   final (icon, text) = switch (l) {
-                    _AddressLabel.home => (Icons.home_rounded, 'Home'),
-                    _AddressLabel.work => (Icons.work_outline_rounded, 'Work'),
-                    _AddressLabel.other => (Icons.place_outlined, 'Other'),
+                    _AddressLabel.home => (
+                      Icons.home_rounded,
+                      context.l10n.labelHome,
+                    ),
+                    _AddressLabel.work => (
+                      Icons.work_outline_rounded,
+                      context.l10n.labelWork,
+                    ),
+                    _AddressLabel.other => (
+                      Icons.place_outlined,
+                      context.l10n.labelOther,
+                    ),
                   };
                   return ChoiceChip(
                     avatar: Icon(icon, size: 16),
@@ -957,10 +964,10 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
                 controller: _nameCtrl,
                 textInputAction: TextInputAction.next,
                 textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                  labelText: 'Recipient Name',
-                  hintText: 'e.g. Rahul Sharma',
-                  prefixIcon: Icon(Icons.person_outline_rounded),
+                decoration: InputDecoration(
+                  labelText: context.l10n.recipientName,
+                  hintText: context.l10n.recipientNameHint,
+                  prefixIcon: const Icon(Icons.person_outline_rounded),
                 ),
               ),
               const SizedBox(height: 12),
@@ -974,10 +981,10 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
                       controller: _phoneCtrl,
                       keyboardType: TextInputType.phone,
                       textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        labelText: 'Recipient Phone',
-                        hintText: 'e.g. 9876543210',
-                        prefixIcon: Icon(Icons.phone_outlined),
+                      decoration: InputDecoration(
+                        labelText: context.l10n.recipientPhone,
+                        hintText: context.l10n.recipientPhoneHint,
+                        prefixIcon: const Icon(Icons.phone_outlined),
                       ),
                     ),
                   ),
@@ -985,7 +992,7 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
                   Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: IconButton.outlined(
-                      tooltip: 'Pick from contacts',
+                      tooltip: context.l10n.pickFromContacts,
                       icon: _isPickingContact
                           ? const SizedBox(
                               width: 18,
@@ -1004,10 +1011,10 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
               TextFormField(
                 controller: _areaCtrl,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'Area / Neighbourhood',
-                  hintText: 'e.g. Koramangala',
-                  prefixIcon: Icon(Icons.place_outlined),
+                decoration: InputDecoration(
+                  labelText: context.l10n.areaNeighbourhood,
+                  hintText: context.l10n.areaHint,
+                  prefixIcon: const Icon(Icons.place_outlined),
                 ),
               ),
               const SizedBox(height: 12),
@@ -1016,10 +1023,10 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
               TextFormField(
                 controller: _cityCtrl,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'City',
-                  hintText: 'e.g. Bengaluru',
-                  prefixIcon: Icon(Icons.location_city_outlined),
+                decoration: InputDecoration(
+                  labelText: context.l10n.cityLabel,
+                  hintText: context.l10n.cityHint,
+                  prefixIcon: const Icon(Icons.location_city_outlined),
                 ),
               ),
               const SizedBox(height: 12),
@@ -1029,13 +1036,14 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
                 controller: _postalCtrl,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'Postal Code *',
-                  hintText: 'e.g. 560034',
-                  prefixIcon: Icon(Icons.markunread_mailbox_outlined),
+                decoration: InputDecoration(
+                  labelText: context.l10n.postalCodeRequired,
+                  hintText: context.l10n.postalCodeHint,
+                  prefixIcon: const Icon(Icons.markunread_mailbox_outlined),
                 ),
-                validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? 'Required' : null,
+                validator: (v) => (v == null || v.trim().isEmpty)
+                    ? context.l10n.required
+                    : null,
               ),
               const SizedBox(height: 12),
 
@@ -1044,14 +1052,15 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
                 controller: _countryCtrl,
                 textInputAction: TextInputAction.done,
                 maxLength: 2,
-                decoration: const InputDecoration(
-                  labelText: 'Country Code *',
-                  hintText: 'e.g. IN',
-                  prefixIcon: Icon(Icons.flag_outlined),
+                decoration: InputDecoration(
+                  labelText: context.l10n.countryCodeRequired,
+                  hintText: context.l10n.countryCodeHint,
+                  prefixIcon: const Icon(Icons.flag_outlined),
                   counterText: '',
                 ),
-                validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? 'Required' : null,
+                validator: (v) => (v == null || v.trim().isEmpty)
+                    ? context.l10n.required
+                    : null,
               ),
               const SizedBox(height: 24),
 
@@ -1061,7 +1070,7 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
                   Expanded(
                     child: OutlinedButton(
                       onPressed: _isSaving ? null : _useWithoutSaving,
-                      child: const Text('Use Without Saving'),
+                      child: Text(context.l10n.useWithoutSaving),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -1077,7 +1086,7 @@ class _SaveAddressSheetState extends ConsumerState<_SaveAddressSheet> {
                               ),
                             )
                           : const Icon(Icons.save_outlined),
-                      label: const Text('Save & Use'),
+                      label: Text(context.l10n.saveAndUse),
                       onPressed: _isSaving ? null : _saveAndUse,
                     ),
                   ),
@@ -1231,9 +1240,9 @@ class _SavedAddressesTabState extends ConsumerState<_SavedAddressesTab> {
             color: cs.primaryContainer.withValues(alpha: 0.35),
             child: ListTile(
               leading: Icon(Icons.my_location_rounded, color: cs.primary),
-              title: const Text('Use My Current Location'),
+              title: Text(context.l10n.useMyCurrentLocation),
               subtitle: _fetchingGps
-                  ? const Text('Detecting location…')
+                  ? Text(context.l10n.detectingLocation)
                   : Text(
                       _liveDisplayText ?? 'GPS location ready',
                       maxLines: 1,
@@ -1288,18 +1297,18 @@ class _SavedAddressesTabState extends ConsumerState<_SavedAddressesTab> {
                       final confirmed = await showDialog<bool>(
                         context: context,
                         builder: (ctx) => AlertDialog(
-                          title: const Text('Delete Address'),
+                          title: Text(context.l10n.deleteAddress),
                           content: Text(
                             'Remove "${addr.addressLabel ?? addr.displayName}" from saved addresses?',
                           ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.of(ctx).pop(false),
-                              child: const Text('Cancel'),
+                              child: Text(context.l10n.cancel),
                             ),
                             FilledButton(
                               onPressed: () => Navigator.of(ctx).pop(true),
-                              child: const Text('Delete'),
+                              child: Text(context.l10n.delete),
                             ),
                           ],
                         ),

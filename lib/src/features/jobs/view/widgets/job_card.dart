@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/network/exchange_rate_service.dart';
 import '../../model/job_item.dart';
 
@@ -220,7 +221,7 @@ class _JobCardState extends ConsumerState<JobCard> {
                           borderRadius: BorderRadius.circular(999),
                         ),
                         child: Text(
-                          'Escrow',
+                          context.l10n.escrow,
                           style: theme.textTheme.labelSmall?.copyWith(
                             color: colors.onPrimaryContainer,
                             fontWeight: FontWeight.w600,

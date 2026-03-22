@@ -219,40 +219,190 @@ abstract class AppLocalizations {
   /// **'Already have an account?'**
   String get alreadyHaveAccount;
 
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get welcomeBack;
+
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue as provider or worker.'**
+  String get loginSubtitle;
+
+  /// No description provided for @noAccountYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No account yet?'**
+  String get noAccountYet;
+
+  /// No description provided for @createOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Create one'**
+  String get createOne;
+
+  /// No description provided for @emailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailRequired;
+
+  /// No description provided for @enterValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email'**
+  String get enterValidEmail;
+
+  /// No description provided for @passwordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordRequired;
+
+  /// No description provided for @minimumSixCharacters.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum 6 characters'**
+  String get minimumSixCharacters;
+
+  /// No description provided for @unableToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to login. Please retry.'**
+  String get unableToLogin;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'{field} is required'**
+  String fieldRequired(String field);
+
+  /// No description provided for @enterValidPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid phone number'**
+  String get enterValidPhone;
+
+  /// No description provided for @unableToRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to register'**
+  String get unableToRegister;
+
+  /// No description provided for @registrationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration successful. Please log in.'**
+  String get registrationSuccess;
+
+  /// No description provided for @registerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register as provider or worker with your basic location profile.'**
+  String get registerSubtitle;
+
+  /// No description provided for @roleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get roleLabel;
+
+  /// No description provided for @roleJobProvider.
+  ///
+  /// In en, this message translates to:
+  /// **'Job Provider'**
+  String get roleJobProvider;
+
+  /// No description provided for @roleJobWorker.
+  ///
+  /// In en, this message translates to:
+  /// **'Job Worker'**
+  String get roleJobWorker;
+
+  /// No description provided for @countryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get countryLabel;
+
+  /// No description provided for @currencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currencyLabel;
+
+  /// No description provided for @cityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get cityLabel;
+
+  /// No description provided for @postalCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal code'**
+  String get postalCodeLabel;
+
+  /// No description provided for @areaOptionalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Area (optional)'**
+  String get areaOptionalLabel;
+
+  /// No description provided for @fullAddressOptionalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full address (optional)'**
+  String get fullAddressOptionalLabel;
+
+  /// No description provided for @alreadyRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Already registered?'**
+  String get alreadyRegistered;
+
+  /// No description provided for @logInLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Log in'**
+  String get logInLink;
+
   /// No description provided for @onboardingTitle1.
   ///
   /// In en, this message translates to:
-  /// **'Find Tasks Around You'**
+  /// **'Book Local Services Fast'**
   String get onboardingTitle1;
 
   /// No description provided for @onboardingSubtitle1.
   ///
   /// In en, this message translates to:
-  /// **'Discover local jobs and services right in your neighbourhood.'**
+  /// **'Post your requirement in minutes and get matched with nearby verified workers.'**
   String get onboardingSubtitle1;
 
   /// No description provided for @onboardingTitle2.
   ///
   /// In en, this message translates to:
-  /// **'Bid & Get Hired'**
+  /// **'Compare Bids Transparently'**
   String get onboardingTitle2;
 
   /// No description provided for @onboardingSubtitle2.
   ///
   /// In en, this message translates to:
-  /// **'Place competitive bids and get hired for tasks that match your skills.'**
+  /// **'Review pricing, profiles, and timelines before assigning your job with confidence.'**
   String get onboardingSubtitle2;
 
   /// No description provided for @onboardingTitle3.
   ///
   /// In en, this message translates to:
-  /// **'Secure Payments'**
+  /// **'Track Every Job Clearly'**
   String get onboardingTitle3;
 
   /// No description provided for @onboardingSubtitle3.
   ///
   /// In en, this message translates to:
-  /// **'Escrow-backed payments ensure fair and safe transactions.'**
+  /// **'Stay updated from job creation to completion with role-based dashboards.'**
   String get onboardingSubtitle3;
 
   /// No description provided for @getStarted.
@@ -272,6 +422,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next'**
   String get next;
+
+  /// No description provided for @newHereCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'New here? Create account'**
+  String get newHereCreateAccount;
 
   /// No description provided for @roleSelectionTitle.
   ///
@@ -309,6 +465,30 @@ abstract class AppLocalizations {
   /// **'Continue'**
   String get continueButton;
 
+  /// No description provided for @roleSelectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the workflow you want to use in AroundU.'**
+  String get roleSelectionSubtitle;
+
+  /// No description provided for @signedInAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in as {email}'**
+  String signedInAs(String email);
+
+  /// No description provided for @roleProviderDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Post jobs and manage incoming bids.'**
+  String get roleProviderDesc;
+
+  /// No description provided for @roleWorkerDescAlt.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse nearby jobs and place bids quickly.'**
+  String get roleWorkerDescAlt;
+
   /// No description provided for @homeTab.
   ///
   /// In en, this message translates to:
@@ -332,6 +512,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile'**
   String get profileTab;
+
+  /// No description provided for @providerTabMyTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'My Tasks'**
+  String get providerTabMyTasks;
+
+  /// No description provided for @providerTabPostTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Post Task'**
+  String get providerTabPostTask;
+
+  /// No description provided for @tasksNavLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get tasksNavLabel;
+
+  /// No description provided for @postNavLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get postNavLabel;
+
+  /// No description provided for @workerTabTaskFeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Task Feed'**
+  String get workerTabTaskFeed;
+
+  /// No description provided for @feedNavLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Feed'**
+  String get feedNavLabel;
 
   /// No description provided for @myJobs.
   ///
@@ -435,11 +651,23 @@ abstract class AppLocalizations {
   /// **'Normal'**
   String get urgencyNormal;
 
+  /// No description provided for @urgencyMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get urgencyMedium;
+
   /// No description provided for @urgencyUrgent.
   ///
   /// In en, this message translates to:
   /// **'Urgent'**
   String get urgencyUrgent;
+
+  /// No description provided for @urgencyAsap.
+  ///
+  /// In en, this message translates to:
+  /// **'ASAP'**
+  String get urgencyAsap;
 
   /// No description provided for @paymentOffline.
   ///
@@ -452,6 +680,282 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Escrow'**
   String get paymentEscrow;
+
+  /// No description provided for @paymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get paymentMethod;
+
+  /// No description provided for @payInCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay in Cash'**
+  String get payInCash;
+
+  /// No description provided for @secureEscrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure Escrow'**
+  String get secureEscrow;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @filterOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get filterOpen;
+
+  /// No description provided for @filterActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get filterActive;
+
+  /// No description provided for @filterInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get filterInProgress;
+
+  /// No description provided for @filterCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get filterCompleted;
+
+  /// No description provided for @filterCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get filterCancelled;
+
+  /// No description provided for @filterExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get filterExpired;
+
+  /// No description provided for @filterNearby.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby'**
+  String get filterNearby;
+
+  /// No description provided for @filterAllMine.
+  ///
+  /// In en, this message translates to:
+  /// **'All Mine'**
+  String get filterAllMine;
+
+  /// No description provided for @filterBidPlaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Bid Placed'**
+  String get filterBidPlaced;
+
+  /// No description provided for @filterAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get filterAccepted;
+
+  /// No description provided for @noTasksPostedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks posted yet'**
+  String get noTasksPostedYet;
+
+  /// No description provided for @noOpenTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'No open tasks'**
+  String get noOpenTasks;
+
+  /// No description provided for @noActiveTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'No active tasks'**
+  String get noActiveTasks;
+
+  /// No description provided for @noTasksInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks in progress'**
+  String get noTasksInProgress;
+
+  /// No description provided for @noCompletedTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'No completed tasks'**
+  String get noCompletedTasks;
+
+  /// No description provided for @noCancelledTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'No cancelled tasks'**
+  String get noCancelledTasks;
+
+  /// No description provided for @noExpiredTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'No expired tasks'**
+  String get noExpiredTasks;
+
+  /// No description provided for @unableToLoadTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load tasks'**
+  String get unableToLoadTasks;
+
+  /// No description provided for @noNearbyJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'No nearby jobs right now'**
+  String get noNearbyJobs;
+
+  /// No description provided for @noJobsYetBid.
+  ///
+  /// In en, this message translates to:
+  /// **'No jobs yet — place a bid to get started!'**
+  String get noJobsYetBid;
+
+  /// No description provided for @noPendingBids.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending bids'**
+  String get noPendingBids;
+
+  /// No description provided for @noAcceptedJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'No accepted jobs'**
+  String get noAcceptedJobs;
+
+  /// No description provided for @noJobsInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'No jobs in progress'**
+  String get noJobsInProgress;
+
+  /// No description provided for @noCompletedJobsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No completed jobs yet'**
+  String get noCompletedJobsYet;
+
+  /// No description provided for @noCancelledJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'No cancelled jobs'**
+  String get noCancelledJobs;
+
+  /// No description provided for @noExpiredJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'No expired jobs'**
+  String get noExpiredJobs;
+
+  /// No description provided for @pullDownToRefreshCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull down to refresh and check again.'**
+  String get pullDownToRefreshCheck;
+
+  /// No description provided for @unableToLoadJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load jobs'**
+  String get unableToLoadJobs;
+
+  /// No description provided for @postNewTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Post a New Task'**
+  String get postNewTask;
+
+  /// No description provided for @postTaskSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add clear details so workers can send accurate offers.'**
+  String get postTaskSubtitle;
+
+  /// No description provided for @taskTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Task title'**
+  String get taskTitleLabel;
+
+  /// No description provided for @savingLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving location…'**
+  String get savingLocation;
+
+  /// No description provided for @tapToSelectLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to select location'**
+  String get tapToSelectLocation;
+
+  /// No description provided for @postTaskButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Post Task'**
+  String get postTaskButton;
+
+  /// No description provided for @addSkillWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one required skill for this task'**
+  String get addSkillWarning;
+
+  /// No description provided for @enterValidBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid budget amount'**
+  String get enterValidBudget;
+
+  /// No description provided for @setJobLocationWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Please set a job location before posting'**
+  String get setJobLocationWarning;
+
+  /// No description provided for @jobPostedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Job posted successfully'**
+  String get jobPostedSuccess;
+
+  /// No description provided for @failedToPostJob.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to post job. Please retry.'**
+  String get failedToPostJob;
+
+  /// No description provided for @failedToSaveLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save location'**
+  String get failedToSaveLocation;
+
+  /// No description provided for @unableToLoadJobWorkflow.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load job workflow'**
+  String get unableToLoadJobWorkflow;
+
+  /// No description provided for @unknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get unknownError;
 
   /// No description provided for @statusOpenForBids.
   ///
@@ -555,6 +1059,180 @@ abstract class AppLocalizations {
   /// **'Pending'**
   String get bidPending;
 
+  /// No description provided for @offersSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Offers'**
+  String get offersSection;
+
+  /// No description provided for @noOffersReceivedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No offers received yet.'**
+  String get noOffersReceivedYet;
+
+  /// No description provided for @offerAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer Accepted'**
+  String get offerAccepted;
+
+  /// No description provided for @offerRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer Rejected'**
+  String get offerRejected;
+
+  /// No description provided for @offerPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer Pending'**
+  String get offerPending;
+
+  /// No description provided for @workerNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Worker #{id}'**
+  String workerNumber(int id);
+
+  /// No description provided for @acceptThisOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept this Offer'**
+  String get acceptThisOffer;
+
+  /// No description provided for @messageWorker.
+  ///
+  /// In en, this message translates to:
+  /// **'Message Worker'**
+  String get messageWorker;
+
+  /// No description provided for @offerAcceptedSnack.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer accepted'**
+  String get offerAcceptedSnack;
+
+  /// No description provided for @yourOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Offer'**
+  String get yourOffer;
+
+  /// No description provided for @bidStatusSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected'**
+  String get bidStatusSelected;
+
+  /// No description provided for @bidStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get bidStatusRejected;
+
+  /// No description provided for @bidStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get bidStatusPending;
+
+  /// No description provided for @placeYourOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Place Your Offer'**
+  String get placeYourOffer;
+
+  /// No description provided for @yourOfferAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Your offer amount'**
+  String get yourOfferAmount;
+
+  /// No description provided for @messageToClientOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Message to client (optional)'**
+  String get messageToClientOptional;
+
+  /// No description provided for @addPartnerOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a partner (optional)'**
+  String get addPartnerOptional;
+
+  /// No description provided for @partnerNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Partner name'**
+  String get partnerNameLabel;
+
+  /// No description provided for @partnerFeeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Partner fee'**
+  String get partnerFeeLabel;
+
+  /// No description provided for @partnerFeeAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'+ {symbol}{amount} partner fee'**
+  String partnerFeeAmount(String symbol, String amount);
+
+  /// No description provided for @submitOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Offer'**
+  String get submitOffer;
+
+  /// No description provided for @enterValidOfferAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid offer amount'**
+  String get enterValidOfferAmount;
+
+  /// No description provided for @offerSubmittedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer submitted successfully'**
+  String get offerSubmittedSuccess;
+
+  /// No description provided for @clientSelectedYourOffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Client Selected Your Offer!'**
+  String get clientSelectedYourOffer;
+
+  /// No description provided for @handshakeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept to confirm this job, or decline if you\'re no longer available.'**
+  String get handshakeHint;
+
+  /// No description provided for @handshakeAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake accepted'**
+  String get handshakeAccepted;
+
+  /// No description provided for @handshakeDeclined.
+  ///
+  /// In en, this message translates to:
+  /// **'Handshake declined'**
+  String get handshakeDeclined;
+
+  /// No description provided for @acceptJob.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Job'**
+  String get acceptJob;
+
+  /// No description provided for @decline.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get decline;
+
   /// No description provided for @startCode.
   ///
   /// In en, this message translates to:
@@ -585,6 +1263,126 @@ abstract class AppLocalizations {
   /// **'Enter Code'**
   String get enterCode;
 
+  /// No description provided for @generateStartCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Start Code'**
+  String get generateStartCode;
+
+  /// No description provided for @startCodeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Start code copied'**
+  String get startCodeCopied;
+
+  /// No description provided for @reserveInEscrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve {symbol}{amount} in Escrow'**
+  String reserveInEscrow(String symbol, String amount);
+
+  /// No description provided for @releaseCodeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Release code copied'**
+  String get releaseCodeCopied;
+
+  /// No description provided for @releaseCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Share this verbally with the worker. They enter it to confirm task completion.'**
+  String get releaseCodeHint;
+
+  /// No description provided for @regenerateCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Regenerate Code'**
+  String get regenerateCode;
+
+  /// No description provided for @generateReleaseCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Release Code'**
+  String get generateReleaseCode;
+
+  /// No description provided for @taskCodesGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'Task codes generated'**
+  String get taskCodesGenerated;
+
+  /// No description provided for @newReleaseCodeGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'New release code generated'**
+  String get newReleaseCodeGenerated;
+
+  /// No description provided for @readyToBegin.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to Begin?'**
+  String get readyToBegin;
+
+  /// No description provided for @startCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask the client for the start code and enter it below to officially begin work.'**
+  String get startCodeHint;
+
+  /// No description provided for @verifyAndStartWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify & Start Work'**
+  String get verifyAndStartWork;
+
+  /// No description provided for @startCodeVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Start code verified. Task is now in progress.'**
+  String get startCodeVerified;
+
+  /// No description provided for @enterStartCodeFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter start code first'**
+  String get enterStartCodeFirst;
+
+  /// No description provided for @workInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Work In Progress'**
+  String get workInProgress;
+
+  /// No description provided for @releaseCodePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Once done, ask the client for the 6-digit release code.'**
+  String get releaseCodePrompt;
+
+  /// No description provided for @releaseCodeHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code from the client'**
+  String get releaseCodeHelper;
+
+  /// No description provided for @confirmWorkCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Work Completed'**
+  String get confirmWorkCompleted;
+
+  /// No description provided for @workConfirmedPaymentReleased.
+  ///
+  /// In en, this message translates to:
+  /// **'Work confirmed — payment released!'**
+  String get workConfirmedPaymentReleased;
+
+  /// No description provided for @enterReleaseCodeWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the release code from the client'**
+  String get enterReleaseCodeWarning;
+
   /// No description provided for @escrow.
   ///
   /// In en, this message translates to:
@@ -614,6 +1412,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment Released'**
   String get paymentReleased;
+
+  /// No description provided for @paymentSafelyReserved.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment safely reserved'**
+  String get paymentSafelyReserved;
+
+  /// No description provided for @cancelTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Task'**
+  String get cancelTask;
+
+  /// No description provided for @taskCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Task cancelled'**
+  String get taskCancelled;
+
+  /// No description provided for @deleteTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Task'**
+  String get deleteTask;
+
+  /// No description provided for @deleteTaskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete task?'**
+  String get deleteTaskTitle;
+
+  /// No description provided for @deleteTaskConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This will remove the task and all associated offers.'**
+  String get deleteTaskConfirm;
+
+  /// No description provided for @taskDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Task deleted'**
+  String get taskDeleted;
+
+  /// No description provided for @typeFirstMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Type your first message…'**
+  String get typeFirstMessage;
+
+  /// No description provided for @send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
+
+  /// No description provided for @failedToSendMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send message'**
+  String get failedToSendMessage;
 
   /// No description provided for @conversations.
   ///
@@ -675,6 +1533,48 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 worker} other{{count} workers}}'**
   String workersCount(int count);
 
+  /// No description provided for @chatToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get chatToday;
+
+  /// No description provided for @chatYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get chatYesterday;
+
+  /// No description provided for @chatYouPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'You: {message}'**
+  String chatYouPrefix(String message);
+
+  /// No description provided for @chatReFallback.
+  ///
+  /// In en, this message translates to:
+  /// **'Re: {jobTitle}'**
+  String chatReFallback(String jobTitle);
+
+  /// No description provided for @noConversationsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No conversations yet'**
+  String get noConversationsYet;
+
+  /// No description provided for @loadingConversations.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading conversations...'**
+  String get loadingConversations;
+
+  /// No description provided for @loadingMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading messages...'**
+  String get loadingMessages;
+
   /// No description provided for @profile.
   ///
   /// In en, this message translates to:
@@ -728,6 +1628,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to log out?'**
   String get logoutConfirm;
+
+  /// No description provided for @myProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get myProfile;
+
+  /// No description provided for @unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
+
+  /// No description provided for @experienceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get experienceLabel;
+
+  /// No description provided for @statusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get statusLabel;
+
+  /// No description provided for @notSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get notSet;
+
+  /// No description provided for @onDuty.
+  ///
+  /// In en, this message translates to:
+  /// **'On Duty'**
+  String get onDuty;
+
+  /// No description provided for @offDuty.
+  ///
+  /// In en, this message translates to:
+  /// **'Off Duty'**
+  String get offDuty;
+
+  /// No description provided for @yearsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} years'**
+  String yearsCount(int count);
+
+  /// No description provided for @themeAndColors.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme & Colors'**
+  String get themeAndColors;
+
+  /// No description provided for @aiModelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Model'**
+  String get aiModelLabel;
+
+  /// No description provided for @availableForWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Available for Work'**
+  String get availableForWork;
+
+  /// No description provided for @visibleToClients.
+  ///
+  /// In en, this message translates to:
+  /// **'You are visible to clients'**
+  String get visibleToClients;
+
+  /// No description provided for @currentlyOffDuty.
+  ///
+  /// In en, this message translates to:
+  /// **'You are currently off duty'**
+  String get currentlyOffDuty;
+
+  /// No description provided for @myReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'My Reviews'**
+  String get myReviews;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently delete your account and all data. This cannot be undone.'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @couldNotDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not delete account'**
+  String get couldNotDeleteAccount;
+
+  /// No description provided for @profilePhotoUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile photo updated'**
+  String get profilePhotoUpdated;
+
+  /// No description provided for @profileUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated'**
+  String get profileUpdated;
+
+  /// No description provided for @nameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get nameLabel;
+
+  /// No description provided for @profileImageUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Image URL'**
+  String get profileImageUrl;
+
+  /// No description provided for @yearsOfExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Years of Experience'**
+  String get yearsOfExperience;
+
+  /// No description provided for @certificationsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Certifications'**
+  String get certificationsLabel;
+
+  /// No description provided for @payoutAccountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Payout Account'**
+  String get payoutAccountLabel;
+
+  /// No description provided for @onDutySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle availability for new tasks'**
+  String get onDutySubtitle;
+
+  /// No description provided for @loadingProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading profile...'**
+  String get loadingProfile;
+
+  /// No description provided for @availabilityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Availability'**
+  String get availabilityLabel;
+
+  /// No description provided for @memberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get memberLabel;
+
+  /// No description provided for @available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get available;
+
+  /// No description provided for @unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable'**
+  String get unavailable;
+
+  /// No description provided for @viewAllReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'View All Reviews'**
+  String get viewAllReviews;
 
   /// No description provided for @settings.
   ///
@@ -807,6 +1893,30 @@ abstract class AppLocalizations {
   /// **'Secondary'**
   String get secondary;
 
+  /// No description provided for @modeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Mode'**
+  String get modeLabel;
+
+  /// No description provided for @pickAColour.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a colour'**
+  String get pickAColour;
+
+  /// No description provided for @systemDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get systemDefault;
+
+  /// No description provided for @darkModeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch between light and dark themes'**
+  String get darkModeSubtitle;
+
   /// No description provided for @reviews.
   ///
   /// In en, this message translates to:
@@ -843,23 +1953,107 @@ abstract class AppLocalizations {
   /// **'Submit Review'**
   String get submitReview;
 
+  /// No description provided for @howWasWorker.
+  ///
+  /// In en, this message translates to:
+  /// **'How was {name}?'**
+  String howWasWorker(String name);
+
+  /// No description provided for @feedbackHelps.
+  ///
+  /// In en, this message translates to:
+  /// **'Your feedback helps the community'**
+  String get feedbackHelps;
+
+  /// No description provided for @thanksForReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks for your review!'**
+  String get thanksForReview;
+
+  /// No description provided for @shareExperienceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your experience (optional)'**
+  String get shareExperienceHint;
+
+  /// No description provided for @ratingExcellent.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent!'**
+  String get ratingExcellent;
+
+  /// No description provided for @ratingGreat.
+  ///
+  /// In en, this message translates to:
+  /// **'Great!'**
+  String get ratingGreat;
+
+  /// No description provided for @ratingGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get ratingGood;
+
+  /// No description provided for @ratingFair.
+  ///
+  /// In en, this message translates to:
+  /// **'Fair'**
+  String get ratingFair;
+
+  /// No description provided for @ratingPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor'**
+  String get ratingPoor;
+
+  /// No description provided for @tapToRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to rate'**
+  String get tapToRate;
+
+  /// No description provided for @workerReviewsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s Reviews'**
+  String workerReviewsTitle(String name);
+
+  /// No description provided for @loadingReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading reviews...'**
+  String get loadingReviews;
+
+  /// No description provided for @noReviewsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews will appear here after completed tasks.'**
+  String get noReviewsSubtitle;
+
+  /// No description provided for @allReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'All Reviews'**
+  String get allReviews;
+
+  /// No description provided for @reviewCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 review} other{{count} reviews}}'**
+  String reviewCount(int count);
+
+  /// No description provided for @anonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous'**
+  String get anonymous;
+
   /// No description provided for @loading.
   ///
   /// In en, this message translates to:
   /// **'Loading...'**
   String get loading;
-
-  /// No description provided for @loadingConversations.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading conversations...'**
-  String get loadingConversations;
-
-  /// No description provided for @loadingMessages.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading messages...'**
-  String get loadingMessages;
 
   /// No description provided for @error.
   ///
@@ -872,6 +2066,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get retry;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgain;
 
   /// No description provided for @cancel.
   ///
@@ -926,6 +2126,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pull to refresh'**
   String get pullToRefresh;
+
+  /// No description provided for @pullDownToRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull down to refresh.'**
+  String get pullDownToRefresh;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @required.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get required;
+
+  /// No description provided for @stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get stop;
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
 
   /// No description provided for @aiSetup.
   ///
@@ -1016,6 +2246,576 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Analyzing…'**
   String get analyzing;
+
+  /// No description provided for @aiCapabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Capabilities'**
+  String get aiCapabilities;
+
+  /// No description provided for @onDeviceAi.
+  ///
+  /// In en, this message translates to:
+  /// **'On-Device AI'**
+  String get onDeviceAi;
+
+  /// No description provided for @aiTaglineSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Private · Offline · Free'**
+  String get aiTaglineSetup;
+
+  /// No description provided for @aiSetupDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Get smart suggestions for tasks and bids powered by an AI model that runs entirely on your device. No data leaves your phone.'**
+  String get aiSetupDescription;
+
+  /// No description provided for @physicalDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical device'**
+  String get physicalDevice;
+
+  /// No description provided for @emulatorDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'Emulator detected'**
+  String get emulatorDetected;
+
+  /// No description provided for @ram.
+  ///
+  /// In en, this message translates to:
+  /// **'RAM'**
+  String get ram;
+
+  /// No description provided for @sufficient.
+  ///
+  /// In en, this message translates to:
+  /// **'Sufficient'**
+  String get sufficient;
+
+  /// No description provided for @freeStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Free storage'**
+  String get freeStorage;
+
+  /// No description provided for @mbFree.
+  ///
+  /// In en, this message translates to:
+  /// **'{mb} MB free'**
+  String mbFree(int mb);
+
+  /// No description provided for @aiRequiresPhysicalDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'AI features require a physical device.'**
+  String get aiRequiresPhysicalDevice;
+
+  /// No description provided for @multilingual.
+  ///
+  /// In en, this message translates to:
+  /// **'Multilingual'**
+  String get multilingual;
+
+  /// No description provided for @downloadingProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading… {percent}%'**
+  String downloadingProgress(String percent);
+
+  /// No description provided for @loadingModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading model…'**
+  String get loadingModel;
+
+  /// No description provided for @retryDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry Download'**
+  String get retryDownload;
+
+  /// No description provided for @activeAndReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Active & Ready'**
+  String get activeAndReady;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @enableAi.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable AI'**
+  String get enableAi;
+
+  /// No description provided for @downloadAiModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Download AI Model'**
+  String get downloadAiModel;
+
+  /// No description provided for @deviceNotSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Device not supported'**
+  String get deviceNotSupported;
+
+  /// No description provided for @downloadBackgroundNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Download happens in the background — you can leave this screen. The model file will be stored on your device and can be removed at any time.'**
+  String get downloadBackgroundNote;
+
+  /// No description provided for @removeAiModelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove AI Model?'**
+  String get removeAiModelTitle;
+
+  /// No description provided for @removeAiModelConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This will delete the AI model from your device. You can re-download it later.'**
+  String get removeAiModelConfirm;
+
+  /// No description provided for @analyzeWithAi.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze with AI'**
+  String get analyzeWithAi;
+
+  /// No description provided for @aiAssistantAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Assistant available'**
+  String get aiAssistantAvailable;
+
+  /// No description provided for @aiSetupPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up an on-device AI model to get smart suggestions.'**
+  String get aiSetupPrompt;
+
+  /// No description provided for @setup.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup'**
+  String get setup;
+
+  /// No description provided for @adminDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Dashboard'**
+  String get adminDashboard;
+
+  /// No description provided for @failedToLoadDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load dashboard'**
+  String get failedToLoadDashboard;
+
+  /// No description provided for @platformOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Overview'**
+  String get platformOverview;
+
+  /// No description provided for @liveStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Live statistics from the backend.'**
+  String get liveStatistics;
+
+  /// No description provided for @usersSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get usersSection;
+
+  /// No description provided for @adminTabClients.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients'**
+  String get adminTabClients;
+
+  /// No description provided for @adminTabWorkers.
+  ///
+  /// In en, this message translates to:
+  /// **'Workers'**
+  String get adminTabWorkers;
+
+  /// No description provided for @adminTabAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get adminTabAccount;
+
+  /// No description provided for @jobsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Jobs'**
+  String get jobsSection;
+
+  /// No description provided for @activeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get activeLabel;
+
+  /// No description provided for @todaySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todaySection;
+
+  /// No description provided for @createdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get createdLabel;
+
+  /// No description provided for @completedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completedLabel;
+
+  /// No description provided for @deleteUserTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {role}'**
+  String deleteUserTitle(String role);
+
+  /// No description provided for @deleteUserConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This action removes {name} ({email}) permanently. Continue?'**
+  String deleteUserConfirm(String name, String email);
+
+  /// No description provided for @userDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'User deleted successfully'**
+  String get userDeletedSuccess;
+
+  /// No description provided for @unableToLoadUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load users'**
+  String get unableToLoadUsers;
+
+  /// No description provided for @noClientsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No clients found'**
+  String get noClientsFound;
+
+  /// No description provided for @noWorkersFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No workers found'**
+  String get noWorkersFound;
+
+  /// No description provided for @deleteUserTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete user'**
+  String get deleteUserTooltip;
+
+  /// No description provided for @adminSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Session'**
+  String get adminSession;
+
+  /// No description provided for @adminManageUsersHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage users from the Clients and Workers tabs.'**
+  String get adminManageUsersHint;
+
+  /// No description provided for @distanceKm.
+  ///
+  /// In en, this message translates to:
+  /// **'{radius} km'**
+  String distanceKm(int radius);
+
+  /// No description provided for @youreOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re Offline'**
+  String get youreOffline;
+
+  /// No description provided for @offlineHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle the switch in the top bar to go online and discover nearby jobs.'**
+  String get offlineHint;
+
+  /// No description provided for @yourSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Skills'**
+  String get yourSkills;
+
+  /// No description provided for @skillsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search and add skills. These are sent to the server to filter your job feed.'**
+  String get skillsSubtitle;
+
+  /// No description provided for @addSkillLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Skill'**
+  String get addSkillLabel;
+
+  /// No description provided for @typeToSearchSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Type to search skills…'**
+  String get typeToSearchSkills;
+
+  /// No description provided for @savedSkillsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved Skills ({count})'**
+  String savedSkillsCount(int count);
+
+  /// No description provided for @noSkillsAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'No skills added yet. Search above to add relevant skills.'**
+  String get noSkillsAdded;
+
+  /// No description provided for @unableToLoadTaskDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load task details'**
+  String get unableToLoadTaskDetails;
+
+  /// No description provided for @detailDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get detailDistance;
+
+  /// No description provided for @chooseLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Location'**
+  String get chooseLocation;
+
+  /// No description provided for @savedTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get savedTab;
+
+  /// No description provided for @pinOnMapTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin on Map'**
+  String get pinOnMapTab;
+
+  /// No description provided for @locationDeniedPermanently.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permanently denied. Enable it in Settings.'**
+  String get locationDeniedPermanently;
+
+  /// No description provided for @couldNotGetLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not get location'**
+  String get couldNotGetLocation;
+
+  /// No description provided for @searchPlaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Search places…'**
+  String get searchPlaces;
+
+  /// No description provided for @switchToSatellite.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Satellite'**
+  String get switchToSatellite;
+
+  /// No description provided for @switchToRoadMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Road map'**
+  String get switchToRoadMap;
+
+  /// No description provided for @goToMyLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to my location'**
+  String get goToMyLocation;
+
+  /// No description provided for @confirmLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Location'**
+  String get confirmLocation;
+
+  /// No description provided for @saveAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Address'**
+  String get saveAddress;
+
+  /// No description provided for @saveAddressSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a label and recipient details for this location.'**
+  String get saveAddressSubtitle;
+
+  /// No description provided for @labelField.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get labelField;
+
+  /// No description provided for @labelHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get labelHome;
+
+  /// No description provided for @labelWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Work'**
+  String get labelWork;
+
+  /// No description provided for @labelOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get labelOther;
+
+  /// No description provided for @recipientName.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipient Name'**
+  String get recipientName;
+
+  /// No description provided for @recipientNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Rahul Sharma'**
+  String get recipientNameHint;
+
+  /// No description provided for @recipientPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipient Phone'**
+  String get recipientPhone;
+
+  /// No description provided for @recipientPhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 9876543210'**
+  String get recipientPhoneHint;
+
+  /// No description provided for @pickFromContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick from contacts'**
+  String get pickFromContacts;
+
+  /// No description provided for @contactsAccessDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts access denied — name was copied. Please enter the phone number manually.'**
+  String get contactsAccessDenied;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get openSettings;
+
+  /// No description provided for @couldNotOpenContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open contacts'**
+  String get couldNotOpenContacts;
+
+  /// No description provided for @areaNeighbourhood.
+  ///
+  /// In en, this message translates to:
+  /// **'Area / Neighbourhood'**
+  String get areaNeighbourhood;
+
+  /// No description provided for @areaHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Koramangala'**
+  String get areaHint;
+
+  /// No description provided for @cityHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Bengaluru'**
+  String get cityHint;
+
+  /// No description provided for @postalCodeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal Code'**
+  String get postalCodeRequired;
+
+  /// No description provided for @postalCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 560034'**
+  String get postalCodeHint;
+
+  /// No description provided for @countryCodeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Country Code'**
+  String get countryCodeRequired;
+
+  /// No description provided for @countryCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. IN'**
+  String get countryCodeHint;
+
+  /// No description provided for @requiredSkillsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Required Skills'**
+  String get requiredSkillsLabel;
+
+  /// No description provided for @skillHintText.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. plumbing, painting…'**
+  String get skillHintText;
+
+  /// No description provided for @skillHelperEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Type skills and separate them with commas'**
+  String get skillHelperEmpty;
+
+  /// No description provided for @skillsAddedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 skill added} other{{count} skills added}}'**
+  String skillsAddedCount(int count);
 
   /// No description provided for @languagePicker.
   ///
@@ -1184,6 +2984,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'עברית'**
   String get languageHebrew;
+
+  /// No description provided for @useWithoutSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Use Without Saving'**
+  String get useWithoutSaving;
+
+  /// No description provided for @saveAndUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Save & Use'**
+  String get saveAndUse;
+
+  /// No description provided for @useMyCurrentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Use My Current Location'**
+  String get useMyCurrentLocation;
+
+  /// No description provided for @detectingLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Detecting location…'**
+  String get detectingLocation;
+
+  /// No description provided for @deleteAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Address'**
+  String get deleteAddress;
 }
 
 class _AppLocalizationsDelegate

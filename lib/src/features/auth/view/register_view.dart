@@ -11,6 +11,7 @@ import '../../../core/network/exchange_rate_service.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/app_notification.dart';
 import '../../../core/widgets/primary_button.dart';
+import '../../../core/l10n/l10n_extension.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -96,55 +97,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     super.dispose();
   }
 
-  String? _required(String? value, String field) {
-    if (value == null || value.trim().isEmpty) {
-      return '$field is required';
-    }
-    return null;
-  }
-
-  String? _validateEmail(String? value) {
-    final required = _required(value, 'Email');
-    if (required != null) {
-      return required;
-    }
-
-    final email = value!.trim();
-    final isEmail = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email);
-    if (!isEmail) {
-      return 'Enter a valid email';
-    }
-
-    return null;
-  }
-
-  String? _validatePhone(String? value) {
-    final required = _required(value, 'Phone number');
-    if (required != null) {
-      return required;
-    }
-
-    final isDigitsOnly = RegExp(r'^[+]?\d{10,15}$').hasMatch(value!.trim());
-    if (!isDigitsOnly) {
-      return 'Enter a valid phone number';
-    }
-
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    final required = _required(value, 'Password');
-    if (required != null) {
-      return required;
-    }
-
-    if (value!.length < 6) {
-      return 'Minimum 6 characters';
-    }
-
-    return null;
-  }
-
   Future<void> _submit() async {
     final form = _formKey.currentState;
     if (form == null || !form.validate()) {
@@ -191,12 +143,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     final authState = ref.read(authControllerProvider);
     if (!success) {
-      final error = authState.errorMessage ?? 'Unable to register';
+      final error = authState.errorMessage ?? context.l10n.unableToRegister;
       AppNotifier.showError(context, error);
       return;
     }
 
-    AppNotifier.showSuccess(context, 'Registration successful. Please log in.');
+    AppNotifier.showSuccess(context, context.l10n.registrationSuccess);
 
     Navigator.pushReplacementNamed(context, AppRoutes.login);
   }
@@ -216,14 +168,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Create Account',
+                  context.l10n.registerTitle,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge?.copyWith(fontSize: 30),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Register as provider or worker with your basic location profile.',
+                  context.l10n.registerSubtitle,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 16),
@@ -234,14 +186,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Role',
+                          context.l10n.roleLabel,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(height: 8),
                         Row(
                           children: [
                             ChoiceChip(
-                              label: const Text('Job Provider'),
+                              label: Text(context.l10n.roleJobProvider),
                               selected:
                                   registerUi.selectedRole == UserRole.provider,
                               onSelected: authState.isLoading
@@ -254,7 +206,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             ),
                             const SizedBox(width: 8),
                             ChoiceChip(
-                              label: const Text('Job Worker'),
+                              label: Text(context.l10n.roleJobWorker),
                               selected:
                                   registerUi.selectedRole == UserRole.worker,
                               onSelected: authState.isLoading
@@ -271,10 +223,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         TextFormField(
                           controller: _nameController,
                           textInputAction: TextInputAction.next,
-                          validator: (value) => _required(value, 'Name'),
-                          decoration: const InputDecoration(
-                            labelText: 'Full name',
-                            prefixIcon: Icon(Icons.badge_outlined),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty)
+                              return context.l10n.fieldRequired(
+                                context.l10n.fullName,
+                              );
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: context.l10n.fullName,
+                            prefixIcon: const Icon(Icons.badge_outlined),
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -282,10 +240,22 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
-                          validator: _validateEmail,
-                          decoration: const InputDecoration(
-                            labelText: 'Email',
-                            prefixIcon: Icon(Icons.alternate_email_rounded),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty)
+                              return context.l10n.fieldRequired(
+                                context.l10n.emailLabel,
+                              );
+                            if (!RegExp(
+                              r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
+                            ).hasMatch(value.trim()))
+                              return context.l10n.enterValidEmail;
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: context.l10n.emailLabel,
+                            prefixIcon: const Icon(
+                              Icons.alternate_email_rounded,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -293,10 +263,20 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           controller: _phoneController,
                           keyboardType: TextInputType.phone,
                           textInputAction: TextInputAction.next,
-                          validator: _validatePhone,
-                          decoration: const InputDecoration(
-                            labelText: 'Phone number',
-                            prefixIcon: Icon(Icons.call_outlined),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty)
+                              return context.l10n.fieldRequired(
+                                context.l10n.phone,
+                              );
+                            if (!RegExp(
+                              r'^[+]?\d{10,15}$',
+                            ).hasMatch(value.trim()))
+                              return context.l10n.enterValidPhone;
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: context.l10n.phone,
+                            prefixIcon: const Icon(Icons.call_outlined),
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -304,9 +284,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           controller: _passwordController,
                           obscureText: registerUi.isPasswordObscured,
                           textInputAction: TextInputAction.next,
-                          validator: _validatePassword,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty)
+                              return context.l10n.fieldRequired(
+                                context.l10n.passwordLabel,
+                              );
+                            if (value.length < 6)
+                              return context.l10n.minimumSixCharacters;
+                            return null;
+                          },
                           decoration: InputDecoration(
-                            labelText: 'Password',
+                            labelText: context.l10n.passwordLabel,
                             prefixIcon: const Icon(Icons.lock_outline_rounded),
                             suffixIcon: IconButton(
                               onPressed: () {
@@ -329,9 +317,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               child: DropdownButtonFormField<String>(
                                 isExpanded: true,
                                 initialValue: registerUi.selectedCountry,
-                                decoration: const InputDecoration(
-                                  labelText: 'Country',
-                                  prefixIcon: Icon(Icons.flag_outlined),
+                                decoration: InputDecoration(
+                                  labelText: context.l10n.countryLabel,
+                                  prefixIcon: const Icon(Icons.flag_outlined),
                                 ),
                                 items: kCountryToCurrency.keys
                                     .map(
@@ -360,9 +348,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               child: DropdownButtonFormField<String>(
                                 isExpanded: true,
                                 initialValue: registerUi.selectedCurrency,
-                                decoration: const InputDecoration(
-                                  labelText: 'Currency',
-                                  prefixIcon: Icon(
+                                decoration: InputDecoration(
+                                  labelText: context.l10n.currencyLabel,
+                                  prefixIcon: const Icon(
                                     Icons.currency_exchange_outlined,
                                   ),
                                 ),
@@ -397,29 +385,45 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         TextFormField(
                           controller: _cityController,
                           textInputAction: TextInputAction.next,
-                          validator: (value) => _required(value, 'City'),
-                          decoration: const InputDecoration(
-                            labelText: 'City',
-                            prefixIcon: Icon(Icons.location_city_outlined),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty)
+                              return context.l10n.fieldRequired(
+                                context.l10n.cityLabel,
+                              );
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: context.l10n.cityLabel,
+                            prefixIcon: const Icon(
+                              Icons.location_city_outlined,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: _postalCodeController,
                           textInputAction: TextInputAction.next,
-                          validator: (value) => _required(value, 'Postal code'),
-                          decoration: const InputDecoration(
-                            labelText: 'Postal code',
-                            prefixIcon: Icon(Icons.local_post_office_outlined),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty)
+                              return context.l10n.fieldRequired(
+                                context.l10n.postalCodeLabel,
+                              );
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: context.l10n.postalCodeLabel,
+                            prefixIcon: const Icon(
+                              Icons.local_post_office_outlined,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: _areaController,
                           textInputAction: TextInputAction.next,
-                          decoration: const InputDecoration(
-                            labelText: 'Area (optional)',
-                            prefixIcon: Icon(Icons.pin_drop_outlined),
+                          decoration: InputDecoration(
+                            labelText: context.l10n.areaOptionalLabel,
+                            prefixIcon: const Icon(Icons.pin_drop_outlined),
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -427,15 +431,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           controller: _fullAddressController,
                           textInputAction: TextInputAction.done,
                           maxLines: 2,
-                          decoration: const InputDecoration(
-                            labelText: 'Full address (optional)',
-                            prefixIcon: Icon(Icons.home_work_outlined),
+                          decoration: InputDecoration(
+                            labelText: context.l10n.fullAddressOptionalLabel,
+                            prefixIcon: const Icon(Icons.home_work_outlined),
                             alignLabelWithHint: true,
                           ),
                         ),
                         const SizedBox(height: 16),
                         PrimaryButton(
-                          label: 'Register',
+                          label: context.l10n.registerButton,
                           isLoading: authState.isLoading,
                           onPressed: authState.isLoading ? null : _submit,
                         ),
@@ -471,7 +475,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Already registered?'),
+                    Text(context.l10n.alreadyRegistered),
                     TextButton(
                       onPressed: authState.isLoading
                           ? null
@@ -481,7 +485,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 AppRoutes.login,
                               );
                             },
-                      child: const Text('Log in'),
+                      child: Text(context.l10n.logInLink),
                     ),
                   ],
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../data/admin_api.dart';
 import '../view_model/admin_view_model.dart';
 
@@ -13,11 +14,12 @@ class AdminDashboardScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Dashboard'),
+        title: Text(context.l10n.adminDashboard),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh_rounded),
-            onPressed: () => ref.read(adminControllerProvider.notifier).refresh(),
+            onPressed: () =>
+                ref.read(adminControllerProvider.notifier).refresh(),
           ),
         ],
       ),
@@ -33,7 +35,7 @@ class AdminDashboardScreen extends ConsumerWidget {
               const Icon(Icons.error_outline_rounded, size: 48),
               const SizedBox(height: 12),
               Text(
-                'Failed to load dashboard',
+                context.l10n.failedToLoadDashboard,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
@@ -64,24 +66,27 @@ class _OverviewBody extends StatelessWidget {
       children: [
         const SizedBox(height: 8),
         Text(
-          'Platform Overview',
+          context.l10n.platformOverview,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 4),
         Text(
-          'Live statistics from the backend.',
+          context.l10n.liveStatistics,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(height: 16),
         // ── User stats ──
-        Text('Users', style: Theme.of(context).textTheme.titleSmall),
+        Text(
+          context.l10n.usersSection,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
         const SizedBox(height: 8),
         Row(
           children: [
             Expanded(
               child: _StatCard(
                 icon: Icons.person_rounded,
-                label: 'Clients',
+                label: context.l10n.adminTabClients,
                 value: overview.totalClients,
               ),
             ),
@@ -89,7 +94,7 @@ class _OverviewBody extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 icon: Icons.handyman_rounded,
-                label: 'Workers',
+                label: context.l10n.adminTabWorkers,
                 value: overview.totalWorkers,
               ),
             ),
@@ -97,14 +102,17 @@ class _OverviewBody extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         // ── Job stats ──
-        Text('Jobs', style: Theme.of(context).textTheme.titleSmall),
+        Text(
+          context.l10n.jobsSection,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
         const SizedBox(height: 8),
         Row(
           children: [
             Expanded(
               child: _StatCard(
                 icon: Icons.work_rounded,
-                label: 'Active',
+                label: context.l10n.activeLabel,
                 value: overview.activeJobs,
                 highlight: true,
               ),
@@ -113,7 +121,7 @@ class _OverviewBody extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 icon: Icons.receipt_long_rounded,
-                label: 'Open for Bids',
+                label: context.l10n.statusOpenForBids,
                 value: overview.openJobs,
               ),
             ),
@@ -121,14 +129,17 @@ class _OverviewBody extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         // ── Today stats ──
-        Text("Today", style: Theme.of(context).textTheme.titleSmall),
+        Text(
+          context.l10n.todaySection,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
         const SizedBox(height: 8),
         Row(
           children: [
             Expanded(
               child: _StatCard(
                 icon: Icons.add_circle_outline_rounded,
-                label: 'Created',
+                label: context.l10n.createdLabel,
                 value: overview.jobsCreatedToday,
               ),
             ),
@@ -136,7 +147,7 @@ class _OverviewBody extends StatelessWidget {
             Expanded(
               child: _StatCard(
                 icon: Icons.check_circle_outline_rounded,
-                label: 'Completed',
+                label: context.l10n.completedLabel,
                 value: overview.jobsCompletedToday,
                 highlight: true,
               ),
@@ -187,10 +198,7 @@ class _StatCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 2),
-            Text(
-              label,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+            Text(label, style: Theme.of(context).textTheme.bodySmall),
           ],
         ),
       ),

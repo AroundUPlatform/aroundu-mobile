@@ -27,16 +27,10 @@ import 'location_picker_screen.dart';
 import 'widgets/job_card.dart';
 import 'widgets/job_shared_widgets.dart';
 import 'widgets/skill_suggest_field.dart';
+import '../../../core/l10n/l10n_extension.dart';
 
 class ProviderShellScreen extends ConsumerStatefulWidget {
   const ProviderShellScreen({super.key});
-
-  static const List<String> _titles = [
-    'My Tasks',
-    'Post Task',
-    'Messages',
-    'Profile',
-  ];
 
   @override
   ConsumerState<ProviderShellScreen> createState() =>
@@ -59,7 +53,16 @@ class _ProviderShellScreenState extends ConsumerState<ProviderShellScreen> {
     });
 
     return Scaffold(
-      appBar: AppBar(title: Text(ProviderShellScreen._titles[tabIndex])),
+      appBar: AppBar(
+        title: Text(
+          [
+            context.l10n.providerTabMyTasks,
+            context.l10n.providerTabPostTask,
+            context.l10n.conversations,
+            context.l10n.profile,
+          ][tabIndex],
+        ),
+      ),
       body: IndexedStack(
         index: tabIndex,
         children: const [
@@ -74,26 +77,26 @@ class _ProviderShellScreenState extends ConsumerState<ProviderShellScreen> {
         onDestinationSelected: (index) {
           ref.read(providerTabIndexProvider.notifier).setIndex(index);
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.work_outline_rounded),
-            selectedIcon: Icon(Icons.work_rounded),
-            label: 'Tasks',
+            icon: const Icon(Icons.work_outline_rounded),
+            selectedIcon: const Icon(Icons.work_rounded),
+            label: context.l10n.tasksNavLabel,
           ),
           NavigationDestination(
-            icon: Icon(Icons.add_circle_outline_rounded),
-            selectedIcon: Icon(Icons.add_circle_rounded),
-            label: 'Post',
+            icon: const Icon(Icons.add_circle_outline_rounded),
+            selectedIcon: const Icon(Icons.add_circle_rounded),
+            label: context.l10n.postNavLabel,
           ),
           NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline_rounded),
-            selectedIcon: Icon(Icons.chat_bubble_rounded),
-            label: 'Messages',
+            icon: const Icon(Icons.chat_bubble_outline_rounded),
+            selectedIcon: const Icon(Icons.chat_bubble_rounded),
+            label: context.l10n.conversations,
           ),
           NavigationDestination(
-            icon: Icon(Icons.person_outline_rounded),
-            selectedIcon: Icon(Icons.person_rounded),
-            label: 'Profile',
+            icon: const Icon(Icons.person_outline_rounded),
+            selectedIcon: const Icon(Icons.person_rounded),
+            label: context.l10n.profile,
           ),
         ],
       ),
@@ -113,50 +116,29 @@ class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
   ProviderJobFilter _activeFilter = ProviderJobFilter.all;
   Timer? _refreshTimer;
 
-  static const List<({ProviderJobFilter filter, String label, IconData icon})>
-  _chips = [
-    (
-      filter: ProviderJobFilter.all,
-      label: 'All',
-      icon: Icons.work_outline_rounded,
-    ),
-    (filter: ProviderJobFilter.open, label: 'Open', icon: Icons.public_rounded),
-    (
-      filter: ProviderJobFilter.active,
-      label: 'Active',
-      icon: Icons.handshake_outlined,
-    ),
-    (
-      filter: ProviderJobFilter.inProgress,
-      label: 'In Progress',
-      icon: Icons.construction_rounded,
-    ),
+  static const List<({ProviderJobFilter filter, IconData icon})> _chips = [
+    (filter: ProviderJobFilter.all, icon: Icons.work_outline_rounded),
+    (filter: ProviderJobFilter.open, icon: Icons.public_rounded),
+    (filter: ProviderJobFilter.active, icon: Icons.handshake_outlined),
+    (filter: ProviderJobFilter.inProgress, icon: Icons.construction_rounded),
     (
       filter: ProviderJobFilter.completed,
-      label: 'Completed',
       icon: Icons.check_circle_outline_rounded,
     ),
-    (
-      filter: ProviderJobFilter.cancelled,
-      label: 'Cancelled',
-      icon: Icons.cancel_outlined,
-    ),
-    (
-      filter: ProviderJobFilter.expired,
-      label: 'Expired',
-      icon: Icons.timer_off_outlined,
-    ),
+    (filter: ProviderJobFilter.cancelled, icon: Icons.cancel_outlined),
+    (filter: ProviderJobFilter.expired, icon: Icons.timer_off_outlined),
   ];
 
-  static const Map<ProviderJobFilter, String> _emptyMessages = {
-    ProviderJobFilter.all: 'No tasks posted yet',
-    ProviderJobFilter.open: 'No open tasks',
-    ProviderJobFilter.active: 'No active tasks',
-    ProviderJobFilter.inProgress: 'No tasks in progress',
-    ProviderJobFilter.completed: 'No completed tasks',
-    ProviderJobFilter.cancelled: 'No cancelled tasks',
-    ProviderJobFilter.expired: 'No expired tasks',
-  };
+  static Map<ProviderJobFilter, String> _emptyMessages(BuildContext context) =>
+      {
+        ProviderJobFilter.all: context.l10n.noTasksPostedYet,
+        ProviderJobFilter.open: context.l10n.noOpenTasks,
+        ProviderJobFilter.active: context.l10n.noActiveTasks,
+        ProviderJobFilter.inProgress: context.l10n.noTasksInProgress,
+        ProviderJobFilter.completed: context.l10n.noCompletedTasks,
+        ProviderJobFilter.cancelled: context.l10n.noCancelledTasks,
+        ProviderJobFilter.expired: context.l10n.noExpiredTasks,
+      };
 
   @override
   void initState() {
@@ -222,6 +204,15 @@ class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
   }
 
   Widget _buildChipBar() {
+    final chipLabels = <ProviderJobFilter, String>{
+      ProviderJobFilter.all: context.l10n.filterAll,
+      ProviderJobFilter.open: context.l10n.filterOpen,
+      ProviderJobFilter.active: context.l10n.filterActive,
+      ProviderJobFilter.inProgress: context.l10n.filterInProgress,
+      ProviderJobFilter.completed: context.l10n.filterCompleted,
+      ProviderJobFilter.cancelled: context.l10n.filterCancelled,
+      ProviderJobFilter.expired: context.l10n.filterExpired,
+    };
     return SizedBox(
       height: 44,
       child: ListView.separated(
@@ -235,7 +226,7 @@ class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
           return FilterChip(
             selected: selected,
             avatar: Icon(chip.icon, size: 16),
-            label: Text(chip.label),
+            label: Text(chipLabels[chip.filter]!),
             onSelected: (_) {
               if (_activeFilter != chip.filter) {
                 setState(() => _activeFilter = chip.filter);
@@ -250,7 +241,8 @@ class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
 
   Widget _buildJobList(BuildContext context, List<JobItem> jobs) {
     if (jobs.isEmpty) {
-      final message = _emptyMessages[_activeFilter] ?? 'No tasks found';
+      final message =
+          _emptyMessages(context)[_activeFilter] ?? 'No tasks found';
       return CenteredListBody(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -264,7 +256,7 @@ class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
             Text(message, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 6),
             Text(
-              'Pull down to refresh.',
+              context.l10n.pullDownToRefresh,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -325,7 +317,7 @@ class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Unable to load tasks',
+                      context.l10n.unableToLoadTasks,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 8),
@@ -338,7 +330,7 @@ class _ProviderJobsTabState extends ConsumerState<_ProviderJobsTab>
                     OutlinedButton.icon(
                       onPressed: _refresh,
                       icon: const Icon(Icons.refresh_rounded),
-                      label: const Text('Retry'),
+                      label: Text(context.l10n.retry),
                     ),
                   ],
                 ),
@@ -415,7 +407,8 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
     } on ApiException catch (e) {
       if (mounted) AppNotifier.showError(context, e.userMessage);
     } catch (_) {
-      if (mounted) AppNotifier.showError(context, 'Failed to save location');
+      if (mounted)
+        AppNotifier.showError(context, context.l10n.failedToSaveLocation);
     } finally {
       if (mounted) setState(() => _isRegisteringAddress = false);
     }
@@ -429,26 +422,20 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
         .read(skillSuggestControllerProvider.notifier)
         .selectedNames;
     if (selectedSkillNames.isEmpty) {
-      AppNotifier.showWarning(
-        context,
-        'Add at least one required skill for this task',
-      );
+      AppNotifier.showWarning(context, context.l10n.addSkillWarning);
       return;
     }
 
     final budget = double.tryParse(_budgetController.text.trim());
     if (budget == null || budget <= 0) {
-      AppNotifier.showWarning(context, 'Enter a valid budget amount');
+      AppNotifier.showWarning(context, context.l10n.enterValidBudget);
       return;
     }
 
     final auth = ref.read(authControllerProvider);
     final locationId = _selectedAddress?.id ?? auth.currentAddressId;
     if (locationId == null) {
-      AppNotifier.showWarning(
-        context,
-        'Please set a job location before posting',
-      );
+      AppNotifier.showWarning(context, context.l10n.setJobLocationWarning);
       return;
     }
 
@@ -480,7 +467,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
         _selectedAddress = null;
       });
 
-      AppNotifier.showSuccess(context, 'Job posted successfully');
+      AppNotifier.showSuccess(context, context.l10n.jobPostedSuccess);
       ref.read(providerTabIndexProvider.notifier).setIndex(0);
       return;
     }
@@ -495,7 +482,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
     if (error is ApiException) return error.userMessage;
     final message = error?.toString().trim();
     if (message == null || message.isEmpty) {
-      return 'Failed to post job. Please retry.';
+      return context.l10n.failedToPostJob;
     }
     return message;
   }
@@ -516,12 +503,12 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Post a New Task',
+              context.l10n.postNewTask,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 6),
             Text(
-              'Add clear details so workers can send accurate offers.',
+              context.l10n.postTaskSubtitle,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 16),
@@ -539,9 +526,9 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                         controller: _titleController,
                         textInputAction: TextInputAction.next,
                         validator: (value) => _required(value, 'Title'),
-                        decoration: const InputDecoration(
-                          labelText: 'Task title',
-                          prefixIcon: Icon(Icons.title_rounded),
+                        decoration: InputDecoration(
+                          labelText: context.l10n.taskTitleLabel,
+                          prefixIcon: const Icon(Icons.title_rounded),
                         ),
                       ),
                       const SizedBox(height: 12),
@@ -560,9 +547,9 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                         ),
                         textInputAction: TextInputAction.next,
                         validator: (value) => _required(value, 'Budget'),
-                        decoration: const InputDecoration(
-                          labelText: 'Budget',
-                          prefixIcon: Icon(Icons.currency_rupee_rounded),
+                        decoration: InputDecoration(
+                          labelText: context.l10n.jobBudget,
+                          prefixIcon: const Icon(Icons.currency_rupee_rounded),
                         ),
                       ),
                       const SizedBox(height: 12),
@@ -573,17 +560,17 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                         maxLines: 4,
                         textInputAction: TextInputAction.newline,
                         validator: (value) => _required(value, 'Description'),
-                        decoration: const InputDecoration(
-                          labelText: 'Description',
+                        decoration: InputDecoration(
+                          labelText: context.l10n.jobDescription,
                           alignLabelWithHint: true,
-                          prefixIcon: Icon(Icons.description_outlined),
+                          prefixIcon: const Icon(Icons.description_outlined),
                         ),
                       ),
                       const SizedBox(height: 16),
 
                       // ── Urgency ────────────────────────────────────────
                       Text(
-                        'Urgency',
+                        context.l10n.jobUrgency,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       const SizedBox(height: 8),
@@ -591,7 +578,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                         spacing: 8,
                         children: [
                           _UrgencyChip(
-                            label: 'Normal',
+                            label: context.l10n.urgencyNormal,
                             value: 'NORMAL',
                             icon: Icons.schedule_rounded,
                             color: Colors.green,
@@ -599,7 +586,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                             onTap: () => setState(() => _urgency = 'NORMAL'),
                           ),
                           _UrgencyChip(
-                            label: 'Medium',
+                            label: context.l10n.urgencyMedium,
                             value: 'MEDIUM',
                             icon: Icons.hourglass_bottom_rounded,
                             color: Colors.amber,
@@ -607,7 +594,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                             onTap: () => setState(() => _urgency = 'MEDIUM'),
                           ),
                           _UrgencyChip(
-                            label: 'Urgent',
+                            label: context.l10n.urgencyUrgent,
                             value: 'URGENT',
                             icon: Icons.priority_high_rounded,
                             color: Colors.orange,
@@ -615,7 +602,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                             onTap: () => setState(() => _urgency = 'URGENT'),
                           ),
                           _UrgencyChip(
-                            label: 'ASAP',
+                            label: context.l10n.urgencyAsap,
                             value: 'SUPER_URGENT',
                             icon: Icons.flash_on_rounded,
                             color: Colors.red,
@@ -629,21 +616,21 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
 
                       // ── Payment Mode ───────────────────────────────────
                       Text(
-                        'Payment Method',
+                        context.l10n.paymentMethod,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       const SizedBox(height: 8),
                       SegmentedButton<String>(
-                        segments: const [
+                        segments: [
                           ButtonSegment(
                             value: 'OFFLINE',
-                            label: Text('Pay in Cash'),
-                            icon: Icon(Icons.payments_outlined),
+                            label: Text(context.l10n.payInCash),
+                            icon: const Icon(Icons.payments_outlined),
                           ),
                           ButtonSegment(
                             value: 'ESCROW',
-                            label: Text('Secure Escrow'),
-                            icon: Icon(Icons.lock_outline_rounded),
+                            label: Text(context.l10n.secureEscrow),
+                            icon: const Icon(Icons.lock_outline_rounded),
                           ),
                         ],
                         selected: {_paymentMode},
@@ -660,12 +647,12 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
 
                       // ── Location ───────────────────────────────────────
                       Text(
-                        'Job Location',
+                        context.l10n.jobLocation,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       const SizedBox(height: 8),
                       _isRegisteringAddress
-                          ? const Center(
+                          ? Center(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 12),
                                 child: Row(
@@ -673,7 +660,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                                   children: [
                                     CircularProgressIndicator(strokeWidth: 2),
                                     SizedBox(width: 10),
-                                    Text('Saving location…'),
+                                    Text(context.l10n.savingLocation),
                                   ],
                                 ),
                               ),
@@ -744,7 +731,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
                                               ],
                                             )
                                           : Text(
-                                              'Tap to select location',
+                                              context.l10n.tapToSelectLocation,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium
@@ -764,7 +751,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
 
                       // ── Submit ─────────────────────────────────────────
                       PrimaryButton(
-                        label: 'Post Task',
+                        label: context.l10n.postTaskButton,
                         isLoading: isSubmitting,
                         onPressed: _submit,
                       ),
@@ -949,7 +936,7 @@ class _ProviderJobWorkflowSheetState
       // Refresh the top-level jobs list so the updated status is reflected
       // immediately when the sheet is dismissed.
       ref.invalidate(providerJobsControllerProvider);
-    }, successMessage: 'Offer accepted');
+    }, successMessage: context.l10n.offerAcceptedSnack);
   }
 
   Future<void> _generateCodes() {
@@ -958,7 +945,7 @@ class _ProviderJobWorkflowSheetState
           .read(jobRepositoryProvider)
           .generateCodes(widget.jobId);
       _codeInfo = result;
-    }, successMessage: 'Task codes generated');
+    }, successMessage: context.l10n.taskCodesGenerated);
   }
 
   Future<void> _regenerateCodes() {
@@ -967,7 +954,7 @@ class _ProviderJobWorkflowSheetState
           .read(jobRepositoryProvider)
           .regenerateCodes(widget.jobId);
       _codeInfo = result;
-    }, successMessage: 'New release code generated');
+    }, successMessage: context.l10n.newReleaseCodeGenerated);
   }
 
   Future<void> _lockEscrow() {
@@ -980,7 +967,7 @@ class _ProviderJobWorkflowSheetState
       _paymentInfo = await ref
           .read(jobRepositoryProvider)
           .lockEscrow(jobId: widget.jobId, amount: job.budget);
-    }, successMessage: 'Payment safely reserved');
+    }, successMessage: context.l10n.paymentSafelyReserved);
   }
 
   Future<void> _cancelJob() {
@@ -990,7 +977,7 @@ class _ProviderJobWorkflowSheetState
             .read(jobRepositoryProvider)
             .updateJobStatus(jobId: widget.jobId, newStatus: 'CANCELLED');
       },
-      successMessage: 'Task cancelled',
+      successMessage: context.l10n.taskCancelled,
       reload: true,
     );
   }
@@ -1000,19 +987,17 @@ class _ProviderJobWorkflowSheetState
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Delete task?'),
-          content: const Text(
-            'This will remove the task and all associated offers.',
-          ),
+          title: Text(context.l10n.deleteTaskTitle),
+          content: Text(context.l10n.deleteTaskConfirm),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel'),
+              child: Text(context.l10n.cancel),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
               style: FilledButton.styleFrom(backgroundColor: AppPalette.danger),
-              child: const Text('Delete'),
+              child: Text(context.l10n.delete),
             ),
           ],
         );
@@ -1027,7 +1012,7 @@ class _ProviderJobWorkflowSheetState
       () async {
         await ref.read(jobRepositoryProvider).deleteJob(widget.jobId);
       },
-      successMessage: 'Task deleted',
+      successMessage: context.l10n.taskDeleted,
       reload: false,
     );
 
@@ -1072,7 +1057,7 @@ class _ProviderJobWorkflowSheetState
             conversationId: existing!.id,
             jobId: existing.jobId,
             otherUserId: bid.workerId,
-            otherUserName: 'Worker #${bid.workerId}',
+            otherUserName: context.l10n.workerNumber(bid.workerId),
             jobTitle: _job!.title,
           ),
         ),
@@ -1116,14 +1101,14 @@ class _ProviderJobWorkflowSheetState
             conversationId: conversationId,
             jobId: widget.jobId,
             otherUserId: bid.workerId,
-            otherUserName: 'Worker #${bid.workerId}',
+            otherUserName: context.l10n.workerNumber(bid.workerId),
             jobTitle: _job!.title,
           ),
         ),
       );
     } catch (e) {
       if (!mounted) return;
-      AppNotifier.showError(context, 'Failed to send message: $e');
+      AppNotifier.showError(context, context.l10n.failedToSendMessage);
     } finally {
       if (mounted) setState(() => _working = false);
     }
@@ -1142,13 +1127,13 @@ class _ProviderJobWorkflowSheetState
         children: [
           const SizedBox(height: 120),
           Text(
-            'Unable to load job workflow',
+            context.l10n.unableToLoadJobWorkflow,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),
           Text(
-            _error ?? 'Unknown error',
+            _error ?? context.l10n.unknownError,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
@@ -1156,7 +1141,7 @@ class _ProviderJobWorkflowSheetState
           OutlinedButton.icon(
             onPressed: _load,
             icon: const Icon(Icons.refresh_rounded),
-            label: const Text('Retry'),
+            label: Text(context.l10n.retry),
           ),
         ],
       );
@@ -1294,7 +1279,7 @@ class _ProviderJobWorkflowSheetState
             const Icon(Icons.gavel_rounded, size: 18),
             const SizedBox(width: 6),
             Text(
-              'Offers',
+              context.l10n.offersSection,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w700,
               ),
@@ -1331,7 +1316,7 @@ class _ProviderJobWorkflowSheetState
                   Icon(Icons.inbox_outlined, color: colors.onSurfaceVariant),
                   const SizedBox(width: 10),
                   Text(
-                    'No offers received yet.',
+                    context.l10n.noOffersReceivedYet,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: colors.onSurfaceVariant,
                     ),
@@ -1386,7 +1371,7 @@ class _ProviderJobWorkflowSheetState
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Worker #${bid.workerId}',
+                                  context.l10n.workerNumber(bid.workerId),
                                   style: theme.textTheme.titleSmall?.copyWith(
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -1394,10 +1379,10 @@ class _ProviderJobWorkflowSheetState
                                 const SizedBox(height: 2),
                                 Text(
                                   bStatus == 'SELECTED'
-                                      ? 'Offer Accepted'
+                                      ? context.l10n.offerAccepted
                                       : bStatus == 'REJECTED'
-                                      ? 'Offer Rejected'
-                                      : 'Offer Pending',
+                                      ? context.l10n.offerRejected
+                                      : context.l10n.offerPending,
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: isSelected
                                         ? AppPalette.success
@@ -1458,7 +1443,7 @@ class _ProviderJobWorkflowSheetState
                             icon: const Icon(
                               Icons.check_circle_outline_rounded,
                             ),
-                            label: const Text('Accept this Offer'),
+                            label: Text(context.l10n.acceptThisOffer),
                           ),
                         ),
                       ],
@@ -1471,7 +1456,7 @@ class _ProviderJobWorkflowSheetState
                           child: OutlinedButton.icon(
                             onPressed: _working ? null : () => _openChat(bid),
                             icon: const Icon(Icons.chat_bubble_outline_rounded),
-                            label: const Text('Message Worker'),
+                            label: Text(context.l10n.messageWorker),
                           ),
                         ),
                       ],
@@ -1502,20 +1487,20 @@ class _ProviderJobWorkflowSheetState
                 FilledButton.icon(
                   onPressed: _working ? null : _generateCodes,
                   icon: const Icon(Icons.key_rounded),
-                  label: const Text('Generate Start Code'),
+                  label: Text(context.l10n.generateStartCode),
                 ),
                 const SizedBox(height: 10),
               ],
               if (_codeInfo?.startCode != null) ...[
                 _CodeCard(
-                  title: 'Start Code',
+                  title: context.l10n.startCode,
                   icon: Icons.lock_open_rounded,
                   code: _codeInfo!.startCode!,
                   onCopy: () {
                     Clipboard.setData(
                       ClipboardData(text: _codeInfo!.startCode!),
                     );
-                    AppNotifier.showInfo(context, 'Start code copied');
+                    AppNotifier.showInfo(context, context.l10n.startCodeCopied);
                   },
                 ),
                 const SizedBox(height: 10),
@@ -1527,7 +1512,10 @@ class _ProviderJobWorkflowSheetState
                   onPressed: _working ? null : _lockEscrow,
                   icon: const Icon(Icons.lock_rounded),
                   label: Text(
-                    'Reserve ₹${job.budget.toStringAsFixed(0)} in Escrow',
+                    context.l10n.reserveInEscrow(
+                      '₹',
+                      job.budget.toStringAsFixed(0),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -1545,29 +1533,31 @@ class _ProviderJobWorkflowSheetState
               if (canRelease) ...[
                 if (_codeInfo?.releaseCode != null) ...[
                   _CodeCard(
-                    title: 'Release Code',
+                    title: context.l10n.releaseCode,
                     icon: Icons.verified_outlined,
                     code: _codeInfo!.releaseCode!,
                     onCopy: () {
                       Clipboard.setData(
                         ClipboardData(text: _codeInfo!.releaseCode!),
                       );
-                      AppNotifier.showInfo(context, 'Release code copied');
+                      AppNotifier.showInfo(
+                        context,
+                        context.l10n.releaseCodeCopied,
+                      );
                     },
-                    subtitle:
-                        'Share this verbally with the worker. They enter it to confirm task completion.',
+                    subtitle: context.l10n.releaseCodeHint,
                   ),
                   const SizedBox(height: 8),
                   OutlinedButton.icon(
                     onPressed: _working ? null : _regenerateCodes,
                     icon: const Icon(Icons.refresh_rounded),
-                    label: const Text('Regenerate Code'),
+                    label: Text(context.l10n.regenerateCode),
                   ),
                 ] else
                   OutlinedButton.icon(
                     onPressed: _working ? null : _regenerateCodes,
                     icon: const Icon(Icons.lock_open_rounded),
-                    label: const Text('Generate Release Code'),
+                    label: Text(context.l10n.generateReleaseCode),
                   ),
                 const SizedBox(height: 10),
               ],
@@ -1586,7 +1576,10 @@ class _ProviderJobWorkflowSheetState
                                   .where(
                                     (b) => b.status.toUpperCase() == 'SELECTED',
                                   )
-                                  .map((b) => 'Worker #${b.workerId}')
+                                  .map(
+                                    (b) =>
+                                        context.l10n.workerNumber(b.workerId),
+                                  )
                                   .firstOrNull ??
                               'Worker',
                         ),
@@ -1594,7 +1587,7 @@ class _ProviderJobWorkflowSheetState
                     );
                   },
                   icon: const Icon(Icons.rate_review_outlined),
-                  label: const Text('Leave a Review'),
+                  label: Text(context.l10n.leaveReview),
                 ),
                 const SizedBox(height: 10),
               ],
@@ -1613,7 +1606,7 @@ class _ProviderJobWorkflowSheetState
                     ),
                   ),
                   icon: const Icon(Icons.cancel_outlined),
-                  label: const Text('Cancel Task'),
+                  label: Text(context.l10n.cancelTask),
                 ),
               if (canCancel) const SizedBox(height: 8),
               if (canDelete)
@@ -1626,7 +1619,7 @@ class _ProviderJobWorkflowSheetState
                     ),
                   ),
                   icon: const Icon(Icons.delete_outline_rounded),
-                  label: const Text('Delete Task'),
+                  label: Text(context.l10n.deleteTask),
                 ),
             ],
           ),
@@ -1785,21 +1778,21 @@ class _MessageWorkerDialogState extends State<_MessageWorkerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Message Worker'),
+      title: Text(context.l10n.messageWorker),
       content: TextField(
         controller: _controller,
         autofocus: true,
         maxLines: 3,
-        decoration: const InputDecoration(hintText: 'Type your first message…'),
+        decoration: InputDecoration(hintText: context.l10n.typeFirstMessage),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text(context.l10n.cancel),
         ),
         FilledButton(
           onPressed: () => Navigator.pop(context, _controller.text.trim()),
-          child: const Text('Send'),
+          child: Text(context.l10n.send),
         ),
       ],
     );

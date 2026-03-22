@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../app.dart';
 import '../view_model/auth_view_model.dart';
 import '../../../core/widgets/primary_button.dart';
+import '../../../core/l10n/l10n_extension.dart';
 
 class RoleSelectionScreen extends ConsumerStatefulWidget {
   const RoleSelectionScreen({super.key});
@@ -78,7 +79,7 @@ class _RoleSelectionScreenState extends ConsumerState<RoleSelectionScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Choose Your Role',
+                context.l10n.roleSelectionTitle,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontSize: 30),
@@ -86,14 +87,14 @@ class _RoleSelectionScreenState extends ConsumerState<RoleSelectionScreen> {
               const SizedBox(height: 8),
               Text(
                 authState.email == null
-                    ? 'Select the workflow you want to use in AroundU.'
-                    : 'Signed in as ${authState.email}',
+                    ? context.l10n.roleSelectionSubtitle
+                    : context.l10n.signedInAs(authState.email ?? ''),
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 18),
               _RoleCard(
-                title: 'Job Provider',
-                subtitle: 'Post jobs and manage incoming bids.',
+                title: context.l10n.roleJobProvider,
+                subtitle: context.l10n.roleProviderDesc,
                 icon: Icons.business_center_outlined,
                 selected: selectedRole == UserRole.provider,
                 onTap: () {
@@ -104,8 +105,8 @@ class _RoleSelectionScreenState extends ConsumerState<RoleSelectionScreen> {
               ),
               const SizedBox(height: 12),
               _RoleCard(
-                title: 'Job Worker',
-                subtitle: 'Browse nearby jobs and place bids quickly.',
+                title: context.l10n.roleJobWorker,
+                subtitle: context.l10n.roleWorkerDescAlt,
                 icon: Icons.build_circle_outlined,
                 selected: selectedRole == UserRole.worker,
                 onTap: () {
@@ -116,7 +117,7 @@ class _RoleSelectionScreenState extends ConsumerState<RoleSelectionScreen> {
               ),
               const Spacer(),
               PrimaryButton(
-                label: 'Continue',
+                label: context.l10n.continueButton,
                 onPressed: selectedRole == null ? null : _continue,
               ),
             ],

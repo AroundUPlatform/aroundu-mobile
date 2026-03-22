@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app.dart';
 import '../../../core/widgets/primary_button.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../view_model/auth_ui_view_model.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
@@ -17,27 +18,6 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   late final PageController _controller;
   Timer? _autoScroll;
-
-  static const List<_OnboardingSlide> _slides = [
-    _OnboardingSlide(
-      title: 'Book Local Services Fast',
-      description:
-          'Post your requirement in minutes and get matched with nearby verified workers.',
-      icon: Icons.bolt_rounded,
-    ),
-    _OnboardingSlide(
-      title: 'Compare Bids Transparently',
-      description:
-          'Review pricing, profiles, and timelines before assigning your job with confidence.',
-      icon: Icons.compare_arrows_rounded,
-    ),
-    _OnboardingSlide(
-      title: 'Track Every Job Clearly',
-      description:
-          'Stay updated from job creation to completion with role-based dashboards.',
-      icon: Icons.fact_check_rounded,
-    ),
-  ];
 
   // A large multiplier so we can start near the middle and scroll
   // infinitely in both directions.
@@ -109,6 +89,23 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final dotIndex = ref.watch(onboardingPageProvider);
+    final slides = [
+      _OnboardingSlide(
+        title: context.l10n.onboardingTitle1,
+        description: context.l10n.onboardingSubtitle1,
+        icon: Icons.bolt_rounded,
+      ),
+      _OnboardingSlide(
+        title: context.l10n.onboardingTitle2,
+        description: context.l10n.onboardingSubtitle2,
+        icon: Icons.compare_arrows_rounded,
+      ),
+      _OnboardingSlide(
+        title: context.l10n.onboardingTitle3,
+        description: context.l10n.onboardingSubtitle3,
+        icon: Icons.fact_check_rounded,
+      ),
+    ];
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -123,7 +120,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextButton(onPressed: _toLogin, child: const Text('Skip')),
+                    TextButton(
+                      onPressed: _toLogin,
+                      child: Text(context.l10n.skip),
+                    ),
                   ],
                 ),
               ),
@@ -156,7 +156,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           vertical: 8,
                         ),
                         child: _OnboardingCard(
-                          slide: _slides[_realIndex(virtualIdx)],
+                          slide: slides[_realIndex(virtualIdx)],
                         ),
                       );
                     },
@@ -170,7 +170,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
-                  _slides.length,
+                  _realCount,
                   (index) => AnimatedContainer(
                     duration: const Duration(milliseconds: 220),
                     margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -192,12 +192,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: PrimaryButton(
-                  label: dotIndex == _slides.length - 1
-                      ? 'Get Started'
-                      : 'Next',
-                  onPressed: dotIndex == _slides.length - 1
-                      ? _toLogin
-                      : _goNext,
+                  label: dotIndex == _realCount - 1
+                      ? context.l10n.getStarted
+                      : context.l10n.next,
+                  onPressed: dotIndex == _realCount - 1 ? _toLogin : _goNext,
                 ),
               ),
               const SizedBox(height: 8),
@@ -205,7 +203,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, AppRoutes.register);
                 },
-                child: const Text('New here? Create account'),
+                child: Text(context.l10n.newHereCreateAccount),
               ),
               const SizedBox(height: 4),
             ],

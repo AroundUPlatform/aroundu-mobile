@@ -2,6 +2,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme/theme_model.dart';
 import '../../../core/view_model/theme_view_model.dart';
 
@@ -14,29 +15,29 @@ class ThemePickerScreen extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Appearance')),
+      appBar: AppBar(title: Text(context.l10n.appearance)),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         children: [
           // ── Mode selector ──────────────────────────────────────
-          Text('Mode', style: theme.textTheme.titleMedium),
+          Text(context.l10n.modeLabel, style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
           SegmentedButton<ThemeMode>(
-            segments: const [
+            segments: [
               ButtonSegment(
                 value: ThemeMode.light,
-                icon: Icon(Icons.light_mode_rounded, size: 18),
-                label: Text('Light'),
+                icon: const Icon(Icons.light_mode_rounded, size: 18),
+                label: Text(context.l10n.lightMode),
               ),
               ButtonSegment(
                 value: ThemeMode.system,
-                icon: Icon(Icons.brightness_auto_rounded, size: 18),
-                label: Text('System'),
+                icon: const Icon(Icons.brightness_auto_rounded, size: 18),
+                label: Text(context.l10n.systemMode),
               ),
               ButtonSegment(
                 value: ThemeMode.dark,
-                icon: Icon(Icons.dark_mode_rounded, size: 18),
-                label: Text('Dark'),
+                icon: const Icon(Icons.dark_mode_rounded, size: 18),
+                label: Text(context.l10n.darkMode),
               ),
             ],
             selected: {settings.mode},
@@ -49,7 +50,7 @@ class ThemePickerScreen extends ConsumerWidget {
           const SizedBox(height: 32),
 
           // ── Accent colour ──────────────────────────────────────
-          Text('Accent Colour', style: theme.textTheme.titleMedium),
+          Text(context.l10n.accentColour, style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
           Wrap(
             spacing: 12,
@@ -67,7 +68,7 @@ class ThemePickerScreen extends ConsumerWidget {
                   ),
               _ColorSwatch(
                 color: settings.customColor ?? Colors.grey,
-                label: 'Custom',
+                label: context.l10n.customColour,
                 isSelected: settings.accent == AppAccentColor.custom,
                 showPicker: true,
                 onTap: () async {
@@ -88,7 +89,7 @@ class ThemePickerScreen extends ConsumerWidget {
           const SizedBox(height: 32),
 
           // ── Preview ────────────────────────────────────────────
-          Text('Preview', style: theme.textTheme.titleMedium),
+          Text(context.l10n.preview, style: theme.textTheme.titleMedium),
           const SizedBox(height: 12),
           Card(
             child: Padding(
@@ -114,11 +115,11 @@ class ThemePickerScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Your colours look great!',
+                              context.l10n.previewTitle,
                               style: theme.textTheme.titleMedium,
                             ),
                             Text(
-                              'This is how your app will look.',
+                              context.l10n.previewSubtitle,
                               style: theme.textTheme.bodyMedium,
                             ),
                           ],
@@ -131,12 +132,12 @@ class ThemePickerScreen extends ConsumerWidget {
                     children: [
                       FilledButton(
                         onPressed: () {},
-                        child: const Text('Primary'),
+                        child: Text(context.l10n.primary),
                       ),
                       const SizedBox(width: 12),
                       OutlinedButton(
                         onPressed: () {},
-                        child: const Text('Secondary'),
+                        child: Text(context.l10n.secondary),
                       ),
                     ],
                   ),
@@ -165,7 +166,7 @@ class ThemePickerScreen extends ConsumerWidget {
           height: 40,
           borderRadius: 20,
           heading: Text(
-            'Pick a colour',
+            context.l10n.pickAColour,
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ).showPickerDialog(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/error_state.dart';
@@ -40,7 +41,7 @@ class _WorkerConversationsView extends ConsumerWidget {
     final conversationsAsync = ref.watch(conversationsControllerProvider);
 
     return conversationsAsync.when(
-      loading: () => const LoadingState(message: 'Loading conversations...'),
+      loading: () => LoadingState(message: context.l10n.loadingConversations),
       error: (error, _) => ErrorState(
         message: error.toString(),
         onRetry: () =>
@@ -48,11 +49,10 @@ class _WorkerConversationsView extends ConsumerWidget {
       ),
       data: (conversations) {
         if (conversations.isEmpty) {
-          return const EmptyState(
+          return EmptyState(
             icon: Icons.chat_bubble_outline_rounded,
-            title: 'No messages yet',
-            subtitle:
-                'Your conversations will appear here when you start chatting about a task.',
+            title: context.l10n.noMessagesYet,
+            subtitle: context.l10n.noMessagesSubtitle,
           );
         }
 
@@ -83,7 +83,7 @@ class _ClientGroupedConversationsView extends ConsumerWidget {
     final groupedAsync = ref.watch(groupedConversationsControllerProvider);
 
     return groupedAsync.when(
-      loading: () => const LoadingState(message: 'Loading conversations...'),
+      loading: () => LoadingState(message: context.l10n.loadingConversations),
       error: (error, _) => ErrorState(
         message: error.toString(),
         onRetry: () =>
@@ -91,11 +91,10 @@ class _ClientGroupedConversationsView extends ConsumerWidget {
       ),
       data: (groups) {
         if (groups.isEmpty) {
-          return const EmptyState(
+          return EmptyState(
             icon: Icons.chat_bubble_outline_rounded,
-            title: 'No messages yet',
-            subtitle:
-                'Your conversations will appear here when you start chatting about a task.',
+            title: context.l10n.noMessagesYet,
+            subtitle: context.l10n.noMessagesSubtitle,
           );
         }
 
@@ -126,7 +125,7 @@ class _JobGroupTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasUnread = group.totalUnreadCount > 0;
     final timeText = group.lastMessageAt != null
-        ? formatChatTime(group.lastMessageAt!)
+        ? formatChatTime(context, group.lastMessageAt!)
         : '';
     final workerCount = group.conversations.length;
 
@@ -190,7 +189,7 @@ class _JobGroupTile extends StatelessWidget {
           Expanded(
             child: Text(
               group.lastMessageContent ??
-                  '$workerCount worker${workerCount == 1 ? '' : 's'}',
+                  context.l10n.workersCount(workerCount),
               style: TextStyle(
                 fontSize: 13,
                 color: AppPalette.textSecondary,
@@ -243,12 +242,18 @@ class ConversationTile extends ConsumerWidget {
 
   final Conversation conversation;
 
-  String _lastMessagePreview(Conversation conv, AuthState auth) {
-    if (conv.lastMessageContent == null) return 'Re: ${conv.jobTitle}';
+  String _lastMessagePreview(
+    BuildContext context,
+    Conversation conv,
+    AuthState auth,
+  ) {
+    if (conv.lastMessageContent == null) {
+      return context.l10n.chatReFallback(conv.jobTitle);
+    }
     final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
     final isMine = conv.lastMessageSenderRole == myRole;
     return isMine
-        ? 'You: ${conv.lastMessageContent}'
+        ? context.l10n.chatYouPrefix(conv.lastMessageContent!)
         : conv.lastMessageContent!;
   }
 
@@ -260,7 +265,7 @@ class ConversationTile extends ConsumerWidget {
     final hasUnread = conversation.unreadCount > 0;
 
     final timeText = conversation.lastMessageAt != null
-        ? formatChatTime(conversation.lastMessageAt!)
+        ? formatChatTime(context, conversation.lastMessageAt!)
         : '';
 
     return ListTile(
@@ -327,7 +332,7 @@ class ConversationTile extends ConsumerWidget {
         children: [
           Expanded(
             child: Text(
-              _lastMessagePreview(conversation, auth),
+              _lastMessagePreview(context, conversation, auth),
               style: TextStyle(
                 fontSize: 13,
                 color: AppPalette.textSecondary,
@@ -385,12 +390,12 @@ class UnreadBadge extends StatelessWidget {
 }
 
 /// Format a timestamp for conversation list display.
-String formatChatTime(DateTime dateTime) {
+String formatChatTime(BuildContext context, DateTime dateTime) {
   final now = DateTime.now();
   final diff = now.difference(dateTime);
 
-  if (diff.inMinutes < 1) return 'now';
-  if (diff.inHours < 1) return '${diff.inMinutes}m ago';
+  if (diff.inMinutes < 1) return context.l10n.now;
+  if (diff.inHours < 1) return context.l10n.minutesAgo(diff.inMinutes);
   if (diff.inDays < 1) return DateFormat.jm().format(dateTime);
   if (diff.inDays < 7) return DateFormat.E().format(dateTime);
   return DateFormat.MMMd().format(dateTime);

@@ -7,6 +7,7 @@ import '../view_model/auth_view_model.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/app_notification.dart';
 import '../../../core/widgets/primary_button.dart';
+import '../../../core/l10n/l10n_extension.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -25,30 +26,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  String? _validateEmail(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Email is required';
-    }
-
-    final email = value.trim();
-    final isEmail = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email);
-    if (!isEmail) {
-      return 'Enter a valid email';
-    }
-
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Password is required';
-    }
-    if (value.length < 6) {
-      return 'Minimum 6 characters';
-    }
-    return null;
   }
 
   void _routeAfterAuth(AuthState authState) {
@@ -97,7 +74,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
 
-    final error = authState.errorMessage ?? 'Unable to login. Please retry.';
+    final error = authState.errorMessage ?? context.l10n.unableToLogin;
     AppNotifier.showError(context, error);
   }
 
@@ -117,14 +94,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 const SizedBox(height: 10),
                 Text(
-                  'Welcome Back',
+                  context.l10n.welcomeBack,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge?.copyWith(fontSize: 30),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Sign in to continue as provider or worker.',
+                  context.l10n.loginSubtitle,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 24),
@@ -137,10 +114,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
-                          validator: _validateEmail,
-                          decoration: const InputDecoration(
-                            labelText: 'Email',
-                            prefixIcon: Icon(Icons.alternate_email_rounded),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty)
+                              return context.l10n.emailRequired;
+                            if (!RegExp(
+                              r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
+                            ).hasMatch(value.trim()))
+                              return context.l10n.enterValidEmail;
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: context.l10n.emailLabel,
+                            prefixIcon: const Icon(
+                              Icons.alternate_email_rounded,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 14),
@@ -148,10 +135,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           controller: _passwordController,
                           obscureText: obscurePassword,
                           textInputAction: TextInputAction.done,
-                          validator: _validatePassword,
+                          validator: (value) {
+                            if (value == null || value.isEmpty)
+                              return context.l10n.passwordRequired;
+                            if (value.length < 6)
+                              return context.l10n.minimumSixCharacters;
+                            return null;
+                          },
                           onFieldSubmitted: (_) => _submit(),
                           decoration: InputDecoration(
-                            labelText: 'Password',
+                            labelText: context.l10n.passwordLabel,
                             prefixIcon: const Icon(Icons.lock_outline_rounded),
                             suffixIcon: IconButton(
                               onPressed: () {
@@ -173,7 +166,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                         const SizedBox(height: 18),
                         PrimaryButton(
-                          label: 'Log In',
+                          label: context.l10n.loginButton,
                           isLoading: authState.isLoading,
                           onPressed: authState.isLoading ? null : _submit,
                         ),
@@ -209,7 +202,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('No account yet?'),
+                    Text(context.l10n.noAccountYet),
                     TextButton(
                       onPressed: authState.isLoading
                           ? null
@@ -219,7 +212,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 AppRoutes.register,
                               );
                             },
-                      child: const Text('Create one'),
+                      child: Text(context.l10n.createOne),
                     ),
                   ],
                 ),

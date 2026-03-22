@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/ai/device_checker.dart';
 import '../../../core/ai/model_catalog.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../view_model/model_manager_provider.dart';
 
 /// AI capabilities screen — simple toggle to download / remove the AI model.
@@ -43,7 +44,7 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
     final mm = ref.watch(modelManagerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('AI Capabilities')),
+      appBar: AppBar(title: Text(context.l10n.aiCapabilities)),
       body: _checking
           ? const Center(child: CircularProgressIndicator())
           : ListView(
@@ -53,21 +54,19 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
                 Icon(Icons.auto_awesome, size: 48, color: cs.primary),
                 const SizedBox(height: 12),
                 Text(
-                  'On-Device AI',
+                  context.l10n.onDeviceAi,
                   style: tt.titleLarge?.copyWith(fontSize: 24),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'Private · Offline · Free',
+                  context.l10n.aiTaglineSetup,
                   style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Get smart suggestions for tasks and bids powered by '
-                  'an AI model that runs entirely on your device. '
-                  'No data leaves your phone.',
+                  context.l10n.aiSetupDescription,
                   style: tt.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -108,7 +107,7 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                'Multilingual',
+                                context.l10n.multilingual,
                                 style: TextStyle(
                                   fontSize: 11,
                                   color: cs.onPrimaryContainer,
@@ -162,9 +161,7 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
                 const SizedBox(height: 16),
                 // ── Fine print ───────────────────────────────────
                 Text(
-                  'Download happens in the background — you can leave '
-                  'this screen. The model file will be stored on your '
-                  'device and can be removed at any time.',
+                  context.l10n.downloadBackgroundNote,
                   style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
                   textAlign: TextAlign.center,
                 ),
@@ -190,7 +187,9 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
           LinearProgressIndicator(value: installState.progress),
           const SizedBox(height: 6),
           Text(
-            'Downloading… ${(installState.progress * 100).toStringAsFixed(0)}%',
+            context.l10n.downloadingProgress(
+              (installState.progress * 100).toStringAsFixed(0),
+            ),
             style: const TextStyle(fontSize: 12),
           ),
         ],
@@ -198,15 +197,15 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
     }
 
     if (installState is InstallLoading) {
-      return const Row(
+      return Row(
         children: [
-          SizedBox(
+          const SizedBox(
             width: 16,
             height: 16,
             child: CircularProgressIndicator(strokeWidth: 2),
           ),
-          SizedBox(width: 8),
-          Text('Loading model…', style: TextStyle(fontSize: 13)),
+          const SizedBox(width: 8),
+          Text(context.l10n.loadingModel, style: const TextStyle(fontSize: 13)),
         ],
       );
     }
@@ -226,7 +225,7 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
                       .read(modelManagerProvider.notifier)
                       .downloadAndActivate()
                 : null,
-            child: const Text('Retry Download'),
+            child: Text(context.l10n.retryDownload),
           ),
         ],
       );
@@ -237,11 +236,14 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
         children: [
           Icon(Icons.check_circle, color: cs.primary, size: 18),
           const SizedBox(width: 6),
-          const Text('Active & Ready', style: TextStyle(fontSize: 13)),
+          Text(
+            context.l10n.activeAndReady,
+            style: const TextStyle(fontSize: 13),
+          ),
           const Spacer(),
           TextButton(
             onPressed: () => _confirmDelete(context),
-            child: const Text('Remove'),
+            child: Text(context.l10n.remove),
           ),
         ],
       );
@@ -252,12 +254,12 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
         children: [
           FilledButton.tonal(
             onPressed: () => ref.read(modelManagerProvider.notifier).activate(),
-            child: const Text('Enable AI'),
+            child: Text(context.l10n.enableAi),
           ),
           const Spacer(),
           TextButton(
             onPressed: () => _confirmDelete(context),
-            child: const Text('Remove'),
+            child: Text(context.l10n.remove),
           ),
         ],
       );
@@ -269,7 +271,9 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
           ? () => ref.read(modelManagerProvider.notifier).downloadAndActivate()
           : null,
       icon: const Icon(Icons.download_rounded),
-      label: Text(canRun ? 'Download AI Model' : 'Device not supported'),
+      label: Text(
+        canRun ? context.l10n.downloadAiModel : context.l10n.deviceNotSupported,
+      ),
     );
   }
 
@@ -277,19 +281,16 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Remove AI Model?'),
-        content: const Text(
-          'This will delete the AI model from your device. '
-          'You can re-download it later.',
-        ),
+        title: Text(context.l10n.removeAiModelTitle),
+        content: Text(context.l10n.removeAiModelConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Remove'),
+            child: Text(context.l10n.remove),
           ),
         ],
       ),
@@ -321,30 +322,35 @@ class _DeviceCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Device Check', style: Theme.of(context).textTheme.titleSmall),
+            Text(
+              context.l10n.deviceCheck,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
             const SizedBox(height: 8),
             _CheckRow(
-              label: 'Physical device',
+              label: context.l10n.physicalDevice,
               ok: physicalOk,
-              detail: physicalOk ? 'Yes' : 'Emulator detected',
+              detail: physicalOk
+                  ? context.l10n.yes
+                  : context.l10n.emulatorDetected,
             ),
             _CheckRow(
-              label: 'RAM',
+              label: context.l10n.ram,
               ok: ramOk,
               detail: device.ramMb >= 99999
-                  ? 'Sufficient'
+                  ? context.l10n.sufficient
                   : '${device.ramMb} MB',
             ),
             _CheckRow(
-              label: 'Free storage',
+              label: context.l10n.freeStorage,
               ok: storageOk,
-              detail: '${device.freeStorageMb} MB free',
+              detail: context.l10n.mbFree(device.freeStorageMb),
             ),
             if (!physicalOk)
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'AI features require a physical device.',
+                  context.l10n.aiRequiresPhysicalDevice,
                   style: TextStyle(color: colorScheme.error, fontSize: 12),
                 ),
               ),

@@ -17,15 +17,16 @@ import '../view_model/worker_skills_view_model.dart';
 import 'widgets/job_card.dart';
 import 'widgets/job_shared_widgets.dart';
 import 'widgets/skill_suggest_field.dart';
+import '../../../core/l10n/l10n_extension.dart';
 
 class WorkerShellScreen extends ConsumerStatefulWidget {
   const WorkerShellScreen({super.key});
 
-  static const List<String> _titles = [
-    'Task Feed',
-    'Skills',
-    'Messages',
-    'Profile',
+  static List<String> titles(BuildContext context) => [
+    context.l10n.workerTabTaskFeed,
+    context.l10n.skills,
+    context.l10n.conversations,
+    context.l10n.profile,
   ];
 
   @override
@@ -78,7 +79,7 @@ class _WorkerShellScreenState extends ConsumerState<WorkerShellScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(WorkerShellScreen._titles[tabIndex]),
+        title: Text(WorkerShellScreen.titles(context)[tabIndex]),
         actions: const [_WorkerDutyToggle()],
       ),
       body: IndexedStack(
@@ -95,26 +96,26 @@ class _WorkerShellScreenState extends ConsumerState<WorkerShellScreen>
         onDestinationSelected: (index) {
           ref.read(workerTabIndexProvider.notifier).setIndex(index);
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
             icon: Icon(Icons.location_searching_outlined),
             selectedIcon: Icon(Icons.location_searching_rounded),
-            label: 'Feed',
+            label: context.l10n.feedNavLabel,
           ),
           NavigationDestination(
             icon: Icon(Icons.handyman_outlined),
             selectedIcon: Icon(Icons.handyman_rounded),
-            label: 'Skills',
+            label: context.l10n.skills,
           ),
           NavigationDestination(
             icon: Icon(Icons.chat_bubble_outline_rounded),
             selectedIcon: Icon(Icons.chat_bubble_rounded),
-            label: 'Messages',
+            label: context.l10n.conversations,
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline_rounded),
             selectedIcon: Icon(Icons.person_rounded),
-            label: 'Profile',
+            label: context.l10n.profile,
           ),
         ],
       ),
@@ -192,59 +193,60 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
     super.dispose();
   }
 
-  static const List<({WorkerJobFilter filter, String label, IconData icon})>
-  _chips = [
+  static List<({WorkerJobFilter filter, String label, IconData icon})> _chips(
+    BuildContext context,
+  ) => [
     (
       filter: WorkerJobFilter.nearby,
-      label: 'Nearby',
+      label: context.l10n.filterNearby,
       icon: Icons.location_on_outlined,
     ),
     (
       filter: WorkerJobFilter.all,
-      label: 'All Mine',
+      label: context.l10n.filterAllMine,
       icon: Icons.work_outline_rounded,
     ),
     (
       filter: WorkerJobFilter.bidPlaced,
-      label: 'Bid Placed',
+      label: context.l10n.filterBidPlaced,
       icon: Icons.gavel_rounded,
     ),
     (
       filter: WorkerJobFilter.accepted,
-      label: 'Accepted',
+      label: context.l10n.filterAccepted,
       icon: Icons.handshake_outlined,
     ),
     (
       filter: WorkerJobFilter.inProgress,
-      label: 'In Progress',
+      label: context.l10n.filterInProgress,
       icon: Icons.construction_rounded,
     ),
     (
       filter: WorkerJobFilter.completed,
-      label: 'Completed',
+      label: context.l10n.filterCompleted,
       icon: Icons.check_circle_outline_rounded,
     ),
     (
       filter: WorkerJobFilter.cancelled,
-      label: 'Cancelled',
+      label: context.l10n.filterCancelled,
       icon: Icons.cancel_outlined,
     ),
     (
       filter: WorkerJobFilter.expired,
-      label: 'Expired',
+      label: context.l10n.filterExpired,
       icon: Icons.timer_off_outlined,
     ),
   ];
 
-  static const Map<WorkerJobFilter, String> _emptyMessages = {
-    WorkerJobFilter.nearby: 'No nearby jobs right now',
-    WorkerJobFilter.all: 'No jobs yet — place a bid to get started!',
-    WorkerJobFilter.bidPlaced: 'No pending bids',
-    WorkerJobFilter.accepted: 'No accepted jobs',
-    WorkerJobFilter.inProgress: 'No jobs in progress',
-    WorkerJobFilter.completed: 'No completed jobs yet',
-    WorkerJobFilter.cancelled: 'No cancelled jobs',
-    WorkerJobFilter.expired: 'No expired jobs',
+  static Map<WorkerJobFilter, String> _emptyMessages(BuildContext context) => {
+    WorkerJobFilter.nearby: context.l10n.noNearbyJobs,
+    WorkerJobFilter.all: context.l10n.noJobsYetBid,
+    WorkerJobFilter.bidPlaced: context.l10n.noPendingBids,
+    WorkerJobFilter.accepted: context.l10n.noAcceptedJobs,
+    WorkerJobFilter.inProgress: context.l10n.noJobsInProgress,
+    WorkerJobFilter.completed: context.l10n.noCompletedJobsYet,
+    WorkerJobFilter.cancelled: context.l10n.noCancelledJobs,
+    WorkerJobFilter.expired: context.l10n.noExpiredJobs,
   };
 
   Future<void> _refresh() async {
@@ -289,15 +291,16 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
   }
 
   Widget _buildChipBar() {
+    final chips = _chips(context);
     return SizedBox(
       height: 44,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        itemCount: _chips.length,
+        itemCount: chips.length,
         separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
-          final chip = _chips[index];
+          final chip = chips[index];
           final selected = _activeFilter == chip.filter;
           return FilterChip(
             selected: selected,
@@ -317,7 +320,7 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
 
   Widget _buildJobList(List<JobItem> jobs) {
     if (jobs.isEmpty) {
-      final message = _emptyMessages[_activeFilter] ?? 'No jobs found';
+      final message = _emptyMessages(context)[_activeFilter] ?? 'No jobs found';
       return CenteredListBody(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -335,7 +338,7 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
             Text(message, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 6),
             Text(
-              'Pull down to refresh and check again.',
+              context.l10n.pullDownToRefreshCheck,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -382,7 +385,7 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
           const Icon(Icons.social_distance_rounded, size: 18),
           const SizedBox(width: 4),
           Text(
-            '$_displayRadius km',
+            context.l10n.distanceKm(_displayRadius),
             style: Theme.of(context).textTheme.labelLarge,
           ),
           Expanded(
@@ -391,7 +394,7 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
               min: 2,
               max: 30,
               divisions: 28,
-              label: '$_displayRadius km',
+              label: context.l10n.distanceKm(_displayRadius),
               // Update label in real time without triggering the API.
               onChanged: (v) => setState(() => _displayRadius = v.round()),
               // Commit to the provider (and thus the API) only on finger lift.
@@ -426,14 +429,14 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
           ),
           const SizedBox(height: 18),
           Text(
-            'You\'re Offline',
+            context.l10n.youreOffline,
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Toggle the switch in the top bar to go online and discover nearby jobs.',
+            context.l10n.offlineHint,
             textAlign: TextAlign.center,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: colors.onSurfaceVariant,
@@ -485,7 +488,7 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Unable to load jobs',
+                      context.l10n.unableToLoadJobs,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 8),
@@ -498,7 +501,7 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
                     OutlinedButton.icon(
                       onPressed: _refresh,
                       icon: const Icon(Icons.refresh_rounded),
-                      label: const Text('Retry'),
+                      label: Text(context.l10n.retry),
                     ),
                   ],
                 ),
@@ -535,10 +538,13 @@ class _WorkerSkillsTab extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        Text('Your Skills', style: Theme.of(context).textTheme.titleLarge),
+        Text(
+          context.l10n.yourSkills,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         const SizedBox(height: 6),
         Text(
-          'Search and add skills. These are sent to the server to filter your job feed.',
+          context.l10n.skillsSubtitle,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         const SizedBox(height: 16),
@@ -548,8 +554,8 @@ class _WorkerSkillsTab extends ConsumerWidget {
             padding: const EdgeInsets.all(14),
             child: SkillSuggestField(
               controllerProvider: skillSuggestControllerProvider,
-              label: 'Add Skill',
-              hintText: 'Type to search skills…',
+              label: context.l10n.addSkillLabel,
+              hintText: context.l10n.typeToSearchSkills,
             ),
           ),
         ),
@@ -557,7 +563,7 @@ class _WorkerSkillsTab extends ConsumerWidget {
         // ── Currently saved skills from workerSkillsProvider ──
         if (selectedSkills.isNotEmpty) ...[
           Text(
-            'Saved Skills (${selectedSkills.length})',
+            context.l10n.savedSkillsCount(selectedSkills.length),
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(height: 8),
@@ -579,7 +585,7 @@ class _WorkerSkillsTab extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.all(14),
               child: Text(
-                'No skills added yet. Search above to add relevant skills.',
+                context.l10n.noSkillsAdded,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
@@ -707,7 +713,7 @@ class _WorkerJobWorkflowSheetState
   Future<void> _placeBid() {
     final amount = double.tryParse(_amountController.text.trim());
     if (amount == null || amount <= 0) {
-      AppNotifier.showWarning(context, 'Enter a valid offer amount');
+      AppNotifier.showWarning(context, context.l10n.enterValidOfferAmount);
       return Future<void>.value();
     }
 
@@ -723,21 +729,26 @@ class _WorkerJobWorkflowSheetState
               notes: _notesController.text,
             ),
           );
-    }, successMessage: 'Offer submitted successfully');
+    }, successMessage: context.l10n.offerSubmittedSuccess);
   }
 
   Future<void> _respondHandshake(bool accepted, int bidId) {
-    return _runAction(() async {
-      await ref
-          .read(jobRepositoryProvider)
-          .handshakeBid(bidId: bidId, accepted: accepted);
-    }, successMessage: accepted ? 'Handshake accepted' : 'Handshake declined');
+    return _runAction(
+      () async {
+        await ref
+            .read(jobRepositoryProvider)
+            .handshakeBid(bidId: bidId, accepted: accepted);
+      },
+      successMessage: accepted
+          ? context.l10n.handshakeAccepted
+          : context.l10n.handshakeDeclined,
+    );
   }
 
   Future<void> _verifyStartCode() {
     final code = _startCodeController.text.trim();
     if (code.isEmpty) {
-      AppNotifier.showWarning(context, 'Enter start code first');
+      AppNotifier.showWarning(context, context.l10n.enterStartCodeFirst);
       return Future<void>.value();
     }
 
@@ -745,16 +756,13 @@ class _WorkerJobWorkflowSheetState
       await ref
           .read(jobRepositoryProvider)
           .verifyStartCode(jobId: widget.jobId, code: code);
-    }, successMessage: 'Start code verified. Task is now in progress.');
+    }, successMessage: context.l10n.startCodeVerified);
   }
 
   Future<void> _verifyReleaseCode() {
     final code = _releaseCodeController.text.trim();
     if (code.isEmpty) {
-      AppNotifier.showWarning(
-        context,
-        'Enter the release code from the client',
-      );
+      AppNotifier.showWarning(context, context.l10n.enterReleaseCodeWarning);
       return Future<void>.value();
     }
 
@@ -762,7 +770,7 @@ class _WorkerJobWorkflowSheetState
       await ref
           .read(jobRepositoryProvider)
           .verifyReleaseCode(jobId: widget.jobId, code: code);
-    }, successMessage: 'Work confirmed — payment released!');
+    }, successMessage: context.l10n.workConfirmedPaymentReleased);
   }
 
   BidItem? _myBid(AuthState authState) {
@@ -794,7 +802,7 @@ class _WorkerJobWorkflowSheetState
         children: [
           const SizedBox(height: 120),
           Text(
-            'Unable to load task details',
+            context.l10n.unableToLoadTaskDetails,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium,
           ),
@@ -808,7 +816,7 @@ class _WorkerJobWorkflowSheetState
           OutlinedButton.icon(
             onPressed: _load,
             icon: const Icon(Icons.refresh_rounded),
-            label: const Text('Retry'),
+            label: Text(context.l10n.retry),
           ),
         ],
       );
@@ -888,7 +896,7 @@ class _WorkerJobWorkflowSheetState
                   icon: escrowMode
                       ? Icons.lock_outline_rounded
                       : Icons.currency_rupee_rounded,
-                  label: 'Budget',
+                  label: context.l10n.jobBudget,
                   value:
                       '₹${job.budget.toStringAsFixed(0)}${escrowMode ? ' (Escrow)' : ' (Cash)'}',
                   iconColor: colors.primary,
@@ -896,14 +904,14 @@ class _WorkerJobWorkflowSheetState
                 const Divider(height: 16),
                 _WorkerDetailRow(
                   icon: Icons.location_on_outlined,
-                  label: 'Location',
+                  label: context.l10n.jobLocation,
                   value: job.location,
                 ),
                 if (job.distanceKm != null) ...[
                   const Divider(height: 16),
                   _WorkerDetailRow(
                     icon: Icons.near_me_outlined,
-                    label: 'Distance',
+                    label: context.l10n.detailDistance,
                     value: '${job.distanceKm!.toStringAsFixed(1)} km away',
                   ),
                 ],
@@ -911,7 +919,7 @@ class _WorkerJobWorkflowSheetState
                   const Divider(height: 16),
                   _WorkerDetailRow(
                     icon: Icons.handyman_outlined,
-                    label: 'Skills',
+                    label: context.l10n.jobSkills,
                     value: job.requiredSkillNames.join(', '),
                   ),
                 ],
@@ -956,7 +964,7 @@ class _WorkerJobWorkflowSheetState
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Your Offer',
+                        context.l10n.yourOffer,
                         style: theme.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w700,
                         ),
@@ -977,10 +985,10 @@ class _WorkerJobWorkflowSheetState
                         ),
                         child: Text(
                           myBid.status.toUpperCase() == 'SELECTED'
-                              ? 'Selected'
+                              ? context.l10n.bidStatusSelected
                               : myBid.status.toUpperCase() == 'REJECTED'
-                              ? 'Rejected'
-                              : 'Pending',
+                              ? context.l10n.bidStatusRejected
+                              : context.l10n.bidStatusPending,
                           style: theme.textTheme.labelSmall?.copyWith(
                             fontWeight: FontWeight.w700,
                             color: myBid.status.toUpperCase() == 'SELECTED'
@@ -1005,7 +1013,10 @@ class _WorkerJobWorkflowSheetState
                       ),
                       if (myBid.partnerFee != null && myBid.partnerFee! > 0)
                         Text(
-                          ' + ₹${myBid.partnerFee!.toStringAsFixed(0)} partner fee',
+                          context.l10n.partnerFeeAmount(
+                            '₹',
+                            myBid.partnerFee!.toStringAsFixed(0),
+                          ),
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: colors.onSurfaceVariant,
                           ),
@@ -1039,7 +1050,7 @@ class _WorkerJobWorkflowSheetState
         // ── Place new bid ─────────────────────────────────────────
         if (canPlaceBid) ...[
           Text(
-            'Place Your Offer',
+            context.l10n.placeYourOffer,
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w700,
             ),
@@ -1060,8 +1071,8 @@ class _WorkerJobWorkflowSheetState
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
-                    decoration: const InputDecoration(
-                      labelText: 'Your offer amount',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.yourOfferAmount,
                       prefixIcon: Icon(Icons.currency_rupee_rounded),
                     ),
                   ),
@@ -1069,8 +1080,8 @@ class _WorkerJobWorkflowSheetState
                   TextField(
                     controller: _notesController,
                     maxLines: 3,
-                    decoration: const InputDecoration(
-                      labelText: 'Message to client (optional)',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.messageToClientOptional,
                       alignLabelWithHint: true,
                       prefixIcon: Icon(Icons.notes_rounded),
                     ),
@@ -1080,7 +1091,7 @@ class _WorkerJobWorkflowSheetState
                   ExpansionTile(
                     tilePadding: EdgeInsets.zero,
                     title: Text(
-                      'Add a partner (optional)',
+                      context.l10n.addPartnerOptional,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colors.onSurfaceVariant,
                       ),
@@ -1093,8 +1104,8 @@ class _WorkerJobWorkflowSheetState
                     children: [
                       TextField(
                         controller: _partnerNameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Partner name',
+                        decoration: InputDecoration(
+                          labelText: context.l10n.partnerNameLabel,
                           prefixIcon: Icon(Icons.person_outline_rounded),
                         ),
                       ),
@@ -1104,8 +1115,8 @@ class _WorkerJobWorkflowSheetState
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        decoration: const InputDecoration(
-                          labelText: 'Partner fee',
+                        decoration: InputDecoration(
+                          labelText: context.l10n.partnerFeeLabel,
                           prefixIcon: Icon(Icons.paid_outlined),
                         ),
                       ),
@@ -1118,7 +1129,7 @@ class _WorkerJobWorkflowSheetState
                     child: FilledButton.icon(
                       onPressed: _working ? null : _placeBid,
                       icon: const Icon(Icons.gavel_rounded),
-                      label: const Text('Submit Offer'),
+                      label: Text(context.l10n.submitOffer),
                     ),
                   ),
                 ],
@@ -1151,7 +1162,7 @@ class _WorkerJobWorkflowSheetState
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Client Selected Your Offer!',
+                      context.l10n.clientSelectedYourOffer,
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppPalette.success,
@@ -1161,7 +1172,7 @@ class _WorkerJobWorkflowSheetState
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'Accept to confirm this job, or decline if you\'re no longer available.',
+                  context.l10n.handshakeHint,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: colors.onSurfaceVariant,
                   ),
@@ -1178,7 +1189,7 @@ class _WorkerJobWorkflowSheetState
                       ? null
                       : () => _respondHandshake(true, myBid.id),
                   icon: const Icon(Icons.check_rounded),
-                  label: const Text('Accept Job'),
+                  label: Text(context.l10n.acceptJob),
                 ),
               ),
               const SizedBox(width: 10),
@@ -1194,7 +1205,7 @@ class _WorkerJobWorkflowSheetState
                     ),
                   ),
                   icon: const Icon(Icons.close_rounded),
-                  label: const Text('Decline'),
+                  label: Text(context.l10n.decline),
                 ),
               ),
             ],
@@ -1205,14 +1216,14 @@ class _WorkerJobWorkflowSheetState
         // ── Start code verification ───────────────────────────────
         if (canVerifyStart) ...[
           Text(
-            'Ready to Begin?',
+            context.l10n.readyToBegin,
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 6),
           Text(
-            'Ask the client for the start code and enter it below to officially begin work.',
+            context.l10n.startCodeHint,
             style: theme.textTheme.bodySmall?.copyWith(
               color: colors.onSurfaceVariant,
             ),
@@ -1226,8 +1237,8 @@ class _WorkerJobWorkflowSheetState
               letterSpacing: 6,
               fontWeight: FontWeight.w700,
             ),
-            decoration: const InputDecoration(
-              labelText: 'Start Code',
+            decoration: InputDecoration(
+              labelText: context.l10n.startCode,
               prefixIcon: Icon(Icons.key_rounded),
             ),
           ),
@@ -1237,7 +1248,7 @@ class _WorkerJobWorkflowSheetState
             child: FilledButton.icon(
               onPressed: _working ? null : _verifyStartCode,
               icon: const Icon(Icons.play_circle_outline_rounded),
-              label: const Text('Verify & Start Work'),
+              label: Text(context.l10n.verifyAndStartWork),
             ),
           ),
           const SizedBox(height: 12),
@@ -1267,7 +1278,7 @@ class _WorkerJobWorkflowSheetState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Work In Progress',
+                        context.l10n.workInProgress,
                         style: theme.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppPalette.warning,
@@ -1275,7 +1286,7 @@ class _WorkerJobWorkflowSheetState
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Once done, ask the client for the 6-digit release code.',
+                        context.l10n.releaseCodePrompt,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: colors.onSurfaceVariant,
                         ),
@@ -1295,10 +1306,10 @@ class _WorkerJobWorkflowSheetState
               letterSpacing: 6,
               fontWeight: FontWeight.w700,
             ),
-            decoration: const InputDecoration(
-              labelText: 'Release Code',
+            decoration: InputDecoration(
+              labelText: context.l10n.releaseCode,
               prefixIcon: Icon(Icons.verified_outlined),
-              helperText: 'Enter the 6-digit code from the client',
+              helperText: context.l10n.releaseCodeHelper,
             ),
           ),
           const SizedBox(height: 10),
@@ -1307,7 +1318,7 @@ class _WorkerJobWorkflowSheetState
             child: FilledButton.icon(
               onPressed: _working ? null : _verifyReleaseCode,
               icon: const Icon(Icons.check_circle_outline_rounded),
-              label: const Text('Confirm Work Completed'),
+              label: Text(context.l10n.confirmWorkCompleted),
             ),
           ),
         ],

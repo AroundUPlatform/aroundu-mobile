@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/network/exchange_rate_service.dart';
 import '../../../core/widgets/app_notification.dart';
+import '../../../core/l10n/l10n_extension.dart';
 import '../../../core/widgets/primary_button.dart';
 import '../../auth/view_model/auth_view_model.dart';
 import '../view_model/profile_view_model.dart';
@@ -71,7 +72,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     if (!mounted) return;
 
     if (success) {
-      AppNotifier.showSuccess(context, 'Profile updated');
+      AppNotifier.showSuccess(context, context.l10n.profileUpdated);
       Navigator.of(context).pop();
     } else {
       final error = ref.read(editProfileControllerProvider).errorMessage;
@@ -88,7 +89,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final isWorker = auth.role == UserRole.worker;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Profile')),
+      appBar: AppBar(title: Text(context.l10n.editProfile)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -96,34 +97,36 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           children: [
             TextField(
               controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(labelText: context.l10n.nameLabel),
               textCapitalization: TextCapitalization.words,
             ),
             const SizedBox(height: 16),
             TextField(
               controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(labelText: context.l10n.emailLabel),
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 16),
             TextField(
               controller: _phoneController,
-              decoration: const InputDecoration(labelText: 'Phone Number'),
+              decoration: InputDecoration(labelText: context.l10n.phone),
               keyboardType: TextInputType.phone,
             ),
             const SizedBox(height: 16),
             TextField(
               controller: _imageUrlController,
-              decoration: const InputDecoration(labelText: 'Profile Image URL'),
+              decoration: InputDecoration(
+                labelText: context.l10n.profileImageUrl,
+              ),
               keyboardType: TextInputType.url,
             ),
             const SizedBox(height: 16),
             // ── Currency picker (all users) ──────────────────────────
             DropdownButtonFormField<String>(
               initialValue: editState.currency,
-              decoration: const InputDecoration(
-                labelText: 'Currency',
-                prefixIcon: Icon(Icons.currency_exchange_outlined),
+              decoration: InputDecoration(
+                labelText: context.l10n.currencyLabel,
+                prefixIcon: const Icon(Icons.currency_exchange_outlined),
               ),
               items: kCurrencySymbols.keys.map((code) {
                 return DropdownMenuItem(
@@ -145,9 +148,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               initialValue: kCountryToCurrency.containsKey(editState.country)
                   ? editState.country
                   : 'IN',
-              decoration: const InputDecoration(
-                labelText: 'Country',
-                prefixIcon: Icon(Icons.flag_outlined),
+              decoration: InputDecoration(
+                labelText: context.l10n.countryLabel,
+                prefixIcon: const Icon(Icons.flag_outlined),
               ),
               items: kCountryToCurrency.keys.map((code) {
                 return DropdownMenuItem(value: code, child: Text(code));
@@ -164,26 +167,30 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               const SizedBox(height: 16),
               TextField(
                 controller: _experienceController,
-                decoration: const InputDecoration(
-                  labelText: 'Years of Experience',
+                decoration: InputDecoration(
+                  labelText: context.l10n.yearsOfExperience,
                 ),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _certificationsController,
-                decoration: const InputDecoration(labelText: 'Certifications'),
+                decoration: InputDecoration(
+                  labelText: context.l10n.certificationsLabel,
+                ),
                 textCapitalization: TextCapitalization.sentences,
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _payoutController,
-                decoration: const InputDecoration(labelText: 'Payout Account'),
+                decoration: InputDecoration(
+                  labelText: context.l10n.payoutAccountLabel,
+                ),
               ),
               const SizedBox(height: 16),
               SwitchListTile(
-                title: const Text('On Duty'),
-                subtitle: const Text('Toggle availability for new tasks'),
+                title: Text(context.l10n.onDuty),
+                subtitle: Text(context.l10n.onDutySubtitle),
                 value: editState.isOnDuty,
                 onChanged: (_) => ref
                     .read(editProfileControllerProvider.notifier)
@@ -192,7 +199,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             ],
             const SizedBox(height: 32),
             PrimaryButton(
-              label: 'Save Changes',
+              label: context.l10n.saveChanges,
               isLoading: editState.isSubmitting,
               onPressed: _save,
             ),
