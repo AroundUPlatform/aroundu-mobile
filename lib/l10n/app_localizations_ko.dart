@@ -18,79 +18,76 @@ class AppLocalizationsKo extends AppLocalizations {
   String get registerTitle => '계정 만들기';
 
   @override
-  String get emailLabel => 'Email';
+  String get emailLabel => '이메일';
 
   @override
-  String get passwordLabel => 'Password';
+  String get passwordLabel => '비밀번호';
 
   @override
-  String get confirmPasswordLabel => 'Confirm Password';
+  String get confirmPasswordLabel => '비밀번호 확인';
 
   @override
-  String get forgotPassword => 'Forgot Password?';
+  String get forgotPassword => '비밀번호를 잊으셨나요?';
 
   @override
-  String get loginButton => 'Log In';
+  String get loginButton => '로그인';
 
   @override
-  String get registerButton => 'Sign Up';
+  String get registerButton => '가입하기';
 
   @override
-  String get orContinueWith => 'Or continue with';
+  String get orContinueWith => '또는 다음으로 계속';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => '계정이 없으신가요?';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => '이미 계정이 있으신가요?';
 
   @override
-  String get onboardingTitle1 => 'Find Tasks Around You';
+  String get onboardingTitle1 => '주변의 작업을 찾아보세요';
 
   @override
-  String get onboardingSubtitle1 =>
-      'Discover local jobs and services right in your neighbourhood.';
+  String get onboardingSubtitle1 => '동네의 지역 일자리와 서비스를 발견하세요.';
 
   @override
-  String get onboardingTitle2 => 'Bid & Get Hired';
+  String get onboardingTitle2 => '입찰하고 채용되세요';
 
   @override
-  String get onboardingSubtitle2 =>
-      'Place competitive bids and get hired for tasks that match your skills.';
+  String get onboardingSubtitle2 => '경쟁력 있는 입찰을 하고 능력에 맞는 작업에 선발되세요.';
 
   @override
-  String get onboardingTitle3 => 'Secure Payments';
+  String get onboardingTitle3 => '안전한 결제';
 
   @override
-  String get onboardingSubtitle3 =>
-      'Escrow-backed payments ensure fair and safe transactions.';
+  String get onboardingSubtitle3 => '에스크로 지원 결제로 공정하고 안전한 거래를 보장합니다.';
 
   @override
   String get getStarted => '시작하기';
 
   @override
-  String get skip => 'Skip';
+  String get skip => '건너뛰기';
 
   @override
-  String get next => 'Next';
+  String get next => '다음';
 
   @override
-  String get roleSelectionTitle => 'Choose Your Role';
+  String get roleSelectionTitle => '역할 선택';
 
   @override
-  String get roleClient => 'Client';
+  String get roleClient => '의뢰인';
 
   @override
-  String get roleClientDesc => 'I need help with tasks';
+  String get roleClientDesc => '작업에 도움이 필요합니다';
 
   @override
-  String get roleWorker => 'Worker';
+  String get roleWorker => '작업자';
 
   @override
-  String get roleWorkerDesc => 'I want to offer my skills';
+  String get roleWorkerDesc => '제 능력을 제공하고 싶습니다';
 
   @override
-  String get continueButton => 'Continue';
+  String get continueButton => '계속';
 
   @override
   String get homeTab => '홈';
@@ -105,174 +102,173 @@ class AppLocalizationsKo extends AppLocalizations {
   String get profileTab => '프로필';
 
   @override
-  String get myJobs => 'My Jobs';
+  String get myJobs => '내 일자리';
 
   @override
-  String get workerFeed => 'Available Jobs';
+  String get workerFeed => '가용 일자리';
 
   @override
-  String get createJob => 'Create Job';
+  String get createJob => '일자리 만들기';
 
   @override
-  String get postJob => 'Post a Job';
+  String get postJob => '일자리 게시';
 
   @override
-  String get editJob => 'Edit Job';
+  String get editJob => '일자리 편집';
 
   @override
-  String get deleteJob => 'Delete Job';
+  String get deleteJob => '일자리 삭제';
 
   @override
-  String get deleteJobConfirm => 'Are you sure you want to delete this job?';
+  String get deleteJobConfirm => '이 일자리를 삭제하시겠습니까?';
 
   @override
-  String get jobTitle => 'Title';
+  String get jobTitle => '제목';
 
   @override
-  String get jobDescription => 'Description';
+  String get jobDescription => '설명';
 
   @override
-  String get jobCategory => 'Category';
+  String get jobCategory => '카테고리';
 
   @override
-  String get jobBudget => 'Budget';
+  String get jobBudget => '예산';
 
   @override
-  String get jobLocation => 'Location';
+  String get jobLocation => '위치';
 
   @override
-  String get jobDueDate => 'Due Date';
+  String get jobDueDate => '마감일';
 
   @override
-  String get jobSkills => 'Skills Required';
+  String get jobSkills => '필요한 기술';
 
   @override
-  String get jobUrgency => 'Urgency';
+  String get jobUrgency => '긴급도';
 
   @override
-  String get jobPaymentMode => 'Payment Mode';
+  String get jobPaymentMode => '결제 방식';
 
   @override
-  String get urgencyNormal => 'Normal';
+  String get urgencyNormal => '보통';
 
   @override
-  String get urgencyUrgent => 'Urgent';
+  String get urgencyUrgent => '긴급';
 
   @override
-  String get paymentOffline => 'Offline';
+  String get paymentOffline => '오프라인';
 
   @override
-  String get paymentEscrow => 'Escrow';
+  String get paymentEscrow => '에스크로';
 
   @override
-  String get statusOpenForBids => 'Open for Bids';
+  String get statusOpenForBids => '입찰 오픈';
 
   @override
-  String get statusInProgress => 'In Progress';
+  String get statusInProgress => '진행 중';
 
   @override
-  String get statusCompleted => 'Completed';
+  String get statusCompleted => '완료';
 
   @override
-  String get statusCancelled => 'Cancelled';
+  String get statusCancelled => '취소됨';
 
   @override
-  String get statusPendingStart => 'Pending Start';
+  String get statusPendingStart => '시작 대기';
 
   @override
-  String get statusPendingRelease => 'Pending Release';
+  String get statusPendingRelease => '지급 대기';
 
   @override
-  String get bids => 'Bids';
+  String get bids => '입찰';
 
   @override
-  String get noBids => 'No bids yet';
+  String get noBids => '아직 입찰 없음';
 
   @override
-  String get placeBid => 'Place Bid';
+  String get placeBid => '입찰하기';
 
   @override
-  String get bidAmount => 'Bid Amount';
+  String get bidAmount => '입찰 금액';
 
   @override
-  String get bidNotes => 'Notes (optional)';
+  String get bidNotes => '메모 (선택)';
 
   @override
-  String get yourBid => 'Your Bid';
+  String get yourBid => '내 입찰';
 
   @override
-  String get acceptBid => 'Accept Bid';
+  String get acceptBid => '입찰 수락';
 
   @override
-  String get rejectBid => 'Reject Bid';
+  String get rejectBid => '입찰 거부';
 
   @override
-  String get bidAccepted => 'Bid Accepted';
+  String get bidAccepted => '입찰 수락됨';
 
   @override
-  String get bidRejected => 'Bid Rejected';
+  String get bidRejected => '입찰 거부됨';
 
   @override
-  String get bidPending => 'Pending';
+  String get bidPending => '대기 중';
 
   @override
-  String get startCode => 'Start Code';
+  String get startCode => '시작 코드';
 
   @override
-  String get releaseCode => 'Release Code';
+  String get releaseCode => '지급 코드';
 
   @override
-  String get generateCodes => 'Generate Codes';
+  String get generateCodes => '코드 생성';
 
   @override
-  String get verifyCode => 'Verify Code';
+  String get verifyCode => '코드 확인';
 
   @override
-  String get enterCode => 'Enter Code';
+  String get enterCode => '코드 입력';
 
   @override
-  String get escrow => 'Escrow';
+  String get escrow => '에스크로';
 
   @override
-  String get lockEscrow => 'Lock Escrow';
+  String get lockEscrow => '에스크로 잠금';
 
   @override
-  String get releaseEscrow => 'Release Payment';
+  String get releaseEscrow => '결제 지급';
 
   @override
-  String get paymentLocked => 'Payment Locked';
+  String get paymentLocked => '결제 잠김';
 
   @override
-  String get paymentReleased => 'Payment Released';
+  String get paymentReleased => '결제 지급됨';
 
   @override
   String get conversations => '메시지';
 
   @override
-  String get noMessagesYet => 'No messages yet';
+  String get noMessagesYet => '아직 메시지 없음';
 
   @override
-  String get noMessagesSubtitle =>
-      'Your conversations will appear here when you start chatting about a task.';
+  String get noMessagesSubtitle => '작업에 대해 대화를 시작하면 여기에 표시됩니다.';
 
   @override
-  String get startConversation => 'Start the conversation!';
+  String get startConversation => '대화를 시작하세요!';
 
   @override
   String get typeMessage => '메시지 입력...';
 
   @override
-  String get typing => 'typing...';
+  String get typing => '입력 중...';
 
   @override
   String get newMessages => '새 메시지';
 
   @override
-  String get now => 'now';
+  String get now => '방금';
 
   @override
   String minutesAgo(int count) {
-    return '${count}m ago';
+    return '$count분 전';
   }
 
   @override
@@ -280,187 +276,186 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count workers',
-      one: '1 worker',
+      other: '작업자 $count명',
+      one: '작업자 1명',
     );
     return '$_temp0';
   }
 
   @override
-  String get profile => 'Profile';
+  String get profile => '프로필';
 
   @override
-  String get editProfile => 'Edit Profile';
+  String get editProfile => '프로필 편집';
 
   @override
-  String get fullName => 'Full Name';
+  String get fullName => '이름';
 
   @override
-  String get phone => 'Phone Number';
+  String get phone => '전화번호';
 
   @override
-  String get bio => 'Bio';
+  String get bio => '자기소개';
 
   @override
-  String get skills => 'Skills';
+  String get skills => '기술';
 
   @override
-  String get saveChanges => 'Save Changes';
+  String get saveChanges => '변경사항 저장';
 
   @override
   String get logout => '로그아웃';
 
   @override
-  String get logoutConfirm => 'Are you sure you want to log out?';
+  String get logoutConfirm => '로그아웃하시겠습니까?';
 
   @override
   String get settings => '설정';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => '외관';
 
   @override
   String get language => '언어';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => '다크 모드';
 
   @override
-  String get lightMode => 'Light Mode';
+  String get lightMode => '라이트 모드';
 
   @override
-  String get systemMode => 'System';
+  String get systemMode => '시스템';
 
   @override
-  String get accentColour => 'Accent Colour';
+  String get accentColour => '강조 색상';
 
   @override
-  String get customColour => 'Custom';
+  String get customColour => '사용자 지정';
 
   @override
-  String get preview => 'Preview';
+  String get preview => '미리보기';
 
   @override
-  String get previewTitle => 'Your colours look great!';
+  String get previewTitle => '색상이 멋지네요!';
 
   @override
-  String get previewSubtitle => 'This is how your app will look.';
+  String get previewSubtitle => '앱이 이렇게 보입니다.';
 
   @override
-  String get primary => 'Primary';
+  String get primary => '기본';
 
   @override
-  String get secondary => 'Secondary';
+  String get secondary => '보조';
 
   @override
-  String get reviews => 'Reviews';
+  String get reviews => '리뷰';
 
   @override
-  String get leaveReview => 'Leave a Review';
+  String get leaveReview => '리뷰 남기기';
 
   @override
-  String get noReviews => 'No reviews yet';
+  String get noReviews => '아직 리뷰 없음';
 
   @override
-  String get rating => 'Rating';
+  String get rating => '평점';
 
   @override
-  String get reviewComment => 'Comment';
+  String get reviewComment => '댓글';
 
   @override
-  String get submitReview => 'Submit Review';
+  String get submitReview => '리뷰 제출';
 
   @override
   String get loading => '로딩 중...';
 
   @override
-  String get loadingConversations => 'Loading conversations...';
+  String get loadingConversations => '대화 로딩 중...';
 
   @override
-  String get loadingMessages => 'Loading messages...';
+  String get loadingMessages => '메시지 로딩 중...';
 
   @override
-  String get error => '문제가 발생했습니다';
+  String get error => '오류가 발생했습니다';
 
   @override
-  String get retry => 'Retry';
+  String get retry => '재시도';
 
   @override
   String get cancel => '취소';
 
   @override
-  String get confirm => 'Confirm';
+  String get confirm => '확인';
 
   @override
-  String get delete => 'Delete';
+  String get delete => '삭제';
 
   @override
   String get save => '저장';
 
   @override
-  String get edit => 'Edit';
+  String get edit => '편집';
 
   @override
-  String get close => 'Close';
+  String get close => '닫기';
 
   @override
   String get search => '검색';
 
   @override
-  String get noResults => 'No results found';
+  String get noResults => '결과 없음';
 
   @override
-  String get pullToRefresh => 'Pull to refresh';
+  String get pullToRefresh => '당겨서 새로고침';
 
   @override
-  String get aiSetup => 'AI Setup';
+  String get aiSetup => 'AI 설정';
 
   @override
-  String get aiAnalysis => 'AI Analysis';
+  String get aiAnalysis => 'AI 분석';
 
   @override
-  String get unlockAi => 'Unlock AI Analysis';
+  String get unlockAi => 'AI 분석 잠금해제';
 
   @override
-  String get aiTagline => 'On-Device  ·  Private  ·  Free';
+  String get aiTagline => '온디바이스  ·  비공개  ·  무료';
 
   @override
-  String get deviceCheck => 'Device Check';
+  String get deviceCheck => '기기 확인';
 
   @override
-  String get chooseModel => 'Choose Your Model';
+  String get chooseModel => '모델 선택';
 
   @override
-  String get chooseModelSubtitle =>
-      'Download one or more models. You can switch between them later.';
+  String get chooseModelSubtitle => '하나 이상의 모델을 다운로드하세요. 나중에 전환할 수 있습니다.';
 
   @override
-  String get initializingAi => 'Initializing AI runtime…';
+  String get initializingAi => 'AI 런타임 초기화 중…';
 
   @override
-  String get modelStorage => 'Model Storage';
+  String get modelStorage => '모델 저장소';
 
   @override
   String get deviceIncompatible =>
-      'On-device AI requires a physical device with GPU support. Simulators and emulators are not compatible.';
+      '온디바이스 AI에는 GPU 지원이 되는 실제 기기가 필요합니다. 시뮬레이터와 에뮬레이터는 호환되지 않습니다.';
 
   @override
-  String get enhanceDescription => 'Enhance';
+  String get enhanceDescription => '향상';
 
   @override
-  String get bidInsights => 'Bid Insights';
+  String get bidInsights => '입찰 인사이트';
 
   @override
-  String get whyThisJob => 'Why this?';
+  String get whyThisJob => '왜 이것?';
 
   @override
-  String get suggestPrice => 'Suggest Price';
+  String get suggestPrice => '가격 제안';
 
   @override
-  String get analyzing => 'Analyzing…';
+  String get analyzing => '분석 중…';
 
   @override
-  String get languagePicker => 'Select Language';
+  String get languagePicker => '언어 선택';
 
   @override
   String get languageEnglish => 'English';

@@ -196,6 +196,13 @@ class ChatMessagesController extends FamilyNotifier<ChatMessagesState, int> {
     final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
     final ws = ref.read(chatWebSocketServiceProvider);
 
+    // Ensure the WebSocket is active. This is a no-op if already connected
+    // with the same token, but recovers from stale state when ChatDetailScreen
+    // is opened without going through the conversations list first.
+    if (auth.isAuthenticated && auth.token != null) {
+      ws.connect(auth.token!);
+    }
+
     ws.subscribeToConversation(
       arg,
       onMessage: (payload) {

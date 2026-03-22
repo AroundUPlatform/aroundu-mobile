@@ -67,13 +67,15 @@ class _LeaveReviewScreenState extends ConsumerState<LeaveReviewScreen> {
             const SizedBox(height: 16),
             CircleAvatar(
               radius: 36,
-              backgroundColor: AppPalette.primary.withValues(alpha: 0.1),
+              backgroundColor: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.1),
               child: Text(
                 widget.workerName.isNotEmpty
                     ? widget.workerName[0].toUpperCase()
                     : '?',
-                style: const TextStyle(
-                  color: AppPalette.primary,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w700,
                   fontSize: 28,
                 ),

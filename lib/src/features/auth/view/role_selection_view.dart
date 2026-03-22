@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app.dart';
 import '../view_model/auth_view_model.dart';
-import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/primary_button.dart';
 
 class RoleSelectionScreen extends ConsumerStatefulWidget {
@@ -145,6 +144,7 @@ class _RoleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: onTap,
@@ -154,12 +154,10 @@ class _RoleCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: selected ? AppPalette.primary : AppPalette.border,
+            color: selected ? cs.primary : cs.outlineVariant,
             width: selected ? 2 : 1,
           ),
-          color: selected
-              ? AppPalette.primary.withValues(alpha: 0.08)
-              : Theme.of(context).colorScheme.surface,
+          color: selected ? cs.primary.withValues(alpha: 0.08) : cs.surface,
         ),
         child: Row(
           children: [
@@ -168,13 +166,13 @@ class _RoleCard extends StatelessWidget {
               height: 44,
               decoration: BoxDecoration(
                 color: selected
-                    ? AppPalette.primary.withValues(alpha: 0.16)
+                    ? cs.primary.withValues(alpha: 0.16)
                     : Theme.of(context).scaffoldBackgroundColor,
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 icon,
-                color: selected ? AppPalette.primary : AppPalette.textSecondary,
+                color: selected ? cs.primary : cs.onSurfaceVariant,
               ),
             ),
             const SizedBox(width: 12),

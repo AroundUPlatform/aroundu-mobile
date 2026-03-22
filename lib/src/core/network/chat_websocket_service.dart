@@ -44,7 +44,9 @@ class ChatWebSocketService {
         stompConnectHeaders: {'Authorization': 'Bearer $token'},
         onConnect: _onConnect,
         onDisconnect: _onDisconnect,
+        onWebSocketDone: _onWebSocketDone,
         onWebSocketError: (error) {
+          _onWebSocketDone(); // treat error same as done
           AppLogger.error('WebSocket error', error: error);
         },
         reconnectDelay: const Duration(seconds: 5),
@@ -150,24 +152,45 @@ class ChatWebSocketService {
     AppLogger.info('WebSocket disconnected');
   }
 
-  void _subscribeTopics(int conversationId) {
-    final msgKey = 'conv-$conversationId';
-    if (!_subscriptions.containsKey(msgKey)) {
-      final sub = _client?.subscribe(
-        destination: '/topic/conversation/$conversationId',
-        callback: (frame) => _handleConversationFrame(conversationId, frame),
-      );
-      if (sub != null) _subscriptions[msgKey] = sub;
-    }
+  void _onWebSocketDone() {
+    if (!_connected) return; // already handled
+    _connected = false;
+    _subscriptions.clear();
+    onConnectionChanged?.call(false);
+    AppLogger.info('WebSocket closed unexpectedly');
+  }
 
-    final typingKey = 'typing-$conversationId';
-    if (!_subscriptions.containsKey(typingKey) &&
-        _typingCallbacks.containsKey(conversationId)) {
-      final sub = _client?.subscribe(
-        destination: '/topic/conversation/$conversationId/typing',
-        callback: (frame) => _handleTypingFrame(conversationId, frame),
+  void _subscribeTopics(int conversationId) {
+    if (!_connected || _client == null) return;
+    try {
+      final msgKey = 'conv-$conversationId';
+      if (!_subscriptions.containsKey(msgKey)) {
+        final sub = _client?.subscribe(
+          destination: '/topic/conversation/$conversationId',
+          callback: (frame) => _handleConversationFrame(conversationId, frame),
+        );
+        if (sub != null) _subscriptions[msgKey] = sub;
+      }
+
+      final typingKey = 'typing-$conversationId';
+      if (!_subscriptions.containsKey(typingKey) &&
+          _typingCallbacks.containsKey(conversationId)) {
+        final sub = _client?.subscribe(
+          destination: '/topic/conversation/$conversationId/typing',
+          callback: (frame) => _handleTypingFrame(conversationId, frame),
+        );
+        if (sub != null) _subscriptions[typingKey] = sub;
+      }
+    } catch (e) {
+      // StompBadStateException: socket closed without triggering _onDisconnect.
+      // Reset state so the next reconnect attempt can re-subscribe cleanly.
+      _connected = false;
+      _subscriptions.clear();
+      onConnectionChanged?.call(false);
+      AppLogger.error(
+        'STOMP subscribe failed — resetting connection state',
+        error: e,
       );
-      if (sub != null) _subscriptions[typingKey] = sub;
     }
   }
 

@@ -5,8 +5,9 @@ import '../../../core/ai/device_checker.dart';
 import '../../../core/ai/model_catalog.dart';
 import '../view_model/model_manager_provider.dart';
 
-/// One-time AI setup screen — device check + model catalog.
-/// Accessible from settings and shown on first AI feature tap.
+/// AI capabilities screen — simple toggle to download / remove the AI model.
+/// No model choice is exposed to the user; the best general-purpose model
+/// is selected automatically.
 class AISetupScreen extends ConsumerStatefulWidget {
   const AISetupScreen({super.key});
 
@@ -38,46 +39,264 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
     final mm = ref.watch(modelManagerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('AI Model Setup')),
+      appBar: AppBar(title: const Text('AI Capabilities')),
       body: _checking
           ? const Center(child: CircularProgressIndicator())
           : ListView(
               padding: const EdgeInsets.all(16),
               children: [
+                // ── Header ───────────────────────────────────────
+                Icon(Icons.auto_awesome, size: 48, color: cs.primary),
+                const SizedBox(height: 12),
+                Text(
+                  'On-Device AI',
+                  style: tt.titleLarge?.copyWith(fontSize: 24),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Private · Offline · Free',
+                  style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Get smart suggestions for tasks and bids powered by '
+                  'an AI model that runs entirely on your device. '
+                  'No data leaves your phone.',
+                  style: tt.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
+
+                // ── Device check ─────────────────────────────────
                 _DeviceCard(device: _device!, colorScheme: cs),
                 const SizedBox(height: 20),
-                Text(
-                  'Choose a model',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Download once, runs fully offline on your device.',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: 12),
-                ...kModelCatalog.map(
-                  (spec) => _ModelCard(
-                    spec: spec,
-                    device: _device!,
-                    mmState: mm,
-                    onDownload: () => ref
-                        .read(modelManagerProvider.notifier)
-                        .downloadAndActivate(spec.id),
-                    onActivate: () => ref
-                        .read(modelManagerProvider.notifier)
-                        .activateModel(spec.id),
-                    onDelete: () => ref
-                        .read(modelManagerProvider.notifier)
-                        .deleteModel(spec.id),
+
+                // ── Model info ───────────────────────────────────
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: mm.isActive
+                        ? BorderSide(color: cs.primary, width: 2)
+                        : BorderSide.none,
                   ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                kDefaultModel.name,
+                                style: tt.titleSmall,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: cs.primaryContainer,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                'Multilingual',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: cs.onPrimaryContainer,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(kDefaultModel.description, style: tt.bodySmall),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          children: [
+                            Chip(
+                              avatar: const Icon(
+                                Icons.storage_outlined,
+                                size: 14,
+                              ),
+                              label: Text(
+                                kDefaultModel.displaySize,
+                                style: const TextStyle(fontSize: 11),
+                              ),
+                              visualDensity: VisualDensity.compact,
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              padding: EdgeInsets.zero,
+                            ),
+                            Chip(
+                              avatar: const Icon(Icons.memory, size: 14),
+                              label: Text(
+                                kDefaultModel.ramDisplay,
+                                style: const TextStyle(fontSize: 11),
+                              ),
+                              visualDensity: VisualDensity.compact,
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              padding: EdgeInsets.zero,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 14),
+
+                        // ── Action area ──────────────────────────
+                        _buildAction(context, cs, mm),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+                // ── Fine print ───────────────────────────────────
+                Text(
+                  'Download happens in the background — you can leave '
+                  'this screen. The model file will be stored on your '
+                  'device and can be removed at any time.',
+                  style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
     );
+  }
+
+  Widget _buildAction(
+    BuildContext context,
+    ColorScheme cs,
+    ModelManagerState mm,
+  ) {
+    final installState = mm.installState;
+    final canRun =
+        _device != null &&
+        _device!.isPhysical &&
+        _device!.ramMb >= (kDefaultModel.memoryBytes / (1024 * 1024)).round();
+
+    if (installState is InstallDownloading) {
+      return Column(
+        children: [
+          LinearProgressIndicator(value: installState.progress),
+          const SizedBox(height: 6),
+          Text(
+            'Downloading… ${(installState.progress * 100).toStringAsFixed(0)}%',
+            style: const TextStyle(fontSize: 12),
+          ),
+        ],
+      );
+    }
+
+    if (installState is InstallLoading) {
+      return const Row(
+        children: [
+          SizedBox(
+            width: 16,
+            height: 16,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+          SizedBox(width: 8),
+          Text('Loading model…', style: TextStyle(fontSize: 13)),
+        ],
+      );
+    }
+
+    if (installState is InstallError) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            installState.message,
+            style: TextStyle(color: cs.error, fontSize: 12),
+          ),
+          const SizedBox(height: 8),
+          FilledButton(
+            onPressed: canRun
+                ? () => ref
+                      .read(modelManagerProvider.notifier)
+                      .downloadAndActivate()
+                : null,
+            child: const Text('Retry Download'),
+          ),
+        ],
+      );
+    }
+
+    if (mm.isActive) {
+      return Row(
+        children: [
+          Icon(Icons.check_circle, color: cs.primary, size: 18),
+          const SizedBox(width: 6),
+          const Text('Active & Ready', style: TextStyle(fontSize: 13)),
+          const Spacer(),
+          TextButton(
+            onPressed: () => _confirmDelete(context),
+            child: const Text('Remove'),
+          ),
+        ],
+      );
+    }
+
+    if (mm.isDownloaded) {
+      return Row(
+        children: [
+          FilledButton.tonal(
+            onPressed: () => ref.read(modelManagerProvider.notifier).activate(),
+            child: const Text('Enable AI'),
+          ),
+          const Spacer(),
+          TextButton(
+            onPressed: () => _confirmDelete(context),
+            child: const Text('Remove'),
+          ),
+        ],
+      );
+    }
+
+    // Not downloaded yet
+    return FilledButton.icon(
+      onPressed: canRun
+          ? () => ref.read(modelManagerProvider.notifier).downloadAndActivate()
+          : null,
+      icon: const Icon(Icons.download_rounded),
+      label: Text(canRun ? 'Download AI Model' : 'Device not supported'),
+    );
+  }
+
+  Future<void> _confirmDelete(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Remove AI Model?'),
+        content: const Text(
+          'This will delete the AI model from your device. '
+          'You can re-download it later.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Remove'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await ref.read(modelManagerProvider.notifier).deleteModel();
+    }
   }
 }
 
@@ -149,6 +368,7 @@ class _CheckRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
@@ -163,201 +383,10 @@ class _CheckRow extends StatelessWidget {
           const Spacer(),
           Text(
             detail,
-            style: const TextStyle(fontSize: 12, color: Colors.grey),
+            style: TextStyle(fontSize: 12, color: cs.onSurfaceVariant),
           ),
         ],
       ),
-    );
-  }
-}
-
-// ── Model card ───────────────────────────────────────────────────────
-
-class _ModelCard extends StatelessWidget {
-  const _ModelCard({
-    required this.spec,
-    required this.device,
-    required this.mmState,
-    required this.onDownload,
-    required this.onActivate,
-    required this.onDelete,
-  });
-
-  final ModelSpec spec;
-  final DeviceCompatibility device;
-  final ModelManagerState mmState;
-  final VoidCallback onDownload;
-  final VoidCallback onActivate;
-  final VoidCallback onDelete;
-
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final isDownloaded = mmState.downloadedIds.contains(spec.id);
-    final isActive = mmState.activeModelId == spec.id;
-    final installState = mmState.installStates[spec.id] ?? const InstallIdle();
-    final ramNeededMb = (spec.memoryBytes / (1024 * 1024)).round();
-    final canRun = device.isPhysical && device.ramMb >= ramNeededMb;
-
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: isActive
-            ? BorderSide(color: cs.primary, width: 2)
-            : BorderSide.none,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header row
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    spec.name,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: cs.primaryContainer,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    spec.badge,
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: cs.onPrimaryContainer,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Text(
-              spec.description,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            const SizedBox(height: 6),
-            // Info chips
-            Wrap(
-              spacing: 8,
-              children: [
-                _InfoChip(spec.displaySize, Icons.storage_outlined),
-                _InfoChip(spec.ramDisplay, Icons.memory),
-              ],
-            ),
-            const SizedBox(height: 10),
-            // Action / progress
-            _buildAction(
-              context,
-              cs,
-              installState,
-              isDownloaded,
-              isActive,
-              canRun,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAction(
-    BuildContext context,
-    ColorScheme cs,
-    ModelInstallState installState,
-    bool isDownloaded,
-    bool isActive,
-    bool canRun,
-  ) {
-    if (installState is InstallDownloading) {
-      return Column(
-        children: [
-          LinearProgressIndicator(value: installState.progress),
-          const SizedBox(height: 4),
-          Text(
-            '${(installState.progress * 100).toStringAsFixed(0)}%',
-            style: const TextStyle(fontSize: 12),
-          ),
-        ],
-      );
-    }
-
-    if (installState is InstallLoading) {
-      return const Row(
-        children: [
-          SizedBox(
-            width: 16,
-            height: 16,
-            child: CircularProgressIndicator(strokeWidth: 2),
-          ),
-          SizedBox(width: 8),
-          Text('Loading model…', style: TextStyle(fontSize: 13)),
-        ],
-      );
-    }
-
-    if (installState is InstallError) {
-      return Text(
-        installState.message,
-        style: TextStyle(color: cs.error, fontSize: 12),
-      );
-    }
-
-    if (isActive) {
-      return Row(
-        children: [
-          Icon(Icons.check_circle, color: cs.primary, size: 18),
-          const SizedBox(width: 6),
-          const Text('Active', style: TextStyle(fontSize: 13)),
-          const Spacer(),
-          TextButton(onPressed: onDelete, child: const Text('Delete')),
-        ],
-      );
-    }
-
-    if (isDownloaded) {
-      return Row(
-        children: [
-          FilledButton.tonal(
-            onPressed: onActivate,
-            child: const Text('Activate'),
-          ),
-          const Spacer(),
-          TextButton(onPressed: onDelete, child: const Text('Delete')),
-        ],
-      );
-    }
-
-    // Not downloaded
-    return FilledButton(
-      onPressed: canRun ? onDownload : null,
-      child: Text(canRun ? 'Download & Activate' : 'Device not supported'),
-    );
-  }
-}
-
-class _InfoChip extends StatelessWidget {
-  const _InfoChip(this.label, this.icon);
-  final String label;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Chip(
-      avatar: Icon(icon, size: 14),
-      label: Text(label, style: const TextStyle(fontSize: 11)),
-      visualDensity: VisualDensity.compact,
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      padding: EdgeInsets.zero,
     );
   }
 }

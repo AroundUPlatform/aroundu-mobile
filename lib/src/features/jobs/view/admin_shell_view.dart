@@ -77,7 +77,9 @@ class _AdminUsersTab extends ConsumerWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Delete ${role == UserRole.provider ? 'client' : 'worker'}'),
+          title: Text(
+            'Delete ${role == UserRole.provider ? 'client' : 'worker'}',
+          ),
           content: Text(
             'This action removes ${user.name} (${user.email}) permanently. Continue?',
           ),
@@ -138,7 +140,7 @@ class _AdminUsersTab extends ConsumerWidget {
             const SizedBox(height: 120),
             Icon(
               Icons.cloud_off_rounded,
-              color: AppPalette.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               size: 46,
             ),
             const SizedBox(height: 12),
@@ -219,14 +221,16 @@ class _AdminUsersTab extends ConsumerWidget {
                       vertical: 6,
                     ),
                     leading: CircleAvatar(
-                      backgroundColor: AppPalette.primary.withValues(alpha: 0.12),
+                      backgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.primary.withValues(alpha: 0.12),
                       child: Text(
                         user.name.isEmpty
                             ? '?'
                             : user.name.characters.first.toUpperCase(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          color: AppPalette.primary,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),
@@ -286,10 +290,15 @@ class _AdminAccountTab extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Admin Session', style: Theme.of(context).textTheme.titleMedium),
+                Text(
+                  'Admin Session',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 const SizedBox(height: 10),
-                Text(authState.email ?? 'Unknown',
-                    style: Theme.of(context).textTheme.bodyLarge),
+                Text(
+                  authState.email ?? 'Unknown',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
                 const SizedBox(height: 6),
                 Text(
                   'Manage users from the Clients and Workers tabs.',

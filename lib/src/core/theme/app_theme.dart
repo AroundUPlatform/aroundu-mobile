@@ -62,6 +62,14 @@ ThemeData _buildTheme({
     ),
     scaffoldBackgroundColor: background,
     textTheme: textTheme.copyWith(
+      // Display / Headline — used in hero text
+      displayLarge: textTheme.displayLarge?.copyWith(color: textPrimary),
+      displayMedium: textTheme.displayMedium?.copyWith(color: textPrimary),
+      displaySmall: textTheme.displaySmall?.copyWith(color: textPrimary),
+      headlineLarge: textTheme.headlineLarge?.copyWith(color: textPrimary),
+      headlineMedium: textTheme.headlineMedium?.copyWith(color: textPrimary),
+      headlineSmall: textTheme.headlineSmall?.copyWith(color: textPrimary),
+      // Title
       titleLarge: textTheme.titleLarge?.copyWith(
         fontWeight: FontWeight.w700,
         fontSize: 20,
@@ -72,6 +80,8 @@ ThemeData _buildTheme({
         fontSize: 17,
         color: textPrimary,
       ),
+      titleSmall: textTheme.titleSmall?.copyWith(color: textPrimary),
+      // Body
       bodyLarge: textTheme.bodyLarge?.copyWith(
         fontSize: 15,
         color: textPrimary,
@@ -80,8 +90,11 @@ ThemeData _buildTheme({
         fontSize: 14,
         color: textSecondary,
       ),
+      bodySmall: textTheme.bodySmall?.copyWith(color: textSecondary),
+      // Label
       labelLarge: textTheme.labelLarge?.copyWith(color: textPrimary),
       labelMedium: textTheme.labelMedium?.copyWith(color: textSecondary),
+      labelSmall: textTheme.labelSmall?.copyWith(color: textSecondary),
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
@@ -129,6 +142,76 @@ ThemeData _buildTheme({
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: seedColor,
       foregroundColor: Colors.white,
+    ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        backgroundColor: seedColor,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: seedColor,
+        side: BorderSide(color: border),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: seedColor),
+    ),
+    dividerTheme: DividerThemeData(color: border, thickness: 1),
+    dialogTheme: DialogThemeData(
+      backgroundColor: surface,
+      titleTextStyle: textTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.w700,
+        fontSize: 20,
+        color: textPrimary,
+      ),
+      contentTextStyle: textTheme.bodyLarge?.copyWith(
+        fontSize: 15,
+        color: textPrimary,
+      ),
+    ),
+    chipTheme: ChipThemeData(
+      backgroundColor: isDark
+          ? const Color(0xFF1E2530)
+          : const Color(0xFFF0F3F8),
+      labelStyle: TextStyle(color: textSecondary, fontSize: 11),
+      side: BorderSide(color: border),
+    ),
+    listTileTheme: ListTileThemeData(
+      textColor: textPrimary,
+      iconColor: textSecondary,
+    ),
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return seedColor;
+        return isDark ? const Color(0xFF6B7280) : const Color(0xFFD1D5DB);
+      }),
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return seedColor.withValues(alpha: 0.4);
+        }
+        return isDark ? const Color(0xFF2A3341) : const Color(0xFFE5E7EB);
+      }),
+    ),
+    popupMenuTheme: PopupMenuThemeData(
+      color: surface,
+      textStyle: TextStyle(color: textPrimary),
+    ),
+    bottomSheetTheme: BottomSheetThemeData(backgroundColor: surface),
+    segmentedButtonTheme: SegmentedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return seedColor;
+          return surface;
+        }),
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return Colors.white;
+          return textPrimary;
+        }),
+      ),
     ),
   );
 }

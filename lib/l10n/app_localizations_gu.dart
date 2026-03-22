@@ -15,82 +15,82 @@ class AppLocalizationsGu extends AppLocalizations {
   String get loginTitle => 'લૉગ ઇન';
 
   @override
-  String get registerTitle => 'એકાઉન્ટ બનાવો';
+  String get registerTitle => 'ખાતું બનાવો';
 
   @override
-  String get emailLabel => 'Email';
+  String get emailLabel => 'ઇમેઇલ';
 
   @override
-  String get passwordLabel => 'Password';
+  String get passwordLabel => 'પાસવર્ડ';
 
   @override
-  String get confirmPasswordLabel => 'Confirm Password';
+  String get confirmPasswordLabel => 'પાસવર્ડની પુષ્ટિ કરો';
 
   @override
-  String get forgotPassword => 'Forgot Password?';
+  String get forgotPassword => 'પાસવર્ડ ભૂલી ગયા?';
 
   @override
-  String get loginButton => 'Log In';
+  String get loginButton => 'લૉગ ઇન';
 
   @override
-  String get registerButton => 'Sign Up';
+  String get registerButton => 'સાઇન અપ';
 
   @override
-  String get orContinueWith => 'Or continue with';
+  String get orContinueWith => 'અથવા આની સાથે ચાલુ રાખો';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'ખાતું નથી?';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'પહેલેથી ખાતું છે?';
 
   @override
-  String get onboardingTitle1 => 'Find Tasks Around You';
+  String get onboardingTitle1 => 'તમારી આસપાસ કામ શોધો';
 
   @override
   String get onboardingSubtitle1 =>
-      'Discover local jobs and services right in your neighbourhood.';
+      'તમારા પડોશમાં સ્થાનિક નોકરીઓ અને સેવાઓ શોધો.';
 
   @override
-  String get onboardingTitle2 => 'Bid & Get Hired';
+  String get onboardingTitle2 => 'બિડ કરો અને નોકરી મેળવો';
 
   @override
   String get onboardingSubtitle2 =>
-      'Place competitive bids and get hired for tasks that match your skills.';
+      'સ્પર્ધાત્મક બિડ મૂકો અને તમારા કૌશલ્યને અનુરૂપ કામ માટે પસંદગી પામો.';
 
   @override
-  String get onboardingTitle3 => 'Secure Payments';
+  String get onboardingTitle3 => 'સુરક્ષિત ચુકવણી';
 
   @override
   String get onboardingSubtitle3 =>
-      'Escrow-backed payments ensure fair and safe transactions.';
+      'એસ્ક્રો-સમર્થિત ચુકવણી ન્યાયી અને સુરક્ષિત વ્યવહારોની ખાતરી આપે છે.';
 
   @override
   String get getStarted => 'શરૂ કરો';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'છોડો';
 
   @override
-  String get next => 'Next';
+  String get next => 'આગળ';
 
   @override
-  String get roleSelectionTitle => 'Choose Your Role';
+  String get roleSelectionTitle => 'તમારી ભૂમિકા પસંદ કરો';
 
   @override
-  String get roleClient => 'Client';
+  String get roleClient => 'ક્લાયન્ટ';
 
   @override
-  String get roleClientDesc => 'I need help with tasks';
+  String get roleClientDesc => 'મને કામમાં મદદ જોઈએ છે';
 
   @override
-  String get roleWorker => 'Worker';
+  String get roleWorker => 'વર્કર';
 
   @override
-  String get roleWorkerDesc => 'I want to offer my skills';
+  String get roleWorkerDesc => 'હું મારા કૌશલ્ય પ્રદાન કરવા માંગુ છું';
 
   @override
-  String get continueButton => 'Continue';
+  String get continueButton => 'ચાલુ રાખો';
 
   @override
   String get homeTab => 'હોમ';
@@ -105,174 +105,174 @@ class AppLocalizationsGu extends AppLocalizations {
   String get profileTab => 'પ્રોફાઇલ';
 
   @override
-  String get myJobs => 'My Jobs';
+  String get myJobs => 'મારી નોકરીઓ';
 
   @override
-  String get workerFeed => 'Available Jobs';
+  String get workerFeed => 'ઉપલબ્ધ નોકરીઓ';
 
   @override
-  String get createJob => 'Create Job';
+  String get createJob => 'નોકરી બનાવો';
 
   @override
-  String get postJob => 'Post a Job';
+  String get postJob => 'નોકરી પોસ્ટ કરો';
 
   @override
-  String get editJob => 'Edit Job';
+  String get editJob => 'નોકરી સંપાદિત કરો';
 
   @override
-  String get deleteJob => 'Delete Job';
+  String get deleteJob => 'નોકરી કાઢી નાખો';
 
   @override
-  String get deleteJobConfirm => 'Are you sure you want to delete this job?';
+  String get deleteJobConfirm => 'શું તમે ખરેખર આ નોકરી કાઢી નાખવા માંગો છો?';
 
   @override
-  String get jobTitle => 'Title';
+  String get jobTitle => 'શીર્ષક';
 
   @override
-  String get jobDescription => 'Description';
+  String get jobDescription => 'વર્ણન';
 
   @override
-  String get jobCategory => 'Category';
+  String get jobCategory => 'શ્રેણી';
 
   @override
-  String get jobBudget => 'Budget';
+  String get jobBudget => 'બજેટ';
 
   @override
-  String get jobLocation => 'Location';
+  String get jobLocation => 'સ્થળ';
 
   @override
-  String get jobDueDate => 'Due Date';
+  String get jobDueDate => 'નિયત તારીખ';
 
   @override
-  String get jobSkills => 'Skills Required';
+  String get jobSkills => 'જરૂરી કૌશલ્ય';
 
   @override
-  String get jobUrgency => 'Urgency';
+  String get jobUrgency => 'તાકીદ';
 
   @override
-  String get jobPaymentMode => 'Payment Mode';
+  String get jobPaymentMode => 'ચુકવણી મોડ';
 
   @override
-  String get urgencyNormal => 'Normal';
+  String get urgencyNormal => 'સામાન્ય';
 
   @override
-  String get urgencyUrgent => 'Urgent';
+  String get urgencyUrgent => 'તાકીદનું';
 
   @override
-  String get paymentOffline => 'Offline';
+  String get paymentOffline => 'ઑફલાઇન';
 
   @override
-  String get paymentEscrow => 'Escrow';
+  String get paymentEscrow => 'એસ્ક્રો';
 
   @override
-  String get statusOpenForBids => 'Open for Bids';
+  String get statusOpenForBids => 'બિડ માટે ખુલ્લું';
 
   @override
-  String get statusInProgress => 'In Progress';
+  String get statusInProgress => 'પ્રગતિમાં';
 
   @override
-  String get statusCompleted => 'Completed';
+  String get statusCompleted => 'પૂર્ણ';
 
   @override
-  String get statusCancelled => 'Cancelled';
+  String get statusCancelled => 'રદ';
 
   @override
-  String get statusPendingStart => 'Pending Start';
+  String get statusPendingStart => 'શરૂ થવાની રાહમાં';
 
   @override
-  String get statusPendingRelease => 'Pending Release';
+  String get statusPendingRelease => 'રિલીઝની રાહમાં';
 
   @override
-  String get bids => 'Bids';
+  String get bids => 'બિડ';
 
   @override
-  String get noBids => 'No bids yet';
+  String get noBids => 'હજી કોઈ બિડ નથી';
 
   @override
-  String get placeBid => 'Place Bid';
+  String get placeBid => 'બિડ મૂકો';
 
   @override
-  String get bidAmount => 'Bid Amount';
+  String get bidAmount => 'બિડ રકમ';
 
   @override
-  String get bidNotes => 'Notes (optional)';
+  String get bidNotes => 'નોંધ (વૈકલ્પિક)';
 
   @override
-  String get yourBid => 'Your Bid';
+  String get yourBid => 'તમારી બિડ';
 
   @override
-  String get acceptBid => 'Accept Bid';
+  String get acceptBid => 'બિડ સ્વીકારો';
 
   @override
-  String get rejectBid => 'Reject Bid';
+  String get rejectBid => 'બિડ નકારો';
 
   @override
-  String get bidAccepted => 'Bid Accepted';
+  String get bidAccepted => 'બિડ સ્વીકૃત';
 
   @override
-  String get bidRejected => 'Bid Rejected';
+  String get bidRejected => 'બિડ નકારાયેલ';
 
   @override
-  String get bidPending => 'Pending';
+  String get bidPending => 'બાકી';
 
   @override
-  String get startCode => 'Start Code';
+  String get startCode => 'સ્ટાર્ટ કોડ';
 
   @override
-  String get releaseCode => 'Release Code';
+  String get releaseCode => 'રિલીઝ કોડ';
 
   @override
-  String get generateCodes => 'Generate Codes';
+  String get generateCodes => 'કોડ જનરેટ કરો';
 
   @override
-  String get verifyCode => 'Verify Code';
+  String get verifyCode => 'કોડ ચકાસો';
 
   @override
-  String get enterCode => 'Enter Code';
+  String get enterCode => 'કોડ દાખલ કરો';
 
   @override
-  String get escrow => 'Escrow';
+  String get escrow => 'એસ્ક્રો';
 
   @override
-  String get lockEscrow => 'Lock Escrow';
+  String get lockEscrow => 'એસ્ક્રો લૉક કરો';
 
   @override
-  String get releaseEscrow => 'Release Payment';
+  String get releaseEscrow => 'ચુકવણી છોડો';
 
   @override
-  String get paymentLocked => 'Payment Locked';
+  String get paymentLocked => 'ચુકવણી લૉક';
 
   @override
-  String get paymentReleased => 'Payment Released';
+  String get paymentReleased => 'ચુકવણી છોડાયેલ';
 
   @override
   String get conversations => 'સંદેશાઓ';
 
   @override
-  String get noMessagesYet => 'No messages yet';
+  String get noMessagesYet => 'હજી કોઈ સંદેશા નથી';
 
   @override
   String get noMessagesSubtitle =>
-      'Your conversations will appear here when you start chatting about a task.';
+      'જ્યારે તમે કોઈ કાર્ય વિશે ચેટ શરૂ કરશો ત્યારે તમારી વાતચીત અહીં દેખાશે.';
 
   @override
-  String get startConversation => 'Start the conversation!';
+  String get startConversation => 'વાતચીત શરૂ કરો!';
 
   @override
-  String get typeMessage => 'સંદેશ ટાઇપ કરો...';
+  String get typeMessage => 'સંદેશ લખો...';
 
   @override
-  String get typing => 'typing...';
+  String get typing => 'ટાઇપ કરી રહ્યા છે...';
 
   @override
-  String get newMessages => 'નવા સંદેશાઓ';
+  String get newMessages => 'નવા સંદેશા';
 
   @override
-  String get now => 'now';
+  String get now => 'હમણાં';
 
   @override
   String minutesAgo(int count) {
-    return '${count}m ago';
+    return '$countમિ. પહેલાં';
   }
 
   @override
@@ -280,187 +280,187 @@ class AppLocalizationsGu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count workers',
-      one: '1 worker',
+      other: '$count વર્કર',
+      one: '1 વર્કર',
     );
     return '$_temp0';
   }
 
   @override
-  String get profile => 'Profile';
+  String get profile => 'પ્રોફાઇલ';
 
   @override
-  String get editProfile => 'Edit Profile';
+  String get editProfile => 'પ્રોફાઇલ સંપાદિત કરો';
 
   @override
-  String get fullName => 'Full Name';
+  String get fullName => 'પૂરું નામ';
 
   @override
-  String get phone => 'Phone Number';
+  String get phone => 'ફોન નંબર';
 
   @override
-  String get bio => 'Bio';
+  String get bio => 'પરિચય';
 
   @override
-  String get skills => 'Skills';
+  String get skills => 'કૌશલ્ય';
 
   @override
-  String get saveChanges => 'Save Changes';
+  String get saveChanges => 'ફેરફારો સાચવો';
 
   @override
   String get logout => 'લૉગ આઉટ';
 
   @override
-  String get logoutConfirm => 'Are you sure you want to log out?';
+  String get logoutConfirm => 'શું તમે ખરેખર લૉગ આઉટ કરવા માંગો છો?';
 
   @override
   String get settings => 'સેટિંગ્સ';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => 'દેખાવ';
 
   @override
   String get language => 'ભાષા';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'ડાર્ક મોડ';
 
   @override
-  String get lightMode => 'Light Mode';
+  String get lightMode => 'લાઇટ મોડ';
 
   @override
-  String get systemMode => 'System';
+  String get systemMode => 'સિસ્ટમ';
 
   @override
-  String get accentColour => 'Accent Colour';
+  String get accentColour => 'એક્સેન્ટ રંગ';
 
   @override
-  String get customColour => 'Custom';
+  String get customColour => 'કસ્ટમ';
 
   @override
-  String get preview => 'Preview';
+  String get preview => 'પ્રીવ્યૂ';
 
   @override
-  String get previewTitle => 'Your colours look great!';
+  String get previewTitle => 'તમારા રંગો સરસ લાગે છે!';
 
   @override
-  String get previewSubtitle => 'This is how your app will look.';
+  String get previewSubtitle => 'તમારી એપ આવી દેખાશે.';
 
   @override
-  String get primary => 'Primary';
+  String get primary => 'પ્રાથમિક';
 
   @override
-  String get secondary => 'Secondary';
+  String get secondary => 'ગૌણ';
 
   @override
-  String get reviews => 'Reviews';
+  String get reviews => 'સમીક્ષાઓ';
 
   @override
-  String get leaveReview => 'Leave a Review';
+  String get leaveReview => 'સમીક્ષા આપો';
 
   @override
-  String get noReviews => 'No reviews yet';
+  String get noReviews => 'હજી કોઈ સમીક્ષા નથી';
 
   @override
-  String get rating => 'Rating';
+  String get rating => 'રેટિંગ';
 
   @override
-  String get reviewComment => 'Comment';
+  String get reviewComment => 'ટિપ્પણી';
 
   @override
-  String get submitReview => 'Submit Review';
+  String get submitReview => 'સમીક્ષા સબમિટ કરો';
 
   @override
   String get loading => 'લોડ થઈ રહ્યું છે...';
 
   @override
-  String get loadingConversations => 'Loading conversations...';
+  String get loadingConversations => 'વાતચીત લોડ થઈ રહી છે...';
 
   @override
-  String get loadingMessages => 'Loading messages...';
+  String get loadingMessages => 'સંદેશા લોડ થઈ રહ્યા છે...';
 
   @override
   String get error => 'કંઈક ખોટું થયું';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'ફરી પ્રયાસ કરો';
 
   @override
   String get cancel => 'રદ કરો';
 
   @override
-  String get confirm => 'Confirm';
+  String get confirm => 'પુષ્ટિ કરો';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'કાઢી નાખો';
 
   @override
   String get save => 'સાચવો';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'સંપાદિત કરો';
 
   @override
-  String get close => 'Close';
+  String get close => 'બંધ કરો';
 
   @override
   String get search => 'શોધો';
 
   @override
-  String get noResults => 'No results found';
+  String get noResults => 'કોઈ પરિણામ મળ્યું નથી';
 
   @override
-  String get pullToRefresh => 'Pull to refresh';
+  String get pullToRefresh => 'રિફ્રેશ કરવા ખેંચો';
 
   @override
-  String get aiSetup => 'AI Setup';
+  String get aiSetup => 'AI સેટઅપ';
 
   @override
-  String get aiAnalysis => 'AI Analysis';
+  String get aiAnalysis => 'AI વિશ્લેષણ';
 
   @override
-  String get unlockAi => 'Unlock AI Analysis';
+  String get unlockAi => 'AI વિશ્લેષણ અનલૉક કરો';
 
   @override
-  String get aiTagline => 'On-Device  ·  Private  ·  Free';
+  String get aiTagline => 'ઑન-ડિવાઇસ  ·  ખાનગી  ·  મફત';
 
   @override
-  String get deviceCheck => 'Device Check';
+  String get deviceCheck => 'ડિવાઇસ ચેક';
 
   @override
-  String get chooseModel => 'Choose Your Model';
+  String get chooseModel => 'તમારું મોડેલ પસંદ કરો';
 
   @override
   String get chooseModelSubtitle =>
-      'Download one or more models. You can switch between them later.';
+      'એક અથવા વધુ મોડેલ ડાઉનલોડ કરો. પછી તેમની વચ્ચે બદલી શકો છો.';
 
   @override
-  String get initializingAi => 'Initializing AI runtime…';
+  String get initializingAi => 'AI રનટાઇમ શરૂ થઈ રહ્યું છે…';
 
   @override
-  String get modelStorage => 'Model Storage';
+  String get modelStorage => 'મોડેલ સ્ટોરેજ';
 
   @override
   String get deviceIncompatible =>
-      'On-device AI requires a physical device with GPU support. Simulators and emulators are not compatible.';
+      'ઑન-ડિવાઇસ AI માટે GPU સપોર્ટ ધરાવતું ફિઝિકલ ડિવાઇસ જરૂરી છે. સિમ્યુલેટર અને એમ્યુલેટર સુસંગત નથી.';
 
   @override
-  String get enhanceDescription => 'Enhance';
+  String get enhanceDescription => 'સુધારો';
 
   @override
-  String get bidInsights => 'Bid Insights';
+  String get bidInsights => 'બિડ અંતર્દૃષ્ટિ';
 
   @override
-  String get whyThisJob => 'Why this?';
+  String get whyThisJob => 'આ શા માટે?';
 
   @override
-  String get suggestPrice => 'Suggest Price';
+  String get suggestPrice => 'કિંમત સૂચન';
 
   @override
-  String get analyzing => 'Analyzing…';
+  String get analyzing => 'વિશ્લેષણ થઈ રહ્યું છે…';
 
   @override
-  String get languagePicker => 'Select Language';
+  String get languagePicker => 'ભાષા પસંદ કરો';
 
   @override
   String get languageEnglish => 'English';

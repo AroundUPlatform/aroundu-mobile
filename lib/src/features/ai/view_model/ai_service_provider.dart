@@ -108,7 +108,7 @@ class AIAnalysisNotifier extends AutoDisposeNotifier<AIAnalysisState> {
   /// Requires an active model (see [modelManagerProvider]).
   void analyze(AIUseCase useCase, String userInput) {
     final mm = ref.read(modelManagerProvider);
-    if (mm.activeModelId == null) {
+    if (!mm.isActive) {
       state = state.copyWith(
         error: () => 'No AI model loaded. Please set up a model first.',
       );

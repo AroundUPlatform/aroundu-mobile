@@ -12,10 +12,10 @@ class AppLocalizationsTa extends AppLocalizations {
   String get appName => 'AroundU';
 
   @override
-  String get loginTitle => 'உள்நுழைக';
+  String get loginTitle => 'உள்நுழையவும்';
 
   @override
-  String get registerTitle => 'கணக்கை உருவாக்குக';
+  String get registerTitle => 'கணக்கை உருவாக்கவும்';
 
   @override
   String get emailLabel => 'மின்னஞ்சல்';
@@ -24,49 +24,49 @@ class AppLocalizationsTa extends AppLocalizations {
   String get passwordLabel => 'கடவுச்சொல்';
 
   @override
-  String get confirmPasswordLabel => 'Confirm Password';
+  String get confirmPasswordLabel => 'கடவுச்சொல்லை உறுதிப்படுத்தவும்';
 
   @override
-  String get forgotPassword => 'Forgot Password?';
+  String get forgotPassword => 'கடவுச்சொல் மறந்துவிட்டதா?';
 
   @override
-  String get loginButton => 'உள்நுழைக';
+  String get loginButton => 'உள்நுழையவும்';
 
   @override
-  String get registerButton => 'பதிவு செய்க';
+  String get registerButton => 'பதிவு செய்யவும்';
 
   @override
-  String get orContinueWith => 'Or continue with';
+  String get orContinueWith => 'அல்லது இதைப் பயன்படுத்தி தொடரவும்';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'கணக்கு இல்லையா?';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'ஏற்கனவே கணக்கு உள்ளதா?';
 
   @override
-  String get onboardingTitle1 => 'Find Tasks Around You';
+  String get onboardingTitle1 => 'உங்கள் அருகில் வேலைகளைக் கண்டறியுங்கள்';
 
   @override
   String get onboardingSubtitle1 =>
-      'Discover local jobs and services right in your neighbourhood.';
+      'உங்கள் அக்கம்பக்கத்தில் உள்ள உள்ளூர் வேலைகளையும் சேவைகளையும் கண்டறியுங்கள்.';
 
   @override
-  String get onboardingTitle2 => 'Bid & Get Hired';
+  String get onboardingTitle2 => 'ஏலம் எடுத்து வேலை பெறுங்கள்';
 
   @override
   String get onboardingSubtitle2 =>
-      'Place competitive bids and get hired for tasks that match your skills.';
+      'போட்டி ஏலங்களை வைத்து உங்கள் திறமைகளுக்கு பொருத்தமான வேலைகளுக்கு தேர்ந்தெடுக்கப்படுங்கள்.';
 
   @override
-  String get onboardingTitle3 => 'Secure Payments';
+  String get onboardingTitle3 => 'பாதுகாப்பான கட்டணங்கள்';
 
   @override
   String get onboardingSubtitle3 =>
-      'Escrow-backed payments ensure fair and safe transactions.';
+      'எஸ்க்ரோ-ஆதரவு கட்டணங்கள் நியாயமான மற்றும் பாதுகாப்பான பரிவர்த்தனைகளை உறுதிசெய்கின்றன.';
 
   @override
-  String get getStarted => 'தொடங்குக';
+  String get getStarted => 'தொடங்குங்கள்';
 
   @override
   String get skip => 'தவிர்';
@@ -75,22 +75,22 @@ class AppLocalizationsTa extends AppLocalizations {
   String get next => 'அடுத்து';
 
   @override
-  String get roleSelectionTitle => 'Choose Your Role';
+  String get roleSelectionTitle => 'உங்கள் பங்கைத் தேர்ந்தெடுக்கவும்';
 
   @override
-  String get roleClient => 'Client';
+  String get roleClient => 'வாடிக்கையாளர்';
 
   @override
-  String get roleClientDesc => 'I need help with tasks';
+  String get roleClientDesc => 'எனக்கு வேலைகளில் உதவி தேவை';
 
   @override
-  String get roleWorker => 'Worker';
+  String get roleWorker => 'தொழிலாளி';
 
   @override
-  String get roleWorkerDesc => 'I want to offer my skills';
+  String get roleWorkerDesc => 'நான் என் திறமைகளை வழங்க விரும்புகிறேன்';
 
   @override
-  String get continueButton => 'Continue';
+  String get continueButton => 'தொடரவும்';
 
   @override
   String get homeTab => 'முகப்பு';
@@ -99,180 +99,180 @@ class AppLocalizationsTa extends AppLocalizations {
   String get jobsTab => 'வேலைகள்';
 
   @override
-  String get chatTab => 'அரட்டை';
+  String get chatTab => 'உரையாடல்';
 
   @override
   String get profileTab => 'சுயவிவரம்';
 
   @override
-  String get myJobs => 'எனது வேலைகள்';
+  String get myJobs => 'என் வேலைகள்';
 
   @override
   String get workerFeed => 'கிடைக்கும் வேலைகள்';
 
   @override
-  String get createJob => 'வேலை உருவாக்குக';
+  String get createJob => 'வேலை உருவாக்கவும்';
 
   @override
-  String get postJob => 'Post a Job';
+  String get postJob => 'வேலை பதிவிடவும்';
 
   @override
-  String get editJob => 'Edit Job';
+  String get editJob => 'வேலை திருத்தவும்';
 
   @override
-  String get deleteJob => 'Delete Job';
+  String get deleteJob => 'வேலை நீக்கவும்';
 
   @override
-  String get deleteJobConfirm => 'Are you sure you want to delete this job?';
+  String get deleteJobConfirm => 'இந்த வேலையை நீக்க விரும்புகிறீர்களா?';
 
   @override
-  String get jobTitle => 'Title';
+  String get jobTitle => 'தலைப்பு';
 
   @override
-  String get jobDescription => 'Description';
+  String get jobDescription => 'விவரம்';
 
   @override
-  String get jobCategory => 'Category';
+  String get jobCategory => 'வகை';
 
   @override
-  String get jobBudget => 'Budget';
+  String get jobBudget => 'பட்ஜெட்';
 
   @override
-  String get jobLocation => 'Location';
+  String get jobLocation => 'இடம்';
 
   @override
-  String get jobDueDate => 'Due Date';
+  String get jobDueDate => 'நிலுவைத் தேதி';
 
   @override
-  String get jobSkills => 'Skills Required';
+  String get jobSkills => 'தேவையான திறன்கள்';
 
   @override
-  String get jobUrgency => 'Urgency';
+  String get jobUrgency => 'அவசரம்';
 
   @override
-  String get jobPaymentMode => 'Payment Mode';
+  String get jobPaymentMode => 'கட்டண முறை';
 
   @override
-  String get urgencyNormal => 'Normal';
+  String get urgencyNormal => 'சாதாரணம்';
 
   @override
-  String get urgencyUrgent => 'Urgent';
+  String get urgencyUrgent => 'அவசரம்';
 
   @override
-  String get paymentOffline => 'Offline';
+  String get paymentOffline => 'ஆஃப்லைன்';
 
   @override
-  String get paymentEscrow => 'Escrow';
+  String get paymentEscrow => 'எஸ்க்ரோ';
 
   @override
-  String get statusOpenForBids => 'Open for Bids';
+  String get statusOpenForBids => 'ஏலத்திற்குத் திறந்தது';
 
   @override
-  String get statusInProgress => 'In Progress';
+  String get statusInProgress => 'நடப்பில் உள்ளது';
 
   @override
-  String get statusCompleted => 'Completed';
+  String get statusCompleted => 'முடிந்தது';
 
   @override
-  String get statusCancelled => 'Cancelled';
+  String get statusCancelled => 'ரத்து செய்யப்பட்டது';
 
   @override
-  String get statusPendingStart => 'Pending Start';
+  String get statusPendingStart => 'தொடக்கத்திற்கு காத்திருக்கிறது';
 
   @override
-  String get statusPendingRelease => 'Pending Release';
+  String get statusPendingRelease => 'வெளியீட்டிற்கு காத்திருக்கிறது';
 
   @override
-  String get bids => 'Bids';
+  String get bids => 'ஏலங்கள்';
 
   @override
-  String get noBids => 'No bids yet';
+  String get noBids => 'இன்னும் ஏலங்கள் இல்லை';
 
   @override
-  String get placeBid => 'Place Bid';
+  String get placeBid => 'ஏலம் வைக்கவும்';
 
   @override
-  String get bidAmount => 'Bid Amount';
+  String get bidAmount => 'ஏலத் தொகை';
 
   @override
-  String get bidNotes => 'Notes (optional)';
+  String get bidNotes => 'குறிப்புகள் (விருப்பம்)';
 
   @override
-  String get yourBid => 'Your Bid';
+  String get yourBid => 'உங்கள் ஏலம்';
 
   @override
-  String get acceptBid => 'Accept Bid';
+  String get acceptBid => 'ஏலத்தை ஏற்கவும்';
 
   @override
-  String get rejectBid => 'Reject Bid';
+  String get rejectBid => 'ஏலத்தை நிராகரிக்கவும்';
 
   @override
-  String get bidAccepted => 'Bid Accepted';
+  String get bidAccepted => 'ஏலம் ஏற்றுக்கொள்ளப்பட்டது';
 
   @override
-  String get bidRejected => 'Bid Rejected';
+  String get bidRejected => 'ஏலம் நிராகரிக்கப்பட்டது';
 
   @override
-  String get bidPending => 'Pending';
+  String get bidPending => 'நிலுவையில்';
 
   @override
-  String get startCode => 'Start Code';
+  String get startCode => 'தொடக்க குறியீடு';
 
   @override
-  String get releaseCode => 'Release Code';
+  String get releaseCode => 'வெளியீட்டு குறியீடு';
 
   @override
-  String get generateCodes => 'Generate Codes';
+  String get generateCodes => 'குறியீடுகளை உருவாக்கவும்';
 
   @override
-  String get verifyCode => 'Verify Code';
+  String get verifyCode => 'குறியீட்டை சரிபார்க்கவும்';
 
   @override
-  String get enterCode => 'Enter Code';
+  String get enterCode => 'குறியீட்டை உள்ளிடவும்';
 
   @override
-  String get escrow => 'Escrow';
+  String get escrow => 'எஸ்க்ரோ';
 
   @override
-  String get lockEscrow => 'Lock Escrow';
+  String get lockEscrow => 'எஸ்க்ரோவை பூட்டவும்';
 
   @override
-  String get releaseEscrow => 'Release Payment';
+  String get releaseEscrow => 'கட்டணத்தை வெளியிடவும்';
 
   @override
-  String get paymentLocked => 'Payment Locked';
+  String get paymentLocked => 'கட்டணம் பூட்டப்பட்டது';
 
   @override
-  String get paymentReleased => 'Payment Released';
+  String get paymentReleased => 'கட்டணம் வெளியிடப்பட்டது';
 
   @override
   String get conversations => 'செய்திகள்';
 
   @override
-  String get noMessagesYet => 'இதுவரை செய்திகள் இல்லை';
+  String get noMessagesYet => 'இன்னும் செய்திகள் இல்லை';
 
   @override
   String get noMessagesSubtitle =>
-      'Your conversations will appear here when you start chatting about a task.';
+      'நீங்கள் ஒரு பணியைப் பற்றி உரையாடத் தொடங்கும்போது உங்கள் உரையாடல்கள் இங்கே தோன்றும்.';
 
   @override
-  String get startConversation => 'Start the conversation!';
+  String get startConversation => 'உரையாடலைத் தொடங்குங்கள்!';
 
   @override
-  String get typeMessage => 'செய்தியை எழுதுக...';
+  String get typeMessage => 'செய்தியை உள்ளிடவும்...';
 
   @override
-  String get typing => 'தட்டச்சு செய்கிறார்...';
+  String get typing => 'தட்டச்சு செய்கிறது...';
 
   @override
   String get newMessages => 'புதிய செய்திகள்';
 
   @override
-  String get now => 'now';
+  String get now => 'இப்போது';
 
   @override
   String minutesAgo(int count) {
-    return '${count}m ago';
+    return '$countநி. முன்';
   }
 
   @override
@@ -280,8 +280,8 @@ class AppLocalizationsTa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count workers',
-      one: '1 worker',
+      other: '$count தொழிலாளிகள்',
+      one: '1 தொழிலாளி',
     );
     return '$_temp0';
   }
@@ -290,28 +290,28 @@ class AppLocalizationsTa extends AppLocalizations {
   String get profile => 'சுயவிவரம்';
 
   @override
-  String get editProfile => 'Edit Profile';
+  String get editProfile => 'சுயவிவரத்தைத் திருத்தவும்';
 
   @override
-  String get fullName => 'Full Name';
+  String get fullName => 'முழு பெயர்';
 
   @override
-  String get phone => 'Phone Number';
+  String get phone => 'தொலைபேசி எண்';
 
   @override
-  String get bio => 'Bio';
+  String get bio => 'சுய அறிமுகம்';
 
   @override
-  String get skills => 'Skills';
+  String get skills => 'திறன்கள்';
 
   @override
-  String get saveChanges => 'Save Changes';
+  String get saveChanges => 'மாற்றங்களைச் சேமிக்கவும்';
 
   @override
-  String get logout => 'வெளியேறு';
+  String get logout => 'வெளியேறவும்';
 
   @override
-  String get logoutConfirm => 'Are you sure you want to log out?';
+  String get logoutConfirm => 'நீங்கள் வெளியேற விரும்புகிறீர்களா?';
 
   @override
   String get settings => 'அமைப்புகள்';
@@ -323,144 +323,144 @@ class AppLocalizationsTa extends AppLocalizations {
   String get language => 'மொழி';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'இருண்ட பயன்முறை';
 
   @override
-  String get lightMode => 'Light Mode';
+  String get lightMode => 'ஒளி பயன்முறை';
 
   @override
-  String get systemMode => 'System';
+  String get systemMode => 'கணினி';
 
   @override
-  String get accentColour => 'Accent Colour';
+  String get accentColour => 'வலியுறுத்தல் நிறம்';
 
   @override
-  String get customColour => 'Custom';
+  String get customColour => 'தனிப்பயன்';
 
   @override
-  String get preview => 'Preview';
+  String get preview => 'முன்னோட்டம்';
 
   @override
-  String get previewTitle => 'Your colours look great!';
+  String get previewTitle => 'உங்கள் வண்ணங்கள் அருமையாக இருக்கின்றன!';
 
   @override
-  String get previewSubtitle => 'This is how your app will look.';
+  String get previewSubtitle => 'உங்கள் ஆப் இப்படி இருக்கும்.';
 
   @override
-  String get primary => 'Primary';
+  String get primary => 'முதன்மை';
 
   @override
-  String get secondary => 'Secondary';
+  String get secondary => 'இரண்டாம் நிலை';
 
   @override
-  String get reviews => 'Reviews';
+  String get reviews => 'மதிப்புரைகள்';
 
   @override
-  String get leaveReview => 'Leave a Review';
+  String get leaveReview => 'மதிப்புரை தரவும்';
 
   @override
-  String get noReviews => 'No reviews yet';
+  String get noReviews => 'இன்னும் மதிப்புரைகள் இல்லை';
 
   @override
-  String get rating => 'Rating';
+  String get rating => 'மதிப்பீடு';
 
   @override
-  String get reviewComment => 'Comment';
+  String get reviewComment => 'கருத்து';
 
   @override
-  String get submitReview => 'Submit Review';
+  String get submitReview => 'மதிப்புரையைச் சமர்ப்பிக்கவும்';
 
   @override
   String get loading => 'ஏற்றுகிறது...';
 
   @override
-  String get loadingConversations => 'Loading conversations...';
+  String get loadingConversations => 'உரையாடல்களை ஏற்றுகிறது...';
 
   @override
-  String get loadingMessages => 'Loading messages...';
+  String get loadingMessages => 'செய்திகளை ஏற்றுகிறது...';
 
   @override
-  String get error => 'ஏதோ தவறு ஏற்பட்டது';
+  String get error => 'ஏதோ தவறு நடந்தது';
 
   @override
-  String get retry => 'மீண்டும் முயற்சிக்க';
+  String get retry => 'மீண்டும் முயற்சிக்கவும்';
 
   @override
-  String get cancel => 'ரத்து';
+  String get cancel => 'ரத்துசெய்';
 
   @override
-  String get confirm => 'உறுதிப்படுத்து';
+  String get confirm => 'உறுதிப்படுத்தவும்';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'நீக்கவும்';
 
   @override
-  String get save => 'சேமி';
+  String get save => 'சேமிக்கவும்';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'திருத்தவும்';
 
   @override
-  String get close => 'Close';
+  String get close => 'மூடவும்';
 
   @override
-  String get search => 'தேடு';
+  String get search => 'தேடவும்';
 
   @override
-  String get noResults => 'No results found';
+  String get noResults => 'முடிவுகள் இல்லை';
 
   @override
-  String get pullToRefresh => 'Pull to refresh';
+  String get pullToRefresh => 'புதுப்பிக்க இழுக்கவும்';
 
   @override
-  String get aiSetup => 'AI Setup';
+  String get aiSetup => 'AI அமைப்பு';
 
   @override
-  String get aiAnalysis => 'AI Analysis';
+  String get aiAnalysis => 'AI பகுப்பாய்வு';
 
   @override
-  String get unlockAi => 'Unlock AI Analysis';
+  String get unlockAi => 'AI பகுப்பாய்வை திறக்கவும்';
 
   @override
-  String get aiTagline => 'On-Device  ·  Private  ·  Free';
+  String get aiTagline => 'சாதனத்தில்  ·  தனிப்பட்ட  ·  இலவசம்';
 
   @override
-  String get deviceCheck => 'Device Check';
+  String get deviceCheck => 'சாதன சோதனை';
 
   @override
-  String get chooseModel => 'Choose Your Model';
+  String get chooseModel => 'உங்கள் மாதிரியைத் தேர்ந்தெடுக்கவும்';
 
   @override
   String get chooseModelSubtitle =>
-      'Download one or more models. You can switch between them later.';
+      'ஒன்று அல்லது அதற்கு மேற்பட்ட மாதிரிகளைப் பதிவிறக்கவும். பின்னர் அவற்றிடையே மாறலாம்.';
 
   @override
-  String get initializingAi => 'Initializing AI runtime…';
+  String get initializingAi => 'AI இயக்க நேரத்தை துவக்குகிறது…';
 
   @override
-  String get modelStorage => 'Model Storage';
+  String get modelStorage => 'மாதிரி சேமிப்பு';
 
   @override
   String get deviceIncompatible =>
-      'On-device AI requires a physical device with GPU support. Simulators and emulators are not compatible.';
+      'சாதன AI-க்கு GPU ஆதரவுடன் கூடிய இயற்பியல் சாதனம் தேவை. சிமுலேட்டர்கள் மற்றும் எமுலேட்டர்கள் இணக்கமானவை அல்ல.';
 
   @override
-  String get enhanceDescription => 'Enhance';
+  String get enhanceDescription => 'மேம்படுத்து';
 
   @override
-  String get bidInsights => 'Bid Insights';
+  String get bidInsights => 'ஏல நுண்ணறிவு';
 
   @override
-  String get whyThisJob => 'Why this?';
+  String get whyThisJob => 'ஏன் இது?';
 
   @override
-  String get suggestPrice => 'Suggest Price';
+  String get suggestPrice => 'விலை பரிந்துரை';
 
   @override
-  String get analyzing => 'Analyzing…';
+  String get analyzing => 'பகுப்பாய்வு செய்கிறது…';
 
   @override
-  String get languagePicker => 'Select Language';
+  String get languagePicker => 'மொழியைத் தேர்ந்தெடுக்கவும்';
 
   @override
   String get languageEnglish => 'English';

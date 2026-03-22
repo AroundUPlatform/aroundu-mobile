@@ -25,14 +25,12 @@ class RunAnywhereService {
     await RunAnywhere.initialize();
     await LlamaCpp.register();
 
-    for (final spec in kModelCatalog) {
-      LlamaCpp.addModel(
-        id: spec.id,
-        name: spec.name,
-        url: spec.url,
-        memoryRequirement: spec.memoryBytes,
-      );
-    }
+    LlamaCpp.addModel(
+      id: kDefaultModel.id,
+      name: kDefaultModel.name,
+      url: kDefaultModel.url,
+      memoryRequirement: kDefaultModel.memoryBytes,
+    );
 
     _sdkReady = true;
   }

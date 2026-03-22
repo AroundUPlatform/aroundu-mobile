@@ -18,79 +18,76 @@ class AppLocalizationsJa extends AppLocalizations {
   String get registerTitle => 'アカウント作成';
 
   @override
-  String get emailLabel => 'Email';
+  String get emailLabel => 'メール';
 
   @override
-  String get passwordLabel => 'Password';
+  String get passwordLabel => 'パスワード';
 
   @override
-  String get confirmPasswordLabel => 'Confirm Password';
+  String get confirmPasswordLabel => 'パスワード確認';
 
   @override
-  String get forgotPassword => 'Forgot Password?';
+  String get forgotPassword => 'パスワードを忘れた場合';
 
   @override
-  String get loginButton => 'Log In';
+  String get loginButton => 'ログイン';
 
   @override
-  String get registerButton => 'Sign Up';
+  String get registerButton => '新規登録';
 
   @override
-  String get orContinueWith => 'Or continue with';
+  String get orContinueWith => 'または以下で続行';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'アカウントをお持ちでない方';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'すでにアカウントをお持ちの方';
 
   @override
-  String get onboardingTitle1 => 'Find Tasks Around You';
+  String get onboardingTitle1 => '周辺のタスクを見つけよう';
 
   @override
-  String get onboardingSubtitle1 =>
-      'Discover local jobs and services right in your neighbourhood.';
+  String get onboardingSubtitle1 => 'ご近所の求人やサービスを見つけましょう。';
 
   @override
-  String get onboardingTitle2 => 'Bid & Get Hired';
+  String get onboardingTitle2 => '入札して仕事を獲得';
 
   @override
-  String get onboardingSubtitle2 =>
-      'Place competitive bids and get hired for tasks that match your skills.';
+  String get onboardingSubtitle2 => '競争力のある入札を行い、スキルに合った仕事に選ばれましょう。';
 
   @override
-  String get onboardingTitle3 => 'Secure Payments';
+  String get onboardingTitle3 => '安全な決済';
 
   @override
-  String get onboardingSubtitle3 =>
-      'Escrow-backed payments ensure fair and safe transactions.';
+  String get onboardingSubtitle3 => 'エスクロー対応の決済で公正かつ安全な取引を保証します。';
 
   @override
   String get getStarted => '始める';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'スキップ';
 
   @override
-  String get next => 'Next';
+  String get next => '次へ';
 
   @override
-  String get roleSelectionTitle => 'Choose Your Role';
+  String get roleSelectionTitle => '役割を選択';
 
   @override
-  String get roleClient => 'Client';
+  String get roleClient => 'クライアント';
 
   @override
-  String get roleClientDesc => 'I need help with tasks';
+  String get roleClientDesc => 'タスクを手伝ってほしい';
 
   @override
-  String get roleWorker => 'Worker';
+  String get roleWorker => 'ワーカー';
 
   @override
-  String get roleWorkerDesc => 'I want to offer my skills';
+  String get roleWorkerDesc => 'スキルを提供したい';
 
   @override
-  String get continueButton => 'Continue';
+  String get continueButton => '続ける';
 
   @override
   String get homeTab => 'ホーム';
@@ -105,174 +102,173 @@ class AppLocalizationsJa extends AppLocalizations {
   String get profileTab => 'プロフィール';
 
   @override
-  String get myJobs => 'My Jobs';
+  String get myJobs => '自分の仕事';
 
   @override
-  String get workerFeed => 'Available Jobs';
+  String get workerFeed => '利用可能な仕事';
 
   @override
-  String get createJob => 'Create Job';
+  String get createJob => '仕事を作成';
 
   @override
-  String get postJob => 'Post a Job';
+  String get postJob => '仕事を投稿';
 
   @override
-  String get editJob => 'Edit Job';
+  String get editJob => '仕事を編集';
 
   @override
-  String get deleteJob => 'Delete Job';
+  String get deleteJob => '仕事を削除';
 
   @override
-  String get deleteJobConfirm => 'Are you sure you want to delete this job?';
+  String get deleteJobConfirm => 'この仕事を削除してもよろしいですか？';
 
   @override
-  String get jobTitle => 'Title';
+  String get jobTitle => 'タイトル';
 
   @override
-  String get jobDescription => 'Description';
+  String get jobDescription => '説明';
 
   @override
-  String get jobCategory => 'Category';
+  String get jobCategory => 'カテゴリ';
 
   @override
-  String get jobBudget => 'Budget';
+  String get jobBudget => '予算';
 
   @override
-  String get jobLocation => 'Location';
+  String get jobLocation => '場所';
 
   @override
-  String get jobDueDate => 'Due Date';
+  String get jobDueDate => '期限';
 
   @override
-  String get jobSkills => 'Skills Required';
+  String get jobSkills => '必要なスキル';
 
   @override
-  String get jobUrgency => 'Urgency';
+  String get jobUrgency => '緊急度';
 
   @override
-  String get jobPaymentMode => 'Payment Mode';
+  String get jobPaymentMode => '支払い方法';
 
   @override
-  String get urgencyNormal => 'Normal';
+  String get urgencyNormal => '通常';
 
   @override
-  String get urgencyUrgent => 'Urgent';
+  String get urgencyUrgent => '緊急';
 
   @override
-  String get paymentOffline => 'Offline';
+  String get paymentOffline => 'オフライン';
 
   @override
-  String get paymentEscrow => 'Escrow';
+  String get paymentEscrow => 'エスクロー';
 
   @override
-  String get statusOpenForBids => 'Open for Bids';
+  String get statusOpenForBids => '入札受付中';
 
   @override
-  String get statusInProgress => 'In Progress';
+  String get statusInProgress => '進行中';
 
   @override
-  String get statusCompleted => 'Completed';
+  String get statusCompleted => '完了';
 
   @override
-  String get statusCancelled => 'Cancelled';
+  String get statusCancelled => 'キャンセル済み';
 
   @override
-  String get statusPendingStart => 'Pending Start';
+  String get statusPendingStart => '開始待ち';
 
   @override
-  String get statusPendingRelease => 'Pending Release';
+  String get statusPendingRelease => '支払い待ち';
 
   @override
-  String get bids => 'Bids';
+  String get bids => '入札';
 
   @override
-  String get noBids => 'No bids yet';
+  String get noBids => 'まだ入札がありません';
 
   @override
-  String get placeBid => 'Place Bid';
+  String get placeBid => '入札する';
 
   @override
-  String get bidAmount => 'Bid Amount';
+  String get bidAmount => '入札額';
 
   @override
-  String get bidNotes => 'Notes (optional)';
+  String get bidNotes => 'メモ（任意）';
 
   @override
-  String get yourBid => 'Your Bid';
+  String get yourBid => 'あなたの入札';
 
   @override
-  String get acceptBid => 'Accept Bid';
+  String get acceptBid => '入札を受諾';
 
   @override
-  String get rejectBid => 'Reject Bid';
+  String get rejectBid => '入札を拒否';
 
   @override
-  String get bidAccepted => 'Bid Accepted';
+  String get bidAccepted => '入札が受諾されました';
 
   @override
-  String get bidRejected => 'Bid Rejected';
+  String get bidRejected => '入札が拒否されました';
 
   @override
-  String get bidPending => 'Pending';
+  String get bidPending => '保留中';
 
   @override
-  String get startCode => 'Start Code';
+  String get startCode => '開始コード';
 
   @override
-  String get releaseCode => 'Release Code';
+  String get releaseCode => 'リリースコード';
 
   @override
-  String get generateCodes => 'Generate Codes';
+  String get generateCodes => 'コードを生成';
 
   @override
-  String get verifyCode => 'Verify Code';
+  String get verifyCode => 'コードを確認';
 
   @override
-  String get enterCode => 'Enter Code';
+  String get enterCode => 'コードを入力';
 
   @override
-  String get escrow => 'Escrow';
+  String get escrow => 'エスクロー';
 
   @override
-  String get lockEscrow => 'Lock Escrow';
+  String get lockEscrow => 'エスクローをロック';
 
   @override
-  String get releaseEscrow => 'Release Payment';
+  String get releaseEscrow => '支払いをリリース';
 
   @override
-  String get paymentLocked => 'Payment Locked';
+  String get paymentLocked => '支払いロック済み';
 
   @override
-  String get paymentReleased => 'Payment Released';
+  String get paymentReleased => '支払いリリース済み';
 
   @override
   String get conversations => 'メッセージ';
 
   @override
-  String get noMessagesYet => 'No messages yet';
+  String get noMessagesYet => 'まだメッセージがありません';
 
   @override
-  String get noMessagesSubtitle =>
-      'Your conversations will appear here when you start chatting about a task.';
+  String get noMessagesSubtitle => 'タスクについてチャットを開始すると、会話がここに表示されます。';
 
   @override
-  String get startConversation => 'Start the conversation!';
+  String get startConversation => '会話を始めましょう！';
 
   @override
   String get typeMessage => 'メッセージを入力...';
 
   @override
-  String get typing => 'typing...';
+  String get typing => '入力中...';
 
   @override
   String get newMessages => '新着メッセージ';
 
   @override
-  String get now => 'now';
+  String get now => '今';
 
   @override
   String minutesAgo(int count) {
-    return '${count}m ago';
+    return '$count分前';
   }
 
   @override
@@ -280,187 +276,186 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count workers',
-      one: '1 worker',
+      other: '$count人のワーカー',
+      one: '1人のワーカー',
     );
     return '$_temp0';
   }
 
   @override
-  String get profile => 'Profile';
+  String get profile => 'プロフィール';
 
   @override
-  String get editProfile => 'Edit Profile';
+  String get editProfile => 'プロフィール編集';
 
   @override
-  String get fullName => 'Full Name';
+  String get fullName => '氏名';
 
   @override
-  String get phone => 'Phone Number';
+  String get phone => '電話番号';
 
   @override
-  String get bio => 'Bio';
+  String get bio => '自己紹介';
 
   @override
-  String get skills => 'Skills';
+  String get skills => 'スキル';
 
   @override
-  String get saveChanges => 'Save Changes';
+  String get saveChanges => '変更を保存';
 
   @override
   String get logout => 'ログアウト';
 
   @override
-  String get logoutConfirm => 'Are you sure you want to log out?';
+  String get logoutConfirm => 'ログアウトしてもよろしいですか？';
 
   @override
   String get settings => '設定';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => '外観';
 
   @override
   String get language => '言語';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'ダークモード';
 
   @override
-  String get lightMode => 'Light Mode';
+  String get lightMode => 'ライトモード';
 
   @override
-  String get systemMode => 'System';
+  String get systemMode => 'システム';
 
   @override
-  String get accentColour => 'Accent Colour';
+  String get accentColour => 'アクセントカラー';
 
   @override
-  String get customColour => 'Custom';
+  String get customColour => 'カスタム';
 
   @override
-  String get preview => 'Preview';
+  String get preview => 'プレビュー';
 
   @override
-  String get previewTitle => 'Your colours look great!';
+  String get previewTitle => '色がきれいに見えます！';
 
   @override
-  String get previewSubtitle => 'This is how your app will look.';
+  String get previewSubtitle => 'アプリはこのように表示されます。';
 
   @override
-  String get primary => 'Primary';
+  String get primary => 'プライマリ';
 
   @override
-  String get secondary => 'Secondary';
+  String get secondary => 'セカンダリ';
 
   @override
-  String get reviews => 'Reviews';
+  String get reviews => 'レビュー';
 
   @override
-  String get leaveReview => 'Leave a Review';
+  String get leaveReview => 'レビューを書く';
 
   @override
-  String get noReviews => 'No reviews yet';
+  String get noReviews => 'まだレビューがありません';
 
   @override
-  String get rating => 'Rating';
+  String get rating => '評価';
 
   @override
-  String get reviewComment => 'Comment';
+  String get reviewComment => 'コメント';
 
   @override
-  String get submitReview => 'Submit Review';
+  String get submitReview => 'レビューを送信';
 
   @override
   String get loading => '読み込み中...';
 
   @override
-  String get loadingConversations => 'Loading conversations...';
+  String get loadingConversations => '会話を読み込み中...';
 
   @override
-  String get loadingMessages => 'Loading messages...';
+  String get loadingMessages => 'メッセージを読み込み中...';
 
   @override
   String get error => 'エラーが発生しました';
 
   @override
-  String get retry => 'Retry';
+  String get retry => '再試行';
 
   @override
   String get cancel => 'キャンセル';
 
   @override
-  String get confirm => 'Confirm';
+  String get confirm => '確認';
 
   @override
-  String get delete => 'Delete';
+  String get delete => '削除';
 
   @override
   String get save => '保存';
 
   @override
-  String get edit => 'Edit';
+  String get edit => '編集';
 
   @override
-  String get close => 'Close';
+  String get close => '閉じる';
 
   @override
   String get search => '検索';
 
   @override
-  String get noResults => 'No results found';
+  String get noResults => '結果が見つかりません';
 
   @override
-  String get pullToRefresh => 'Pull to refresh';
+  String get pullToRefresh => '引っ張って更新';
 
   @override
-  String get aiSetup => 'AI Setup';
+  String get aiSetup => 'AIセットアップ';
 
   @override
-  String get aiAnalysis => 'AI Analysis';
+  String get aiAnalysis => 'AI分析';
 
   @override
-  String get unlockAi => 'Unlock AI Analysis';
+  String get unlockAi => 'AI分析をロック解除';
 
   @override
-  String get aiTagline => 'On-Device  ·  Private  ·  Free';
+  String get aiTagline => 'オンデバイス  ·  プライベート  ·  無料';
 
   @override
-  String get deviceCheck => 'Device Check';
+  String get deviceCheck => 'デバイスチェック';
 
   @override
-  String get chooseModel => 'Choose Your Model';
+  String get chooseModel => 'モデルを選択';
 
   @override
-  String get chooseModelSubtitle =>
-      'Download one or more models. You can switch between them later.';
+  String get chooseModelSubtitle => '1つ以上のモデルをダウンロード。後で切り替えできます。';
 
   @override
-  String get initializingAi => 'Initializing AI runtime…';
+  String get initializingAi => 'AIランタイムを初期化中…';
 
   @override
-  String get modelStorage => 'Model Storage';
+  String get modelStorage => 'モデルストレージ';
 
   @override
   String get deviceIncompatible =>
-      'On-device AI requires a physical device with GPU support. Simulators and emulators are not compatible.';
+      'オンデバイスAIにはGPUサポートのある物理デバイスが必要です。シミュレーターやエミュレーターは非対応です。';
 
   @override
-  String get enhanceDescription => 'Enhance';
+  String get enhanceDescription => '改善';
 
   @override
-  String get bidInsights => 'Bid Insights';
+  String get bidInsights => '入札インサイト';
 
   @override
-  String get whyThisJob => 'Why this?';
+  String get whyThisJob => 'なぜこれ？';
 
   @override
-  String get suggestPrice => 'Suggest Price';
+  String get suggestPrice => '価格を提案';
 
   @override
-  String get analyzing => 'Analyzing…';
+  String get analyzing => '分析中…';
 
   @override
-  String get languagePicker => 'Select Language';
+  String get languagePicker => '言語を選択';
 
   @override
   String get languageEnglish => 'English';

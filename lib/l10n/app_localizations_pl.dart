@@ -15,88 +15,88 @@ class AppLocalizationsPl extends AppLocalizations {
   String get loginTitle => 'Zaloguj się';
 
   @override
-  String get registerTitle => 'Utwórz konto';
+  String get registerTitle => 'Utwórz Konto';
 
   @override
-  String get emailLabel => 'Email';
+  String get emailLabel => 'E-mail';
 
   @override
-  String get passwordLabel => 'Password';
+  String get passwordLabel => 'Hasło';
 
   @override
-  String get confirmPasswordLabel => 'Confirm Password';
+  String get confirmPasswordLabel => 'Potwierdź Hasło';
 
   @override
-  String get forgotPassword => 'Forgot Password?';
+  String get forgotPassword => 'Zapomniałeś hasła?';
 
   @override
-  String get loginButton => 'Log In';
+  String get loginButton => 'Zaloguj się';
 
   @override
-  String get registerButton => 'Sign Up';
+  String get registerButton => 'Zarejestruj się';
 
   @override
-  String get orContinueWith => 'Or continue with';
+  String get orContinueWith => 'Lub kontynuuj z';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'Nie masz konta?';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'Masz już konto?';
 
   @override
-  String get onboardingTitle1 => 'Find Tasks Around You';
+  String get onboardingTitle1 => 'Znajdź Zadania w Okolicy';
 
   @override
   String get onboardingSubtitle1 =>
-      'Discover local jobs and services right in your neighbourhood.';
+      'Odkryj lokalne prace i usługi w swojej okolicy.';
 
   @override
-  String get onboardingTitle2 => 'Bid & Get Hired';
+  String get onboardingTitle2 => 'Licytuj i Zostań Zatrudniony';
 
   @override
   String get onboardingSubtitle2 =>
-      'Place competitive bids and get hired for tasks that match your skills.';
+      'Składaj konkurencyjne oferty i daj się wybrać do zadań pasujących do twoich umiejętności.';
 
   @override
-  String get onboardingTitle3 => 'Secure Payments';
+  String get onboardingTitle3 => 'Bezpieczne Płatności';
 
   @override
   String get onboardingSubtitle3 =>
-      'Escrow-backed payments ensure fair and safe transactions.';
+      'Płatności zabezpieczone escrow zapewniają uczciwe i bezpieczne transakcje.';
 
   @override
-  String get getStarted => 'Rozpocznij';
+  String get getStarted => 'Zacznij';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'Pomiń';
 
   @override
-  String get next => 'Next';
+  String get next => 'Dalej';
 
   @override
-  String get roleSelectionTitle => 'Choose Your Role';
+  String get roleSelectionTitle => 'Wybierz Swoją Rolę';
 
   @override
-  String get roleClient => 'Client';
+  String get roleClient => 'Klient';
 
   @override
-  String get roleClientDesc => 'I need help with tasks';
+  String get roleClientDesc => 'Potrzebuję pomocy z zadaniami';
 
   @override
-  String get roleWorker => 'Worker';
+  String get roleWorker => 'Pracownik';
 
   @override
-  String get roleWorkerDesc => 'I want to offer my skills';
+  String get roleWorkerDesc => 'Chcę zaoferować swoje umiejętności';
 
   @override
-  String get continueButton => 'Continue';
+  String get continueButton => 'Kontynuuj';
 
   @override
-  String get homeTab => 'Główna';
+  String get homeTab => 'Strona Główna';
 
   @override
-  String get jobsTab => 'Zlecenia';
+  String get jobsTab => 'Prace';
 
   @override
   String get chatTab => 'Czat';
@@ -105,58 +105,58 @@ class AppLocalizationsPl extends AppLocalizations {
   String get profileTab => 'Profil';
 
   @override
-  String get myJobs => 'My Jobs';
+  String get myJobs => 'Moje Prace';
 
   @override
-  String get workerFeed => 'Available Jobs';
+  String get workerFeed => 'Dostępne Prace';
 
   @override
-  String get createJob => 'Create Job';
+  String get createJob => 'Utwórz Pracę';
 
   @override
-  String get postJob => 'Post a Job';
+  String get postJob => 'Opublikuj Pracę';
 
   @override
-  String get editJob => 'Edit Job';
+  String get editJob => 'Edytuj Pracę';
 
   @override
-  String get deleteJob => 'Delete Job';
+  String get deleteJob => 'Usuń Pracę';
 
   @override
-  String get deleteJobConfirm => 'Are you sure you want to delete this job?';
+  String get deleteJobConfirm => 'Czy na pewno chcesz usunąć tę pracę?';
 
   @override
-  String get jobTitle => 'Title';
+  String get jobTitle => 'Tytuł';
 
   @override
-  String get jobDescription => 'Description';
+  String get jobDescription => 'Opis';
 
   @override
-  String get jobCategory => 'Category';
+  String get jobCategory => 'Kategoria';
 
   @override
-  String get jobBudget => 'Budget';
+  String get jobBudget => 'Budżet';
 
   @override
-  String get jobLocation => 'Location';
+  String get jobLocation => 'Lokalizacja';
 
   @override
-  String get jobDueDate => 'Due Date';
+  String get jobDueDate => 'Termin';
 
   @override
-  String get jobSkills => 'Skills Required';
+  String get jobSkills => 'Wymagane Umiejętności';
 
   @override
-  String get jobUrgency => 'Urgency';
+  String get jobUrgency => 'Pilność';
 
   @override
-  String get jobPaymentMode => 'Payment Mode';
+  String get jobPaymentMode => 'Metoda Płatności';
 
   @override
-  String get urgencyNormal => 'Normal';
+  String get urgencyNormal => 'Normalny';
 
   @override
-  String get urgencyUrgent => 'Urgent';
+  String get urgencyUrgent => 'Pilny';
 
   @override
   String get paymentOffline => 'Offline';
@@ -165,114 +165,114 @@ class AppLocalizationsPl extends AppLocalizations {
   String get paymentEscrow => 'Escrow';
 
   @override
-  String get statusOpenForBids => 'Open for Bids';
+  String get statusOpenForBids => 'Otwarty na Oferty';
 
   @override
-  String get statusInProgress => 'In Progress';
+  String get statusInProgress => 'W Toku';
 
   @override
-  String get statusCompleted => 'Completed';
+  String get statusCompleted => 'Zakończony';
 
   @override
-  String get statusCancelled => 'Cancelled';
+  String get statusCancelled => 'Anulowany';
 
   @override
-  String get statusPendingStart => 'Pending Start';
+  String get statusPendingStart => 'Oczekuje na Start';
 
   @override
-  String get statusPendingRelease => 'Pending Release';
+  String get statusPendingRelease => 'Oczekuje na Zwolnienie';
 
   @override
-  String get bids => 'Bids';
+  String get bids => 'Oferty';
 
   @override
-  String get noBids => 'No bids yet';
+  String get noBids => 'Brak ofert';
 
   @override
-  String get placeBid => 'Place Bid';
+  String get placeBid => 'Złóż Ofertę';
 
   @override
-  String get bidAmount => 'Bid Amount';
+  String get bidAmount => 'Kwota Oferty';
 
   @override
-  String get bidNotes => 'Notes (optional)';
+  String get bidNotes => 'Uwagi (opcjonalne)';
 
   @override
-  String get yourBid => 'Your Bid';
+  String get yourBid => 'Twoja Oferta';
 
   @override
-  String get acceptBid => 'Accept Bid';
+  String get acceptBid => 'Akceptuj Ofertę';
 
   @override
-  String get rejectBid => 'Reject Bid';
+  String get rejectBid => 'Odrzuć Ofertę';
 
   @override
-  String get bidAccepted => 'Bid Accepted';
+  String get bidAccepted => 'Oferta Zaakceptowana';
 
   @override
-  String get bidRejected => 'Bid Rejected';
+  String get bidRejected => 'Oferta Odrzucona';
 
   @override
-  String get bidPending => 'Pending';
+  String get bidPending => 'Oczekujący';
 
   @override
-  String get startCode => 'Start Code';
+  String get startCode => 'Kod Startowy';
 
   @override
-  String get releaseCode => 'Release Code';
+  String get releaseCode => 'Kod Zwolnienia';
 
   @override
-  String get generateCodes => 'Generate Codes';
+  String get generateCodes => 'Generuj Kody';
 
   @override
-  String get verifyCode => 'Verify Code';
+  String get verifyCode => 'Zweryfikuj Kod';
 
   @override
-  String get enterCode => 'Enter Code';
+  String get enterCode => 'Wprowadź Kod';
 
   @override
   String get escrow => 'Escrow';
 
   @override
-  String get lockEscrow => 'Lock Escrow';
+  String get lockEscrow => 'Zablokuj Escrow';
 
   @override
-  String get releaseEscrow => 'Release Payment';
+  String get releaseEscrow => 'Zwolnij Płatność';
 
   @override
-  String get paymentLocked => 'Payment Locked';
+  String get paymentLocked => 'Płatność Zablokowana';
 
   @override
-  String get paymentReleased => 'Payment Released';
+  String get paymentReleased => 'Płatność Zwolniona';
 
   @override
   String get conversations => 'Wiadomości';
 
   @override
-  String get noMessagesYet => 'No messages yet';
+  String get noMessagesYet => 'Brak wiadomości';
 
   @override
   String get noMessagesSubtitle =>
-      'Your conversations will appear here when you start chatting about a task.';
+      'Twoje rozmowy pojawią się tutaj, gdy zaczniesz czatować o zadaniu.';
 
   @override
-  String get startConversation => 'Start the conversation!';
+  String get startConversation => 'Rozpocznij rozmowę!';
 
   @override
   String get typeMessage => 'Wpisz wiadomość...';
 
   @override
-  String get typing => 'typing...';
+  String get typing => 'pisze...';
 
   @override
-  String get newMessages => 'Nowe wiadomości';
+  String get newMessages => 'Nowe Wiadomości';
 
   @override
-  String get now => 'now';
+  String get now => 'teraz';
 
   @override
   String minutesAgo(int count) {
-    return '${count}m ago';
+    return '${count}min temu';
   }
 
   @override
@@ -280,187 +280,187 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count workers',
-      one: '1 worker',
+      other: '$count pracowników',
+      one: '1 pracownik',
     );
     return '$_temp0';
   }
 
   @override
-  String get profile => 'Profile';
+  String get profile => 'Profil';
 
   @override
-  String get editProfile => 'Edit Profile';
+  String get editProfile => 'Edytuj Profil';
 
   @override
-  String get fullName => 'Full Name';
+  String get fullName => 'Pełne Imię';
 
   @override
-  String get phone => 'Phone Number';
+  String get phone => 'Numer Telefonu';
 
   @override
   String get bio => 'Bio';
 
   @override
-  String get skills => 'Skills';
+  String get skills => 'Umiejętności';
 
   @override
-  String get saveChanges => 'Save Changes';
+  String get saveChanges => 'Zapisz Zmiany';
 
   @override
-  String get logout => 'Wyloguj';
+  String get logout => 'Wyloguj się';
 
   @override
-  String get logoutConfirm => 'Are you sure you want to log out?';
+  String get logoutConfirm => 'Czy na pewno chcesz się wylogować?';
 
   @override
   String get settings => 'Ustawienia';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => 'Wygląd';
 
   @override
   String get language => 'Język';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'Tryb Ciemny';
 
   @override
-  String get lightMode => 'Light Mode';
+  String get lightMode => 'Tryb Jasny';
 
   @override
   String get systemMode => 'System';
 
   @override
-  String get accentColour => 'Accent Colour';
+  String get accentColour => 'Kolor Akcentu';
 
   @override
-  String get customColour => 'Custom';
+  String get customColour => 'Własny';
 
   @override
-  String get preview => 'Preview';
+  String get preview => 'Podgląd';
 
   @override
-  String get previewTitle => 'Your colours look great!';
+  String get previewTitle => 'Twoje kolory wyglądają świetnie!';
 
   @override
-  String get previewSubtitle => 'This is how your app will look.';
+  String get previewSubtitle => 'Tak będzie wyglądać twoja aplikacja.';
 
   @override
-  String get primary => 'Primary';
+  String get primary => 'Główny';
 
   @override
-  String get secondary => 'Secondary';
+  String get secondary => 'Dodatkowy';
 
   @override
-  String get reviews => 'Reviews';
+  String get reviews => 'Recenzje';
 
   @override
-  String get leaveReview => 'Leave a Review';
+  String get leaveReview => 'Zostaw Recenzję';
 
   @override
-  String get noReviews => 'No reviews yet';
+  String get noReviews => 'Brak recenzji';
 
   @override
-  String get rating => 'Rating';
+  String get rating => 'Ocena';
 
   @override
-  String get reviewComment => 'Comment';
+  String get reviewComment => 'Komentarz';
 
   @override
-  String get submitReview => 'Submit Review';
+  String get submitReview => 'Prześlij Recenzję';
 
   @override
   String get loading => 'Ładowanie...';
 
   @override
-  String get loadingConversations => 'Loading conversations...';
+  String get loadingConversations => 'Ładowanie rozmów...';
 
   @override
-  String get loadingMessages => 'Loading messages...';
+  String get loadingMessages => 'Ładowanie wiadomości...';
 
   @override
   String get error => 'Coś poszło nie tak';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Ponów';
 
   @override
   String get cancel => 'Anuluj';
 
   @override
-  String get confirm => 'Confirm';
+  String get confirm => 'Potwierdź';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Usuń';
 
   @override
   String get save => 'Zapisz';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Edytuj';
 
   @override
-  String get close => 'Close';
+  String get close => 'Zamknij';
 
   @override
   String get search => 'Szukaj';
 
   @override
-  String get noResults => 'No results found';
+  String get noResults => 'Brak wyników';
 
   @override
-  String get pullToRefresh => 'Pull to refresh';
+  String get pullToRefresh => 'Pociągnij, aby odświeżyć';
 
   @override
-  String get aiSetup => 'AI Setup';
+  String get aiSetup => 'Konfiguracja AI';
 
   @override
-  String get aiAnalysis => 'AI Analysis';
+  String get aiAnalysis => 'Analiza AI';
 
   @override
-  String get unlockAi => 'Unlock AI Analysis';
+  String get unlockAi => 'Odblokuj Analizę AI';
 
   @override
-  String get aiTagline => 'On-Device  ·  Private  ·  Free';
+  String get aiTagline => 'Na urządzeniu  ·  Prywatne  ·  Bezpłatne';
 
   @override
-  String get deviceCheck => 'Device Check';
+  String get deviceCheck => 'Sprawdzenie Urządzenia';
 
   @override
-  String get chooseModel => 'Choose Your Model';
+  String get chooseModel => 'Wybierz Model';
 
   @override
   String get chooseModelSubtitle =>
-      'Download one or more models. You can switch between them later.';
+      'Pobierz jeden lub więcej modeli. Możesz później przełączać między nimi.';
 
   @override
-  String get initializingAi => 'Initializing AI runtime…';
+  String get initializingAi => 'Inicjalizowanie środowiska AI…';
 
   @override
-  String get modelStorage => 'Model Storage';
+  String get modelStorage => 'Pamięć Modelu';
 
   @override
   String get deviceIncompatible =>
-      'On-device AI requires a physical device with GPU support. Simulators and emulators are not compatible.';
+      'AI na urządzeniu wymaga fizycznego urządzenia z obsługą GPU. Symulatory i emulatory nie są kompatybilne.';
 
   @override
-  String get enhanceDescription => 'Enhance';
+  String get enhanceDescription => 'Ulepsz';
 
   @override
-  String get bidInsights => 'Bid Insights';
+  String get bidInsights => 'Analiza Oferty';
 
   @override
-  String get whyThisJob => 'Why this?';
+  String get whyThisJob => 'Dlaczego to?';
 
   @override
-  String get suggestPrice => 'Suggest Price';
+  String get suggestPrice => 'Zaproponuj Cenę';
 
   @override
-  String get analyzing => 'Analyzing…';
+  String get analyzing => 'Analizowanie…';
 
   @override
-  String get languagePicker => 'Select Language';
+  String get languagePicker => 'Wybierz Język';
 
   @override
   String get languageEnglish => 'English';

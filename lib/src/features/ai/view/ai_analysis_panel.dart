@@ -32,7 +32,7 @@ class AIAnalysisPanel extends ConsumerWidget {
     final analysis = ref.watch(aiAnalysisProvider);
 
     // No model loaded — show setup prompt
-    if (mm.activeModelId == null) {
+    if (!mm.isActive) {
       return _SetupPrompt(colorScheme: cs);
     }
 

@@ -4,7 +4,7 @@ import '../../../core/ai/device_checker.dart';
 import '../../../core/ai/model_catalog.dart';
 import '../../../core/ai/run_anywhere_service.dart';
 
-// ── Per-model install state ─────────────────────────────────────────
+// ── Install state ───────────────────────────────────────────────────
 
 sealed class ModelInstallState {
   const ModelInstallState();
@@ -36,30 +36,28 @@ class InstallError extends ModelInstallState {
 
 class ModelManagerState {
   final bool sdkReady;
-  final List<String> downloadedIds;
-  final String? activeModelId;
-  final Map<String, ModelInstallState> installStates;
+  final bool isDownloaded;
+  final bool isActive;
+  final ModelInstallState installState;
 
   const ModelManagerState({
     this.sdkReady = false,
-    this.downloadedIds = const [],
-    this.activeModelId,
-    this.installStates = const {},
+    this.isDownloaded = false,
+    this.isActive = false,
+    this.installState = const InstallIdle(),
   });
 
   ModelManagerState copyWith({
     bool? sdkReady,
-    List<String>? downloadedIds,
-    String? Function()? activeModelId,
-    Map<String, ModelInstallState>? installStates,
+    bool? isDownloaded,
+    bool? isActive,
+    ModelInstallState? installState,
   }) {
     return ModelManagerState(
       sdkReady: sdkReady ?? this.sdkReady,
-      downloadedIds: downloadedIds ?? this.downloadedIds,
-      activeModelId: activeModelId != null
-          ? activeModelId()
-          : this.activeModelId,
-      installStates: installStates ?? this.installStates,
+      isDownloaded: isDownloaded ?? this.isDownloaded,
+      isActive: isActive ?? this.isActive,
+      installState: installState ?? this.installState,
     );
   }
 }
@@ -70,83 +68,77 @@ class ModelManagerNotifier extends Notifier<ModelManagerState> {
   @override
   ModelManagerState build() => const ModelManagerState();
 
-  /// Initialize the RunAnywhere SDK and scan for already-downloaded models.
+  /// Initialize the RunAnywhere SDK and check if the model is already present.
   Future<void> initSDK() async {
     if (state.sdkReady) return;
 
     await RunAnywhereService.ensureSDKInitialized();
-    final ids = await RunAnywhereService.getDownloadedModelIds();
-    final active = RunAnywhereService.currentModelId;
+    final downloaded = await RunAnywhereService.isModelDownloaded(
+      kDefaultModel.id,
+    );
+    final active = RunAnywhereService.currentModelId == kDefaultModel.id;
 
     state = state.copyWith(
       sdkReady: true,
-      downloadedIds: ids,
-      activeModelId: () => active,
+      isDownloaded: downloaded,
+      isActive: active,
     );
   }
 
-  /// Download a model, then load it into memory and make it the active model.
-  Future<void> downloadAndActivate(String id) async {
-    _setInstall(id, const InstallDownloading(0));
+  /// Download the model, then load it into memory.
+  Future<void> downloadAndActivate() async {
+    state = state.copyWith(installState: const InstallDownloading(0));
 
     try {
-      await RunAnywhereService.downloadModel(id, (progress) {
-        _setInstall(id, InstallDownloading(progress));
+      await RunAnywhereService.downloadModel(kDefaultModel.id, (progress) {
+        state = state.copyWith(installState: InstallDownloading(progress));
       });
 
-      _setInstall(id, const InstallLoading());
-      await RunAnywhereService.loadModel(id);
-
-      final ids = await RunAnywhereService.getDownloadedModelIds();
+      state = state.copyWith(installState: const InstallLoading());
+      await RunAnywhereService.loadModel(kDefaultModel.id);
 
       state = state.copyWith(
-        downloadedIds: ids,
-        activeModelId: () => id,
-        installStates: {...state.installStates, id: const InstallReady()},
+        isDownloaded: true,
+        isActive: true,
+        installState: const InstallReady(),
       );
     } catch (e) {
-      _setInstall(id, InstallError('$e'));
+      state = state.copyWith(installState: InstallError('$e'));
     }
   }
 
-  /// Switch to an already-downloaded model.
-  Future<void> activateModel(String id) async {
-    if (state.activeModelId == id) return;
+  /// Load an already-downloaded model into memory.
+  Future<void> activate() async {
+    if (state.isActive) return;
 
-    _setInstall(id, const InstallLoading());
+    state = state.copyWith(installState: const InstallLoading());
 
     try {
-      await RunAnywhereService.loadModel(id);
+      await RunAnywhereService.loadModel(kDefaultModel.id);
       state = state.copyWith(
-        activeModelId: () => id,
-        installStates: {...state.installStates, id: const InstallReady()},
+        isActive: true,
+        installState: const InstallReady(),
       );
     } catch (e) {
-      _setInstall(id, InstallError('$e'));
+      state = state.copyWith(installState: InstallError('$e'));
     }
   }
 
-  /// Remove a downloaded model from disk.
-  Future<void> deleteModel(String id) async {
+  /// Remove the downloaded model from disk completely.
+  Future<void> deleteModel() async {
     try {
-      await RunAnywhereService.deleteModel(id);
+      await RunAnywhereService.deleteModel(kDefaultModel.id);
     } catch (_) {}
 
-    final ids = await RunAnywhereService.getDownloadedModelIds();
-    final newInstalls = Map<String, ModelInstallState>.of(state.installStates);
-    newInstalls.remove(id);
-
-    state = state.copyWith(
-      downloadedIds: ids,
-      activeModelId: () =>
-          state.activeModelId == id ? null : state.activeModelId,
-      installStates: newInstalls,
+    // Verify deletion
+    final stillExists = await RunAnywhereService.isModelDownloaded(
+      kDefaultModel.id,
     );
-  }
 
-  void _setInstall(String id, ModelInstallState installState) {
     state = state.copyWith(
-      installStates: {...state.installStates, id: installState},
+      isDownloaded: stillExists,
+      isActive: false,
+      installState: const InstallIdle(),
     );
   }
 }
@@ -158,48 +150,32 @@ final modelManagerProvider =
       ModelManagerNotifier.new,
     );
 
-/// The [ModelSpec] of the currently loaded (active) model, or `null`.
-final activeModelSpecProvider = Provider<ModelSpec?>((ref) {
-  final id = ref.watch(modelManagerProvider.select((s) => s.activeModelId));
-  if (id == null) return null;
-  return findModelSpec(id);
-});
-
-/// [ModelSpec] list for every model whose file is on disk.
-final downloadedModelSpecsProvider = Provider<List<ModelSpec>>((ref) {
-  final ids = ref.watch(modelManagerProvider.select((s) => s.downloadedIds));
-  return ids.map(findModelSpec).whereType<ModelSpec>().toList();
+/// Whether any AI model is currently loaded and ready for inference.
+final isAiReadyProvider = Provider<bool>((ref) {
+  return ref.watch(modelManagerProvider.select((s) => s.isActive));
 });
 
 // ── Storage usage ────────────────────────────────────────────────────
 
 class StorageUsageData {
-  final Map<String, int> modelSizeBytes;
-  final int totalUsedBytes;
+  final int modelSizeBytes;
   final int totalFreeBytes;
 
   const StorageUsageData({
     required this.modelSizeBytes,
-    required this.totalUsedBytes,
     required this.totalFreeBytes,
   });
-
-  int get totalCapacityBytes => totalUsedBytes + totalFreeBytes;
 }
 
 final storageUsageProvider = FutureProvider.autoDispose<StorageUsageData>((
   ref,
 ) async {
-  ref.watch(modelManagerProvider.select((s) => s.downloadedIds));
+  ref.watch(modelManagerProvider.select((s) => s.isDownloaded));
 
   final diskSizes = await RunAnywhereService.getModelDiskSizes();
-  final totalUsed = diskSizes.values.fold<int>(0, (a, b) => a + b);
+  final modelSize = diskSizes[kDefaultModel.id] ?? 0;
   final freeMb = await DeviceChecker.getFreeStorageMb();
   final freeBytes = freeMb * 1024 * 1024;
 
-  return StorageUsageData(
-    modelSizeBytes: diskSizes,
-    totalUsedBytes: totalUsed,
-    totalFreeBytes: freeBytes,
-  );
+  return StorageUsageData(modelSizeBytes: modelSize, totalFreeBytes: freeBytes);
 });

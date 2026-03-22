@@ -146,7 +146,7 @@ class ThemeSettingsController extends Notifier<ThemeSettings> {
       if (state.customColor != null) {
         await storage.saveString(
           'ui.custom_color.v1',
-          state.customColor!.value.toRadixString(16),
+          state.customColor!.toARGB32().toRadixString(16),
         );
       }
       await storage.saveThemeMode(state.mode.name);

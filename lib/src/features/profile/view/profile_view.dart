@@ -53,7 +53,7 @@ class ProfileScreen extends ConsumerWidget {
                   Text(
                     auth.role == UserRole.provider ? 'Client' : 'Worker',
                     style: TextStyle(
-                      color: AppPalette.primary,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -113,7 +113,7 @@ class ProfileScreen extends ConsumerWidget {
                         value: auth.isOnDuty == true ? 'On Duty' : 'Off Duty',
                         valueColor: auth.isOnDuty == true
                             ? AppPalette.success
-                            : AppPalette.textSecondary,
+                            : Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ],
                   ],
@@ -337,21 +337,19 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Row(
       children: [
-        Icon(icon, size: 18, color: AppPalette.textSecondary),
+        Icon(icon, size: 18, color: cs.onSurfaceVariant),
         const SizedBox(width: 10),
-        Text(
-          label,
-          style: const TextStyle(color: AppPalette.textSecondary, fontSize: 13),
-        ),
+        Text(label, style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13)),
         const Spacer(),
         Flexible(
           child: Text(
             value,
             style: TextStyle(
               fontWeight: FontWeight.w500,
-              color: valueColor,
+              color: valueColor ?? cs.onSurface,
               fontSize: 13,
             ),
             textAlign: TextAlign.end,
@@ -396,7 +394,9 @@ class _UploadableAvatar extends ConsumerWidget {
                     .pickAndUpload(),
           child: CircleAvatar(
             radius: 48,
-            backgroundColor: AppPalette.primary.withValues(alpha: 0.1),
+            backgroundColor: Theme.of(
+              context,
+            ).colorScheme.primary.withValues(alpha: 0.1),
             backgroundImage:
                 auth.profileImageUrl != null && auth.profileImageUrl!.isNotEmpty
                 ? NetworkImage(auth.profileImageUrl!)
@@ -406,10 +406,10 @@ class _UploadableAvatar extends ConsumerWidget {
                 : auth.profileImageUrl == null || auth.profileImageUrl!.isEmpty
                 ? Text(
                     (auth.name ?? 'U')[0].toUpperCase(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.w700,
-                      color: AppPalette.primary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   )
                 : null,

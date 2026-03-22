@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
@@ -88,10 +87,10 @@ class _ReviewSummaryCard extends StatelessWidget {
           children: [
             Text(
               stats.averageRating.toStringAsFixed(1),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 48,
                 fontWeight: FontWeight.w700,
-                color: AppPalette.textPrimary,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 8),
@@ -103,8 +102,8 @@ class _ReviewSummaryCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               '${stats.totalReviews} review${stats.totalReviews == 1 ? '' : 's'}',
-              style: const TextStyle(
-                color: AppPalette.textSecondary,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontSize: 14,
               ),
             ),
@@ -131,11 +130,13 @@ class _ReviewCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 18,
-                  backgroundColor: AppPalette.primary.withValues(alpha: 0.1),
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.primary.withValues(alpha: 0.1),
                   child: Text(
                     (review.reviewerName ?? 'U')[0].toUpperCase(),
-                    style: const TextStyle(
-                      color: AppPalette.primary,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -152,9 +153,11 @@ class _ReviewCard extends StatelessWidget {
                       if (review.createdAt != null)
                         Text(
                           DateFormat.yMMMd().format(review.createdAt!),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
-                            color: AppPalette.textSecondary,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
                           ),
                         ),
                     ],

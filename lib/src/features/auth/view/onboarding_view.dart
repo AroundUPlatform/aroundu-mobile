@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app.dart';
-import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/primary_button.dart';
 import '../view_model/auth_ui_view_model.dart';
 
@@ -134,7 +133,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (n) {
                     if (n is ScrollEndNotification) {
-                      final realIdx = _realIndex(_controller.page?.round() ?? 0);
+                      final realIdx = _realIndex(
+                        _controller.page?.round() ?? 0,
+                      );
                       ref.read(onboardingPageProvider.notifier).state = realIdx;
                     }
                     return false;
@@ -178,7 +179,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(999),
                       color: dotIndex == index
-                          ? AppPalette.primary
+                          ? Theme.of(context).colorScheme.primary
                           : Theme.of(context).colorScheme.outlineVariant,
                     ),
                   ),
@@ -191,8 +192,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: PrimaryButton(
-                  label: dotIndex == _slides.length - 1 ? 'Get Started' : 'Next',
-                  onPressed: dotIndex == _slides.length - 1 ? _toLogin : _goNext,
+                  label: dotIndex == _slides.length - 1
+                      ? 'Get Started'
+                      : 'Next',
+                  onPressed: dotIndex == _slides.length - 1
+                      ? _toLogin
+                      : _goNext,
                 ),
               ),
               const SizedBox(height: 8),
@@ -228,10 +233,16 @@ class _OnboardingCard extends StatelessWidget {
               width: 84,
               height: 84,
               decoration: BoxDecoration(
-                color: AppPalette.primary.withValues(alpha: 0.12),
+                color: Theme.of(
+                  context,
+                ).colorScheme.primary.withValues(alpha: 0.12),
                 shape: BoxShape.circle,
               ),
-              child: Icon(slide.icon, color: AppPalette.primary, size: 44),
+              child: Icon(
+                slide.icon,
+                color: Theme.of(context).colorScheme.primary,
+                size: 44,
+              ),
             ),
             const SizedBox(height: 24),
             Text(

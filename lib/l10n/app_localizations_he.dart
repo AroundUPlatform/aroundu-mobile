@@ -18,79 +18,78 @@ class AppLocalizationsHe extends AppLocalizations {
   String get registerTitle => 'יצירת חשבון';
 
   @override
-  String get emailLabel => 'Email';
+  String get emailLabel => 'אימייל';
 
   @override
-  String get passwordLabel => 'Password';
+  String get passwordLabel => 'סיסמה';
 
   @override
-  String get confirmPasswordLabel => 'Confirm Password';
+  String get confirmPasswordLabel => 'אימות סיסמה';
 
   @override
-  String get forgotPassword => 'Forgot Password?';
+  String get forgotPassword => 'שכחת סיסמה?';
 
   @override
-  String get loginButton => 'Log In';
+  String get loginButton => 'התחברות';
 
   @override
-  String get registerButton => 'Sign Up';
+  String get registerButton => 'הרשמה';
 
   @override
-  String get orContinueWith => 'Or continue with';
+  String get orContinueWith => 'או המשך עם';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get dontHaveAccount => 'אין לך חשבון?';
 
   @override
-  String get alreadyHaveAccount => 'Already have an account?';
+  String get alreadyHaveAccount => 'כבר יש לך חשבון?';
 
   @override
-  String get onboardingTitle1 => 'Find Tasks Around You';
+  String get onboardingTitle1 => 'מצא משימות סביבך';
 
   @override
-  String get onboardingSubtitle1 =>
-      'Discover local jobs and services right in your neighbourhood.';
+  String get onboardingSubtitle1 => 'גלה עבודות ושירותים מקומיים בשכונה שלך.';
 
   @override
-  String get onboardingTitle2 => 'Bid & Get Hired';
+  String get onboardingTitle2 => 'הגש הצעה והתקבל לעבודה';
 
   @override
   String get onboardingSubtitle2 =>
-      'Place competitive bids and get hired for tasks that match your skills.';
+      'הגש הצעות תחרותיות והתקבל למשימות שמתאימות לכישוריך.';
 
   @override
-  String get onboardingTitle3 => 'Secure Payments';
+  String get onboardingTitle3 => 'תשלומים מאובטחים';
 
   @override
   String get onboardingSubtitle3 =>
-      'Escrow-backed payments ensure fair and safe transactions.';
+      'תשלומים מגובי נאמנות מבטיחים עסקאות הוגנות ובטוחות.';
 
   @override
   String get getStarted => 'התחל';
 
   @override
-  String get skip => 'Skip';
+  String get skip => 'דלג';
 
   @override
-  String get next => 'Next';
+  String get next => 'הבא';
 
   @override
-  String get roleSelectionTitle => 'Choose Your Role';
+  String get roleSelectionTitle => 'בחר את התפקיד שלך';
 
   @override
-  String get roleClient => 'Client';
+  String get roleClient => 'לקוח';
 
   @override
-  String get roleClientDesc => 'I need help with tasks';
+  String get roleClientDesc => 'אני צריך עזרה במשימות';
 
   @override
-  String get roleWorker => 'Worker';
+  String get roleWorker => 'עובד';
 
   @override
-  String get roleWorkerDesc => 'I want to offer my skills';
+  String get roleWorkerDesc => 'אני רוצה להציע את הכישורים שלי';
 
   @override
-  String get continueButton => 'Continue';
+  String get continueButton => 'המשך';
 
   @override
   String get homeTab => 'בית';
@@ -105,174 +104,174 @@ class AppLocalizationsHe extends AppLocalizations {
   String get profileTab => 'פרופיל';
 
   @override
-  String get myJobs => 'My Jobs';
+  String get myJobs => 'העבודות שלי';
 
   @override
-  String get workerFeed => 'Available Jobs';
+  String get workerFeed => 'עבודות זמינות';
 
   @override
-  String get createJob => 'Create Job';
+  String get createJob => 'צור עבודה';
 
   @override
-  String get postJob => 'Post a Job';
+  String get postJob => 'פרסם עבודה';
 
   @override
-  String get editJob => 'Edit Job';
+  String get editJob => 'ערוך עבודה';
 
   @override
-  String get deleteJob => 'Delete Job';
+  String get deleteJob => 'מחק עבודה';
 
   @override
-  String get deleteJobConfirm => 'Are you sure you want to delete this job?';
+  String get deleteJobConfirm => 'האם אתה בטוח שברצונך למחוק עבודה זו?';
 
   @override
-  String get jobTitle => 'Title';
+  String get jobTitle => 'כותרת';
 
   @override
-  String get jobDescription => 'Description';
+  String get jobDescription => 'תיאור';
 
   @override
-  String get jobCategory => 'Category';
+  String get jobCategory => 'קטגוריה';
 
   @override
-  String get jobBudget => 'Budget';
+  String get jobBudget => 'תקציב';
 
   @override
-  String get jobLocation => 'Location';
+  String get jobLocation => 'מיקום';
 
   @override
-  String get jobDueDate => 'Due Date';
+  String get jobDueDate => 'תאריך יעד';
 
   @override
-  String get jobSkills => 'Skills Required';
+  String get jobSkills => 'כישורים נדרשים';
 
   @override
-  String get jobUrgency => 'Urgency';
+  String get jobUrgency => 'דחיפות';
 
   @override
-  String get jobPaymentMode => 'Payment Mode';
+  String get jobPaymentMode => 'אופן תשלום';
 
   @override
-  String get urgencyNormal => 'Normal';
+  String get urgencyNormal => 'רגיל';
 
   @override
-  String get urgencyUrgent => 'Urgent';
+  String get urgencyUrgent => 'דחוף';
 
   @override
-  String get paymentOffline => 'Offline';
+  String get paymentOffline => 'לא מקוון';
 
   @override
-  String get paymentEscrow => 'Escrow';
+  String get paymentEscrow => 'נאמנות';
 
   @override
-  String get statusOpenForBids => 'Open for Bids';
+  String get statusOpenForBids => 'פתוח להצעות';
 
   @override
-  String get statusInProgress => 'In Progress';
+  String get statusInProgress => 'בתהליך';
 
   @override
-  String get statusCompleted => 'Completed';
+  String get statusCompleted => 'הושלם';
 
   @override
-  String get statusCancelled => 'Cancelled';
+  String get statusCancelled => 'בוטל';
 
   @override
-  String get statusPendingStart => 'Pending Start';
+  String get statusPendingStart => 'ממתין להתחלה';
 
   @override
-  String get statusPendingRelease => 'Pending Release';
+  String get statusPendingRelease => 'ממתין לשחרור';
 
   @override
-  String get bids => 'Bids';
+  String get bids => 'הצעות';
 
   @override
-  String get noBids => 'No bids yet';
+  String get noBids => 'אין הצעות עדיין';
 
   @override
-  String get placeBid => 'Place Bid';
+  String get placeBid => 'הגש הצעה';
 
   @override
-  String get bidAmount => 'Bid Amount';
+  String get bidAmount => 'סכום ההצעה';
 
   @override
-  String get bidNotes => 'Notes (optional)';
+  String get bidNotes => 'הערות (אופציונלי)';
 
   @override
-  String get yourBid => 'Your Bid';
+  String get yourBid => 'ההצעה שלך';
 
   @override
-  String get acceptBid => 'Accept Bid';
+  String get acceptBid => 'קבל הצעה';
 
   @override
-  String get rejectBid => 'Reject Bid';
+  String get rejectBid => 'דחה הצעה';
 
   @override
-  String get bidAccepted => 'Bid Accepted';
+  String get bidAccepted => 'ההצעה התקבלה';
 
   @override
-  String get bidRejected => 'Bid Rejected';
+  String get bidRejected => 'ההצעה נדחתה';
 
   @override
-  String get bidPending => 'Pending';
+  String get bidPending => 'ממתין';
 
   @override
-  String get startCode => 'Start Code';
+  String get startCode => 'קוד התחלה';
 
   @override
-  String get releaseCode => 'Release Code';
+  String get releaseCode => 'קוד שחרור';
 
   @override
-  String get generateCodes => 'Generate Codes';
+  String get generateCodes => 'צור קודים';
 
   @override
-  String get verifyCode => 'Verify Code';
+  String get verifyCode => 'אמת קוד';
 
   @override
-  String get enterCode => 'Enter Code';
+  String get enterCode => 'הזן קוד';
 
   @override
-  String get escrow => 'Escrow';
+  String get escrow => 'נאמנות';
 
   @override
-  String get lockEscrow => 'Lock Escrow';
+  String get lockEscrow => 'נעל נאמנות';
 
   @override
-  String get releaseEscrow => 'Release Payment';
+  String get releaseEscrow => 'שחרר תשלום';
 
   @override
-  String get paymentLocked => 'Payment Locked';
+  String get paymentLocked => 'התשלום נעול';
 
   @override
-  String get paymentReleased => 'Payment Released';
+  String get paymentReleased => 'התשלום שוחרר';
 
   @override
   String get conversations => 'הודעות';
 
   @override
-  String get noMessagesYet => 'No messages yet';
+  String get noMessagesYet => 'אין הודעות עדיין';
 
   @override
   String get noMessagesSubtitle =>
-      'Your conversations will appear here when you start chatting about a task.';
+      'השיחות שלך יופיעו כאן כשתתחיל לשוחח על משימה.';
 
   @override
-  String get startConversation => 'Start the conversation!';
+  String get startConversation => 'התחל שיחה!';
 
   @override
   String get typeMessage => 'הקלד הודעה...';
 
   @override
-  String get typing => 'typing...';
+  String get typing => 'מקליד...';
 
   @override
   String get newMessages => 'הודעות חדשות';
 
   @override
-  String get now => 'now';
+  String get now => 'עכשיו';
 
   @override
   String minutesAgo(int count) {
-    return '${count}m ago';
+    return 'לפני $countד\'';
   }
 
   @override
@@ -280,187 +279,187 @@ class AppLocalizationsHe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count workers',
-      one: '1 worker',
+      other: '$count עובדים',
+      one: 'עובד אחד',
     );
     return '$_temp0';
   }
 
   @override
-  String get profile => 'Profile';
+  String get profile => 'פרופיל';
 
   @override
-  String get editProfile => 'Edit Profile';
+  String get editProfile => 'ערוך פרופיל';
 
   @override
-  String get fullName => 'Full Name';
+  String get fullName => 'שם מלא';
 
   @override
-  String get phone => 'Phone Number';
+  String get phone => 'מספר טלפון';
 
   @override
-  String get bio => 'Bio';
+  String get bio => 'אודות';
 
   @override
-  String get skills => 'Skills';
+  String get skills => 'כישורים';
 
   @override
-  String get saveChanges => 'Save Changes';
+  String get saveChanges => 'שמור שינויים';
 
   @override
   String get logout => 'התנתק';
 
   @override
-  String get logoutConfirm => 'Are you sure you want to log out?';
+  String get logoutConfirm => 'האם אתה בטוח שברצונך להתנתק?';
 
   @override
   String get settings => 'הגדרות';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => 'מראה';
 
   @override
   String get language => 'שפה';
 
   @override
-  String get darkMode => 'Dark Mode';
+  String get darkMode => 'מצב כהה';
 
   @override
-  String get lightMode => 'Light Mode';
+  String get lightMode => 'מצב בהיר';
 
   @override
-  String get systemMode => 'System';
+  String get systemMode => 'מערכת';
 
   @override
-  String get accentColour => 'Accent Colour';
+  String get accentColour => 'צבע הדגשה';
 
   @override
-  String get customColour => 'Custom';
+  String get customColour => 'מותאם אישית';
 
   @override
-  String get preview => 'Preview';
+  String get preview => 'תצוגה מקדימה';
 
   @override
-  String get previewTitle => 'Your colours look great!';
+  String get previewTitle => 'הצבעים שלך נראים מעולה!';
 
   @override
-  String get previewSubtitle => 'This is how your app will look.';
+  String get previewSubtitle => 'כך תיראה האפליקציה שלך.';
 
   @override
-  String get primary => 'Primary';
+  String get primary => 'ראשי';
 
   @override
-  String get secondary => 'Secondary';
+  String get secondary => 'משני';
 
   @override
-  String get reviews => 'Reviews';
+  String get reviews => 'ביקורות';
 
   @override
-  String get leaveReview => 'Leave a Review';
+  String get leaveReview => 'השאר ביקורת';
 
   @override
-  String get noReviews => 'No reviews yet';
+  String get noReviews => 'אין ביקורות עדיין';
 
   @override
-  String get rating => 'Rating';
+  String get rating => 'דירוג';
 
   @override
-  String get reviewComment => 'Comment';
+  String get reviewComment => 'תגובה';
 
   @override
-  String get submitReview => 'Submit Review';
+  String get submitReview => 'שלח ביקורת';
 
   @override
   String get loading => 'טוען...';
 
   @override
-  String get loadingConversations => 'Loading conversations...';
+  String get loadingConversations => 'טוען שיחות...';
 
   @override
-  String get loadingMessages => 'Loading messages...';
+  String get loadingMessages => 'טוען הודעות...';
 
   @override
   String get error => 'משהו השתבש';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'נסה שוב';
 
   @override
   String get cancel => 'ביטול';
 
   @override
-  String get confirm => 'Confirm';
+  String get confirm => 'אישור';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'מחק';
 
   @override
   String get save => 'שמור';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'ערוך';
 
   @override
-  String get close => 'Close';
+  String get close => 'סגור';
 
   @override
   String get search => 'חיפוש';
 
   @override
-  String get noResults => 'No results found';
+  String get noResults => 'לא נמצאו תוצאות';
 
   @override
-  String get pullToRefresh => 'Pull to refresh';
+  String get pullToRefresh => 'משוך לרענון';
 
   @override
-  String get aiSetup => 'AI Setup';
+  String get aiSetup => 'הגדרת AI';
 
   @override
-  String get aiAnalysis => 'AI Analysis';
+  String get aiAnalysis => 'ניתוח AI';
 
   @override
-  String get unlockAi => 'Unlock AI Analysis';
+  String get unlockAi => 'בטל נעילת ניתוח AI';
 
   @override
-  String get aiTagline => 'On-Device  ·  Private  ·  Free';
+  String get aiTagline => 'על המכשיר  ·  פרטי  ·  חינם';
 
   @override
-  String get deviceCheck => 'Device Check';
+  String get deviceCheck => 'בדיקת מכשיר';
 
   @override
-  String get chooseModel => 'Choose Your Model';
+  String get chooseModel => 'בחר את המודל שלך';
 
   @override
   String get chooseModelSubtitle =>
-      'Download one or more models. You can switch between them later.';
+      'הורד מודל אחד או יותר. תוכל לעבור ביניהם מאוחר יותר.';
 
   @override
-  String get initializingAi => 'Initializing AI runtime…';
+  String get initializingAi => 'מאתחל זמן ריצת AI…';
 
   @override
-  String get modelStorage => 'Model Storage';
+  String get modelStorage => 'אחסון מודל';
 
   @override
   String get deviceIncompatible =>
-      'On-device AI requires a physical device with GPU support. Simulators and emulators are not compatible.';
+      'AI על המכשיר דורש מכשיר פיזי עם תמיכת GPU. סימולטורים ואמולטורים אינם תואמים.';
 
   @override
-  String get enhanceDescription => 'Enhance';
+  String get enhanceDescription => 'שפר';
 
   @override
-  String get bidInsights => 'Bid Insights';
+  String get bidInsights => 'תובנות הצעה';
 
   @override
-  String get whyThisJob => 'Why this?';
+  String get whyThisJob => 'למה זה?';
 
   @override
-  String get suggestPrice => 'Suggest Price';
+  String get suggestPrice => 'הצע מחיר';
 
   @override
-  String get analyzing => 'Analyzing…';
+  String get analyzing => 'מנתח…';
 
   @override
-  String get languagePicker => 'Select Language';
+  String get languagePicker => 'בחר שפה';
 
   @override
   String get languageEnglish => 'English';

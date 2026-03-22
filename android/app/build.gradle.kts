@@ -32,6 +32,11 @@ android {
         // Inject Maps key from local.properties into the AndroidManifest
         manifestPlaceholders["GOOGLE_MAPS_API_KEY"] =
             localProperties.getProperty("GOOGLE_MAPS_API_KEY") ?: ""
+        // Only build for 64-bit ARM — the AI models require arm64 and won't
+        // run on armeabi-v7a or x86_64 anyway.
+        ndk {
+            abiFilters += listOf("arm64-v8a")
+        }
     }
 
     buildTypes {

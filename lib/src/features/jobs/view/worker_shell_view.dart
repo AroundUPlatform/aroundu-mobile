@@ -139,7 +139,9 @@ class _WorkerDutyToggle extends ConsumerWidget {
           Icon(
             Icons.circle,
             size: 8,
-            color: isOnDuty ? AppPalette.success : AppPalette.textSecondary,
+            color: isOnDuty
+                ? AppPalette.success
+                : Theme.of(context).colorScheme.onSurfaceVariant,
           ),
           const SizedBox(width: 2),
           Switch.adaptive(
