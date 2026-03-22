@@ -217,6 +217,17 @@ class AuthController extends Notifier<AuthState> {
     try {
       final authApi = ref.read(authApiProvider);
       final loginResult = await authApi.login(email: email, password: password);
+
+      // Guard: the login response must contain a usable token and user id.
+      if (loginResult.token.isEmpty || loginResult.userId == 0) {
+        state = state.copyWith(
+          isHydrating: false,
+          isLoading: false,
+          errorMessage: 'Login failed: invalid server response',
+        );
+        return false;
+      }
+
       final role = _mapRole(loginResult.role);
 
       UserProfileData? profile;

@@ -5,17 +5,23 @@ import 'package:dio/dio.dart';
 import '../logging/app_logger.dart';
 import '../security/payload_crypto.dart';
 
-/// Dio interceptor that encrypts outgoing request bodies and decrypts
-/// incoming response bodies using ChaCha20-Poly1305.
+/// Dio interceptor that encrypts ALL outgoing request bodies and decrypts
+/// ALL incoming response bodies using ChaCha20-Poly1305.
 ///
-/// Protocol:
-///   Request  → body is JSON-encoded, encrypted, wrapped as `{"data":"<b64>"}`,
-///              `X-Encrypted: true` header added.
-///   Response → if `X-Encrypted: true` header present, unwrap `data` field,
-///              decrypt, and replace `response.data` with parsed JSON.
+/// Acts as a full perimeter / AOP boundary — every request and response
+/// that flows through the app's [ApiClient] is covered:
 ///
-/// Gracefully degrades: if `PAYLOAD_ENCRYPTION_KEY` is absent, requests and
-/// responses pass through unmodified.
+///   Request  → `X-Encrypted: true` header is ALWAYS added so the backend
+///              knows to encrypt its response.  If a JSON body is present
+///              it is also encrypted and wrapped as `{"data":"<b64>"}`.
+///              Multipart / binary bodies are passed through unmodified
+///              (the header is still added so the response is encrypted).
+///   Response → if `X-Encrypted: true` header is present (or the body
+///              looks like an encrypted envelope), unwrap the `data` field,
+///              decrypt, and replace `response.data` with the parsed JSON.
+///
+/// Gracefully degrades: if `PAYLOAD_ENCRYPTION_KEY` is absent in `.env`,
+/// all requests and responses pass through completely unmodified.
 class EncryptionInterceptor extends Interceptor {
   static final _log = AppLogger.tag('EncryptionInterceptor');
 
@@ -28,27 +34,34 @@ class EncryptionInterceptor extends Interceptor {
       return handler.next(options);
     }
 
-    // Only encrypt JSON bodies (skip multipart uploads etc.)
-    if (options.data == null ||
-        options.data is FormData ||
-        options.data is List<int>) {
-      return handler.next(options);
-    }
+    // Always tell the backend we want an encrypted response.
+    // The backend's PayloadEncryptionFilter checks this header and encrypts
+    // the response body regardless of whether the request itself has a body
+    // (e.g. GET, DELETE with no payload still get encrypted responses).
+    options.headers['X-Encrypted'] = 'true';
 
-    try {
-      final plaintext = options.data is String
-          ? options.data as String
-          : jsonEncode(options.data);
+    // Encrypt the request body only when there is a JSON-serialisable body.
+    // Skip multipart form data and raw binary payloads.
+    final hasEncryptableBody = options.data != null &&
+        options.data is! FormData &&
+        options.data is! List<int>;
 
-      final encrypted = await PayloadCrypto.encrypt(plaintext);
+    if (hasEncryptableBody) {
+      try {
+        final plaintext = options.data is String
+            ? options.data as String
+            : jsonEncode(options.data);
 
-      options.data = jsonEncode({'data': encrypted});
-      options.headers['X-Encrypted'] = 'true';
-      // Ensure content-type is JSON even after wrapping.
-      options.contentType = 'application/json; charset=utf-8';
-    } catch (e, st) {
-      _log.e('Failed to encrypt request body', error: e, stackTrace: st);
-      // Fall through with plaintext rather than crashing
+        final encrypted = await PayloadCrypto.encrypt(plaintext);
+
+        options.data = jsonEncode({'data': encrypted});
+        // Ensure content-type stays JSON after wrapping.
+        options.contentType = 'application/json; charset=utf-8';
+      } catch (e, st) {
+        _log.e('Failed to encrypt request body', error: e, stackTrace: st);
+        // Fall through with plaintext body — response will still be encrypted
+        // because we already set the X-Encrypted header above.
+      }
     }
 
     handler.next(options);
@@ -66,7 +79,19 @@ class EncryptionInterceptor extends Interceptor {
     final isEncrypted =
         response.headers.value('X-Encrypted')?.toLowerCase() == 'true';
 
-    if (!isEncrypted) {
+    // Fallback: if the header is missing (e.g. stripped by a proxy or
+    // set after the response was committed), detect encrypted payloads
+    // by inspecting the body structure.
+    final bodyLooksEncrypted =
+        !isEncrypted &&
+        response.data is Map<String, dynamic> &&
+        (response.data as Map<String, dynamic>).length == 1 &&
+        (response.data as Map<String, dynamic>).containsKey('data') &&
+        (response.data as Map<String, dynamic>)['data'] is String &&
+        ((response.data as Map<String, dynamic>)['data'] as String).length >
+            100;
+
+    if (!isEncrypted && !bodyLooksEncrypted) {
       return handler.next(response);
     }
 
