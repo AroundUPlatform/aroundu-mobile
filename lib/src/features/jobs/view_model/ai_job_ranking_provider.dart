@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/ai/ai_output_validator.dart';
 import '../../../core/ai/run_anywhere_service.dart';
+import '../../../core/logging/app_logger.dart';
 import '../../ai/view_model/model_manager_provider.dart';
 import '../model/job_item.dart';
 import '../model/ranked_job_feed.dart';
@@ -59,6 +60,8 @@ class AIJobRankingState {
 // ── Notifier ────────────────────────────────────────────────────────
 
 class AIJobRankingNotifier extends AutoDisposeNotifier<AIJobRankingState> {
+  static final _log = AppLogger.tag('AI/JobRanker');
+
   /// Fingerprint of the last ranked job set to avoid redundant re-ranks.
   Set<int>? _lastFingerprint;
 
@@ -79,17 +82,22 @@ class AIJobRankingNotifier extends AutoDisposeNotifier<AIJobRankingState> {
     final fingerprint = jobs.map((j) => j.jobId).toSet();
     if (fingerprint.length == _lastFingerprint?.length &&
         fingerprint.containsAll(_lastFingerprint ?? {})) {
+      _log.d(
+        'Skipping rank — same job fingerprint (${fingerprint.length} jobs)',
+      );
       return; // already ranked this exact set
     }
 
     // If the model isn't loaded, fall back silently.
     final mm = ref.read(modelManagerProvider);
     if (!mm.isActive) {
+      _log.d('Model inactive, using fallback ranking for ${jobs.length} jobs');
       _lastFingerprint = fingerprint;
       state = AIJobRankingState(rankedFeed: RankedJobFeed.fallback(jobs));
       return;
     }
 
+    _log.d('Ranking ${jobs.length} jobs  skills=[${skills.join(", ")}]');
     state = const AIJobRankingState(isRanking: true);
 
     try {
@@ -107,11 +115,19 @@ class AIJobRankingNotifier extends AutoDisposeNotifier<AIJobRankingState> {
       }
 
       final raw = buffer.toString();
+      _log.t('Raw LLM output (${raw.length} chars):\n$raw');
+
       final rankedFeed = _parseRankings(raw, jobs);
 
+      _log.i(
+        'Ranked ${jobs.length} jobs  '
+        'topMatches=${rankedFeed.topMatches.length}  '
+        'nearby=${rankedFeed.nearbyJobs.length}',
+      );
       _lastFingerprint = fingerprint;
       state = AIJobRankingState(rankedFeed: rankedFeed);
-    } catch (_) {
+    } catch (e) {
+      _log.w('Ranking failed, falling back silently  $e');
       // Silent fallback — never degrade the UX.
       _lastFingerprint = fingerprint;
       state = AIJobRankingState(rankedFeed: RankedJobFeed.fallback(jobs));

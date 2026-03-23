@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/ai/ai_output_validator.dart';
 import '../../../core/ai/run_anywhere_service.dart';
+import '../../../core/logging/app_logger.dart';
 import '../../ai/view_model/model_manager_provider.dart';
 import '../model/chat_models.dart';
 
@@ -56,6 +57,8 @@ class AIChatSuggesterState {
 
 class AIChatSuggesterNotifier
     extends AutoDisposeNotifier<AIChatSuggesterState> {
+  static final _log = AppLogger.tag('AI/ChatSuggester');
+
   @override
   AIChatSuggesterState build() => const AIChatSuggesterState();
 
@@ -70,10 +73,14 @@ class AIChatSuggesterNotifier
   }) async {
     final mm = ref.read(modelManagerProvider);
     if (!mm.isActive) {
-      // Silently bail — don't show error for optional feature.
+      _log.d('Model inactive — chat suggestions skipped');
       return;
     }
 
+    _log.d(
+      'Generating smart replies  role=$myRole  '
+      'job="$jobTitle"  messages=${recentMessages.length}',
+    );
     state = const AIChatSuggesterState(isGenerating: true);
 
     try {
@@ -90,9 +97,12 @@ class AIChatSuggesterNotifier
       }
 
       final raw = buffer.toString();
+      _log.t('Raw LLM output (${raw.length} chars):\n$raw');
+
       final decoded = _extractJsonArray(raw);
 
       if (decoded == null) {
+        _log.w('Could not extract JSON array from chat suggestion output');
         state = const AIChatSuggesterState();
         return;
       }
@@ -101,13 +111,15 @@ class AIChatSuggesterNotifier
       final suggestions = result.value ?? const <String>[];
 
       if (suggestions.isEmpty) {
+        _log.w('Suggestion list empty after validation');
         state = const AIChatSuggesterState();
         return;
       }
 
+      _log.i('Suggestions ready: ${suggestions.length} items');
       state = AIChatSuggesterState(suggestions: suggestions);
-    } catch (_) {
-      // Silently reset — smart replies are non-critical.
+    } catch (e) {
+      _log.w('Smart reply generation failed, resetting silently  $e');
       state = const AIChatSuggesterState();
     }
   }

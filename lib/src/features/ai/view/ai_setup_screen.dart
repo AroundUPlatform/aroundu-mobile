@@ -182,15 +182,30 @@ class _AISetupScreenState extends ConsumerState<AISetupScreen> {
         _device!.ramMb >= (kDefaultModel.memoryBytes / (1024 * 1024)).round();
 
     if (installState is InstallDownloading) {
+      final totalMb = installState.totalMb > 0
+          ? installState.totalMb
+          : kDefaultModel.storageBytes / (1024 * 1024);
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          LinearProgressIndicator(value: installState.progress),
+          _SparkProgressBar(value: installState.progress),
           const SizedBox(height: 6),
-          Text(
-            context.l10n.downloadingProgress(
-              (installState.progress * 100).toStringAsFixed(0),
-            ),
-            style: const TextStyle(fontSize: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                context.l10n.downloadingProgress(
+                  (installState.progress * 100).toStringAsFixed(1),
+                ),
+                style: const TextStyle(fontSize: 12),
+              ),
+              Text(
+                '${installState.downloadedMb.toStringAsFixed(2)} / '
+                '${totalMb.toStringAsFixed(0)} MB'
+                '${installState.speedMbps > 0 ? '  •  ${installState.speedMbps.toStringAsFixed(2)} MB/s' : ''}',
+                style: const TextStyle(fontSize: 11),
+              ),
+            ],
           ),
         ],
       );
@@ -395,4 +410,112 @@ class _CheckRow extends StatelessWidget {
       ),
     );
   }
+}
+
+// ── Spark animated download progress bar ─────────────────────────────────────
+
+class _SparkProgressBar extends StatefulWidget {
+  const _SparkProgressBar({required this.value});
+
+  /// Download fraction 0.0 – 1.0.
+  final double value;
+
+  @override
+  State<_SparkProgressBar> createState() => _SparkProgressBarState();
+}
+
+class _SparkProgressBarState extends State<_SparkProgressBar>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return AnimatedBuilder(
+      animation: _ctrl,
+      builder: (_, __) => ClipRRect(
+        borderRadius: BorderRadius.circular(4),
+        child: SizedBox(
+          height: 8,
+          width: double.infinity,
+          child: CustomPaint(
+            painter: _SparkPainter(
+              progress: widget.value,
+              sweep: _ctrl.value,
+              fillColor: cs.primary,
+              trackColor: cs.surfaceContainerHighest,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SparkPainter extends CustomPainter {
+  const _SparkPainter({
+    required this.progress,
+    required this.sweep,
+    required this.fillColor,
+    required this.trackColor,
+  });
+
+  final double progress;
+  final double sweep;
+  final Color fillColor;
+  final Color trackColor;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Track background.
+    canvas.drawRect(Offset.zero & size, Paint()..color = trackColor);
+
+    final fillW = size.width * progress.clamp(0.0, 1.0);
+    if (fillW <= 0) return;
+
+    // Filled portion.
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, fillW, size.height),
+      Paint()..color = fillColor,
+    );
+
+    // Spark shimmer — a bright diagonal stripe that sweeps across the fill.
+    final shimmerW = (fillW * 0.45).clamp(8.0, double.infinity);
+    final shimmerX = (fillW + shimmerW) * sweep - shimmerW;
+    final shimmerRect = Rect.fromLTWH(shimmerX, 0, shimmerW, size.height);
+
+    canvas.save();
+    canvas.clipRect(Rect.fromLTWH(0, 0, fillW, size.height));
+    canvas.drawRect(
+      shimmerRect,
+      Paint()
+        ..shader = LinearGradient(
+          colors: [
+            Colors.white.withValues(alpha: 0),
+            Colors.white.withValues(alpha: 0.72),
+            Colors.white.withValues(alpha: 0),
+          ],
+        ).createShader(shimmerRect),
+    );
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(_SparkPainter old) =>
+      old.progress != progress || old.sweep != sweep;
 }

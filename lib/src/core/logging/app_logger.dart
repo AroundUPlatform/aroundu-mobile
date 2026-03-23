@@ -31,11 +31,18 @@ class _AroundUFilter extends LogFilter {
   }
 }
 
+// ANSI escape codes (used in debug builds for coloured terminal output).
+const _ansiReset = '\x1B[0m';
+const _ansiDim = '\x1B[2m';
+
 /// Custom printer that prepends a bracketed tag to each line so every log line
 /// is globally grep-able from `flutter logs` / `adb logcat`:
 ///   ┌─────────────────────────────────────────────
 ///   │ [AroundU/Network] POST /api/v1/jobs  ← tag
 ///   └─────────────────────────────────────────────
+///
+/// In DEBUG builds every line is coloured per-level and suffixed with a
+/// clickable `package:aroundu/…` file link (VS Code terminal hyperlink).
 class _TaggedPrinter extends LogPrinter {
   _TaggedPrinter(this.tag);
 
@@ -59,15 +66,36 @@ class _TaggedPrinter extends LogPrinter {
     Level.fatal: 'FATAL',
   };
 
+  /// ANSI foreground colour per log level (debug builds only).
+  static const _levelAnsi = {
+    Level.trace: '\x1B[36m', // Cyan
+    Level.debug: '\x1B[34m', // Blue
+    Level.info: '\x1B[32m', // Green
+    Level.warning: '\x1B[33m', // Yellow
+    Level.error: '\x1B[31m', // Red
+    Level.fatal: '\x1B[35m', // Magenta
+  };
+
   @override
   List<String> log(LogEvent event) {
     final emoji = _levelEmoji[event.level] ?? '•';
     final label = _levelLabel[event.level] ?? event.level.name.toUpperCase();
-    final header = '$emoji [$label][AroundU/$tag] ${event.message}';
+
+    // Colour codes — empty strings in release so no ANSI noise.
+    final color = kDebugMode ? (_levelAnsi[event.level] ?? '') : '';
+    final reset = kDebugMode ? _ansiReset : '';
+    final dim = kDebugMode ? _ansiDim : '';
+
+    // Clickable file link (debug only).
+    final location = kDebugMode ? _callerLocation() : null;
+    final locationStr = location != null ? '  $dim@ $location$reset' : '';
+
+    final header =
+        '$color$emoji [$label][AroundU/$tag] ${event.message}$reset$locationStr';
     final lines = <String>[header];
 
     if (event.error != null) {
-      lines.add('   ↳ ERROR: ${event.error}');
+      lines.add('$color   ↳ ERROR: ${event.error}$reset');
     }
     if (event.stackTrace != null) {
       // Print only the first 10 frames to keep logs readable.
@@ -75,11 +103,27 @@ class _TaggedPrinter extends LogPrinter {
           .toString()
           .split('\n')
           .take(10)
-          .map((l) => '   | $l')
+          .map((l) => '$dim   | $l$reset')
           .join('\n');
       lines.add(frames);
     }
     return lines;
+  }
+
+  /// Walks [StackTrace.current] and returns the first user-code frame,
+  /// skipping logger internals. Returns a `package:aroundu/…` URI that
+  /// VS Code terminal renders as a clickable hyperlink.
+  static final _locationRe = RegExp(r'(package:aroundu/[^\s)]+\.dart:\d+:\d+)');
+
+  static String? _callerLocation() {
+    final frames = StackTrace.current.toString().split('\n');
+    for (final frame in frames) {
+      if (frame.contains('app_logger.dart')) continue;
+      if (frame.contains('package:logger/')) continue;
+      final match = _locationRe.firstMatch(frame);
+      if (match != null) return match.group(1);
+    }
+    return null;
   }
 }
 

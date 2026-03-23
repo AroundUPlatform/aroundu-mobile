@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:runanywhere/runanywhere.dart';
 import 'package:runanywhere_llamacpp/runanywhere_llamacpp.dart';
 
+import '../logging/app_logger.dart';
 import 'model_catalog.dart';
 
 /// Low-level bridge to RunAnywhere SDK.
@@ -12,6 +14,8 @@ import 'model_catalog.dart';
 /// ([ModelManagerNotifier]) sits on top and manages state.
 class RunAnywhereService {
   RunAnywhereService._();
+
+  static final _log = AppLogger.tag('AI/Inference');
 
   static bool _sdkReady = false;
 
@@ -56,13 +60,16 @@ class RunAnywhereService {
 
   // ── Download / load / delete ──────────────────────────────────────
 
-  /// Download a model and report progress via [onProgress] (0.0–1.0).
+  /// Download a model and report progress via [onProgress].
+  ///
+  /// [onProgress] receives both a 0.0–1.0 fraction and the raw bytes
+  /// downloaded so far — enabling speed and size display.
   static Future<void> downloadModel(
     String id,
-    void Function(double progress) onProgress,
+    void Function(double progress, double bytesDownloaded) onProgress,
   ) async {
     await for (final p in RunAnywhere.downloadModel(id)) {
-      onProgress(p.percentage);
+      onProgress(p.percentage, p.bytesDownloaded.toDouble());
       if (p.state.isCompleted) break;
     }
   }
@@ -112,12 +119,33 @@ class RunAnywhereService {
   // ── Prompt templates for AroundU use-cases ─────────────────────────
 
   /// Streams tokens from the on-device LLM.
+  ///
+  /// In debug builds the full prompt is logged before inference starts and
+  /// the raw token stream (Chain-of-Thought) is flushed to [_log] in
+  /// real-time so developers can watch the model "think".
   static Stream<String> generateStream(
     String userPrompt, {
     required String systemPrompt,
     int maxTokens = 600,
     double temperature = 0.3,
   }) async* {
+    if (kDebugMode) {
+      _log.t(
+        '───── INFERENCE INPUT ─────────────────────────────\n'
+        '[SYSTEM]\n$systemPrompt\n\n'
+        '[USER]\n$userPrompt\n'
+        '───────────────────────────────────────────────────',
+      );
+      _log.d(
+        'Inference start  maxTokens=$maxTokens  temp=$temperature  '
+        'topP=0.9  model=${kDefaultModel.id}',
+      );
+    }
+
+    final started = DateTime.now();
+    var tokenCount = 0;
+    final cotBuffer = StringBuffer();
+
     final streamResult = await RunAnywhere.generateStream(
       userPrompt,
       options: LLMGenerationOptions(
@@ -127,6 +155,32 @@ class RunAnywhereService {
         systemPrompt: systemPrompt,
       ),
     );
-    yield* streamResult.stream;
+
+    await for (final token in streamResult.stream) {
+      tokenCount++;
+      yield token;
+
+      if (kDebugMode) {
+        cotBuffer.write(token);
+        if (cotBuffer.length >= 60 || token.contains('\n')) {
+          _log.t('⟩ ${cotBuffer.toString().replaceAll('\n', '↵')}');
+          cotBuffer.clear();
+        }
+      }
+    }
+
+    if (kDebugMode) {
+      if (cotBuffer.isNotEmpty) {
+        _log.t('⟩ ${cotBuffer.toString().replaceAll('\n', '↵')}');
+      }
+      final elapsedMs = DateTime.now().difference(started).inMilliseconds;
+      final tokPerSec = elapsedMs > 0
+          ? (tokenCount * 1000 / elapsedMs).toStringAsFixed(1)
+          : '∞';
+      _log.d(
+        'Inference done  tokens=$tokenCount  '
+        'elapsed=${elapsedMs}ms  $tokPerSec tok/s',
+      );
+    }
   }
 }

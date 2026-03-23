@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/ai/run_anywhere_service.dart';
+import '../../../core/logging/app_logger.dart';
 import 'model_manager_provider.dart';
 
 /// Use cases for on-device AI analysis in AroundU.
@@ -169,6 +170,8 @@ class AIAnalysisState {
 // ── Notifier ─────────────────────────────────────────────────────────
 
 class AIAnalysisNotifier extends AutoDisposeNotifier<AIAnalysisState> {
+  static final _log = AppLogger.tag('AI/Service');
+
   StreamSubscription<String>? _sub;
 
   @override
@@ -180,6 +183,7 @@ class AIAnalysisNotifier extends AutoDisposeNotifier<AIAnalysisState> {
   void analyze(AIUseCase useCase, String userInput) {
     final mm = ref.read(modelManagerProvider);
     if (!mm.isActive) {
+      _log.w('analyze() called but model not active');
       state = state.copyWith(
         error: () => 'No AI model loaded. Please set up a model first.',
       );
@@ -187,6 +191,10 @@ class AIAnalysisNotifier extends AutoDisposeNotifier<AIAnalysisState> {
     }
 
     _sub?.cancel();
+    _log.d(
+      'analyze  useCase=${useCase.name}  '
+      'input="${userInput.length > 80 ? '${userInput.substring(0, 80)}…' : userInput}"',
+    );
     state = const AIAnalysisState(isGenerating: true);
 
     final systemPrompt = _systemPrompts[useCase]!;
@@ -200,9 +208,11 @@ class AIAnalysisNotifier extends AutoDisposeNotifier<AIAnalysisState> {
         state = state.copyWith(output: state.output + token);
       },
       onError: (Object e) {
+        _log.e('analyze stream error', error: e);
         state = state.copyWith(isGenerating: false, error: () => e.toString());
       },
       onDone: () {
+        _log.d('analyze done  outputLen=${state.output.length}');
         state = state.copyWith(isGenerating: false);
       },
     );
@@ -210,6 +220,7 @@ class AIAnalysisNotifier extends AutoDisposeNotifier<AIAnalysisState> {
 
   /// Stop an in-progress generation.
   void stop() {
+    _log.d('analyze stopped by user');
     _sub?.cancel();
     _sub = null;
     state = state.copyWith(isGenerating: false);

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/ai/ai_output_validator.dart';
 import '../../../core/ai/run_anywhere_service.dart';
+import '../../../core/logging/app_logger.dart';
 import '../../ai/view_model/model_manager_provider.dart';
 import '../model/parsed_job_data.dart';
 
@@ -69,6 +70,8 @@ class AIJobParserState {
 // ── Notifier ────────────────────────────────────────────────────────
 
 class AIJobParserNotifier extends AutoDisposeNotifier<AIJobParserState> {
+  static final _log = AppLogger.tag('AI/JobParser');
+
   @override
   AIJobParserState build() => const AIJobParserState();
 
@@ -76,12 +79,14 @@ class AIJobParserNotifier extends AutoDisposeNotifier<AIJobParserState> {
   Future<void> parse(String userInput) async {
     final mm = ref.read(modelManagerProvider);
     if (!mm.isActive) {
+      _log.w('parse() called but model not active');
       state = const AIJobParserState(
         error: 'No AI model loaded. Please set up a model first.',
       );
       return;
     }
 
+    _log.d('Parsing user input (${userInput.length} chars)');
     state = const AIJobParserState(isLoading: true);
 
     try {
@@ -97,9 +102,12 @@ class AIJobParserNotifier extends AutoDisposeNotifier<AIJobParserState> {
       }
 
       final raw = buffer.toString();
+      _log.t('Raw LLM output (${raw.length} chars):\n$raw');
+
       final decoded = _extractJson(raw);
 
       if (decoded == null) {
+        _log.w('Could not extract JSON from parser output');
         state = AIJobParserState(
           rawOutput: raw,
           error: 'Could not extract structured data from AI response.',
@@ -110,6 +118,10 @@ class AIJobParserNotifier extends AutoDisposeNotifier<AIJobParserState> {
       final result = AIOutputValidator.validateParsedJob(decoded);
 
       if (!result.canPartiallyUse) {
+        _log.w(
+          'Job-parse validation failed  '
+          'violations=[${result.violations.map((v) => v.message).join(", ")}]',
+        );
         state = AIJobParserState(
           rawOutput: raw,
           error: 'Could not extract structured data from AI response.',
@@ -118,9 +130,14 @@ class AIJobParserNotifier extends AutoDisposeNotifier<AIJobParserState> {
       }
 
       if (result.isValid && result.value!.hasSufficientData) {
+        _log.i(
+          'Parsed  title="${result.value?.title}"  '
+          'urgency=${result.value?.jobUrgency}',
+        );
         state = AIJobParserState(parsedData: result.value, rawOutput: raw);
       } else {
         final warningParts = result.violations.map((v) => v.message).toList();
+        _log.w('Partial parse  warnings=[${warningParts.join(", ")}]');
         state = AIJobParserState(
           parsedData: result.value,
           rawOutput: raw,
@@ -130,7 +147,8 @@ class AIJobParserNotifier extends AutoDisposeNotifier<AIJobParserState> {
               : 'Some details could not be extracted.',
         );
       }
-    } catch (e) {
+    } catch (e, st) {
+      _log.e('Job parsing failed', error: e, stackTrace: st);
       state = AIJobParserState(error: e.toString());
     }
   }

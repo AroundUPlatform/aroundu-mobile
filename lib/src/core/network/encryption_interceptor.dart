@@ -53,7 +53,13 @@ class EncryptionInterceptor extends Interceptor {
             ? options.data as String
             : jsonEncode(options.data);
 
+        _log.t('── REQUEST PLAIN BODY ──────────────────────────\n$plaintext');
+
         final encrypted = await PayloadCrypto.encrypt(plaintext);
+
+        _log.t(
+          '── REQUEST ENCRYPTED BODY ──────────────────────\n{"data":"${encrypted.length > 80 ? '${encrypted.substring(0, 80)}…' : encrypted}"}',
+        );
 
         options.data = jsonEncode({'data': encrypted});
         // Ensure content-type stays JSON after wrapping.
@@ -113,7 +119,17 @@ class EncryptionInterceptor extends Interceptor {
         return handler.next(response);
       }
 
+      _log.t(
+        '── RESPONSE RAW (ENCRYPTED ENVELOPE) ───────────\n'
+        '${jsonEncode(response.data)}',
+      );
+
       final decrypted = await PayloadCrypto.decrypt(encryptedPayload);
+
+      _log.t(
+        '── RESPONSE ENCRYPTED PAYLOAD ──────────────────\n'
+        '${encryptedPayload.length > 120 ? '${encryptedPayload.substring(0, 120)}…' : encryptedPayload}',
+      );
 
       // Try to parse as JSON; if it fails, return as-is.
       try {
@@ -121,6 +137,8 @@ class EncryptionInterceptor extends Interceptor {
       } catch (_) {
         response.data = decrypted;
       }
+
+      _log.t('── RESPONSE DECRYPTED BODY ─────────────────────\n$decrypted');
     } catch (e, st) {
       _log.e('Failed to decrypt response body', error: e, stackTrace: st);
       // Return the error via Dio's error path so callers can handle it.

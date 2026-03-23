@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/ai/device_checker.dart';
 import '../../../core/ai/model_catalog.dart';
 import '../../../core/ai/run_anywhere_service.dart';
+import '../../../core/logging/app_logger.dart';
 
 // ── Install state ───────────────────────────────────────────────────
 
@@ -16,7 +17,15 @@ class InstallIdle extends ModelInstallState {
 
 class InstallDownloading extends ModelInstallState {
   final double progress; // 0.0 – 1.0
-  const InstallDownloading(this.progress);
+  final double downloadedMb; // bytes received so far, expressed in MB
+  final double totalMb; // total expected size in MB
+  final double speedMbps; // current download speed in MB/s
+  const InstallDownloading(
+    this.progress, {
+    this.downloadedMb = 0,
+    this.totalMb = 0,
+    this.speedMbps = 0,
+  });
 }
 
 class InstallLoading extends ModelInstallState {
@@ -65,6 +74,8 @@ class ModelManagerState {
 // ── Notifier ────────────────────────────────────────────────────────
 
 class ModelManagerNotifier extends Notifier<ModelManagerState> {
+  static final _log = AppLogger.tag('AI/ModelManager');
+
   @override
   ModelManagerState build() => const ModelManagerState();
 
@@ -72,12 +83,17 @@ class ModelManagerNotifier extends Notifier<ModelManagerState> {
   Future<void> initSDK() async {
     if (state.sdkReady) return;
 
+    _log.d('initSDK()');
     await RunAnywhereService.ensureSDKInitialized();
     final downloaded = await RunAnywhereService.isModelDownloaded(
       kDefaultModel.id,
     );
     final active = RunAnywhereService.currentModelId == kDefaultModel.id;
 
+    _log.i(
+      'SDK ready  model=${kDefaultModel.id}  '
+      'downloaded=$downloaded  active=$active',
+    );
     state = state.copyWith(
       sdkReady: true,
       isDownloaded: downloaded,
@@ -89,20 +105,67 @@ class ModelManagerNotifier extends Notifier<ModelManagerState> {
   Future<void> downloadAndActivate() async {
     state = state.copyWith(installState: const InstallDownloading(0));
 
+    // Speed tracking.
+    DateTime? lastTs;
+    double lastBytes = 0;
+    final totalMb = kDefaultModel.storageBytes / (1024 * 1024);
+    int lastLogPct = -1;
+
+    _log.i(
+      'Download started  model=${kDefaultModel.id}  '
+      'total=${totalMb.toStringAsFixed(0)} MB',
+    );
+
     try {
-      await RunAnywhereService.downloadModel(kDefaultModel.id, (progress) {
-        state = state.copyWith(installState: InstallDownloading(progress));
+      await RunAnywhereService.downloadModel(kDefaultModel.id, (
+        progress,
+        bytesDownloaded,
+      ) {
+        final now = DateTime.now();
+        final downloadedMb = bytesDownloaded / (1024 * 1024);
+
+        double speedMbps = 0;
+        if (lastTs != null) {
+          final dtSec = now.difference(lastTs!).inMilliseconds / 1000.0;
+          if (dtSec > 0) {
+            final deltaMb = (bytesDownloaded - lastBytes) / (1024 * 1024);
+            speedMbps = deltaMb / dtSec;
+          }
+        }
+        lastTs = now;
+        lastBytes = bytesDownloaded;
+
+        // Log every 10 % milestone.
+        final pct = (progress * 100).truncate();
+        if (pct ~/ 10 > lastLogPct ~/ 10 || progress >= 0.99) {
+          lastLogPct = pct;
+          _log.d(
+            'Download $pct%  ${downloadedMb.toStringAsFixed(1)} MB  '
+            '${speedMbps.toStringAsFixed(2)} MB/s',
+          );
+        }
+
+        state = state.copyWith(
+          installState: InstallDownloading(
+            progress,
+            downloadedMb: downloadedMb,
+            totalMb: totalMb,
+            speedMbps: speedMbps < 0 ? 0 : speedMbps,
+          ),
+        );
       });
 
       state = state.copyWith(installState: const InstallLoading());
       await RunAnywhereService.loadModel(kDefaultModel.id);
 
+      _log.i('Model loaded and active  id=${kDefaultModel.id}');
       state = state.copyWith(
         isDownloaded: true,
         isActive: true,
         installState: const InstallReady(),
       );
-    } catch (e) {
+    } catch (e, st) {
+      _log.e('Download/activate failed', error: e, stackTrace: st);
       state = state.copyWith(installState: InstallError('$e'));
     }
   }
@@ -111,21 +174,25 @@ class ModelManagerNotifier extends Notifier<ModelManagerState> {
   Future<void> activate() async {
     if (state.isActive) return;
 
+    _log.d('Activating model  id=${kDefaultModel.id}');
     state = state.copyWith(installState: const InstallLoading());
 
     try {
       await RunAnywhereService.loadModel(kDefaultModel.id);
+      _log.i('Model activated  id=${kDefaultModel.id}');
       state = state.copyWith(
         isActive: true,
         installState: const InstallReady(),
       );
-    } catch (e) {
+    } catch (e, st) {
+      _log.e('Model activation failed', error: e, stackTrace: st);
       state = state.copyWith(installState: InstallError('$e'));
     }
   }
 
   /// Remove the downloaded model from disk completely.
   Future<void> deleteModel() async {
+    _log.i('Deleting model  id=${kDefaultModel.id}');
     try {
       await RunAnywhereService.deleteModel(kDefaultModel.id);
     } catch (_) {}
@@ -135,6 +202,7 @@ class ModelManagerNotifier extends Notifier<ModelManagerState> {
       kDefaultModel.id,
     );
 
+    _log.i('Model deleted  stillExists=$stillExists');
     state = state.copyWith(
       isDownloaded: stillExists,
       isActive: false,

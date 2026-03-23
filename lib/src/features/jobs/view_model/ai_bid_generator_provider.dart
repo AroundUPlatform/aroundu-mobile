@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/ai/ai_output_validator.dart';
 import '../../../core/ai/run_anywhere_service.dart';
+import '../../../core/logging/app_logger.dart';
 import '../../ai/view_model/model_manager_provider.dart';
 import '../model/ai_suggested_bid.dart';
 import '../model/job_item.dart';
@@ -55,6 +56,8 @@ class AIBidGeneratorState {
 // ── Notifier ────────────────────────────────────────────────────────
 
 class AIBidGeneratorNotifier extends AutoDisposeNotifier<AIBidGeneratorState> {
+  static final _log = AppLogger.tag('AI/BidGen');
+
   @override
   AIBidGeneratorState build() => const AIBidGeneratorState();
 
@@ -67,12 +70,17 @@ class AIBidGeneratorNotifier extends AutoDisposeNotifier<AIBidGeneratorState> {
   }) async {
     final mm = ref.read(modelManagerProvider);
     if (!mm.isActive) {
+      _log.w('generate() called but model not active');
       state = const AIBidGeneratorState(
         error: 'No AI model loaded. Please set up a model first.',
       );
       return;
     }
 
+    _log.d(
+      'Generating bid  job=#${job.jobId} "${job.title}"  '
+      'skills=[${skills.join(", ")}]  currency=$currency',
+    );
     state = const AIBidGeneratorState(isGenerating: true);
 
     try {
@@ -90,9 +98,12 @@ class AIBidGeneratorNotifier extends AutoDisposeNotifier<AIBidGeneratorState> {
       }
 
       final raw = buffer.toString();
+      _log.t('Raw LLM output (${raw.length} chars):\n$raw');
+
       final suggestion = _extractSuggestion(raw);
 
       if (suggestion == null) {
+        _log.w('Could not extract valid JSON from bid output');
         state = const AIBidGeneratorState(
           error: 'Could not generate a valid bid suggestion.',
         );
@@ -102,14 +113,30 @@ class AIBidGeneratorNotifier extends AutoDisposeNotifier<AIBidGeneratorState> {
       final result = AIOutputValidator.validateBid(suggestion);
 
       if (!result.canPartiallyUse) {
+        _log.w(
+          'Bid validation failed  '
+          'violations=[${result.violations.map((v) => v.message).join(", ")}]',
+        );
         state = const AIBidGeneratorState(
           error: 'Could not generate a valid bid suggestion.',
         );
         return;
       }
 
+      if (result.warnings.isNotEmpty) {
+        _log.w(
+          'Bid has validation warnings  '
+          'warnings=[${result.warnings.map((v) => v.message).join(", ")}]',
+        );
+      }
+
+      _log.i(
+        'Bid generated  price=${result.value?.price}  '
+        'time="${result.value?.estimatedTime}"',
+      );
       state = AIBidGeneratorState(suggestion: result.value);
-    } catch (e) {
+    } catch (e, st) {
+      _log.e('Bid generation failed', error: e, stackTrace: st);
       state = AIBidGeneratorState(error: e.toString());
     }
   }
