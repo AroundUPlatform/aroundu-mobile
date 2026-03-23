@@ -233,10 +233,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           controller: _nameController,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty)
+                            if (value == null || value.trim().isEmpty) {
                               return context.l10n.fieldRequired(
                                 context.l10n.fullName,
                               );
+                            }
                             return null;
                           },
                           decoration: InputDecoration(
@@ -250,14 +251,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty)
+                            if (value == null || value.trim().isEmpty) {
                               return context.l10n.fieldRequired(
                                 context.l10n.emailLabel,
                               );
+                            }
                             if (!RegExp(
                               r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
-                            ).hasMatch(value.trim()))
+                            ).hasMatch(value.trim())) {
                               return context.l10n.enterValidEmail;
+                            }
                             return null;
                           },
                           decoration: InputDecoration(
@@ -273,14 +276,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           keyboardType: TextInputType.phone,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty)
+                            if (value == null || value.trim().isEmpty) {
                               return context.l10n.fieldRequired(
                                 context.l10n.phone,
                               );
+                            }
                             if (!RegExp(
                               r'^[+]?\d{10,15}$',
-                            ).hasMatch(value.trim()))
+                            ).hasMatch(value.trim())) {
                               return context.l10n.enterValidPhone;
+                            }
                             return null;
                           },
                           decoration: InputDecoration(
@@ -294,12 +299,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           obscureText: registerUi.isPasswordObscured,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty)
+                            if (value == null || value.trim().isEmpty) {
                               return context.l10n.fieldRequired(
                                 context.l10n.passwordLabel,
                               );
-                            if (value.length < 6)
+                            }
+                            if (value.length < 6) {
                               return context.l10n.minimumSixCharacters;
+                            }
                             return null;
                           },
                           decoration: InputDecoration(
@@ -395,10 +402,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           controller: _cityController,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty)
+                            if (value == null || value.trim().isEmpty) {
                               return context.l10n.fieldRequired(
                                 context.l10n.cityLabel,
                               );
+                            }
                             return null;
                           },
                           decoration: InputDecoration(
@@ -413,10 +421,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           controller: _postalCodeController,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty)
+                            if (value == null || value.trim().isEmpty) {
                               return context.l10n.fieldRequired(
                                 context.l10n.postalCodeLabel,
                               );
+                            }
                             return null;
                           },
                           decoration: InputDecoration(

@@ -460,8 +460,9 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
     } on ApiException catch (e) {
       if (mounted) AppNotifier.showError(context, e.userMessage);
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         AppNotifier.showError(context, context.l10n.failedToSaveLocation);
+      }
     } finally {
       if (mounted) setState(() => _isRegisteringAddress = false);
     }

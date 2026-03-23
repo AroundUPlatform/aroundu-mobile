@@ -123,12 +123,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty)
+                            if (value == null || value.trim().isEmpty) {
                               return context.l10n.emailRequired;
+                            }
                             if (!RegExp(
                               r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
-                            ).hasMatch(value.trim()))
+                            ).hasMatch(value.trim())) {
                               return context.l10n.enterValidEmail;
+                            }
                             return null;
                           },
                           decoration: InputDecoration(
@@ -144,10 +146,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           obscureText: obscurePassword,
                           textInputAction: TextInputAction.done,
                           validator: (value) {
-                            if (value == null || value.isEmpty)
+                            if (value == null || value.isEmpty) {
                               return context.l10n.passwordRequired;
-                            if (value.length < 6)
+                            }
+                            if (value.length < 6) {
                               return context.l10n.minimumSixCharacters;
+                            }
                             return null;
                           },
                           onFieldSubmitted: (_) => _submit(),
