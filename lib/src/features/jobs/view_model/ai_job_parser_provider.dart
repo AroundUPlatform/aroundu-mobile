@@ -120,9 +120,7 @@ class AIJobParserNotifier extends AutoDisposeNotifier<AIJobParserState> {
       if (result.isValid && result.value!.hasSufficientData) {
         state = AIJobParserState(parsedData: result.value, rawOutput: raw);
       } else {
-        final warningParts = result.violations
-            .map((v) => v.message)
-            .toList();
+        final warningParts = result.violations.map((v) => v.message).toList();
         state = AIJobParserState(
           parsedData: result.value,
           rawOutput: raw,

@@ -111,26 +111,33 @@ class AIOutputValidator {
     final violations = <AIViolation>[];
 
     if (bid.price <= 0) {
-      violations.add(const AIViolation(
-        field: 'price',
-        message: 'Price must be greater than zero.',
-        severity: AIViolationSeverity.critical,
-      ));
+      violations.add(
+        const AIViolation(
+          field: 'price',
+          message: 'Price must be greater than zero.',
+          severity: AIViolationSeverity.critical,
+        ),
+      );
     }
 
     if (bid.message.trim().isEmpty) {
-      violations.add(const AIViolation(
-        field: 'message',
-        message: 'Message must not be empty.',
-        severity: AIViolationSeverity.critical,
-      ));
+      violations.add(
+        const AIViolation(
+          field: 'message',
+          message: 'Message must not be empty.',
+          severity: AIViolationSeverity.critical,
+        ),
+      );
     } else if (bid.message.length > AISuggestedBid.maxMessageLength) {
-      violations.add(AIViolation(
-        field: 'message',
-        message: 'Message exceeds ${AISuggestedBid.maxMessageLength} chars – truncated.',
-        severity: AIViolationSeverity.warning,
-        rawValue: bid.message.length,
-      ));
+      violations.add(
+        AIViolation(
+          field: 'message',
+          message:
+              'Message exceeds ${AISuggestedBid.maxMessageLength} chars – truncated.',
+          severity: AIViolationSeverity.warning,
+          rawValue: bid.message.length,
+        ),
+      );
       // Return a truncated copy.
       final truncated = AISuggestedBid(
         price: bid.price,
@@ -158,35 +165,42 @@ class AIOutputValidator {
     final violations = <AIViolation>[];
 
     for (final field in parsed.missingFields) {
-      violations.add(AIViolation(
-        field: field,
-        message: '$field could not be extracted.',
-        severity: AIViolationSeverity.warning,
-      ));
+      violations.add(
+        AIViolation(
+          field: field,
+          message: '$field could not be extracted.',
+          severity: AIViolationSeverity.warning,
+        ),
+      );
     }
 
     // Budget sanity: fromMap already returns null for non-positive, but if
     // the raw value was present and bad, log it.
     final rawBudget = raw['budget'];
     if (rawBudget != null && parsed.budget == null) {
-      violations.add(AIViolation(
-        field: 'budget',
-        message: 'Invalid budget value dropped.',
-        severity: AIViolationSeverity.warning,
-        rawValue: rawBudget,
-      ));
+      violations.add(
+        AIViolation(
+          field: 'budget',
+          message: 'Invalid budget value dropped.',
+          severity: AIViolationSeverity.warning,
+          rawValue: rawBudget,
+        ),
+      );
     }
 
     // Urgency sanity: if raw had a value that was rejected.
     final rawUrgency = raw['jobUrgency'];
     if (rawUrgency != null && parsed.jobUrgency == null) {
-      violations.add(AIViolation(
-        field: 'jobUrgency',
-        message: 'Invalid urgency "$rawUrgency" dropped. '
-            'Valid: ${ParsedJobData.validUrgencies.join(", ")}.',
-        severity: AIViolationSeverity.warning,
-        rawValue: rawUrgency,
-      ));
+      violations.add(
+        AIViolation(
+          field: 'jobUrgency',
+          message:
+              'Invalid urgency "$rawUrgency" dropped. '
+              'Valid: ${ParsedJobData.validUrgencies.join(", ")}.',
+          severity: AIViolationSeverity.warning,
+          rawValue: rawUrgency,
+        ),
+      );
     }
 
     if (violations.isEmpty) return AIValidationResult.valid(parsed);
@@ -211,33 +225,40 @@ class AIOutputValidator {
     for (var i = 0; i < raw.length && result.length < 3; i++) {
       final item = raw[i];
       if (item is! String) {
-        violations.add(AIViolation(
-          field: 'suggestions[$i]',
-          message: 'Non-string item dropped.',
-          severity: AIViolationSeverity.warning,
-          rawValue: item,
-        ));
+        violations.add(
+          AIViolation(
+            field: 'suggestions[$i]',
+            message: 'Non-string item dropped.',
+            severity: AIViolationSeverity.warning,
+            rawValue: item,
+          ),
+        );
         continue;
       }
 
       final trimmed = item.trim();
       if (trimmed.isEmpty) {
-        violations.add(AIViolation(
-          field: 'suggestions[$i]',
-          message: 'Empty suggestion dropped.',
-          severity: AIViolationSeverity.warning,
-        ));
+        violations.add(
+          AIViolation(
+            field: 'suggestions[$i]',
+            message: 'Empty suggestion dropped.',
+            severity: AIViolationSeverity.warning,
+          ),
+        );
         continue;
       }
 
       if (trimmed.length > _maxSuggestionLength) {
-        violations.add(AIViolation(
-          field: 'suggestions[$i]',
-          message: 'Suggestion truncated from ${trimmed.length} to '
-              '$_maxSuggestionLength chars.',
-          severity: AIViolationSeverity.warning,
-          rawValue: trimmed.length,
-        ));
+        violations.add(
+          AIViolation(
+            field: 'suggestions[$i]',
+            message:
+                'Suggestion truncated from ${trimmed.length} to '
+                '$_maxSuggestionLength chars.',
+            severity: AIViolationSeverity.warning,
+            rawValue: trimmed.length,
+          ),
+        );
         result.add(trimmed.substring(0, _maxSuggestionLength));
       } else {
         result.add(trimmed);
@@ -245,11 +266,13 @@ class AIOutputValidator {
     }
 
     if (result.isEmpty) {
-      violations.add(const AIViolation(
-        field: 'suggestions',
-        message: 'No valid suggestions produced.',
-        severity: AIViolationSeverity.critical,
-      ));
+      violations.add(
+        const AIViolation(
+          field: 'suggestions',
+          message: 'No valid suggestions produced.',
+          severity: AIViolationSeverity.critical,
+        ),
+      );
       _logViolations('ChatSuggestions', violations);
       return AIValidationResult.partial(const <String>[], violations);
     }
@@ -274,11 +297,13 @@ class AIOutputValidator {
 
     final rankingsList = raw['rankings'];
     if (rankingsList is! List) {
-      violations.add(const AIViolation(
-        field: 'rankings',
-        message: 'Missing or invalid "rankings" array.',
-        severity: AIViolationSeverity.critical,
-      ));
+      violations.add(
+        const AIViolation(
+          field: 'rankings',
+          message: 'Missing or invalid "rankings" array.',
+          severity: AIViolationSeverity.critical,
+        ),
+      );
       _logViolations('JobRankings', violations);
       return AIValidationResult.partial(null, violations);
     }
@@ -295,23 +320,27 @@ class AIOutputValidator {
       if (id is! int || score is! num) continue;
 
       if (!validJobIds.contains(id)) {
-        violations.add(AIViolation(
-          field: 'rankings[$i].jobId',
-          message: 'Hallucinated job ID $id dropped.',
-          severity: AIViolationSeverity.warning,
-          rawValue: id,
-        ));
+        violations.add(
+          AIViolation(
+            field: 'rankings[$i].jobId',
+            message: 'Hallucinated job ID $id dropped.',
+            severity: AIViolationSeverity.warning,
+            rawValue: id,
+          ),
+        );
         continue;
       }
 
       var clamped = score.toDouble();
       if (clamped < 0.0 || clamped > 1.0) {
-        violations.add(AIViolation(
-          field: 'rankings[$i].score',
-          message: 'Score $clamped clamped to [0.0, 1.0].',
-          severity: AIViolationSeverity.warning,
-          rawValue: clamped,
-        ));
+        violations.add(
+          AIViolation(
+            field: 'rankings[$i].score',
+            message: 'Score $clamped clamped to [0.0, 1.0].',
+            severity: AIViolationSeverity.warning,
+            rawValue: clamped,
+          ),
+        );
         clamped = clamped.clamp(0.0, 1.0);
       }
 
@@ -322,11 +351,13 @@ class AIOutputValidator {
     for (final job in allJobs) {
       if (!scores.containsKey(job.jobId)) {
         scores[job.jobId] = 0.0;
-        violations.add(AIViolation(
-          field: 'rankings',
-          message: 'Job ${job.jobId} not scored by AI – defaulted to 0.0.',
-          severity: AIViolationSeverity.warning,
-        ));
+        violations.add(
+          AIViolation(
+            field: 'rankings',
+            message: 'Job ${job.jobId} not scored by AI – defaulted to 0.0.',
+            severity: AIViolationSeverity.warning,
+          ),
+        );
       }
     }
 
@@ -334,8 +365,8 @@ class AIOutputValidator {
     return violations.any((v) => v.severity == AIViolationSeverity.critical)
         ? AIValidationResult.partial(scores, violations)
         : scores.isEmpty
-            ? AIValidationResult.partial(null, violations)
-            : AIValidationResult.partial(scores, violations);
+        ? AIValidationResult.partial(null, violations)
+        : AIValidationResult.partial(scores, violations);
   }
 
   // ── Logging helper ────────────────────────────────────────────
