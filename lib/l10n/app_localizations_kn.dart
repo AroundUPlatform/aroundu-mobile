@@ -1326,6 +1326,18 @@ class AppLocalizationsKn extends AppLocalizations {
   String get confirmLocation => 'ಸ್ಥಳ ದೃಢಪಡಿಸಿ';
 
   @override
+  String get useWithoutSaving => 'Use without saving';
+
+  @override
+  String get saveAndUse => 'Save & use';
+
+  @override
+  String get useMyCurrentLocation => 'Use my current location';
+
+  @override
+  String get detectingLocation => 'Detecting location…';
+
+  @override
   String get saveAddress => 'ವಿಳಾಸ ಉಳಿಸಿ';
 
   @override
@@ -1677,14 +1689,93 @@ class AppLocalizationsKn extends AppLocalizations {
   }
 
   @override
-  String get useWithoutSaving => 'ಉಳಿಸದೆ ಬಳಸಿ';
+  String get howToCreateTask => 'How would you like to create your task?';
 
   @override
-  String get saveAndUse => 'ಉಳಿಸಿ ಮತ್ತು ಬಳಸಿ';
+  String get fillManually => 'Fill Manually';
 
   @override
-  String get useMyCurrentLocation => 'ನನ್ನ ಪ್ರಸ್ತುತ ಸ್ಥಳ ಬಳಸಿ';
+  String get describeWithAi => 'Describe with AI';
 
   @override
-  String get detectingLocation => 'ಸ್ಥಳ ಪತ್ತೆಹಚ್ಚುತ್ತಿದೆ…';
+  String get aiDescribeProblem => 'Describe Your Problem';
+
+  @override
+  String get aiDescribeSheetSubtitle =>
+      'Tell us what you need help with in your own words. Our AI will fill in the form for you.';
+
+  @override
+  String get aiDescribeHint =>
+      'e.g. My kitchen tap is leaking and I need a plumber to fix it as soon as possible. Budget around 500.';
+
+  @override
+  String get aiDescribeMinCharsWarning =>
+      'Please describe your problem in at least 10 characters';
+
+  @override
+  String get aiGenerateForm => 'Generate Form';
+
+  @override
+  String get aiParsingJob => 'Analysing your description…';
+
+  @override
+  String get aiJobPrefillSuccess =>
+      'Form filled from your description. Please review and adjust.';
+
+  @override
+  String aiJobParseWarning(String fields) {
+    return 'Partially filled. Missing: $fields';
+  }
+
+  @override
+  String get aiJobParseFailed =>
+      'Could not understand the description. Please try again or fill manually.';
+
+  @override
+  String get aiPrefillBanner =>
+      'AI pre-filled. Review and edit before posting.';
+
+  @override
+  String get addImageContext => 'Add image for context';
+
+  @override
+  String get imageAttached => 'Image attached';
+
+  @override
+  String get aiTopMatchesSection => 'Top Matches';
+
+  @override
+  String get nearbyJobsSection => 'Nearby Jobs';
+
+  @override
+  String get aiRankingInProgress => 'Finding your best matches…';
+
+  @override
+  String get aiBadge => 'AI';
+
+  @override
+  String get suggestBidAi => 'Suggest Bid (AI)';
+
+  @override
+  String get aiSuggestingBid => 'Generating bid suggestion…';
+
+  @override
+  String get aiBidSuggestedSuccess =>
+      'Bid pre-filled from AI suggestion. Review before submitting.';
+
+  @override
+  String get aiBidGenerateFailed =>
+      'Could not generate a suggestion. Please fill manually.';
+
+  @override
+  String get aiBidSuggestionBanner => 'AI suggested. Review and adjust.';
+
+  @override
+  String get aiSuggestReply => 'Suggest reply';
+
+  @override
+  String get aiGeneratingReplies => 'Generating replies…';
+
+  @override
+  String get aiSmartReplies => 'Smart replies';
 }

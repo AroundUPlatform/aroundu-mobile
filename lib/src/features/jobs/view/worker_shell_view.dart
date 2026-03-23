@@ -20,6 +20,9 @@ import 'widgets/skill_suggest_field.dart';
 import '../../../core/l10n/l10n_extension.dart';
 import '../../ai/view/ai_analysis_panel.dart';
 import '../../ai/view_model/ai_service_provider.dart';
+import '../model/ranked_job_feed.dart';
+import '../view_model/ai_job_ranking_provider.dart';
+import '../view_model/ai_bid_generator_provider.dart';
 
 class WorkerShellScreen extends ConsumerStatefulWidget {
   const WorkerShellScreen({super.key});
@@ -253,6 +256,7 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
 
   Future<void> _refresh() async {
     if (_activeFilter == WorkerJobFilter.nearby) {
+      ref.read(aiJobRankingProvider.notifier).invalidate();
       return ref.read(workerFeedControllerProvider.notifier).refresh();
     }
     ref.invalidate(workerMyJobsProvider(_activeFilter));
@@ -455,6 +459,20 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
     final isOnDuty = auth.isOnDuty ?? false;
     final showNearby = _activeFilter == WorkerJobFilter.nearby;
 
+    // Trigger AI ranking when fresh nearby feed data arrives.
+    if (showNearby && isOnDuty) {
+      ref.listen<AsyncValue<List<JobItem>>>(workerFeedControllerProvider, (
+        _,
+        next,
+      ) {
+        final jobs = next.valueOrNull;
+        if (jobs != null && jobs.isNotEmpty) {
+          final skills = ref.read(workerSkillsProvider);
+          ref.read(aiJobRankingProvider.notifier).rank(jobs, skills);
+        }
+      });
+    }
+
     // When offline and on the Nearby tab, skip the API call entirely
     if (showNearby && !isOnDuty) {
       return Column(
@@ -508,13 +526,191 @@ class _WorkerFeedTabState extends ConsumerState<_WorkerFeedTab> {
                   ],
                 ),
               ),
-              data: _buildJobList,
+              data: (jobs) =>
+                  showNearby ? _buildFeedContent(jobs) : _buildJobList(jobs),
             ),
           ),
         ),
       ],
     );
   }
+
+  // ── AI-ranked feed content ──────────────────────────────────────
+
+  Widget _buildFeedContent(List<JobItem> jobs) {
+    if (jobs.isEmpty) return _buildJobList(jobs);
+
+    final rankingState = ref.watch(aiJobRankingProvider);
+
+    // While ranking is in progress, show the flat list with a progress banner.
+    if (rankingState.isRanking) {
+      return Column(
+        children: [
+          _buildRankingBanner(),
+          Expanded(child: _buildJobList(jobs)),
+        ],
+      );
+    }
+
+    final feed = rankingState.rankedFeed;
+    if (feed != null && feed.isAiRanked) {
+      return _buildSectionedList(feed);
+    }
+
+    // Fallback: original flat list.
+    return _buildJobList(jobs);
+  }
+
+  Widget _buildRankingBanner() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 16,
+            height: 16,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            context.l10n.aiRankingInProgress,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionedList(RankedJobFeed feed) {
+    // Build a flat item list: [header?, jobs..., header?, jobs...]
+    final items = <_FeedListItem>[];
+
+    if (feed.topMatches.isNotEmpty) {
+      items.add(
+        _FeedListItem.header(
+          context.l10n.aiTopMatchesSection,
+          showAiBadge: true,
+        ),
+      );
+      for (final job in feed.topMatches) {
+        items.add(_FeedListItem.job(job));
+      }
+    }
+
+    if (feed.nearbyJobs.isNotEmpty) {
+      // Only show this header if there are also top matches.
+      if (feed.topMatches.isNotEmpty) {
+        items.add(_FeedListItem.header(context.l10n.nearbyJobsSection));
+      }
+      for (final job in feed.nearbyJobs) {
+        items.add(_FeedListItem.job(job));
+      }
+    }
+
+    if (items.isEmpty) return _buildJobList(const []);
+
+    return ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        final item = items[index];
+        if (item.isHeader) {
+          return Padding(
+            padding: EdgeInsets.only(top: index == 0 ? 0 : 20, bottom: 8),
+            child: Row(
+              children: [
+                Text(
+                  item.headerTitle!,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                if (item.showAiBadge) ...[
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.auto_awesome_rounded,
+                          size: 14,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onPrimaryContainer,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          context.l10n.aiBadge,
+                          style: Theme.of(context).textTheme.labelSmall
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimaryContainer,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          );
+        }
+
+        // Job card — same animation as the original list.
+        final job = item.job!;
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: TweenAnimationBuilder<double>(
+            duration: Duration(milliseconds: 200 + (index * 35)),
+            curve: Curves.easeOutCubic,
+            tween: Tween<double>(begin: 0, end: 1),
+            builder: (context, value, child) {
+              return Opacity(
+                opacity: value,
+                child: Transform.translate(
+                  offset: Offset(0, 12 * (1 - value)),
+                  child: child,
+                ),
+              );
+            },
+            child: JobCard(
+              job: job,
+              showDistance: true,
+              viewerCurrencyCode: ref.read(authControllerProvider).currency,
+              onTap: () => _openWorkflowSheet(job),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// Lightweight union type for section headers and job cards in the flat list.
+class _FeedListItem {
+  const _FeedListItem._({this.headerTitle, this.showAiBadge = false, this.job});
+
+  factory _FeedListItem.header(String title, {bool showAiBadge = false}) =>
+      _FeedListItem._(headerTitle: title, showAiBadge: showAiBadge);
+
+  factory _FeedListItem.job(JobItem job) => _FeedListItem._(job: job);
+
+  final String? headerTitle;
+  final bool showAiBadge;
+  final JobItem? job;
+
+  bool get isHeader => headerTitle != null;
 }
 
 class _WorkerSkillsTab extends ConsumerWidget {
@@ -620,6 +816,7 @@ class _WorkerJobWorkflowSheetState
   bool _loading = true;
   bool _working = false;
   String? _error;
+  bool _hasAiSuggestion = false;
 
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _partnerNameController = TextEditingController();
@@ -732,6 +929,37 @@ class _WorkerJobWorkflowSheetState
             ),
           );
     }, successMessage: context.l10n.offerSubmittedSuccess);
+  }
+
+  Future<void> _generateBidSuggestion() async {
+    final job = _job;
+    if (job == null) return;
+
+    final skills = ref.read(workerSkillsProvider);
+    final auth = ref.read(authControllerProvider);
+
+    await ref
+        .read(aiBidGeneratorProvider.notifier)
+        .generate(
+          job,
+          skills,
+          experienceYears: auth.experienceYears,
+          currency: auth.currency,
+        );
+
+    final result = ref.read(aiBidGeneratorProvider);
+    if (!mounted) return;
+
+    if (result.suggestion != null && result.suggestion!.isValid) {
+      setState(() {
+        _amountController.text = result.suggestion!.price.toStringAsFixed(0);
+        _notesController.text = result.suggestion!.message;
+        _hasAiSuggestion = true;
+      });
+      AppNotifier.showSuccess(context, context.l10n.aiBidSuggestedSuccess);
+    } else if (result.error != null) {
+      AppNotifier.showWarning(context, context.l10n.aiBidGenerateFailed);
+    }
   }
 
   Future<void> _respondHandshake(bool accepted, int bidId) {
@@ -1068,6 +1296,47 @@ class _WorkerJobWorkflowSheetState
               padding: const EdgeInsets.all(14),
               child: Column(
                 children: [
+                  // ── AI Suggestion button or progress ──
+                  Builder(
+                    builder: (context) {
+                      final bidGenState = ref.watch(aiBidGeneratorProvider);
+                      if (bidGenState.isGenerating) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                context.l10n.aiSuggestingBid,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            onPressed: _generateBidSuggestion,
+                            icon: const Icon(
+                              Icons.auto_awesome_rounded,
+                              size: 18,
+                            ),
+                            label: Text(context.l10n.suggestBidAi),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                   TextField(
                     controller: _amountController,
                     keyboardType: const TextInputType.numberWithOptions(
@@ -1088,6 +1357,52 @@ class _WorkerJobWorkflowSheetState
                       prefixIcon: Icon(Icons.notes_rounded),
                     ),
                   ),
+                  // ── AI Suggestion banner (dismissable) ──
+                  if (_hasAiSuggestion)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Material(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(8),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.auto_awesome_rounded,
+                                size: 16,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  context.l10n.aiBidSuggestionBanner,
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onPrimaryContainer,
+                                      ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () =>
+                                    setState(() => _hasAiSuggestion = false),
+                                icon: Icon(Icons.close, size: 18),
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(
+                                  minWidth: 28,
+                                  minHeight: 28,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   const SizedBox(height: 10),
                   // Partner fields in an expansion section
                   ExpansionTile(
@@ -1139,7 +1454,11 @@ class _WorkerJobWorkflowSheetState
                   SizedBox(
                     width: double.infinity,
                     child: FilledButton.icon(
-                      onPressed: _working ? null : _placeBid,
+                      onPressed:
+                          _working ||
+                              ref.watch(aiBidGeneratorProvider).isGenerating
+                          ? null
+                          : _placeBid,
                       icon: const Icon(Icons.gavel_rounded),
                       label: Text(context.l10n.submitOffer),
                     ),

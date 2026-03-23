@@ -30,6 +30,8 @@ import 'widgets/skill_suggest_field.dart';
 import '../../../core/l10n/l10n_extension.dart';
 import '../../ai/view/ai_analysis_panel.dart';
 import '../../ai/view_model/ai_service_provider.dart';
+import '../model/parsed_job_data.dart';
+import 'widgets/ai_describe_job_sheet.dart';
 
 class ProviderShellScreen extends ConsumerStatefulWidget {
   const ProviderShellScreen({super.key});
@@ -363,6 +365,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
   String _paymentMode = 'OFFLINE';
   AddressInfo? _selectedAddress;
   bool _isRegisteringAddress = false;
+  bool _hasAiPrefill = false;
 
   @override
   void dispose() {
@@ -378,6 +381,54 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
     }
     return null;
   }
+
+  // ── AI pre-fill helpers ─────────────────────────────────────────
+
+  void _prefillFromParsed(ParsedJobData data) {
+    if (data.title != null && data.title!.isNotEmpty) {
+      _titleController.text = data.title!;
+    }
+    if (data.description != null && data.description!.isNotEmpty) {
+      _descriptionController.text = data.description!;
+    }
+    if (data.budget != null && data.budget! > 0) {
+      _budgetController.text = data.budget!.toStringAsFixed(0);
+    }
+    const validUrgencies = {'NORMAL', 'MEDIUM', 'URGENT', 'SUPER_URGENT'};
+    if (data.jobUrgency != null && validUrgencies.contains(data.jobUrgency)) {
+      _urgency = data.jobUrgency!;
+    }
+    // Populate skills
+    final skillNotifier = ref.read(skillSuggestControllerProvider.notifier);
+    skillNotifier.clearAll();
+    for (final name in data.skillNames) {
+      skillNotifier.addCustomSkill(name);
+    }
+    setState(() => _hasAiPrefill = true);
+  }
+
+  Future<void> _openAiDescribeSheet() async {
+    final parsed = await showModalBottomSheet<ParsedJobData>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => const AiDescribeJobSheet(),
+    );
+    if (parsed == null || !mounted) return;
+    _prefillFromParsed(parsed);
+
+    if (!mounted) return;
+    if (parsed.hasSufficientData) {
+      AppNotifier.showSuccess(context, context.l10n.aiJobPrefillSuccess);
+    } else {
+      AppNotifier.showWarning(
+        context,
+        context.l10n.aiJobParseWarning(parsed.missingFields.join(', ')),
+      );
+    }
+  }
+
+  // ── Location picker ─────────────────────────────────────────────
 
   Future<void> _openLocationPicker() async {
     final picked = await Navigator.of(context).push<AddressInfo>(
@@ -467,6 +518,7 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
         _urgency = 'NORMAL';
         _paymentMode = 'OFFLINE';
         _selectedAddress = null;
+        _hasAiPrefill = false;
       });
 
       AppNotifier.showSuccess(context, context.l10n.jobPostedSuccess);
@@ -513,7 +565,98 @@ class _CreateJobTabState extends ConsumerState<_CreateJobTab> {
               context.l10n.postTaskSubtitle,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
+
+            // ── Creation mode selector ──────────────────────────
+            Text(
+              context.l10n.howToCreateTask,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.edit_outlined, size: 18),
+                    label: Text(context.l10n.fillManually),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: FilledButton.tonal(
+                    onPressed: _openAiDescribeSheet,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.auto_awesome, size: 18),
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Text(
+                            context.l10n.describeWithAi,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+
+            // ── AI pre-fill banner ──────────────────────────────
+            if (_hasAiPrefill)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Card(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.auto_awesome,
+                          size: 18,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onPrimaryContainer,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            context.l10n.aiPrefillBanner,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onPrimaryContainer,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () => setState(() => _hasAiPrefill = false),
+                          child: Icon(
+                            Icons.close,
+                            size: 16,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onPrimaryContainer,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
             AnimatedContainer(
               duration: const Duration(milliseconds: 220),
               curve: Curves.easeOut,

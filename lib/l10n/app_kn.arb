@@ -710,8 +710,42 @@
   "paymentStatusReleased": "ಪಾವತಿ ಬಿಡುಗಡೆ",
   "tooltipCopy": "ನಕಲು",
   "tooltipDeleteAddress": "ವಿಳಾಸ ಅಳಿಸಿ",
-  "useWithoutSaving": "ಉಳಿಸದೆ ಬಳಸಿ",
-  "saveAndUse": "ಉಳಿಸಿ ಮತ್ತು ಬಳಸಿ",
-  "useMyCurrentLocation": "ನನ್ನ ಪ್ರಸ್ತುತ ಸ್ಥಳ ಬಳಸಿ",
-  "detectingLocation": "ಸ್ಥಳ ಪತ್ತೆಹಚ್ಚುತ್ತಿದೆ…"
+  "addImageContext": "Add image for context",
+  "aiDescribeHint": "e.g. My kitchen tap is leaking and I need a plumber to fix it as soon as possible. Budget around 500.",
+  "aiDescribeMinCharsWarning": "Please describe your problem in at least 10 characters",
+  "aiDescribeProblem": "Describe Your Problem",
+  "aiDescribeSheetSubtitle": "Tell us what you need help with in your own words. Our AI will fill in the form for you.",
+  "aiGenerateForm": "Generate Form",
+  "aiJobParseFailed": "Could not understand the description. Please try again or fill manually.",
+  "aiJobParseWarning": "Partially filled. Missing: {fields}",
+  "@aiJobParseWarning": {
+    "placeholders": {
+      "fields": {
+        "type": "String"
+      }
+    }
+  },
+  "aiJobPrefillSuccess": "Form filled from your description. Please review and adjust.",
+  "aiParsingJob": "Analysing your description…",
+  "aiPrefillBanner": "AI pre-filled. Review and edit before posting.",
+  "describeWithAi": "Describe with AI",
+  "fillManually": "Fill Manually",
+  "howToCreateTask": "How would you like to create your task?",
+  "imageAttached": "Image attached",
+  "detectingLocation": "Detecting location…",
+  "saveAndUse": "Save & use",
+  "useMyCurrentLocation": "Use my current location",
+  "useWithoutSaving": "Use without saving",
+  "aiBadge": "AI",
+  "aiRankingInProgress": "Finding your best matches…",
+  "aiTopMatchesSection": "Top Matches",
+  "nearbyJobsSection": "Nearby Jobs",
+  "aiBidGenerateFailed": "Could not generate a suggestion. Please fill manually.",
+  "aiBidSuggestedSuccess": "Bid pre-filled from AI suggestion. Review before submitting.",
+  "aiBidSuggestionBanner": "AI suggested. Review and adjust.",
+  "aiSuggestingBid": "Generating bid suggestion…",
+  "suggestBidAi": "Suggest Bid (AI)",
+  "aiGeneratingReplies": "Generating replies…",
+  "aiSmartReplies": "Smart replies",
+  "aiSuggestReply": "Suggest reply"
 }

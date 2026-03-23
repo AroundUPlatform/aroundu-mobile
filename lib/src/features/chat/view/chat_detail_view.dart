@@ -10,6 +10,7 @@ import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
 import '../../auth/view_model/auth_view_model.dart';
 import '../model/chat_models.dart';
+import '../view_model/ai_chat_suggester_provider.dart';
 import '../view_model/chat_view_model.dart';
 
 class ChatDetailScreen extends ConsumerStatefulWidget {
@@ -90,9 +91,27 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
     });
   }
 
+  void _generateSuggestions() {
+    final chatState = ref.read(
+      chatMessagesControllerProvider(widget.conversationId),
+    );
+    final auth = ref.read(authControllerProvider);
+    final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
+    ref
+        .read(aiChatSuggesterProvider.notifier)
+        .generate(
+          recentMessages: chatState.messages,
+          myRole: myRole,
+          jobTitle: widget.jobTitle,
+        );
+  }
+
   Future<void> _sendMessage() async {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
+
+    // Clear AI suggestions when user sends a message
+    ref.read(aiChatSuggesterProvider.notifier).reset();
 
     _controller.clear();
     // Stop typing indicator immediately
@@ -120,18 +139,24 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
     );
     final auth = ref.watch(authControllerProvider);
 
-    // Auto-scroll when new messages arrive
+    final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
+
+    // Auto-scroll when new messages arrive & trigger AI suggestions
     ref.listen(chatMessagesControllerProvider(widget.conversationId), (
       prev,
       next,
     ) {
       if ((prev?.messages.length ?? 0) < next.messages.length) {
         _scrollToBottom();
+        // Auto-generate suggestions when a new message arrives from the other party
+        final newest = next.messages.last;
+        if (newest.senderRole != myRole) {
+          _generateSuggestions();
+        }
       }
     });
 
     // Calculate first unread index for the divider
-    final myRole = auth.role == UserRole.worker ? 'WORKER' : 'CLIENT';
     int? firstUnreadIndex;
     for (int i = 0; i < chatState.messages.length; i++) {
       final msg = chatState.messages[i];
@@ -249,12 +274,15 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                     },
                   ),
           ),
+          // AI smart reply suggestions
+          _AiSuggestionsStrip(controller: _controller),
           // Input
           _ChatInput(
             controller: _controller,
             focusNode: _focusNode,
             isSending: chatState.isSending,
             onSend: _sendMessage,
+            onSuggest: _generateSuggestions,
           ),
         ],
       ),
@@ -445,12 +473,14 @@ class _ChatInput extends StatelessWidget {
     required this.focusNode,
     required this.isSending,
     required this.onSend,
+    required this.onSuggest,
   });
 
   final TextEditingController controller;
   final FocusNode focusNode;
   final bool isSending;
   final VoidCallback onSend;
+  final VoidCallback onSuggest;
 
   @override
   Widget build(BuildContext context) {
@@ -498,7 +528,16 @@ class _ChatInput extends StatelessWidget {
               onSubmitted: (_) => onSend(),
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 4),
+          IconButton(
+            onPressed: isSending ? null : onSuggest,
+            icon: const Icon(Icons.auto_awesome_rounded, size: 20),
+            tooltip: context.l10n.aiSuggestReply,
+            style: IconButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          const SizedBox(width: 4),
           IconButton.filled(
             onPressed: isSending ? null : onSend,
             icon: isSending
@@ -518,6 +557,91 @@ class _ChatInput extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Horizontally scrollable strip of AI-suggested reply chips.
+///
+/// Shows a loading indicator when generating, suggestion chips when ready,
+/// and collapses to zero height when idle.
+class _AiSuggestionsStrip extends ConsumerWidget {
+  const _AiSuggestionsStrip({required this.controller});
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(aiChatSuggesterProvider);
+
+    if (!state.isGenerating && state.suggestions.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final colors = Theme.of(context).colorScheme;
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        border: Border(
+          top: BorderSide(color: colors.outlineVariant.withValues(alpha: 0.3)),
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      child: state.isGenerating
+          ? Row(
+              children: [
+                SizedBox(
+                  width: 14,
+                  height: 14,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: colors.primary,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  context.l10n.aiGeneratingReplies,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: colors.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            )
+          : SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.auto_awesome_rounded,
+                    size: 14,
+                    color: colors.primary,
+                  ),
+                  const SizedBox(width: 6),
+                  ...state.suggestions.map(
+                    (suggestion) => Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: ActionChip(
+                        label: Text(suggestion),
+                        onPressed: () {
+                          controller.text = suggestion;
+                          controller.selection = TextSelection.fromPosition(
+                            TextPosition(offset: suggestion.length),
+                          );
+                        },
+                        backgroundColor: colors.primaryContainer,
+                        labelStyle: TextStyle(
+                          color: colors.onPrimaryContainer,
+                          fontSize: 13,
+                        ),
+                        side: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

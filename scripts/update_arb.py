@@ -494,6 +494,10 @@ EN = {
   "switchToRoadMap": "Switch to Road map",
   "goToMyLocation": "Go to my location",
   "confirmLocation": "Confirm Location",
+  "useWithoutSaving": "Use without saving",
+  "saveAndUse": "Save & use",
+  "useMyCurrentLocation": "Use my current location",
+  "detectingLocation": "Detecting location…",
   "saveAddress": "Save Address",
   "saveAddressSubtitle": "Add a label and recipient details for this location.",
   "labelField": "Label",
@@ -630,6 +634,42 @@ EN = {
   "errorDescriptionUnavailable": "Description unavailable",
   "errorUnauthorizedAction": "Only {roleLabel} can perform this action",
   "@errorUnauthorizedAction": { "placeholders": { "roleLabel": { "type": "String" } } },
+
+  # ── AI Job Creation ───────────────────────────────────────────────────────
+  "howToCreateTask": "How would you like to create your task?",
+  "fillManually": "Fill Manually",
+  "describeWithAi": "Describe with AI",
+  "aiDescribeProblem": "Describe Your Problem",
+  "aiDescribeSheetSubtitle": "Tell us what you need help with in your own words. Our AI will fill in the form for you.",
+  "aiDescribeHint": "e.g. My kitchen tap is leaking and I need a plumber to fix it as soon as possible. Budget around 500.",
+  "aiDescribeMinCharsWarning": "Please describe your problem in at least 10 characters",
+  "aiGenerateForm": "Generate Form",
+  "aiParsingJob": "Analysing your description…",
+  "aiJobPrefillSuccess": "Form filled from your description. Please review and adjust.",
+  "aiJobParseWarning": "Partially filled. Missing: {fields}",
+  "@aiJobParseWarning": { "placeholders": { "fields": { "type": "String" } } },
+  "aiJobParseFailed": "Could not understand the description. Please try again or fill manually.",
+  "aiPrefillBanner": "AI pre-filled. Review and edit before posting.",
+  "addImageContext": "Add image for context",
+  "imageAttached": "Image attached",
+
+  # ── AI Job Ranking ──────────────────────────────────────────────────────
+  "aiTopMatchesSection": "Top Matches",
+  "nearbyJobsSection": "Nearby Jobs",
+  "aiRankingInProgress": "Finding your best matches…",
+  "aiBadge": "AI",
+
+  # ── AI Bid Suggestion ───────────────────────────────────────────────────
+  "suggestBidAi": "Suggest Bid (AI)",
+  "aiSuggestingBid": "Generating bid suggestion\u2026",
+  "aiBidSuggestedSuccess": "Bid pre-filled from AI suggestion. Review before submitting.",
+  "aiBidGenerateFailed": "Could not generate a suggestion. Please fill manually.",
+  "aiBidSuggestionBanner": "AI suggested. Review and adjust.",
+
+  # ── AI Smart Reply Suggestions ──────────────────────────────────────────
+  "aiSuggestReply": "Suggest reply",
+  "aiGeneratingReplies": "Generating replies\u2026",
+  "aiSmartReplies": "Smart replies",
 }
 
 

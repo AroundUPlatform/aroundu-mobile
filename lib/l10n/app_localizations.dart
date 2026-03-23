@@ -2667,6 +2667,30 @@ abstract class AppLocalizations {
   /// **'Confirm Location'**
   String get confirmLocation;
 
+  /// No description provided for @useWithoutSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Use without saving'**
+  String get useWithoutSaving;
+
+  /// No description provided for @saveAndUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Save & use'**
+  String get saveAndUse;
+
+  /// No description provided for @useMyCurrentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Use my current location'**
+  String get useMyCurrentLocation;
+
+  /// No description provided for @detectingLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Detecting location…'**
+  String get detectingLocation;
+
   /// No description provided for @saveAddress.
   ///
   /// In en, this message translates to:
@@ -3345,29 +3369,167 @@ abstract class AppLocalizations {
   /// **'Only {roleLabel} can perform this action'**
   String errorUnauthorizedAction(String roleLabel);
 
-  /// No description provided for @useWithoutSaving.
+  /// No description provided for @howToCreateTask.
   ///
   /// In en, this message translates to:
-  /// **'Use without saving'**
-  String get useWithoutSaving;
+  /// **'How would you like to create your task?'**
+  String get howToCreateTask;
 
-  /// No description provided for @saveAndUse.
+  /// No description provided for @fillManually.
   ///
   /// In en, this message translates to:
-  /// **'Save & use'**
-  String get saveAndUse;
+  /// **'Fill Manually'**
+  String get fillManually;
 
-  /// No description provided for @useMyCurrentLocation.
+  /// No description provided for @describeWithAi.
   ///
   /// In en, this message translates to:
-  /// **'Use my current location'**
-  String get useMyCurrentLocation;
+  /// **'Describe with AI'**
+  String get describeWithAi;
 
-  /// No description provided for @detectingLocation.
+  /// No description provided for @aiDescribeProblem.
   ///
   /// In en, this message translates to:
-  /// **'Detecting location…'**
-  String get detectingLocation;
+  /// **'Describe Your Problem'**
+  String get aiDescribeProblem;
+
+  /// No description provided for @aiDescribeSheetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what you need help with in your own words. Our AI will fill in the form for you.'**
+  String get aiDescribeSheetSubtitle;
+
+  /// No description provided for @aiDescribeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. My kitchen tap is leaking and I need a plumber to fix it as soon as possible. Budget around 500.'**
+  String get aiDescribeHint;
+
+  /// No description provided for @aiDescribeMinCharsWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Please describe your problem in at least 10 characters'**
+  String get aiDescribeMinCharsWarning;
+
+  /// No description provided for @aiGenerateForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Form'**
+  String get aiGenerateForm;
+
+  /// No description provided for @aiParsingJob.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysing your description…'**
+  String get aiParsingJob;
+
+  /// No description provided for @aiJobPrefillSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Form filled from your description. Please review and adjust.'**
+  String get aiJobPrefillSuccess;
+
+  /// No description provided for @aiJobParseWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Partially filled. Missing: {fields}'**
+  String aiJobParseWarning(String fields);
+
+  /// No description provided for @aiJobParseFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not understand the description. Please try again or fill manually.'**
+  String get aiJobParseFailed;
+
+  /// No description provided for @aiPrefillBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'AI pre-filled. Review and edit before posting.'**
+  String get aiPrefillBanner;
+
+  /// No description provided for @addImageContext.
+  ///
+  /// In en, this message translates to:
+  /// **'Add image for context'**
+  String get addImageContext;
+
+  /// No description provided for @imageAttached.
+  ///
+  /// In en, this message translates to:
+  /// **'Image attached'**
+  String get imageAttached;
+
+  /// No description provided for @aiTopMatchesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Matches'**
+  String get aiTopMatchesSection;
+
+  /// No description provided for @nearbyJobsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Jobs'**
+  String get nearbyJobsSection;
+
+  /// No description provided for @aiRankingInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding your best matches…'**
+  String get aiRankingInProgress;
+
+  /// No description provided for @aiBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'AI'**
+  String get aiBadge;
+
+  /// No description provided for @suggestBidAi.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest Bid (AI)'**
+  String get suggestBidAi;
+
+  /// No description provided for @aiSuggestingBid.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating bid suggestion…'**
+  String get aiSuggestingBid;
+
+  /// No description provided for @aiBidSuggestedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Bid pre-filled from AI suggestion. Review before submitting.'**
+  String get aiBidSuggestedSuccess;
+
+  /// No description provided for @aiBidGenerateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not generate a suggestion. Please fill manually.'**
+  String get aiBidGenerateFailed;
+
+  /// No description provided for @aiBidSuggestionBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'AI suggested. Review and adjust.'**
+  String get aiBidSuggestionBanner;
+
+  /// No description provided for @aiSuggestReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest reply'**
+  String get aiSuggestReply;
+
+  /// No description provided for @aiGeneratingReplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating replies…'**
+  String get aiGeneratingReplies;
+
+  /// No description provided for @aiSmartReplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart replies'**
+  String get aiSmartReplies;
 }
 
 class _AppLocalizationsDelegate
