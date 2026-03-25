@@ -96,6 +96,70 @@
 
 ---
 
+## OTP Code Flow
+
+| # | Step | Expected | Pass? |
+|---|------|----------|-------|
+| C.1 | Client taps "Generate Start Code" (READY_TO_START) | 6-digit code shown; code card visible | |
+| C.2 | Worker enters correct start code | Status → **In Progress**; success toast | |
+| C.3 | Worker enters wrong code 5 times | Code locked; "Regenerate" button shown to client | |
+| C.4 | Client taps "Regenerate" | New code generated; old code invalidated | |
+| C.5 | Client fetches release code (after IN_PROGRESS) | Release code shown; start code hidden | |
+| C.6 | Client verifies release code | Status → **Pending Payment** | |
+| C.7 | Try regenerate within 1 minute | Error: "Rate limited, try again later" | |
+
+---
+
+## Profile Management
+
+| # | Step | Expected | Pass? |
+|---|------|----------|-------|
+| P.1 | Navigate to Account → tap Edit Profile | Edit form shows current name, phone, address | |
+| P.2 | Upload profile image (camera/gallery) | Image uploaded; new image visible; public URL returned | |
+| P.3 | Delete profile image | Image removed; default avatar shown | |
+| P.4 | View worker's public profile from job card | Public profile shows name, rating, review count | |
+| P.5 | Change language (Language Picker) | App text updates to selected locale | |
+| P.6 | Update name and phone → save | Success toast; profile reflects changes | |
+
+---
+
+## Admin Dashboard
+
+| # | Step | Expected | Pass? |
+|---|------|----------|-------|
+| A.1 | Login as Admin → admin shell loads | Dashboard shows metric cards | |
+| A.2 | Verify metrics: totalClients, totalWorkers | Counts match database | |
+| A.3 | Verify: activeJobs, openJobs | Counts match current job statuses | |
+| A.4 | Verify: jobsCreatedToday, jobsCompletedToday | Match today's activity | |
+| A.5 | Non-admin tries `/api/v1/admin/overview` | 403 Forbidden | |
+
+---
+
+## AI Features (On-Device)
+
+| # | Step | Expected | Pass? |
+|---|------|----------|-------|
+| AI.1 | Open AI Setup → download default model | Progress bar shows; model downloads successfully | |
+| AI.2 | Create Job → tap "AI Describe" → enter description | Structured job data parsed from free text | |
+| AI.3 | Worker feed → AI ranking toggle | Feed re-ordered by relevance score | |
+| AI.4 | Place bid → tap "AI Suggest" | Suggested bid amount + reasoning shown | |
+| AI.5 | Chat → AI suggestions appear | 3 contextual reply suggestions below input | |
+| AI.6 | Delete model from AI Setup | Model removed; disk space freed | |
+| AI.7 | **Graceful degradation**: AI features without model | Feature quietly unavailable; no crash | |
+
+---
+
+## WebSocket / Real-Time
+
+| # | Step | Expected | Pass? |
+|---|------|----------|-------|
+| W.1 | Two devices: send chat message | Message appears on other device within 1-2 seconds | |
+| W.2 | Read receipt: open conversation | Sender sees "Read" status update | |
+| W.3 | Typing indicator | Recipient sees "typing…" indicator | |
+| W.4 | WebSocket disconnects → polling fallback | Conversations refresh every 15 seconds | |
+
+---
+
 ## Sign-off
 
 | Role | Name | Date | Verdict |

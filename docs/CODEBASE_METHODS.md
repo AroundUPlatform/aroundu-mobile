@@ -218,4 +218,133 @@ This file documents the purpose of each method in the current MVVM codebase.
 ## `lib/src/features/jobs/model/job_item.dart`
 - `JobStatusView.label`: Converts enum value to display label.
 - `JobStatusView.color`: Converts enum value to status color.
+- `JobStatusView.isActive`: Returns whether the status represents an active (in-progress) job.
+- `JobStatusView.isReviewEligible`: Returns whether reviews can be submitted in this status.
 - `JobItem.copyWith`: Creates immutable updated copy of `JobItem`.
+
+---
+
+## `lib/src/core/network/dio_client.dart`
+- `DioClient.instance`: Returns configured Dio singleton with base URL, timeouts, and interceptors.
+
+## `lib/src/core/network/encryption_interceptor.dart`
+- `EncryptionInterceptor.onRequest`: AES-256 encrypts sensitive request payloads before sending.
+- `EncryptionInterceptor.onResponse`: Decrypts AES-256 encrypted response payloads.
+
+## `lib/src/core/network/websocket_service.dart`
+- `WebSocketService.connect`: Connects to STOMP WebSocket endpoint with JWT auth.
+- `WebSocketService.subscribe`: Subscribes to a topic with callback handler.
+- `WebSocketService.send`: Publishes payload to a STOMP destination.
+- `WebSocketService.disconnect`: Graceful WebSocket disconnect.
+
+## `lib/src/core/fx/exchange_rate_notifier.dart`
+- `ExchangeRateNotifier.build`: Fetches exchange rate from backend on init.
+- `ExchangeRateNotifier.refresh`: Re-fetches current exchange rate.
+
+## `lib/src/core/ai/run_anywhere_service.dart`
+- `RunAnywhereService.ensureSDKInitialized`: Idempotent SDK init: initialize → register → add catalog models.
+- `RunAnywhereService.getDownloadedModelIds`: Returns IDs of locally available models.
+- `RunAnywhereService.isModelDownloaded`: Checks if a specific model is on disk.
+- `RunAnywhereService.downloadModel`: Downloads model with progress callback.
+- `RunAnywhereService.loadModel`: Loads model into memory (skip if already loaded).
+- `RunAnywhereService.deleteModel`: Unloads and deletes model from disk.
+- `RunAnywhereService.getModelDiskSizes`: Returns on-disk byte sizes for all downloaded models.
+- `RunAnywhereService.generateStream`: Streams tokens from on-device LLM with debug logging.
+
+## `lib/src/core/ai/model_catalog.dart`
+- `kDefaultModel`: Default model specification (Qwen-2.5).
+- `findModelSpec`: Looks up a model spec by ID.
+
+## `lib/src/core/ai/device_checker.dart`
+- `DeviceChecker.checkDevice`: Returns RAM/disk availability for model compatibility.
+
+## `lib/src/core/ai/ai_output_validator.dart`
+- `AiOutputValidator.parseJson`: Parses and validates JSON from LLM output with fallback extraction.
+
+## `lib/src/core/providers/ai/model_manager_provider.dart`
+- `ModelManagerNotifier.build`: Initializes model manager state.
+- `ModelManagerNotifier.download`: Downloads a model with progress tracking.
+- `ModelManagerNotifier.load`: Loads a model into memory.
+- `ModelManagerNotifier.delete`: Unloads and deletes a model.
+- `ModelManagerNotifier.refresh`: Refreshes downloaded model list.
+
+---
+
+## `lib/src/features/chat/data/chat_api.dart`
+- `ChatApi.sendMessage`: POST `/api/v1/chat/jobs/{jobId}/messages` — sends a message in a job conversation.
+- `ChatApi.getMessages`: GET `/api/v1/chat/conversations/{id}/messages` — paginated message history.
+- `ChatApi.getConversations`: GET `/api/v1/chat/conversations` — lists all conversations.
+- `ChatApi.getConversationsGrouped`: GET `/api/v1/chat/conversations/grouped` — grouped by job.
+- `ChatApi.markAsRead`: POST `/api/v1/chat/conversations/{id}/read` — mark messages as read.
+- `ChatApi.markAsDelivered`: POST `/api/v1/chat/conversations/{id}/delivered` — mark messages as delivered.
+
+## `lib/src/features/chat/view_model/chat_view_model.dart`
+- `ConversationsController.build`: Initializes flat conversation list with WebSocket and polling.
+- `ConversationsController.refresh`: Manually re-fetches conversations.
+- `GroupedConversationsController.build`: Initializes grouped conversation list with WebSocket and polling.
+- `GroupedConversationsController.refresh`: Manually re-fetches grouped conversations.
+- `ChatMessagesController.build`: Initializes messages for a conversation with WebSocket subscriptions.
+- `ChatMessagesController.sendMessage`: Sends message via HTTP with optimistic UI update.
+- `ChatMessagesController.sendTyping`: Sends typing indicator via WebSocket.
+- `ChatMessagesController.refresh`: Re-fetches messages from server.
+
+## `lib/src/features/chat/view_model/ai_chat_suggester_provider.dart`
+- `AiChatSuggesterProvider.suggest`: Generates 3 contextual reply suggestions using on-device AI.
+
+---
+
+## `lib/src/features/review/data/review_api.dart`
+- `ReviewApi.submitReview`: POST `/api/v1/reviews/jobs/{jobId}` — client submits review.
+- `ReviewApi.submitWorkerReview`: POST `/api/v1/reviews/jobs/{jobId}/worker` — worker submits review.
+- `ReviewApi.getWorkerReviews`: GET `/api/v1/reviews/workers/{workerId}` — all reviews for a worker.
+- `ReviewApi.getJobReview`: GET `/api/v1/reviews/jobs/{jobId}` — single job review.
+- `ReviewApi.checkReviewEligibility`: GET `/api/v1/reviews/jobs/{jobId}/eligibility` — eligibility check.
+
+## `lib/src/features/review/view_model/review_view_model.dart`
+- `ReviewController.submitReview`: Submits a review and invalidates related providers.
+- `ReviewController.checkEligibility`: Checks if current user can leave a review.
+- `WorkerReviewsController.build`: Loads a worker's review list.
+
+---
+
+## `lib/src/features/admin/data/admin_api.dart`
+- `AdminApi.fetchOverview`: GET `/api/v1/admin/overview` — returns `AdminOverview` platform stats.
+- `AdminOverview.fromMap`: Factory parsing admin overview map to typed object.
+
+## `lib/src/features/admin/view_model/admin_view_model.dart`
+- `AdminDashboardController.build`: Fetches admin overview on init.
+- `AdminDashboardController.refresh`: Re-fetches admin dashboard data.
+
+---
+
+## `lib/src/features/profile/data/user_profile_api.dart`
+- `UserProfileApi.uploadProfileImage`: POST multipart `/api/v1/users/{userId}/profile-image` — returns public URL.
+- `UserProfileApi.deleteProfileImage`: DELETE `/api/v1/users/{userId}/profile-image`.
+
+## `lib/src/features/profile/view_model/profile_view_model.dart`
+- `ProfileController.uploadImage`: Uploads profile image and updates state.
+- `ProfileController.deleteImage`: Deletes profile image and updates state.
+- `ProfileController.updateProfile`: Updates profile fields via API.
+
+## `lib/src/features/profile/view_model/public_profile_view_model.dart`
+- `PublicProfileController.build`: Fetches public profile for a user by ID and role.
+
+---
+
+## `lib/src/features/jobs/view_model/ai_job_parser_provider.dart`
+- `AiJobParserProvider.parse`: Parses natural language job description into structured `ParsedJobData`.
+
+## `lib/src/features/jobs/view_model/ai_bid_generator_provider.dart`
+- `AiBidGeneratorProvider.suggest`: Generates bid amount suggestions based on job details.
+
+## `lib/src/features/jobs/view_model/ai_job_ranking_provider.dart`
+- `AiJobRankingProvider.rank`: Re-ranks worker feed by relevance using worker skills.
+
+## `lib/src/features/jobs/view_model/skill_suggest_view_model.dart`
+- `SkillSuggestController.search`: Searches skills by query string.
+- `SkillSuggestController.clear`: Clears suggestion list.
+
+## `lib/src/features/jobs/data/skill_api.dart`
+- `SkillApi.fetchAllSkills`: GET `/api/v1/skills` — returns all available skills.
+- `SkillApi.searchSkills`: GET `/api/v1/skills/search` — search by query.
+
