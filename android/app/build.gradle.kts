@@ -5,6 +5,7 @@ val localProperties = Properties().apply {
     val localPropsFile = rootProject.file("local.properties")
     if (localPropsFile.exists()) load(localPropsFile.inputStream())
 }
+val isSplitPerAbiBuild = providers.gradleProperty("split-per-abi").orNull?.toBoolean() == true
 
 plugins {
     id("com.android.application")
@@ -32,10 +33,13 @@ android {
         // Inject Maps key from local.properties into the AndroidManifest
         manifestPlaceholders["GOOGLE_MAPS_API_KEY"] =
             localProperties.getProperty("GOOGLE_MAPS_API_KEY") ?: ""
-        // Only build for 64-bit ARM — the AI models require arm64 and won't
-        // run on armeabi-v7a or x86_64 anyway.
-        ndk {
-            abiFilters += listOf("arm64-v8a")
+        // Keep normal APK builds arm64-only. Flutter configures ABI splits itself
+        // for --split-per-abi, and AGP rejects having both split filters and ndk
+        // abiFilters at the same time.
+        if (!isSplitPerAbiBuild) {
+            ndk {
+                abiFilters += listOf("arm64-v8a")
+            }
         }
     }
 
