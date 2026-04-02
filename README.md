@@ -37,6 +37,28 @@ adb reverse tcp:20232 tcp:20232
 flutter run --dart-define=API_BASE_URL=http://localhost:20232
 ```
 
+### Connecting to EC2-hosted Backend (k3s)
+
+When the backend is deployed on an EC2 instance via Kubernetes (k3s), the NGINX Ingress Controller serves traffic on port 80:
+
+```bash
+flutter run --dart-define=API_BASE_URL=http://<EC2-PUBLIC-IP>
+```
+
+WebSocket (STOMP) connections follow the same host:
+
+```text
+ws://<EC2-PUBLIC-IP>/ws/
+```
+
+If a domain name is pointed at the EC2 instance:
+
+```bash
+flutter run --dart-define=API_BASE_URL=http://yourdomain.com
+```
+
+> **Note:** For production with HTTPS, replace `http://` with `https://` and `ws://` with `wss://` once TLS is configured on the cluster.
+
 ## Debugging API Errors
 - In debug mode, API request/response logs are printed automatically.
 - To force logs in non-debug runs:
